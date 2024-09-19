@@ -4,6 +4,12 @@ on:
     branches:
       - develop
       - main
+    paths:
+      - 'client/**' # Only trigger if there are changes in the client directory
+
+permissions:
+  contents: write
+
 jobs:
   prettify:
     runs-on: ubuntu-latest
