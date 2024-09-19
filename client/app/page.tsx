@@ -3,11 +3,6 @@ export default function Home() {
 		<div>
 			<h1>Digital Keyboard Tunes</h1>
 
-
-
-
-
-
 			<p>New version coming soon.....</p>
 		</div>
 	);
