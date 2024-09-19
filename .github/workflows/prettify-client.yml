@@ -9,14 +9,22 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v3
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 21.7.1
+
       - name: Install dependencies
-        run: npm install
+        run: |
+          cd client
+          npm install
+
       - name: Format with Prettier
-        run: npm run prettier
+        run: |
+          cd client
+          npm run prettier
+
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
