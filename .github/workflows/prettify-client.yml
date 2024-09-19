@@ -3,6 +3,7 @@ on:
   pull_request:
     branches:
       - develop
+      - main
 jobs:
   prettify:
     runs-on: ubuntu-latest
@@ -16,17 +17,16 @@ jobs:
           node-version: 21.7.1
 
       - name: Install dependencies
-        run: |
-          cd client
-          npm install
+        run: cd client && npm ci
 
       - name: Format with Prettier
-        run: |
-          cd client
-          npm run prettier
+        run: cd client && npm run prettier
 
       - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Apply Prettier formatted changes
-          branch: ${{ github.head_ref }}
+        run: |
+          cd client
+          git config --local user.name "GitHub Action"
+          git config --local user.email "action@github.com"
+          git add .
+          git commit -m "Apply Prettier formatted changes" || echo "No changes to commit"
+          git push origin ${{ github.head_ref }}
