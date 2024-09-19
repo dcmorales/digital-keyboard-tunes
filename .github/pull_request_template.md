@@ -6,7 +6,7 @@
 ## Steps to test / reproduce
 
 <!---
-    Please describe how to see and test the changes you made. List any dependencies that are required for this change..
+    Please describe how to see and test the changes you made. List any dependencies that are required for this change.
 -->
 
 ## Types of changes
