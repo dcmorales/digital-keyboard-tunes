@@ -6,6 +6,8 @@ export default function Home() {
 
 
 
+
+
 			<p>New version coming soon.....</p>
 		</div>
 	);
