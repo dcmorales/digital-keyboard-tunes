@@ -1,0 +1,19 @@
+name: Check Merge Branch
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Source Branch
+        if: github.event.pull_request.base.ref == 'main'
+        run: |
+          SOURCE_BRANCH="${{ github.event.pull_request.head.ref }}"
+          if [[ "$SOURCE_BRANCH" != "develop" && "$SOURCE_BRANCH" != hotfix* ]]; then
+            echo "Merging from branch '$SOURCE_BRANCH' into 'main' is not allowed. Only 'develop' and 'hotfix*' branches are permitted."
+            exit 1
+          fi
