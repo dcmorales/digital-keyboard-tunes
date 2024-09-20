@@ -8,7 +8,7 @@ describe('Page', () => {
 		expect(
 			screen.getByRole('heading', {
 				level: 1,
-				name: 'Digital Keyboard Tunes 1',
+				name: 'Digital Keyboard Tunes',
 			})
 		).toBeDefined();
 	});
