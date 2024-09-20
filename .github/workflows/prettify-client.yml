@@ -11,16 +11,14 @@ permissions:
   contents: write
 
 jobs:
-  setup:
-    uses: ./.github/workflows/setup-client.yml
-
   prettify:
     runs-on: ubuntu-latest
-    needs: setup
 
     steps:
-      - name: Format with Prettier
-        run: cd client && npm run prettier
+      - name: Set up client
+        uses: ./.github/actions/setup-client
+        with:
+          node_version: 21.7.1
 
       - name: Commit changes
         run: |

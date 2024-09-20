@@ -9,13 +9,17 @@ on:
       - 'client/**' # Only trigger if there are changes in the client directory
 
 jobs:
-  setup:
-    uses: ./.github/workflows/setup-client.yml
-
   build:
     runs-on: ubuntu-latest
-    needs: setup
+    steps:
+      - name: Set up client
+        uses: ./.github/actions/setup-client
+        with:
+          node_version: 21.7.1
 
+  test:
+    runs-on: ubuntu-latest
+    needs: build
     steps:
       - name: Run tests from Vitest
         run: cd client && npm run test
