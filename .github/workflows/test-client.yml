@@ -18,4 +18,4 @@ jobs:
 
     steps:
       - name: Run tests from Vitest
-        run: cd client && npm run test
+        run: npm run test
