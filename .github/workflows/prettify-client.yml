@@ -1,4 +1,5 @@
 name: Prettify Client
+
 on:
   pull_request:
     branches:
