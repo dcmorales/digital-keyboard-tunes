@@ -1,7 +1,6 @@
 name: Client Setup
 
-on:
-  workflow_call:
+on: workflow_call
 
 jobs:
   setup:
