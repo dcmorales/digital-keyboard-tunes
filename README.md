@@ -70,39 +70,10 @@ COMING SOON: Digital Keyboard Tunes is a web application built with Next.js and 
 ```sh
 └── digital-keyboard-tunes/
     ├── .github
-    │   ├── ISSUE_TEMPLATE
-    │   │   ├── BUG-REPORT.yml
-    │   │   ├── FEATURE-REQUEST.yml
-    │   │   └── config.yml
-    │   ├── pull_request_template.md
     │   └── workflows
-    │       ├── check-merge-branch.yml
-    │       ├── prettify-client.yml
-    │       └── test-client.yml
-    ├── README.md
-    └── client
-        ├── .eslintrc.json
-        ├── .gitignore
-        ├── .nvmrc
-        ├── .prettierignore
-        ├── .prettierrc
-        ├── README.md
-        ├── app
-        │   ├── favicon.ico
-        │   ├── layout.tsx
-        │   ├── page.test.tsx
-        │   └── page.tsx
-        ├── next.config.mjs
-        ├── package.json
-        ├── pnpm-lock.yaml
-        ├── styles
-        │   ├── base
-        │   │   ├── _base.scss
-        │   │   ├── _index.scss
-        │   │   └── _reset.scss
-        │   └── main.scss
-        ├── tsconfig.json
-        └── vitest.config.ts
+    ├── client
+        └── ...
+    └── README.md
 ```
 
 ---
@@ -111,64 +82,17 @@ COMING SOON: Digital Keyboard Tunes is a web application built with Next.js and 
 
 <details closed><summary>client</summary>
 
-| File                                                                                                      | Summary                   |
-| --------------------------------------------------------------------------------------------------------- | ------------------------- |
-| [pnpm-lock.yaml](https://github.com/dcmorales/digital-keyboard-tunes/blob/main/client/pnpm-lock.yaml)     | <code>❯ REPLACE-ME</code> |
-| [next.config.mjs](https://github.com/dcmorales/digital-keyboard-tunes/blob/main/client/next.config.mjs)   | <code>❯ REPLACE-ME</code> |
-| [.prettierignore](https://github.com/dcmorales/digital-keyboard-tunes/blob/main/client/.prettierignore)   | <code>❯ REPLACE-ME</code> |
-| [package.json](https://github.com/dcmorales/digital-keyboard-tunes/blob/main/client/package.json)         | <code>❯ REPLACE-ME</code> |
-| [.nvmrc](https://github.com/dcmorales/digital-keyboard-tunes/blob/main/client/.nvmrc)                     | <code>❯ REPLACE-ME</code> |
-| [tsconfig.json](https://github.com/dcmorales/digital-keyboard-tunes/blob/main/client/tsconfig.json)       | <code>❯ REPLACE-ME</code> |
-| [vitest.config.ts](https://github.com/dcmorales/digital-keyboard-tunes/blob/main/client/vitest.config.ts) | <code>❯ REPLACE-ME</code> |
-| [.eslintrc.json](https://github.com/dcmorales/digital-keyboard-tunes/blob/main/client/.eslintrc.json)     | <code>❯ REPLACE-ME</code> |
+The client is built using Next.js and TypeScript. Vitest and React Testing Library handle testing while Sass is used for styling. For more details, refer to the [README.md](client/README.md) located in the client directory.
 
 </details>
 
 <details closed><summary>.github.workflows</summary>
 
-| File                                                                                                                             | Summary                   |
-| -------------------------------------------------------------------------------------------------------------------------------- | ------------------------- |
-| [test-client.yml](https://github.com/dcmorales/digital-keyboard-tunes/blob/main/.github/workflows/test-client.yml)               | <code>❯ REPLACE-ME</code> |
-| [prettify-client.yml](https://github.com/dcmorales/digital-keyboard-tunes/blob/main/.github/workflows/prettify-client.yml)       | <code>❯ REPLACE-ME</code> |
-| [check-merge-branch.yml](https://github.com/dcmorales/digital-keyboard-tunes/blob/main/.github/workflows/check-merge-branch.yml) | <code>❯ REPLACE-ME</code> |
-
-</details>
-
-<details closed><summary>.github.ISSUE_TEMPLATE</summary>
-
-| File                                                                                                                            | Summary                   |
-| ------------------------------------------------------------------------------------------------------------------------------- | ------------------------- |
-| [BUG-REPORT.yml](https://github.com/dcmorales/digital-keyboard-tunes/blob/main/.github/ISSUE_TEMPLATE/BUG-REPORT.yml)           | <code>❯ REPLACE-ME</code> |
-| [config.yml](https://github.com/dcmorales/digital-keyboard-tunes/blob/main/.github/ISSUE_TEMPLATE/config.yml)                   | <code>❯ REPLACE-ME</code> |
-| [FEATURE-REQUEST.yml](https://github.com/dcmorales/digital-keyboard-tunes/blob/main/.github/ISSUE_TEMPLATE/FEATURE-REQUEST.yml) | <code>❯ REPLACE-ME</code> |
-
-</details>
-
-<details closed><summary>client.app</summary>
-
-| File                                                                                                    | Summary                   |
-| ------------------------------------------------------------------------------------------------------- | ------------------------- |
-| [page.test.tsx](https://github.com/dcmorales/digital-keyboard-tunes/blob/main/client/app/page.test.tsx) | <code>❯ REPLACE-ME</code> |
-| [layout.tsx](https://github.com/dcmorales/digital-keyboard-tunes/blob/main/client/app/layout.tsx)       | <code>❯ REPLACE-ME</code> |
-| [page.tsx](https://github.com/dcmorales/digital-keyboard-tunes/blob/main/client/app/page.tsx)           | <code>❯ REPLACE-ME</code> |
-
-</details>
-
-<details closed><summary>client.styles</summary>
-
-| File                                                                                               | Summary                   |
-| -------------------------------------------------------------------------------------------------- | ------------------------- |
-| [main.scss](https://github.com/dcmorales/digital-keyboard-tunes/blob/main/client/styles/main.scss) | <code>❯ REPLACE-ME</code> |
-
-</details>
-
-<details closed><summary>client.styles.base</summary>
-
-| File                                                                                                         | Summary                   |
-| ------------------------------------------------------------------------------------------------------------ | ------------------------- |
-| [\_index.scss](https://github.com/dcmorales/digital-keyboard-tunes/blob/main/client/styles/base/_index.scss) | <code>❯ REPLACE-ME</code> |
-| [\_reset.scss](https://github.com/dcmorales/digital-keyboard-tunes/blob/main/client/styles/base/_reset.scss) | <code>❯ REPLACE-ME</code> |
-| [\_base.scss](https://github.com/dcmorales/digital-keyboard-tunes/blob/main/client/styles/base/_base.scss)   | <code>❯ REPLACE-ME</code> |
+| File                                                               | Summary                                                                                                                                                                             |
+| ------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [test-client.yml](.github/workflows/test-client.yml)               | Runs tests whenever a pull request is made that includes changes to the client.                                                                                                     |
+| [prettify-client.yml](.github/workflows/prettify-client.yml)       | Runs Prettier when a pull request is made to either the `main` or `develop` branch that includes changes to the client. If formatting is necessary, the changes are auto-committed. |
+| [check-merge-branch.yml](.github/workflows/check-merge-branch.yml) | Ensures merges into `main` can only be done by `develop` and `hotfix*` branches.                                                                                                    |
 
 </details>
 
