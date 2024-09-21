@@ -13,6 +13,7 @@
 <br>
 
 <p align="center">
+	<img src="https://img.shields.io/github/license/dcmorales/digital-keyboard-tunes?style=default&logo=opensourceinitiative&logoColor=white&color=068a62" alt="license">
 	<img src="https://img.shields.io/github/last-commit/dcmorales/digital-keyboard-tunes?style=default&logo=git&logoColor=white&color=068a62" alt="last-commit">
 	<img src="https://img.shields.io/github/languages/top/dcmorales/digital-keyboard-tunes?style=default&color=068a62" alt="repo-top-language">
 	<img src="https://img.shields.io/github/languages/count/dcmorales/digital-keyboard-tunes?style=default&color=068a62" alt="repo-language-count">
@@ -42,6 +43,7 @@
   - [🧪 Tests](#-tests)
 - [📌 Project Roadmap](#-project-roadmap)
 - [🤝 Contributing](#-contributing)
+- [🎗 License](#-license)
 
 ---
 
@@ -262,5 +264,11 @@ Contributions are welcome! Here are several ways you can contribute:
    </a>
 </p>
 </details>
+
+---
+
+## 🎗 License
+
+This project is protected under the [GNU GPLv3](LICENSE.txt) License.
 
 ---
