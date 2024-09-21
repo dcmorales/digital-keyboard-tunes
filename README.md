@@ -37,10 +37,8 @@
 - [📂 Repository Structure](#-repository-structure)
 - [🧩 Modules](#-modules)
 - [🚀 Getting Started](#-getting-started)
-  - [🔖 Prerequisites](#-prerequisites)
-  - [📦 Installation](#-installation)
-  - [🤖 Usage](#-usage)
-  - [🧪 Tests](#-tests)
+  - [🔖 Requirements](#-requirements)
+- [🔄 Continuous Integration / Continuous Delivery](#-continuous-integration--continuous-delivery)
 - [📌 Project Roadmap](#-project-roadmap)
 - [🤝 Contributing](#-contributing)
 - [🎗 License](#-license)
@@ -100,47 +98,13 @@ The client is built using Next.js and TypeScript. Vitest and React Testing Libra
 
 ## 🚀 Getting Started
 
-### 🔖 Prerequisites
+### 🔖 Requirements
 
-**YAML**: `version x.y.z`
+It is recommended to use a Node version manager such as [nvm](https://github.com/nvm-sh/nvm) to install the client. Once that is installed and the repo has been cloned, refer to the [README.md](client/README.md) located in the client directory for specific install steps.
 
-### 📦 Installation
+## 🔄 Continuous Integration / Continuous Delivery
 
-Build the project from source:
-
-1. Clone the digital-keyboard-tunes repository:
-
-```sh
-❯ git clone https://github.com/dcmorales/digital-keyboard-tunes
-```
-
-2. Navigate to the project directory:
-
-```sh
-❯ cd digital-keyboard-tunes
-```
-
-3. Install the required dependencies:
-
-```sh
-❯ ❯ INSERT-INSTALL-COMMANDS
-```
-
-### 🤖 Usage
-
-To run the project, execute the following command:
-
-```sh
-❯ ❯ INSERT-RUN-COMMANDS
-```
-
-### 🧪 Tests
-
-Execute the test suite using the following command:
-
-```sh
-❯ ❯ INSERT-TEST-COMMANDS
-```
+The repo uses Github Actions for CI/CD. Testing and linting have been automated to run on pull requests. These workflows must pass for PR's to be approved. Merging into `develop` triggers deployment to the staging site. Merging into `main` triggers deployment to the production site. Local builds can be previewed on Vercel's preview sites after creating a pull request. Changes cannot be made directly into either `develop` or `main` and must be done through pull requests instead.
 
 ---
 
@@ -183,7 +147,7 @@ Contributions are welcome! Here are ways you can contribute:
    ```
 7. **Submit a Pull Request**: Create a PR against the original project repository. Clearly describe the changes and their motivations using the PR template provided. By Default, merges into `main` are restricted, but you can request to merge into `develop`.
 8. **Ensure all tests pass**: Linting and testing will be triggered after a pull request made into `develop`. If there are any failures in these workflows, the branch will not be allowed to merge.
-9. **Review**: Once your PR is reviewed and approved, it will be merged into the main branch. Thank you for your contribution!
+9. **Review**: Once your PR is reviewed and approved, it will be merged into the `develop` branch. Thank you for your contribution!
 </details>
 
 <details closed>
