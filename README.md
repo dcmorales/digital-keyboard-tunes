@@ -53,13 +53,13 @@ COMING SOON: Digital Keyboard Tunes is a web application built with Next.js and 
 
 ## 👾 Features
 
-|     | Feature           | Description                                                                                                                                                                                                                                                          |
-| --- | ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ⚙️  | **Architecture**  | This project's frontend is built using Next.js and TypeScript. It follows a structured architecture that includes the app-router, components, and styles. Unit tests are co-located by the unit they are testing.                                                    |
-| 🔩  | **Code Quality**  | The frontend of the codebase uses TypeScript for type safety and improved code readability, enhancing overall maintainability. Automated workflows run Vitest testing on PR requests to ensure consistency and Prettier updates to maintain a consistent code style. |
-| 📄  | **Documentation** | The project includes detailed README files and comments within the codebase, aiding developers in understanding the architecture and implementation details.                                                                                                         |
-| 🧪  | **Testing**       | Testing the frontend is done through Vitest and React Testing Library.                                                                                                                                                                                               |
-| 📦  | **Dependencies**  | Key dependencies on the frontend include Next.js, React, TypeScript, Sass, Vitest, and various packages to assist with testing, linting, and typing. Configuration files like package.json and tsconfig.json manage dependencies and project settings effectively.   |
+|     | Feature           | Description                                                                                                                                                                                                                       |
+| --- | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ⚙️  | **Architecture**  | This project's frontend is built using Next.js and TypeScript. It follows a structured architecture that includes the app-router, components, and styles. Unit tests are co-located by the units they are testing.                |
+| 🔩  | **Code Quality**  | The frontend of the codebase uses TypeScript for type safety and improved code readability. Automated workflows run Vitest testing on PR requests to ensure consistency and Prettier updates to maintain a consistent code style. |
+| 📄  | **Documentation** | The project includes detailed README files and comments within the codebase.                                                                                                                                                      |
+| 🧪  | **Testing**       | Testing the frontend is done through Vitest and React Testing Library.                                                                                                                                                            |
+| 📦  | **Dependencies**  | Key dependencies on the frontend include Next.js, React, TypeScript, Sass, and Vitest.                                                                                                                                            |
 
 ---
 
