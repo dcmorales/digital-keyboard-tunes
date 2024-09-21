@@ -224,11 +224,10 @@ Execute the test suite using the following command:
 
 ## 🤝 Contributing
 
-Contributions are welcome! Here are several ways you can contribute:
+Contributions are welcome! Here are ways you can contribute:
 
-- **[Report Issues](https://github.com/dcmorales/digital-keyboard-tunes/issues)**: Submit bugs found or log feature requests for the `digital-keyboard-tunes` project.
-- **[Submit Pull Requests](https://github.com/dcmorales/digital-keyboard-tunes/blob/main/CONTRIBUTING.md)**: Review open PRs, and submit your own PRs.
-- **[Join the Discussions](https://github.com/dcmorales/digital-keyboard-tunes/discussions)**: Share your insights, provide feedback, or ask questions.
+- **[Report Issues](https://github.com/dcmorales/digital-keyboard-tunes/issues)**: Submit bugs found or log feature requests for the `digital-keyboard-tunes` project using the templates provided.
+- **[Submit Pull Requests](https://github.com/dcmorales/digital-keyboard-tunes/pulls)**: Review open PRs, and submit your own PRs.
 
 <details closed>
 <summary>Contributing Guidelines</summary>
@@ -240,7 +239,7 @@ Contributions are welcome! Here are several ways you can contribute:
    ```
 3. **Create a New Branch**: Always work on a new branch, giving it a descriptive name.
    ```sh
-   git checkout -b new-feature-x
+   git checkout -b feature/new-feature-x
    ```
 4. **Make Your Changes**: Develop and test your changes locally.
 5. **Commit Your Changes**: Commit with a clear message describing your updates.
@@ -249,19 +248,18 @@ Contributions are welcome! Here are several ways you can contribute:
    ```
 6. **Push to github**: Push the changes to your forked repository.
    ```sh
-   git push origin new-feature-x
+   git push origin feature/new-feature-x
    ```
-7. **Submit a Pull Request**: Create a PR against the original project repository. Clearly describe the changes and their motivations.
-8. **Review**: Once your PR is reviewed and approved, it will be merged into the main branch. Congratulations on your contribution!
+7. **Submit a Pull Request**: Create a PR against the original project repository. Clearly describe the changes and their motivations using the PR template provided. By Default, merges into `main` are restricted, but you can request to merge into `develop`.
+8. **Ensure all tests pass**: Linting and testing will be triggered after a pull request made into `develop`. If there are any failures in these workflows, the branch will not be allowed to merge.
+9. **Review**: Once your PR is reviewed and approved, it will be merged into the main branch. Thank you for your contribution!
 </details>
 
 <details closed>
 <summary>Contributor Graph</summary>
 <br>
 <p align="left">
-   <a href="https://github.com{/dcmorales/digital-keyboard-tunes/}graphs/contributors">
-      <img src="https://contrib.rocks/image?repo=dcmorales/digital-keyboard-tunes">
-   </a>
+    <img src="https://contrib.rocks/image?repo=dcmorales/digital-keyboard-tunes" alt="contributors to repo">
 </p>
 </details>
 
