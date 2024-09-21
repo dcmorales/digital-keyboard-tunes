@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/PKief/vscode-material-icon-theme/ec559a9f6bfd399b82bb44393651661b08aaf7ba/icons/lilypond.svg" width="10%" alt="Digital Keyboard Tunes logo">
+  <span style="font-size: 100px;">🎹</span>
 </p>
 
 <p align="center">
