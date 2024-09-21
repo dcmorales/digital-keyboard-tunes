@@ -222,9 +222,10 @@ Execute the test suite using the following command:
 
 ## 📌 Project Roadmap
 
-- [x] **`Task 1`**: <strike>Implement feature one.</strike>
-- [ ] **`Task 2`**: Implement feature two.
-- [ ] **`Task 3`**: Implement feature three.
+- [ ] **`Initial keyboard`**: Set up basic functionality for keyboard
+- [ ] **`Add backend`**: Add backend to repo to allow users to save custom tunes.
+- [ ] **`Expand user options`**: Consider options to mark tunes as public and save as favorites.
+- [ ] **`Expand keyboard options`**: Consider more advanced options in customizing and editing parts of tunes.
 
 ---
 
