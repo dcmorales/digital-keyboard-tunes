@@ -146,7 +146,7 @@ Contributions are welcome! Here are ways you can contribute:
    git push origin feature/new-feature-x
    ```
 7. **Submit a Pull Request**: Create a PR against the original project repository. Clearly describe the changes and their motivations using the PR template provided. By Default, merges into `main` are restricted, but you can request to merge into `develop`.
-8. **Ensure all tests pass**: Linting and testing will be triggered after a pull request made into `develop`. If there are any failures in these workflows, the branch will not be allowed to merge.
+8. **Ensure all tests pass**: Linting and testing will be triggered after a pull request is made into `develop`. If there are any failures in these workflows, the PR will not be approved and the branch will not be allowed to merge.
 9. **Review**: Once your PR is reviewed and approved, it will be merged into the `develop` branch. Thank you for your contribution!
 </details>
 
