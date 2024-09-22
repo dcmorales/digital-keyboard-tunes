@@ -1,0 +1,47 @@
+name: Prettify Client
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - main
+    paths:
+      - 'client/**' # Only trigger if there are changes in the client directory
+
+permissions:
+  contents: write
+
+jobs:
+  prettify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 21.7.1
+
+      - name: Install pnpm
+        run: npm install -g pnpm@9.11.0
+
+      - name: Install dependencies
+        run: cd client && pnpm install --frozen-lockfile
+
+      - name: Format with Prettier
+        run: cd client && pnpm run prettier
+
+      - name: Commit changes
+        run: |
+          cd client
+          git config --local user.name "GitHub Action"
+          git config --local user.email "action@github.com"
+          git add .
+          git commit -m "Apply Prettier formatted changes" || echo "No changes to commit"
+
+          # Pull the latest changes before pushing
+          git pull --rebase origin ${{ github.head_ref }} || echo "No changes to pull"
+
+          # Push the changes
+          git push origin HEAD:${{ github.head_ref }}
