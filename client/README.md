@@ -133,7 +133,7 @@ To run the project, execute the following command:
 
 ### 🧪 Tests
 
-Execute the test suite using the following command:
+Vitest and React Testing Library are used for testing. Tests will run automatically after a pull request is made. You can also run the tests manually.
 
 ```sh
 ❯ ❯ pnpm test
@@ -143,7 +143,7 @@ Execute the test suite using the following command:
 
 ### 🖌️ Formatting / Linting
 
-ESLint is used to catch errors and maintain consistency between developers. Linting will run during Vercel's preview deployment after a pull request is made. To prevent any failures, ensure that your code passes the checks. Prettier will also run during select pull requests. You can also set VSCode to format for you automatically. Ensure the [VSCode Prettier extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) is installed. In VSCode, turn on 'format on save' and set Prettier to the default formatter.
+ESLint is used to catch errors and maintain consistency between developers. Linting will run during Vercel's preview deployment after a pull request is made. To prevent any failures, ensure that your code passes the checks. Prettier will also run during select pull requests. You can also set VSCode to format for you automatically. Ensure the [VSCode Prettier extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) is installed. In VSCode, turn on 'format on save' and set Prettier to the default formatter. You can also run the commands manually.
 
 ```sh
 # Run eslint

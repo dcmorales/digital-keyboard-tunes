@@ -2,9 +2,6 @@ name: Test Client
 
 on:
   pull_request:
-    branches:
-      - develop
-      - main
     paths:
       - 'client/**' # Only trigger if there are changes in the client directory
 
