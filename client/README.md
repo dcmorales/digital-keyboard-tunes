@@ -121,13 +121,32 @@ Build the project from source:
 
 ### 🤖 Usage
 
-To run the project, execute the following command:
+To run the client, execute the following command from the `client` directory:
 
 ```sh
-❯ ❯ INSERT-RUN-COMMANDS
+❯ pnpm dev
 ```
 
 ### 🎨 CSS / SCSS
+
+- Components should be designed with a mobile-first approach.
+- When considering class names, try to stick to using the [BEM](https://css-tricks.com/bem-101/) naming convention where possible.
+- CSS properties should be ordered alphabetically.
+- Use CSS variables instead of SASS variables
+
+```css
+.example {
+	&--secondary {
+		background-color: var(--color-background);
+		color: var(--color-primary);
+	}
+
+	&__child {
+		border-radius: var(--radius-small)
+		font-size: var(--font-small);
+	}
+}
+```
 
 ---
 
@@ -136,7 +155,7 @@ To run the project, execute the following command:
 Vitest and React Testing Library are used for testing. Tests will run automatically after a pull request is made. You can also run the tests manually.
 
 ```sh
-❯ ❯ pnpm test
+❯ pnpm test
 ```
 
 ---
