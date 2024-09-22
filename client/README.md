@@ -95,28 +95,38 @@ COMING SOON: Digital Keyboard Tunes client is a web application built with Next.
 
 ### 🔖 Requirements
 
-**YAML**: `version x.y.z`
+You will need [nvm](https://github.com/nvm-sh/nvm). Run the following command to ensure your install was successful:
+
+```sh
+❯ nvm --version
+```
 
 ### 📦 Installation
 
 Build the project from source:
 
-1. Clone the digital-keyboard-tunes repository:
+1. From the root directory, navigate to the client directory:
 
 ```sh
-❯ git clone https://github.com/dcmorales/digital-keyboard-tunes
+❯ cd client
 ```
 
-2. Navigate to the project directory:
+2. Use the correct version of Node:
 
 ```sh
-❯ cd digital-keyboard-tunes
+❯ nvm use
 ```
 
-3. Install the required dependencies:
+3. Install pnpm:
 
 ```sh
-❯ ❯ INSERT-INSTALL-COMMANDS
+❯ npm install -g pnpm
+```
+
+4. Install dependencies:
+
+```sh
+❯ pnpm install
 ```
 
 ### 🤖 Usage
