@@ -20,11 +20,29 @@
 </p>
 
 <p align="center">
-    <em>Built with the tools and technologies below:</em>
+    <em>Built with the tools and technologies below (click on icon for official docs):</em>
 </p>
 
 <p align="center">
-	<img src="https://skillicons.dev/icons?i=nextjs,ts,sass,vitest,githubactions,pnpm" alt="Next.js, TypeScript, Sass, Vitest, Github Actions, and PNPM">
+    <a href="https://nextjs.org/docs">
+	    <img src="https://skillicons.dev/icons?i=nextjs" alt="Next.js documentation">
+    </a>
+    <a href="https://www.typescriptlang.org/docs/">
+        <img src="https://skillicons.dev/icons?i=ts" alt="TypeScript documentation">
+    </a>
+    <a href="https://sass-lang.com/documentation/">
+        <img src="https://skillicons.dev/icons?i=sass" alt="Sass documentation">
+    </a>
+    <a href="https://vitest.dev/guide/">
+        <img src="https://skillicons.dev/icons?i=vitest" alt="Vitest documentation">
+    </a>
+    <a href="https://docs.github.com/en/actions">
+        <img src="https://skillicons.dev/icons?i=githubactions" alt="Github Actions documentation">
+    </a>
+    <a href="https://pnpm.io/motivation">
+        <img src="https://skillicons.dev/icons?i=pnpm" alt="PNPM documentation">
+    </a>
+
 </p>
 
 <br>
