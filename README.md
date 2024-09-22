@@ -108,7 +108,7 @@ The client is built using Next.js and TypeScript. Vitest and React Testing Libra
 
 | File                                                               | Summary                                                                                                                                                                             |
 | ------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [test-client.yml](.github/workflows/test-client.yml)               | Runs tests whenever a pull request is made that includes changes to the client.                                                                                                     |
+| [test-client.yml](.github/workflows/test-client.yml)               | Runs frontend unit tests whenever a pull request is made that includes changes to the client.                                                                                       |
 | [prettify-client.yml](.github/workflows/prettify-client.yml)       | Runs Prettier when a pull request is made to either the `main` or `develop` branch that includes changes to the client. If formatting is necessary, the changes are auto-committed. |
 | [check-merge-branch.yml](.github/workflows/check-merge-branch.yml) | Ensures merges into `main` can only be done by `develop` and `hotfix*` branches.                                                                                                    |
 
