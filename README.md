@@ -36,13 +36,15 @@
     <a href="https://vitest.dev/guide/">
         <img src="https://skillicons.dev/icons?i=vitest" alt="Vitest documentation">
     </a>
+    <a href="https://testing-library.com/docs/react-testing-library/intro/">
+        <img src="https://techstack-generator.vercel.app/testinglibrary-icon.svg"  alt="React Testing Library documentation" width="50" height="50" />
+    </a>
     <a href="https://docs.github.com/en/actions">
         <img src="https://skillicons.dev/icons?i=githubactions" alt="Github Actions documentation">
     </a>
     <a href="https://pnpm.io/motivation">
         <img src="https://skillicons.dev/icons?i=pnpm" alt="PNPM documentation">
     </a>
-
 </p>
 
 <br>
