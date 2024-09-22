@@ -87,9 +87,10 @@ COMING SOON: Digital Keyboard Tunes is a web application built with Next.js and 
 
 ```sh
 └── digital-keyboard-tunes/
-    ├── .github
-    │   └── workflows
-    └── client
+    ├── .github/
+    │   └── workflows/
+    │       └── *.yml
+    └── client/
         └── ...
 ```
 
