@@ -1,5 +1,5 @@
 <p align="center">
-  <span style="font-size: 100px;">🎹</span>
+   <img src="app/icon.png" width="10%" alt="Digital Keyboard Tunes Logo" />
 </p>
 
 <p align="center">

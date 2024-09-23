@@ -1,5 +1,5 @@
 <p align="center">
-  <span style="font-size: 100px;">🎹</span>
+   <img src="client/app/icon.png" width="10%" alt="Digital Keyboard Tunes Logo" />
 </p>
 
 <p align="center">
@@ -98,12 +98,6 @@ COMING SOON: Digital Keyboard Tunes is a web application built with Next.js and 
 
 ## 🧩 Modules
 
-<details closed><summary>client</summary>
-
-The client is built using Next.js and TypeScript. Vitest and React Testing Library handle testing while Sass is used for styling. For more details, refer to the [README.md](client/README.md) located in the client directory.
-
-</details>
-
 <details closed><summary>.github.workflows</summary>
 
 | File                                                               | Summary                                                                                                                                                                             |
@@ -111,6 +105,12 @@ The client is built using Next.js and TypeScript. Vitest and React Testing Libra
 | [test-client.yml](.github/workflows/test-client.yml)               | Runs frontend unit tests whenever a pull request is made that includes changes to the client.                                                                                       |
 | [prettify-client.yml](.github/workflows/prettify-client.yml)       | Runs Prettier when a pull request is made to either the `main` or `develop` branch that includes changes to the client. If formatting is necessary, the changes are auto-committed. |
 | [check-merge-branch.yml](.github/workflows/check-merge-branch.yml) | Ensures merges into `main` can only be done by `develop` and `hotfix*` branches.                                                                                                    |
+
+</details>
+
+<details closed><summary>client</summary>
+
+The client is built using Next.js and TypeScript. Vitest and React Testing Library handle testing while Sass is used for styling. For more details, refer to the [README.md](client/README.md) located in the client directory.
 
 </details>
 
