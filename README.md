@@ -156,7 +156,7 @@ Contributions are welcome! Here are ways you can contribute:
    ```sh
    git checkout -b feature/new-feature-x
    ```
-4. **Make Your Changes**: Develop and test your changes locally.
+4. **Make Your Changes**: Develop and test your changes locally. Be sure to follow the guidelines provided in the other README files.
 5. **Commit Your Changes**: Commit with a clear message describing your updates.
    ```sh
    git commit -m 'Implemented new feature x.'
