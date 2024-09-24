@@ -1,5 +1,5 @@
 <p align="center">
-  <span style="font-size: 100px;">🎹</span>
+   <img src="app/icon.png" width="10%" alt="Digital Keyboard Tunes Logo" />
 </p>
 
 <p align="center">
@@ -142,7 +142,8 @@ To run the client, execute the following command from the `client` directory:
 - Components should be designed with a mobile-first approach.
 - When considering class names, try to stick to using the [BEM](https://css-tricks.com/bem-101/) naming convention where possible.
 - CSS properties should be ordered alphabetically.
-- Use CSS variables instead of SASS variables
+- Prefer CSS custom properties (variables) over SCSS variables where possible
+- Use the `@include breakpoint()` mixin to handle media queries.
 
 ```css
 .example {
@@ -154,6 +155,10 @@ To run the client, execute the following command from the `client` directory:
 	&__child {
 		border-radius: var(--radius-small)
 		font-size: var(--font-small);
+
+        @include breakpoint(large) {
+            font-size: var(--font-large);
+        }
 	}
 }
 ```
