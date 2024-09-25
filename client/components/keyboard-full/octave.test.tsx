@@ -4,7 +4,7 @@ import Octave from './octave';
 
 describe('Octave', () => {
 	beforeEach(() => {
-		render(<Octave octNum={1} />);
+		render(<Octave octaveNum={1} />);
 	});
 
 	afterEach(cleanup);

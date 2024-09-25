@@ -7,7 +7,7 @@ export default function KeyboardFull(): JSX.Element {
 	return (
 		<div role="group" aria-label="Full Keyboard Keys">
 			{octaveNums.map((octaveNum) => {
-				return <Octave key={octaveNum} octNum={octaveNum} />;
+				return <Octave key={octaveNum} octaveNum={octaveNum} />;
 			})}
 		</div>
 	);

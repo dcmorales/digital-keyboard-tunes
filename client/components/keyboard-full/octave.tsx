@@ -1,7 +1,7 @@
 import Key from './key';
 
 interface OctaveProps {
-	octNum: number;
+	octaveNum: number;
 }
 
 const noteOptions = [
@@ -19,11 +19,11 @@ const noteOptions = [
 	'B',
 ];
 
-export default function Octave({ octNum }: OctaveProps): JSX.Element {
+export default function Octave({ octaveNum }: OctaveProps): JSX.Element {
 	return (
-		<div role="group" aria-label={`Octave #${octNum}`}>
+		<div role="group" aria-label={`Octave #${octaveNum}`}>
 			{noteOptions.map((noteOption) => {
-				return <Key key={noteOption} note={`${noteOption}${octNum}`} />;
+				return <Key key={noteOption} note={`${noteOption}${octaveNum}`} />;
 			})}
 		</div>
 	);
