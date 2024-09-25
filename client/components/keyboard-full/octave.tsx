@@ -6,16 +6,16 @@ interface OctaveProps {
 
 const noteOptions = [
 	'C',
-	'D&#9837;',
+	'D♭',
 	'D',
-	'E&#9837;',
+	'E♭',
 	'E',
 	'F',
-	'G&#9837;',
+	'G♭',
 	'G',
-	'A&#9837;',
+	'A♭',
 	'A',
-	'B&#9837;',
+	'B♭',
 	'B',
 ];
 
