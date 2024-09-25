@@ -18,7 +18,7 @@ describe('Key', () => {
 	});
 
 	it('applies the correct class name', () => {
-		expect(screen.getByRole('button').classList.contains('key__white')).toBe(
+		expect(screen.getByRole('button').classList.contains('key--white')).toBe(
 			true
 		);
 	});

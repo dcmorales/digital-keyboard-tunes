@@ -6,7 +6,7 @@ export default function Key({ note }: KeyProps): JSX.Element {
 	return (
 		<button
 			aria-label={`Play the ${note} note`}
-			className={`key key__${note.includes('♭') ? 'black' : 'white'}`}
+			className={`key key--${note.includes('♭') ? 'black' : 'white'}`}
 		>
 			{note}
 		</button>
