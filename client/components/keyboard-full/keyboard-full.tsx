@@ -5,7 +5,7 @@ const octaveNums = Array.from({ length: 8 }, (_, index) => index + 1);
 
 export default function KeyboardFull(): JSX.Element {
 	return (
-		<div role="group" aria-label="Full Keyboard Keys">
+		<div className="keyboard" role="group" aria-label="Full Keyboard Keys">
 			{octaveNums.map((octaveNum) => {
 				return <Octave key={octaveNum} octaveNum={octaveNum} />;
 			})}

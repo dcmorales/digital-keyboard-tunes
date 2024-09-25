@@ -8,7 +8,14 @@ export default function Key({ note }: KeyProps): JSX.Element {
 			aria-label={`Play the ${note} note`}
 			className={`key key--${note.includes('♭') ? 'black' : 'white'}`}
 		>
-			{note}
+			{note.includes('♭') ? (
+				<>
+					{note[0]} <span className="key__flat"> {note[1]}</span>
+					{note[2]}
+				</>
+			) : (
+				note
+			)}
 		</button>
 	);
 }

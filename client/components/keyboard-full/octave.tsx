@@ -21,7 +21,7 @@ const noteOptions = [
 
 export default function Octave({ octaveNum }: OctaveProps): JSX.Element {
 	return (
-		<div role="group" aria-label={`Octave #${octaveNum}`}>
+		<div className="octave" role="group" aria-label={`Octave #${octaveNum}`}>
 			{noteOptions.map((noteOption) => {
 				return <Key key={noteOption} note={`${noteOption}${octaveNum}`} />;
 			})}
