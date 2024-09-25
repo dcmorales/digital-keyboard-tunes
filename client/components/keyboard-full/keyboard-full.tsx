@@ -1,7 +1,7 @@
 import Octave from './octave';
 
 // create an array of numbers 1-8
-const octaveNums = Array.from({ length: 8 }, (_, index) => index + 1);
+const octaveNums = Array.from({ length: 7 }, (_, index) => index + 1);
 
 export default function KeyboardFull(): JSX.Element {
 	return (

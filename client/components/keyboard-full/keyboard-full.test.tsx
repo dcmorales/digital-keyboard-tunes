@@ -22,6 +22,6 @@ describe('Full Keyboard', () => {
 			screen.getByRole('group', {
 				name: 'Full Keyboard Keys',
 			}).children.length
-		).toBe(8);
+		).toBe(7);
 	});
 });
