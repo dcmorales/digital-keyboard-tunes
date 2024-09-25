@@ -4,11 +4,11 @@ import Key from './key';
 
 describe('Key', () => {
 	it('renders a button the correct aria label', () => {
-		render(<Key note="C" />);
+		render(<Key note="C1" />);
 
 		expect(
 			screen.getByRole('button', {
-				name: 'Play C note',
+				name: 'Play the C1 note',
 			})
 		).toBeDefined();
 	});
