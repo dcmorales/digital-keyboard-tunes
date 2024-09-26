@@ -1,14 +1,10 @@
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { cleanup, render, screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
+import { render, screen } from '@testing-library/react';
 
 import Octave from './octave';
 
 describe('Octave', () => {
-	beforeEach(() => {
-		render(<Octave octaveNum={1} />);
-	});
-
-	afterEach(cleanup);
+	render(<Octave octaveNum={1} />);
 
 	it('renders a labeled group div', () => {
 		expect(
