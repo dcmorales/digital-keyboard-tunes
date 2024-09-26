@@ -12,7 +12,7 @@ export default function KeyboardFull(): JSX.Element {
 		<div
 			className="keyboard--full"
 			role="group"
-			aria-label="Full Keyboard Keys"
+			aria-label="Full keyboard keys"
 		>
 			{octaveNums.map((octaveNum) => {
 				return <Octave key={octaveNum} octaveNum={octaveNum} />;

@@ -9,7 +9,7 @@ describe('Full Keyboard', () => {
 	it('renders a labeled group div', () => {
 		expect(
 			screen.getByRole('group', {
-				name: 'Full Keyboard Keys',
+				name: 'Full keyboard keys',
 			})
 		).toBeDefined();
 	});
@@ -17,7 +17,7 @@ describe('Full Keyboard', () => {
 	it('renders 8 octaves', () => {
 		expect(
 			screen.getByRole('group', {
-				name: 'Full Keyboard Keys',
+				name: 'Full keyboard keys',
 			}).children.length
 		).toBe(7);
 	});
