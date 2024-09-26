@@ -58,11 +58,13 @@
 }
 
 .keyboard {
-	display: none;
+	&--full {
+		display: none;
 
-	@include breakpoint(large) {
-		display: flex;
-		height: 40vh;
-		margin: 0 0.5rem;
+		@include breakpoint(large) {
+			display: flex;
+			height: 40vh;
+			margin: 0 0.5rem;
+		}
 	}
 }
