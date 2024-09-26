@@ -1,3 +1,8 @@
+// octave
+// A container grouping the 12 available keys together.
+// THe octaveNum prop is used to determine which octave the keys belong to.
+// This along with the noteOption will determine the frequency value for each individual key.
+
 import Key from './key';
 
 interface OctaveProps {

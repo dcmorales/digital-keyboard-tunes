@@ -1,3 +1,7 @@
+// keyboard-full
+// Essentially a container component for grouping the Octave components.
+// This keyboard contains seven octaves.
+
 import Octave from './octave';
 
 // create an array of numbers 1-7

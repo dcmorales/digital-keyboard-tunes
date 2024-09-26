@@ -1,3 +1,5 @@
+// Home page
+
 import KeyboardFull from '@/components/keyboard-full/keyboard-full';
 
 export default function Home(): JSX.Element {

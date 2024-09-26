@@ -1,3 +1,5 @@
+// main layout
+
 import type { Metadata } from 'next';
 
 import '@/styles/main.scss';

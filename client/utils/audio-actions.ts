@@ -1,3 +1,10 @@
+// audio-actions
+// Contains the actions for the Key buttons.
+// playNote initializes an audio context if there isn't one or resumes an existing one.
+// The note info is then used in the noteValues array to find the proper frequency value.
+// This value is passed into the audioContext to create the sound.
+// Stopping the currentOscillator stops the sound.
+
 import { noteValues } from '@/values/noteValues';
 
 let audioContext: AudioContext | null = null;
@@ -24,7 +31,6 @@ export async function playNote(note: string): Promise<void> {
 	await initializeAudioContext(); // ensure AudioContext is ready
 
 	const noteInfo = splitNoteString(note);
-
 	const pitch = noteValues[noteInfo[1] - 1] // reduce octaveNum by 1 to get correct index of octave
 		.filter((info) => note.includes(info.note)) // find object based on note letter provided
 		.map((note) => note.frequency)[0]; // use frequency provided in the note object

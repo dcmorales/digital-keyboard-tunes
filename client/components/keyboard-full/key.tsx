@@ -1,3 +1,7 @@
+// key
+// Each key within the keyboard. A client component with click actions.
+// The note prop will determine the keys style, label, and the sound played.
+
 'use client';
 
 import { playNote, stopNote } from '@/utils/audio-actions';
