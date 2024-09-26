@@ -1,0 +1,48 @@
+$mobile: 768px;
+$tablet: 1024px;
+$desktop: 1920px;
+
+// Small breakpoint (mobile)
+$small: '(max-width: #{$mobile - 1})';
+
+// Medium breakpoint (tablet)
+$medium: '(min-width: #{($mobile)})';
+$medium-down: '(max-width: #{$tablet - 1})';
+
+// Large breakpoint (laptop/small desktop)
+$large: '(min-width: #{($tablet)})';
+$large-down: '(max-width: #{$desktop - 1})';
+
+// Extra Large breakpoint (medium/large desktop)
+$xl: '(min-width: #{($desktop)})';
+
+@mixin breakpoint($point) {
+	@if $point == small {
+		@media #{$small} {
+			@content;
+		}
+	} @else if $point == medium {
+		@media #{$medium} {
+			@content;
+		}
+	} @else if $point == medium-down {
+		@media #{$medium-down} {
+			@content;
+		}
+	} @else if $point == large {
+		@media #{$large} {
+			@content;
+		}
+	} @else if $point == large-down {
+		@media #{$large-down} {
+			@content;
+		}
+	} @else if $point == xl {
+		@media #{$xl} {
+			@content;
+		}
+	} @else {
+		@warn "Unknown breakpoint #{$point}.";
+		@content;
+	}
+}
