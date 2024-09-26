@@ -1,26 +1,56 @@
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { cleanup, render, screen } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 
+import { playNote, stopNote } from '@/utils/audio-actions';
 import Key from './key';
 
+vi.mock('@/utils/audio-actions', () => ({
+	playNote: vi.fn(),
+	stopNote: vi.fn(),
+}));
+
 describe('Key', () => {
+	let button: HTMLButtonElement;
+
 	beforeEach(() => {
-		render(<Key note="C1" />);
+		render(<Key note="C4" />);
+		button = screen.getByRole('button', { name: 'Play the C4 note' });
 	});
 
-	afterEach(cleanup);
+	afterEach(() => {
+		vi.clearAllMocks();
+		cleanup();
+	});
 
-	it('renders a button the correct aria label', () => {
-		expect(
-			screen.getByRole('button', {
-				name: 'Play the C1 note',
-			})
-		).toBeDefined();
+	it('renders a button with the correct aria label', () => {
+		expect(button).toBeDefined();
 	});
 
 	it('applies the correct class name', () => {
-		expect(screen.getByRole('button').classList.contains('key--white')).toBe(
-			true
-		);
+		expect(button.classList.contains('key--white')).toBe(true);
+	});
+
+	it('plays the note on mouse down event', () => {
+		fireEvent.mouseDown(button);
+
+		expect(playNote).toHaveBeenCalledWith('C4');
+	});
+
+	it('stops the note on mouse up event', () => {
+		fireEvent.mouseUp(button);
+
+		expect(stopNote).toHaveBeenCalled();
+	});
+
+	it('plays the note on touch start event', () => {
+		fireEvent.touchStart(button);
+
+		expect(playNote).toHaveBeenCalledWith('C4');
+	});
+
+	it('stops the note on touch end event', () => {
+		fireEvent.touchEnd(button);
+
+		expect(stopNote).toHaveBeenCalled();
 	});
 });

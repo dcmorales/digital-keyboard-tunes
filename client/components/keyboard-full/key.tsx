@@ -1,12 +1,28 @@
+'use client';
+
+import { playNote, stopNote } from '@/utils/audio-actions';
+
 interface KeyProps {
 	note: string;
 }
 
 export default function Key({ note }: KeyProps): JSX.Element {
+	const handleMouseDown = (): void => {
+		playNote(note);
+	};
+
+	const handleMouseUp = (): void => {
+		stopNote();
+	};
+
 	return (
 		<button
 			aria-label={`Play the ${note} note`}
 			className={`key key--${note.includes('♭') ? 'black' : 'white'}`}
+			onMouseDown={handleMouseDown}
+			onMouseUp={handleMouseUp}
+			onTouchStart={handleMouseDown}
+			onTouchEnd={handleMouseUp}
 		>
 			{note.includes('♭') ? (
 				<>
