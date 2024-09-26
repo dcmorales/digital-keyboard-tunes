@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 
-import { playNote, stopNote } from '@/utils/audio-actions';
+import { playNote, stopNote } from '@/utils/audio-functions';
 import Key from './key';
 
 vi.mock('@/utils/audio-actions', () => ({
