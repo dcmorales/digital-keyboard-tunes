@@ -6,29 +6,18 @@
 import Key from '@/components/key';
 
 interface OctaveProps {
-	octaveNum: number;
+	fullNotes: string[];
 }
 
-const noteOptions = [
-	'C',
-	'D♭',
-	'D',
-	'E♭',
-	'E',
-	'F',
-	'G♭',
-	'G',
-	'A♭',
-	'A',
-	'B♭',
-	'B',
-];
-
-export default function Octave({ octaveNum }: OctaveProps): JSX.Element {
+export default function Octave({ fullNotes }: OctaveProps): JSX.Element {
 	return (
-		<div className="octave" role="group" aria-label={`Octave #${octaveNum}`}>
-			{noteOptions.map((noteOption) => {
-				return <Key key={noteOption} note={`${noteOption}${octaveNum}`} />;
+		<div
+			className="octave"
+			role="group"
+			aria-label={`Octave for ${fullNotes[0]}`}
+		>
+			{fullNotes.map((fullNote) => {
+				return <Key key={fullNote} note={fullNote} />;
 			})}
 		</div>
 	);

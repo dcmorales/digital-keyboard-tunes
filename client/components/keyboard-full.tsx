@@ -7,6 +7,21 @@ import Octave from '@/components/octave';
 // create an array of numbers 1-7
 const octaveNums = Array.from({ length: 7 }, (_, index) => index + 1);
 
+export const noteOptions = [
+	'C',
+	'D♭',
+	'D',
+	'E♭',
+	'E',
+	'F',
+	'G♭',
+	'G',
+	'A♭',
+	'A',
+	'B♭',
+	'B',
+];
+
 export default function KeyboardFull(): JSX.Element {
 	return (
 		<div
@@ -15,7 +30,8 @@ export default function KeyboardFull(): JSX.Element {
 			aria-label="Full keyboard keys"
 		>
 			{octaveNums.map((octaveNum) => {
-				return <Octave key={octaveNum} octaveNum={octaveNum} />;
+				const fullNotes = noteOptions.map((note) => note + octaveNum);
+				return <Octave key={octaveNum} fullNotes={fullNotes} />;
 			})}
 		</div>
 	);
