@@ -1,19 +1,15 @@
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { cleanup, render, screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
+import { render, screen } from '@testing-library/react';
 
 import KeyboardFull from './keyboard-full';
 
 describe('Full Keyboard', () => {
-	beforeEach(() => {
-		render(<KeyboardFull />);
-	});
-
-	afterEach(cleanup);
+	render(<KeyboardFull />);
 
 	it('renders a labeled group div', () => {
 		expect(
 			screen.getByRole('group', {
-				name: 'Full Keyboard Keys',
+				name: 'Full keyboard keys',
 			})
 		).toBeDefined();
 	});
@@ -21,7 +17,7 @@ describe('Full Keyboard', () => {
 	it('renders 8 octaves', () => {
 		expect(
 			screen.getByRole('group', {
-				name: 'Full Keyboard Keys',
+				name: 'Full keyboard keys',
 			}).children.length
 		).toBe(7);
 	});

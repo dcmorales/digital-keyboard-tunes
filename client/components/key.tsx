@@ -4,7 +4,7 @@
 
 'use client';
 
-import { playNote, stopNote } from '@/utils/audio-actions';
+import { playNote, stopNote } from '@/utils/audio-functions';
 
 interface KeyProps {
 	note: string;
