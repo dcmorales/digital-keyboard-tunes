@@ -9,4 +9,13 @@ describe('Header', () => {
 	it('renders the header', () => {
 		expect(screen.getByRole('banner')).toBeDefined();
 	});
+
+	it('renders a heading', () => {
+		expect(
+			screen.getByRole('heading', {
+				level: 1,
+				name: 'Digital Keyboard Tunes',
+			})
+		).toBeDefined();
+	});
 });
