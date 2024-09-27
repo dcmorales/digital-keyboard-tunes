@@ -2,7 +2,7 @@
 
 // Each note is an object containing a note and a frequency value
 // Note indicates which note on the keyboard it will represent within an octave, there are only 12 options
-// Frequency is the value for the frequency when reaching out to the Web Audio API
+// Frequency is the value provided to the Web Audio API
 interface NoteValue {
 	note:
 		| 'C'

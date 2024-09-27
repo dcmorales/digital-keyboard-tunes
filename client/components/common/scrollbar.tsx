@@ -1,3 +1,6 @@
+// scrollbar
+// A wrapper component that makes its children scrollable
+
 interface ScrollbarProps {
 	children: React.ReactNode;
 }

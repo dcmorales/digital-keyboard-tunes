@@ -1,6 +1,6 @@
 // keyboard-full
 // Essentially a container component for grouping the Octave components.
-// This keyboard contains seven octaves.
+// This keyboard contains seven octaves; each octave contains a key for every note within the noteOptions.
 
 import Scrollbar from '@/components/common/scrollbar';
 import Octave from '@/components/octave';
