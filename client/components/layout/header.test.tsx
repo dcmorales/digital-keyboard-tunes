@@ -1,0 +1,12 @@
+import { describe, expect, it } from 'vitest';
+import { render, screen } from '@testing-library/react';
+
+import Header from './header';
+
+describe('Header', () => {
+	render(<Header />);
+
+	it('renders the header', () => {
+		expect(screen.getByRole('banner')).toBeDefined();
+	});
+});
