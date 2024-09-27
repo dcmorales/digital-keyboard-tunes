@@ -1,6 +1,7 @@
 // Home page
 
 import KeyboardFull from '@/components/keyboard-full';
+import KeyboardSelected from '@/components/keyboard-selected';
 
 export default function Home(): JSX.Element {
 	return (
@@ -8,6 +9,8 @@ export default function Home(): JSX.Element {
 			<h1>Digital Keyboard Tunes</h1>
 
 			<KeyboardFull />
+
+			<KeyboardSelected />
 		</div>
 	);
 }

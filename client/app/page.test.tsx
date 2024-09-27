@@ -17,7 +17,14 @@ describe('Page', () => {
 
 	it('renders the full keyboard', () => {
 		const keyboardFull = screen.getByRole('group', {
-			name: /Full Keyboard Keys/i,
+			name: 'Full keyboard keys',
+		});
+		expect(keyboardFull).toBeDefined();
+	});
+
+	it('renders the selected keyboard', () => {
+		const keyboardFull = screen.getByRole('group', {
+			name: 'Selected keyboard',
 		});
 		expect(keyboardFull).toBeDefined();
 	});
