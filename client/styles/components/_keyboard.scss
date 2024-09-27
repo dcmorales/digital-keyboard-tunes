@@ -9,7 +9,6 @@
 	&--white {
 		background: var(--color-white);
 		border: 1px solid var(--color-black);
-		border-right: none;
 		color: var(--color-black);
 		font-size: 0.8rem;
 		height: 100%;
@@ -31,11 +30,6 @@
 
 	&__flat {
 		margin-left: -0.1rem;
-		padding-bottom: 0.1rem;
-
-		@include breakpoint(xl) {
-			padding-bottom: 0.2rem;
-		}
 	}
 
 	@include breakpoint(xl) {
@@ -44,17 +38,8 @@
 }
 
 .octave {
-	border: 1.5px solid var(--color-black);
 	display: flex;
 	width: 100%;
-
-	&:first-child {
-		border-left: 3px solid var(--color-black);
-	}
-
-	&:last-child {
-		border-right: 4px solid var(--color-black);
-	}
 }
 
 .keyboard {
@@ -65,6 +50,60 @@
 			display: flex;
 			height: 40vh;
 			margin: 0 0.5rem;
+		}
+
+		.key {
+			&--white {
+				border-right: none;
+			}
+
+			&__flat {
+				padding-bottom: 0.1rem;
+
+				@include breakpoint(xl) {
+					padding-bottom: 0.2rem;
+				}
+			}
+		}
+
+		.octave {
+			border: 1.5px solid var(--color-black);
+
+			&:first-child {
+				border-left: 3px solid var(--color-black);
+			}
+
+			&:last-child {
+				border-right: 4px solid var(--color-black);
+			}
+		}
+	}
+
+	&--selected {
+		display: flex;
+		height: 40vh;
+		justify-content: center;
+		margin: 0 auto;
+
+		@include breakpoint(large) {
+			width: 80%;
+		}
+
+		@include breakpoint(xl) {
+			width: 60%;
+		}
+
+		.key {
+			font-size: 2rem;
+
+			&__flat {
+				font-size: 1.5rem;
+				padding-bottom: 0.5rem;
+			}
+		}
+
+		.octave {
+			border: 1px solid var(--color-black);
 		}
 	}
 }

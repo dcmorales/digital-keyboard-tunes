@@ -23,7 +23,11 @@ export default function KeyboardSelected(): JSX.Element {
 	}
 
 	return (
-		<div className="keyboard--full" role="group" aria-label="Selected keyboard">
+		<div
+			className="keyboard--selected"
+			role="group"
+			aria-label="Selected keyboard"
+		>
 			<Octave fullNotes={rearrangeNotes()} />
 		</div>
 	);
