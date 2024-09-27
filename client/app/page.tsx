@@ -5,7 +5,7 @@ import KeyboardSelected from '@/components/keyboard-selected';
 
 export default function Home(): JSX.Element {
 	return (
-		<div>
+		<div className="home">
 			<h1>Digital Keyboard Tunes</h1>
 
 			<KeyboardFull />
