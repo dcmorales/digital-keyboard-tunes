@@ -29,7 +29,7 @@ describe('Octave', () => {
 		).toBeDefined();
 	});
 
-	it('renders 12 keys', () => {
+	it('renders each note as a child', () => {
 		expect(
 			screen.getByRole('group', {
 				name: 'Octave for C3',

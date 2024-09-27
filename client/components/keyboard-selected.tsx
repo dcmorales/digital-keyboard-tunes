@@ -7,9 +7,10 @@ export default function KeyboardSelected(): JSX.Element {
 	const selectedKey = 'C';
 	const selectedOctave = 3;
 
-	// create a new array that includes the selectedOctave and starts with the selectedKey
-	// any note that was originally before the selectedKey will now show up at the end of the new array;
-	// the octave will also increase for these notes
+	// Create a new array that includes the selectedOctave and starts with the selectedKey.
+	// Any note that was originally before the selectedKey will now show up at the end of the new array.
+	// The octave will also increase for these notes.
+	// End the array with the selectedKey note up one octave.
 	function rearrangeNotes() {
 		const startIndex = noteOptions.indexOf(selectedKey);
 		const firstSegment = noteOptions
@@ -18,8 +19,9 @@ export default function KeyboardSelected(): JSX.Element {
 		const secondSegment = noteOptions
 			.slice(0, startIndex)
 			.map((note) => note + (selectedOctave + 1));
+		const endNote = selectedKey + (selectedOctave + 1);
 
-		return firstSegment.concat(secondSegment);
+		return firstSegment.concat(secondSegment, endNote);
 	}
 
 	return (
