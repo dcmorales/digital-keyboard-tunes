@@ -10,7 +10,6 @@ export default function Header(): JSX.Element {
 
 			<CustomButton ariaLabel="Open keyboard settings">
 				<Icon name="gear" />
-				<Icon name="chevron" />
 			</CustomButton>
 		</header>
 	);

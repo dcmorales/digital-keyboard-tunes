@@ -9,5 +9,9 @@ export default function CustomButton({
 	children,
 	ariaLabel,
 }: CustomButtonProps): JSX.Element {
-	return <button aria-label={ariaLabel}>{children}</button>;
+	return (
+		<button className="custom-button" aria-label={ariaLabel}>
+			{children}
+		</button>
+	);
 }
