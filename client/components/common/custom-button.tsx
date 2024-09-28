@@ -1,13 +1,13 @@
-// button
+// custom-button
 
-interface ButtonProps {
+interface CustomButtonProps {
 	children: React.ReactNode;
 	ariaLabel: string;
 }
 
-export default function Button({
+export default function CustomButton({
 	children,
 	ariaLabel,
-}: ButtonProps): JSX.Element {
+}: CustomButtonProps): JSX.Element {
 	return <button aria-label={ariaLabel}>{children}</button>;
 }

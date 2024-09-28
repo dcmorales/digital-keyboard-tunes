@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 
-import Button from './button';
+import CustomButton from './custom-button';
 
 describe('Header', () => {
 	const { getByText } = render(
-		<Button ariaLabel="Test the Button">Test Button</Button>
+		<CustomButton ariaLabel="Test the Button">Test Button</CustomButton>
 	);
 
 	it('renders the button with children', () => {
