@@ -19,7 +19,9 @@ describe('Header', () => {
 		).toBeDefined();
 	});
 
-	it('renders the svg', () => {
-		expect(screen.getByTestId('svg-gear')).toBeDefined();
+	it('renders the settings button', () => {
+		expect(
+			screen.getByRole('button', { name: 'Open keyboard settings' })
+		).toBeDefined();
 	});
 });

@@ -8,8 +8,8 @@ const icons = {
 	gear: (
 		<svg
 			data-testid="svg-gear"
-			width="24"
-			height="24"
+			width="30"
+			height="30"
 			version="1.1"
 			viewBox="0 0 1200 1200"
 			xmlns="http://www.w3.org/2000/svg"
