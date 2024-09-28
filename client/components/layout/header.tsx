@@ -2,6 +2,7 @@
 
 import CustomButton from '@/components/common/custom-button';
 import Icon from '@/components/common/icon';
+import KeyboardSettings from '@/components/keyboard-settings';
 
 export default function Header(): JSX.Element {
 	return (
@@ -11,6 +12,8 @@ export default function Header(): JSX.Element {
 			<CustomButton ariaLabel="Open keyboard settings">
 				<Icon name="gear" />
 			</CustomButton>
+
+			<KeyboardSettings />
 		</header>
 	);
 }

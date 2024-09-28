@@ -24,4 +24,10 @@ describe('Header', () => {
 			screen.getByRole('button', { name: 'Open keyboard settings' })
 		).toBeDefined();
 	});
+
+	it('renders the keyboard settings', () => {
+		expect(
+			screen.getByRole('group', { name: 'Keyboard settings' })
+		).toBeDefined();
+	});
 });
