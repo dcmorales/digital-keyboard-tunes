@@ -18,4 +18,8 @@ describe('Header', () => {
 			})
 		).toBeDefined();
 	});
+
+	it('renders the svg', () => {
+		expect(screen.getByTestId('svg')).toBeDefined();
+	});
 });
