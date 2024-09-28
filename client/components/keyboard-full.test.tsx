@@ -21,4 +21,12 @@ describe('Full Keyboard', () => {
 			}).children.length
 		).toBe(7);
 	});
+
+	it('renders a scrollbar', () => {
+		const scrollbar = screen.getByRole('scrollbar', {
+			name: 'Scrollable area',
+		});
+
+		expect(scrollbar).toBeDefined();
+	});
 });
