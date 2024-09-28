@@ -7,7 +7,7 @@ export default function Header(): JSX.Element {
 		<header className="header">
 			<h1>Digital Keyboard Tunes</h1>
 
-			<Icon />
+			<Icon name="gear" />
 		</header>
 	);
 }

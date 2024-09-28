@@ -1,10 +1,13 @@
 // icon
 
-export default function Icon() {
-	return (
-		// gear
+interface IconProps {
+	name: 'gear' | 'chevron';
+}
+
+const icons = {
+	gear: (
 		<svg
-			data-testid="svg"
+			data-testid="svg-gear"
 			width="24"
 			height="24"
 			version="1.1"
@@ -16,5 +19,31 @@ export default function Icon() {
 				fillRule="evenodd"
 			/>
 		</svg>
-	);
+	),
+	chevron: (
+		<svg
+			data-testid="svg-chevron"
+			xmlns="http://www.w3.org/2000/svg"
+			xmlSpace="preserve"
+			width="32"
+			height="18"
+			shape-rendering="geometricPrecision"
+			text-rendering="geometricPrecision"
+			image-rendering="optimizeQuality"
+			fill-rule="evenodd"
+			clip-rule="evenodd"
+			viewBox="0 0 512 298.04"
+		>
+			<path
+				fill-rule="nonzero"
+				d="M12.08 70.78c-16.17-16.24-16.09-42.54.15-58.7 16.25-16.17 42.54-16.09 58.71.15L256 197.76 441.06 12.23c16.17-16.24 42.46-16.32 58.71-.15 16.24 16.16 16.32 42.46.15 58.7L285.27 285.96c-16.24 16.17-42.54 16.09-58.7-.15L12.08 70.78z"
+			/>
+		</svg>
+	),
+};
+
+export default function Icon({ name }: IconProps): JSX.Element {
+	const IconSVG = icons[name];
+
+	return <>{IconSVG}</>;
 }

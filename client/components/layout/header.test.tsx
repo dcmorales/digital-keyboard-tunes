@@ -20,6 +20,6 @@ describe('Header', () => {
 	});
 
 	it('renders the svg', () => {
-		expect(screen.getByTestId('svg')).toBeDefined();
+		expect(screen.getByTestId('svg-gear')).toBeDefined();
 	});
 });
