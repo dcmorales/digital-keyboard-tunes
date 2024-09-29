@@ -14,7 +14,7 @@ export default function Dropdown({
 	id,
 }: DropdownProps): JSX.Element {
 	return (
-		<div>
+		<div className="dropdown">
 			<label htmlFor={`${id}`}>{title}</label>
 
 			<select id={`${id}`} aria-label={ariaLabel}>
