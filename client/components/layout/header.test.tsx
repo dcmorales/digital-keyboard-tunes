@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 import Header from './header';
 
@@ -25,9 +25,16 @@ describe('Header', () => {
 		).toBeDefined();
 	});
 
-	it('renders the keyboard settings', () => {
+	it('toggles the settings after clicking settings button', () => {
+		const button = screen.getByRole('button', {
+			name: 'Open keyboard settings',
+		});
+
+		fireEvent.click(button);
+
 		expect(
 			screen.getByRole('group', { name: 'Keyboard settings' })
 		).toBeDefined();
+		expect(button.getAttribute('aria-label')).toBe('Close keyboard settings');
 	});
 });
