@@ -18,9 +18,9 @@ export default function Octave({ fullNotes }: OctaveProps): JSX.Element {
 			role="group"
 			aria-label={`Octave for ${fullNotes[0]}`}
 		>
-			{fullNotes.map((fullNote) => {
-				return <Key key={fullNote} note={fullNote} />;
-			})}
+			{fullNotes.map((fullNote) => (
+				<Key key={fullNote} note={fullNote} />
+			))}
 		</div>
 	);
 }

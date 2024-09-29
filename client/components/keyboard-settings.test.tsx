@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 
 import KeyboardSettings from './keyboard-settings';
 
-describe('Header', () => {
+describe('Keyboard settings', () => {
 	render(<KeyboardSettings />);
 
 	it('renders the keyboard settings group', () => {

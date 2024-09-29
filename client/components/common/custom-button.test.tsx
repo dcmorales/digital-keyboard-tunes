@@ -3,7 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 
 import CustomButton from './custom-button';
 
-describe('Header', () => {
+describe('Custom Button', () => {
 	const handleClick = vi.fn();
 	const { getByText } = render(
 		<CustomButton ariaLabel="Test the Button" onClick={handleClick}>
