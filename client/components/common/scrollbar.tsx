@@ -1,8 +1,10 @@
 // scrollbar
 // A wrapper component that makes its children scrollable
 
+import type { ReactNode } from 'react';
+
 interface ScrollbarProps {
-	children: React.ReactNode;
+	children: ReactNode;
 }
 
 export default function Scrollbar({ children }: ScrollbarProps): JSX.Element {

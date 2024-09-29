@@ -1,7 +1,9 @@
 // custom-button
 
+import type { ReactNode } from 'react';
+
 interface CustomButtonProps {
-	children: React.ReactNode;
+	children: ReactNode;
 	ariaLabel: string;
 	onClick: () => void;
 }

@@ -1,6 +1,7 @@
 // main layout
 
 import type { Metadata } from 'next';
+import type { ReactNode } from 'react';
 
 import '@/styles/main.scss';
 
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
 	children,
 }: Readonly<{
-	children: React.ReactNode;
+	children: ReactNode;
 }>): JSX.Element {
 	return (
 		<html lang="en">
