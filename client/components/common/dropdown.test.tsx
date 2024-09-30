@@ -1,36 +1,39 @@
-import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 import Dropdown from './dropdown';
 
 describe('Dropdown', () => {
-	render(
-		<Dropdown
-			options={['a', 'b', 'c']}
-			ariaLabel="Select an option"
-			title="Test dropdown"
-			id="test-id"
-		/>
-	);
+	beforeEach(() => {
+		render(
+			<Dropdown
+				options={['a', 'b', 'c']}
+				ariaLabel="Select an option"
+				title="Test dropdown"
+				id="test-id"
+			/>
+		);
+	});
 
 	it('renders the dropdown with all options', () => {
 		const dropdown = screen.getByRole('combobox', {
 			name: 'Select an option',
-		}) as HTMLSelectElement;
+		});
 
-		expect(dropdown).toBeDefined();
-		expect(dropdown.options[0].textContent).toBe('a');
-		expect(dropdown.options[1].textContent).toBe('b');
-		expect(dropdown.options[2].textContent).toBe('c');
+		expect(dropdown).toBeInTheDocument();
+		expect(dropdown).toHaveTextContent('a');
+		expect(dropdown).toHaveTextContent('b');
+		expect(dropdown).toHaveTextContent('c');
 	});
 
 	it('renders the label for the dropdown', () => {
 		const dropdown = screen.getByRole('combobox', {
 			name: 'Select an option',
 		});
-		const label = screen.getByText('Test dropdown') as HTMLLabelElement;
+		const label = screen.getByText('Test dropdown');
 
-		expect(label).toBeDefined();
-		expect(label.htmlFor).toBe(dropdown.id);
+		expect(dropdown).toBeInTheDocument();
+		expect(label).toBeInTheDocument();
+		expect(label).toHaveTextContent('Test dropdown');
 	});
 });

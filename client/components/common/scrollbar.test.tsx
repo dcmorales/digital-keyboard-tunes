@@ -1,14 +1,16 @@
-import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 import Scrollbar from './scrollbar';
 
 describe('Scrollbar', () => {
-	render(
-		<Scrollbar>
-			<div>Test Child</div>
-		</Scrollbar>
-	);
+	beforeEach(() => {
+		render(
+			<Scrollbar>
+				<div>Test Child</div>
+			</Scrollbar>
+		);
+	});
 
 	it('renders correctly with children', () => {
 		const scrollbar = screen.getByRole('scrollbar', {
@@ -16,8 +18,8 @@ describe('Scrollbar', () => {
 		});
 		const childElement = screen.getByText('Test Child');
 
-		expect(scrollbar).toBeDefined();
-		expect(childElement).toBeDefined();
+		expect(scrollbar).toBeInTheDocument();
+		expect(childElement).toBeInTheDocument();
 	});
 
 	it('has the correct aria attributes', () => {
@@ -25,8 +27,8 @@ describe('Scrollbar', () => {
 			name: 'Scrollable area',
 		});
 
-		expect(scrollbar.getAttribute('aria-controls')).toBe('scrollable-content');
-		expect(scrollbar.getAttribute('aria-valuenow')).toBe('0');
+		expect(scrollbar).toHaveAttribute('aria-controls', 'scrollable-content');
+		expect(scrollbar).toHaveAttribute('aria-valuenow', '0');
 	});
 
 	it('is focusable', () => {
@@ -36,6 +38,7 @@ describe('Scrollbar', () => {
 
 		scrollbar.focus();
 
+		expect(scrollbar).toHaveAttribute('tabindex', '0');
 		expect(document.activeElement).toBe(scrollbar);
 	});
 });

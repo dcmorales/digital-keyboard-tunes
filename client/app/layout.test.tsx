@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'vitest';
 import { render } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 
 import Layout, { metadata } from './layout';
 
@@ -11,7 +11,7 @@ describe('Layout', () => {
 			</Layout>
 		);
 
-		expect(getByText('Hello, world')).toBeDefined();
+		expect(getByText('Hello, world')).toBeInTheDocument();
 	});
 
 	it('has correct metadata', () => {

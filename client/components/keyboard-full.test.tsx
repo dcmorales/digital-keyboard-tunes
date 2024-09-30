@@ -1,20 +1,22 @@
-import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 import KeyboardFull from './keyboard-full';
 
 describe('Full Keyboard', () => {
-	render(<KeyboardFull />);
+	beforeEach(() => {
+		render(<KeyboardFull />);
+	});
 
 	it('renders a labeled group div', () => {
 		expect(
 			screen.getByRole('group', {
 				name: 'Full keyboard keys',
 			})
-		).toBeDefined();
+		).toBeInTheDocument();
 	});
 
-	it('renders 8 octaves', () => {
+	it('renders 7 octaves', () => {
 		expect(
 			screen.getByRole('group', {
 				name: 'Full keyboard keys',
@@ -27,6 +29,6 @@ describe('Full Keyboard', () => {
 			name: 'Scrollable area',
 		});
 
-		expect(scrollbar).toBeDefined();
+		expect(scrollbar).toBeInTheDocument();
 	});
 });

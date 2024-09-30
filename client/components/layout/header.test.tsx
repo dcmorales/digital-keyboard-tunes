@@ -1,13 +1,15 @@
-import { describe, expect, it } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 import Header from './header';
 
 describe('Header', () => {
-	render(<Header />);
+	beforeEach(() => {
+		render(<Header />);
+	});
 
 	it('renders the header', () => {
-		expect(screen.getByRole('banner')).toBeDefined();
+		expect(screen.getByRole('banner')).toBeInTheDocument();
 	});
 
 	it('renders a heading', () => {
@@ -16,13 +18,13 @@ describe('Header', () => {
 				level: 1,
 				name: 'Digital Keyboard Tunes',
 			})
-		).toBeDefined();
+		).toBeInTheDocument();
 	});
 
 	it('renders the settings button', () => {
 		expect(
 			screen.getByRole('button', { name: 'Open keyboard settings' })
-		).toBeDefined();
+		).toBeInTheDocument();
 	});
 
 	it('toggles the settings after clicking settings button', () => {
@@ -34,7 +36,7 @@ describe('Header', () => {
 
 		expect(
 			screen.getByRole('group', { name: 'Keyboard settings' })
-		).toBeDefined();
-		expect(button.getAttribute('aria-label')).toBe('Close keyboard settings');
+		).toBeInTheDocument();
+		expect(button).toHaveAttribute('aria-label', 'Close keyboard settings');
 	});
 });

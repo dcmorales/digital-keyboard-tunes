@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it } from 'vitest';
 
 import Octave from './octave';
 
@@ -19,14 +19,16 @@ const mockNoteOptions = [
 ];
 
 describe('Octave', () => {
-	render(<Octave fullNotes={mockNoteOptions} />);
+	beforeEach(() => {
+		render(<Octave fullNotes={mockNoteOptions} />);
+	});
 
 	it('renders a labeled group div', () => {
 		expect(
 			screen.getByRole('group', {
 				name: 'Octave for C3',
 			})
-		).toBeDefined();
+		).toBeInTheDocument();
 	});
 
 	it('renders each note as a child', () => {

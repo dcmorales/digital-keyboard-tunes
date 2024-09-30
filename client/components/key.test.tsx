@@ -1,5 +1,5 @@
+import { fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 
 import { playNote, stopNote } from '@/utils/audio-functions';
 import Key from './key';
@@ -19,15 +19,14 @@ describe('Key', () => {
 
 	afterEach(() => {
 		vi.clearAllMocks();
-		cleanup();
 	});
 
 	it('renders a button with the correct aria label', () => {
-		expect(button).toBeDefined();
+		expect(button).toBeInTheDocument();
 	});
 
 	it('applies the correct class name', () => {
-		expect(button.classList.contains('key--white')).toBe(true);
+		expect(button).toHaveClass('key--white');
 	});
 
 	it('plays the note on mouse down event', () => {
