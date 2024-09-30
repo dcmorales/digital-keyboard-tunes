@@ -3,6 +3,7 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 
+import { KeyboardOptionsProvider } from '@/context/keyboard-options-context';
 import '@/styles/main.scss';
 
 export const metadata: Metadata = {
@@ -17,7 +18,9 @@ export default function RootLayout({
 }>): JSX.Element {
 	return (
 		<html lang="en">
-			<body>{children}</body>
+			<body>
+				<KeyboardOptionsProvider>{children}</KeyboardOptionsProvider>
+			</body>
 		</html>
 	);
 }
