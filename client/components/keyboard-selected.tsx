@@ -2,11 +2,14 @@
 // Displays one single octave beginning with the selectedKey at the selectedOctave
 // and ending with the first key of the next octave. It contains 13 keys
 
+'use client';
+
 import { noteOptions } from '@/components/keyboard-full';
 import Octave from '@/components/octave';
+import { useKeyboardOptions } from '@/context/keyboard-options-context';
 
 export default function KeyboardSelected(): JSX.Element {
-	const selectedKey = 'C';
+	const { selectedKey } = useKeyboardOptions();
 	const selectedOctave = 3;
 
 	// Create a new array starting at the selectedKey. Add the selectedOctave to each string.
