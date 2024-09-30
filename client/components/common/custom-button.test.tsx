@@ -16,9 +16,9 @@ describe('Custom Button', () => {
 	});
 
 	it('renders the button with children', () => {
-		expect(
-			screen.getByRole('button', { name: 'Test the Button' })
-		).toBeInTheDocument();
+		const button = screen.getByRole('button', { name: 'Test the Button' });
+
+		expect(button).toBeInTheDocument();
 		expect(screen.getByText('Test Button')).toBeInTheDocument();
 	});
 

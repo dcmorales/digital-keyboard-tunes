@@ -14,22 +14,26 @@ describe('Header', () => {
 	});
 
 	it('renders the header', () => {
-		expect(screen.getByRole('banner')).toBeInTheDocument();
+		const header = screen.getByRole('banner');
+
+		expect(header).toBeInTheDocument();
 	});
 
 	it('renders a heading', () => {
-		expect(
-			screen.getByRole('heading', {
-				level: 1,
-				name: 'Digital Keyboard Tunes',
-			})
-		).toBeInTheDocument();
+		const heading = screen.getByRole('heading', {
+			level: 1,
+			name: 'Digital Keyboard Tunes',
+		});
+
+		expect(heading).toBeInTheDocument();
 	});
 
 	it('renders the settings button', () => {
-		expect(
-			screen.getByRole('button', { name: 'Open keyboard settings' })
-		).toBeInTheDocument();
+		const button = screen.getByRole('button', {
+			name: 'Open keyboard settings',
+		});
+
+		expect(button).toBeInTheDocument();
 	});
 
 	it('toggles the settings after clicking settings button', () => {
@@ -39,9 +43,11 @@ describe('Header', () => {
 
 		fireEvent.click(button);
 
-		expect(
-			screen.getByRole('group', { name: 'Keyboard settings' })
-		).toBeInTheDocument();
+		const keyboardSettings = screen.getByRole('group', {
+			name: 'Keyboard settings',
+		});
+
+		expect(keyboardSettings).toBeInTheDocument();
 		expect(button).toHaveAttribute('aria-label', 'Close keyboard settings');
 	});
 });

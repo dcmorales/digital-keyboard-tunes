@@ -24,18 +24,18 @@ describe('Octave', () => {
 	});
 
 	it('renders a labeled group div', () => {
-		expect(
-			screen.getByRole('group', {
-				name: 'Octave for C3',
-			})
-		).toBeInTheDocument();
+		const octave = screen.getByRole('group', {
+			name: 'Octave for C3',
+		});
+
+		expect(octave).toBeInTheDocument();
 	});
 
 	it('renders each note as a child', () => {
-		expect(
-			screen.getByRole('group', {
-				name: 'Octave for C3',
-			}).children.length
-		).toBe(12);
+		const octave = screen.getByRole('group', {
+			name: 'Octave for C3',
+		});
+
+		expect(octave.children.length).toBe(12);
 	});
 });

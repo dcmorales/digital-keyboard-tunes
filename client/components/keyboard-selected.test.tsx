@@ -14,18 +14,18 @@ describe('Selected Keyboard', () => {
 	});
 
 	it('renders a labeled group div', () => {
-		expect(
-			screen.getByRole('group', {
-				name: 'Selected keyboard',
-			})
-		).toBeInTheDocument();
+		const selectedKeyboard = screen.getByRole('group', {
+			name: 'Selected keyboard',
+		});
+
+		expect(selectedKeyboard).toBeInTheDocument();
 	});
 
 	it('renders an octave with the correct selection of keys', () => {
-		expect(
-			screen.getByRole('group', {
-				name: 'Octave for C3',
-			})
-		).toBeInTheDocument();
+		const octave = screen.getByRole('group', {
+			name: 'Octave for C3',
+		});
+
+		expect(octave).toBeInTheDocument();
 	});
 });

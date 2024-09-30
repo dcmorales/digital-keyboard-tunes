@@ -14,9 +14,11 @@ describe('Keyboard settings', () => {
 	});
 
 	it('renders the keyboard settings group', () => {
-		expect(
-			screen.getByRole('group', { name: 'Keyboard settings' })
-		).toBeInTheDocument();
+		const keyboardSettings = screen.getByRole('group', {
+			name: 'Keyboard settings',
+		});
+
+		expect(keyboardSettings).toBeInTheDocument();
 	});
 
 	it('renders the settings dropdowns and the options', () => {

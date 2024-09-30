@@ -9,19 +9,19 @@ describe('Full Keyboard', () => {
 	});
 
 	it('renders a labeled group div', () => {
-		expect(
-			screen.getByRole('group', {
-				name: 'Full keyboard keys',
-			})
-		).toBeInTheDocument();
+		const fullKeyboard = screen.getByRole('group', {
+			name: 'Full keyboard keys',
+		});
+
+		expect(fullKeyboard).toBeInTheDocument();
 	});
 
 	it('renders 7 octaves', () => {
-		expect(
-			screen.getByRole('group', {
-				name: 'Full keyboard keys',
-			}).children.length
-		).toBe(7);
+		const fullKeyboard = screen.getByRole('group', {
+			name: 'Full keyboard keys',
+		});
+
+		expect(fullKeyboard.children.length).toBe(7);
 	});
 
 	it('renders a scrollbar', () => {

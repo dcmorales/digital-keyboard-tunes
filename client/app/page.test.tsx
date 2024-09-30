@@ -14,7 +14,9 @@ describe('Page', () => {
 	});
 
 	it('renders the header', () => {
-		expect(screen.getByRole('banner')).toBeInTheDocument();
+		const header = screen.getByRole('banner');
+
+		expect(header).toBeInTheDocument();
 	});
 
 	it('renders the full keyboard', () => {
