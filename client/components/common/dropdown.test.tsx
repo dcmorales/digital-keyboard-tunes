@@ -1,16 +1,22 @@
-import { render, screen } from '@testing-library/react';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import type { ChangeEvent } from 'react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import Dropdown from './dropdown';
 
 describe('Dropdown', () => {
+	let handleChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+
 	beforeEach(() => {
+		handleChange = vi.fn();
 		render(
 			<Dropdown
 				options={['a', 'b', 'c']}
 				ariaLabel="Select an option"
 				title="Test dropdown"
 				id="test-id"
+				value="b"
+				onChange={handleChange}
 			/>
 		);
 	});
@@ -35,5 +41,48 @@ describe('Dropdown', () => {
 		expect(dropdown).toBeInTheDocument();
 		expect(label).toBeInTheDocument();
 		expect(label).toHaveTextContent('Test dropdown');
+	});
+
+	it('displays the selected value correctly', () => {
+		const dropdown = screen.getByRole('combobox', {
+			name: 'Select an option',
+		});
+
+		expect(dropdown).toHaveValue('b');
+	});
+
+	it('calls onChange when a new option is selected', () => {
+		cleanup();
+		const { rerender } = render(
+			<Dropdown
+				options={['a', 'b', 'c']}
+				ariaLabel="Select an option"
+				title="Test dropdown"
+				id="test-id"
+				value="b"
+				onChange={handleChange}
+			/>
+		);
+		const dropdown = screen.getByRole('combobox', {
+			name: 'Select an option',
+		});
+
+		fireEvent.change(dropdown, { target: { value: 'c' } });
+
+		// update the rendered component to reflect the new value
+		rerender(
+			<Dropdown
+				options={['a', 'b', 'c']}
+				ariaLabel="Select an option"
+				title="Test dropdown"
+				id="test-id"
+				value="c" // update the value
+				onChange={handleChange}
+			/>
+		);
+
+		expect(handleChange).toHaveBeenCalledTimes(1);
+		expect(handleChange).toHaveBeenCalledWith(expect.any(Object));
+		expect(dropdown).toHaveValue('c');
 	});
 });
