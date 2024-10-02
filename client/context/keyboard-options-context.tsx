@@ -10,12 +10,12 @@ import {
 	useState,
 } from 'react';
 
-import { NoteKey, Waveform } from '@/types/keyboard-option-types';
+import { NoteKey, OctaveNum, Waveform } from '@/types/keyboard-option-types';
 
 interface KeyboardOptionsContextType {
 	selectedKey: NoteKey;
 	onKeyChange: (e: ChangeEvent<HTMLSelectElement>) => void;
-	selectedOctave: number;
+	selectedOctave: OctaveNum;
 	onOctaveChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 	selectedWaveform: Waveform;
 	onWaveformChange: (e: ChangeEvent<HTMLSelectElement>) => void;
@@ -35,12 +35,12 @@ export const KeyboardOptionsProvider = ({
 	children,
 }: KeyboardOptionsProviderProps) => {
 	const [selectedKey, setSelectedKey] = useState<NoteKey>('C');
-	const [selectedOctave, setSelectedOctave] = useState<number>(4);
+	const [selectedOctave, setSelectedOctave] = useState<OctaveNum>(4);
 	const [selectedWaveform, setSelectedWaveform] = useState<Waveform>('sine');
 
 	const selectionHandlers: Record<SelectionName, (value: string) => void> = {
 		key: (value: string) => setSelectedKey(value as NoteKey),
-		octave: (value: string) => setSelectedOctave(Number(value)),
+		octave: (value: string) => setSelectedOctave(Number(value) as OctaveNum),
 		waveform: (value: string) => setSelectedWaveform(value as Waveform),
 	};
 

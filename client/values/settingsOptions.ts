@@ -1,4 +1,4 @@
-import { NoteKey, Waveform } from '@/types/keyboard-option-types';
+import { NoteKey, OctaveNum, Waveform } from '@/types/keyboard-option-types';
 
 export const noteOptions: NoteKey[] = [
 	'C',
@@ -15,7 +15,10 @@ export const noteOptions: NoteKey[] = [
 	'B',
 ];
 
-const octaveOptions = Array.from({ length: 6 }, (_, index) => `${index + 1}`);
+const octaveOptions: OctaveNum[] = Array.from(
+	{ length: 6 },
+	(_, index) => (index + 1) as OctaveNum
+);
 
 const waveformOptions: Waveform[] = ['sine', 'sawtooth', 'triangle', 'square'];
 

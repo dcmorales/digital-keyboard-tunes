@@ -5,10 +5,14 @@
 
 import Scrollbar from '@/components/common/scrollbar';
 import Octave from '@/components/octave';
+import { OctaveNum } from '@/types/keyboard-option-types';
 import { noteOptions } from '@/values/settingsOptions';
 
 // create an array of numbers 1-7
-const octaveNums = Array.from({ length: 7 }, (_, index) => index + 1);
+const octaveNums: OctaveNum[] = Array.from(
+	{ length: 7 },
+	(_, index) => (index + 1) as OctaveNum
+);
 
 export default function KeyboardFull(): JSX.Element {
 	return (
