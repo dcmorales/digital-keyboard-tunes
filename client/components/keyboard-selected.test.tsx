@@ -21,9 +21,9 @@ describe('Selected Keyboard', () => {
 		expect(selectedKeyboard).toBeInTheDocument();
 	});
 
-	it('renders an octave with the correct selection of keys', () => {
+	it('renders the default octave with the correct selection of keys', () => {
 		const octave = screen.getByRole('group', {
-			name: 'Octave for C3',
+			name: 'Octave for C4',
 		});
 
 		expect(octave).toBeInTheDocument();

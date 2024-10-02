@@ -9,8 +9,7 @@ import Octave from '@/components/octave';
 import { useKeyboardOptions } from '@/context/keyboard-options-context';
 
 export default function KeyboardSelected(): JSX.Element {
-	const { selectedKey } = useKeyboardOptions();
-	const selectedOctave = 3;
+	const { selectedKey, selectedOctave } = useKeyboardOptions();
 
 	// Create a new array starting at the selectedKey. Add the selectedOctave to each string.
 	// Any note that was originally before the selectedKey will be placed at the end of the new array.
