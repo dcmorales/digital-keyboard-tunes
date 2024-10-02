@@ -14,7 +14,7 @@ describe('Dropdown', () => {
 				options={['a', 'b', 'c']}
 				ariaLabel="Select an option"
 				title="Test dropdown"
-				id="test-id"
+				name="test-id"
 				value="b"
 				onChange={handleChange}
 			/>
@@ -58,7 +58,7 @@ describe('Dropdown', () => {
 				options={['a', 'b', 'c']}
 				ariaLabel="Select an option"
 				title="Test dropdown"
-				id="test-id"
+				name="test-id"
 				value="b"
 				onChange={handleChange}
 			/>
@@ -75,7 +75,7 @@ describe('Dropdown', () => {
 				options={['a', 'b', 'c']}
 				ariaLabel="Select an option"
 				title="Test dropdown"
-				id="test-id"
+				name="test-id"
 				value="c" // update the value
 				onChange={handleChange}
 			/>

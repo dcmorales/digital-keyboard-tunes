@@ -3,11 +3,11 @@
 import type { ChangeEvent } from 'react';
 
 interface DropdownProps {
-	options: string[];
+	options: string[] | number[];
 	ariaLabel: string;
 	title: string;
 	name: string;
-	value: string;
+	value: string | number;
 	onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
 

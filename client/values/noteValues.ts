@@ -11,7 +11,7 @@ interface NoteValue {
 }
 
 // Each octave is made up of 12 notes
-type Octave = [
+type OctaveKeys = [
 	NoteValue,
 	NoteValue,
 	NoteValue,
@@ -27,7 +27,15 @@ type Octave = [
 ];
 
 // The keyboard is made up of seven octaves
-type KeyboardValues = [Octave, Octave, Octave, Octave, Octave, Octave, Octave];
+type KeyboardValues = [
+	OctaveKeys,
+	OctaveKeys,
+	OctaveKeys,
+	OctaveKeys,
+	OctaveKeys,
+	OctaveKeys,
+	OctaveKeys,
+];
 
 export const noteValues: KeyboardValues = [
 	//****************************************************************************

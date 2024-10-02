@@ -35,7 +35,7 @@ export default function KeyboardSettings(): JSX.Element {
 				ariaLabel={octave.ariaLabel}
 				title={octave.title}
 				name={octave.name}
-				value={`${selectedOctave}`}
+				value={selectedOctave}
 				onChange={onOctaveChange}
 			/>
 
