@@ -9,7 +9,11 @@ export default function KeyboardSettings(): JSX.Element {
 		useKeyboardOptions();
 
 	return (
-		<div role="group" aria-label="Keyboard settings">
+		<div
+			className="keyboard-settings"
+			role="group"
+			aria-label="Keyboard settings"
+		>
 			<Dropdown
 				options={noteOptions}
 				ariaLabel="Select a key"
