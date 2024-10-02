@@ -15,6 +15,8 @@ export const noteOptions = [
 
 const octaveOptions = Array.from({ length: 6 }, (_, index) => `${index + 1}`);
 
+const waveformOptions = ['sine', 'sawtooth', 'triangle', 'square'];
+
 export const settingsOptions = {
 	key: {
 		options: noteOptions,
@@ -27,5 +29,11 @@ export const settingsOptions = {
 		ariaLabel: 'Select an octave',
 		title: 'Octave',
 		name: 'octave',
+	},
+	waveform: {
+		options: waveformOptions,
+		ariaLabel: 'Select a waveform',
+		title: 'Waveform',
+		name: 'waveform',
 	},
 };

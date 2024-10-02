@@ -5,9 +5,15 @@ import { useKeyboardOptions } from '@/context/keyboard-options-context';
 import { settingsOptions } from '@/values/settingsOptions';
 
 export default function KeyboardSettings(): JSX.Element {
-	const { selectedKey, onKeyChange, selectedOctave, onOctaveChange } =
-		useKeyboardOptions();
-	const { key, octave } = settingsOptions;
+	const {
+		selectedKey,
+		onKeyChange,
+		selectedOctave,
+		onOctaveChange,
+		selectedWaveform,
+		onWaveformChange,
+	} = useKeyboardOptions();
+	const { key, octave, waveform } = settingsOptions;
 
 	return (
 		<div
@@ -31,6 +37,15 @@ export default function KeyboardSettings(): JSX.Element {
 				name={octave.name}
 				value={`${selectedOctave}`}
 				onChange={onOctaveChange}
+			/>
+
+			<Dropdown
+				options={waveform.options}
+				ariaLabel={waveform.ariaLabel}
+				title={waveform.title}
+				name={waveform.name}
+				value={selectedWaveform}
+				onChange={onWaveformChange}
 			/>
 		</div>
 	);

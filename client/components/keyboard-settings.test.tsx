@@ -38,4 +38,15 @@ describe('Keyboard settings', () => {
 		expect(dropdown).toHaveTextContent('2');
 		expect(dropdown).toHaveTextContent('3');
 	});
+
+	it('renders the waveform dropdown and options', () => {
+		const dropdown = screen.getByRole('combobox', {
+			name: 'Select a waveform',
+		});
+
+		expect(dropdown).toBeInTheDocument();
+		expect(dropdown).toHaveTextContent('sine');
+		expect(dropdown).toHaveTextContent('square');
+		expect(dropdown).toHaveTextContent('triangle');
+	});
 });
