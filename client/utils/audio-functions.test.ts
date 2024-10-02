@@ -38,7 +38,7 @@ beforeEach(() => {
 
 describe('Audio Actions', () => {
 	it('plays a note', async () => {
-		await playNote('C4');
+		await playNote('C4', 'sine');
 
 		expect(audioContextMock.resume).toHaveBeenCalled();
 		expect(audioContextMock.createOscillator).toHaveBeenCalled();
@@ -51,7 +51,7 @@ describe('Audio Actions', () => {
 
 	it('stops the currently playing oscillator and resets it', async () => {
 		// start playing a note to create an oscillator
-		await playNote('C4');
+		await playNote('C4', 'sine');
 
 		stopNote();
 
