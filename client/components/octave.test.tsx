@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 
 import Octave from './octave';
 
-const mockNoteOptions = [
+const mockFullNoteOptions = [
 	'C3',
 	'D♭3',
 	'D3',
@@ -20,7 +20,7 @@ const mockNoteOptions = [
 
 describe('Octave', () => {
 	beforeEach(() => {
-		render(<Octave fullNotes={mockNoteOptions} />);
+		render(<Octave fullNotes={mockFullNoteOptions} />);
 	});
 
 	it('renders a labeled group div', () => {

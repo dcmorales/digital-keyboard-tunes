@@ -1,22 +1,12 @@
 // Keyboard note values
 
+import { NoteKey } from '@/types/keyboard-option-types';
+
 // Each note is an object containing a note and a frequency value
 // Note indicates which note on the keyboard it will represent within an octave, there are only 12 options
 // Frequency is the value provided to the Web Audio API
 interface NoteValue {
-	note:
-		| 'C'
-		| 'D♭'
-		| 'D'
-		| 'E♭'
-		| 'E'
-		| 'F'
-		| 'G♭'
-		| 'G'
-		| 'A♭'
-		| 'A'
-		| 'B♭'
-		| 'B';
+	note: NoteKey;
 	frequency: number;
 }
 

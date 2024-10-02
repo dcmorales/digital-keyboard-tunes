@@ -1,4 +1,6 @@
-export const noteOptions = [
+import { NoteKey } from '@/types/keyboard-option-types';
+
+export const noteOptions: NoteKey[] = [
 	'C',
 	'D♭',
 	'D',
