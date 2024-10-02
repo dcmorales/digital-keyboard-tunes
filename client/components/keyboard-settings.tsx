@@ -18,7 +18,7 @@ export default function KeyboardSettings(): JSX.Element {
 				options={noteOptions}
 				ariaLabel="Select a key"
 				title="Key"
-				id="key"
+				name="key"
 				value={selectedKey}
 				onChange={onKeyChange}
 			/>
@@ -27,7 +27,7 @@ export default function KeyboardSettings(): JSX.Element {
 				options={['1', '2', '3', '4', '5', '6']}
 				ariaLabel="Select an octave"
 				title="Octave"
-				id="octave"
+				name="octave"
 				value={`${selectedOctave}`}
 				onChange={onOctaveChange}
 			/>

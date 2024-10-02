@@ -6,7 +6,7 @@ interface DropdownProps {
 	options: string[];
 	ariaLabel: string;
 	title: string;
-	id: string;
+	name: string;
 	value: string;
 	onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
@@ -15,17 +15,17 @@ export default function Dropdown({
 	options,
 	ariaLabel,
 	title,
-	id,
+	name,
 	value,
 	onChange,
 }: DropdownProps): JSX.Element {
 	return (
 		<div className="dropdown">
-			<label htmlFor={id}>{title}</label>
+			<label htmlFor={name}>{title}</label>
 
 			<select
-				id={id}
-				name={id}
+				id={name}
+				name={name}
 				aria-label={ariaLabel}
 				value={value}
 				onChange={onChange}
