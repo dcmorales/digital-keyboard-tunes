@@ -5,7 +5,7 @@
 
 import Scrollbar from '@/components/common/scrollbar';
 import Octave from '@/components/octave';
-import { OctaveNum } from '@/types/keyboard-option-types';
+import { FullNote, OctaveNum } from '@/types/keyboard-option-types';
 import { noteOptions } from '@/values/settingsOptions';
 
 // create an array of numbers 1-7
@@ -23,7 +23,10 @@ export default function KeyboardFull(): JSX.Element {
 				aria-label="Full keyboard keys"
 			>
 				{octaveNums.map((octaveNum) => {
-					const fullNotes = noteOptions.map((note) => note + octaveNum);
+					const fullNotes = noteOptions.map(
+						(note) => note + octaveNum
+					) as FullNote[];
+
 					return <Octave key={octaveNum} fullNotes={fullNotes} />;
 				})}
 			</div>

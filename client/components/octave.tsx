@@ -6,9 +6,10 @@
 // This will determine the frequency value for each individual key.
 
 import Key from '@/components/key';
+import { FullNote } from '@/types/keyboard-option-types';
 
 interface OctaveProps {
-	fullNotes: string[];
+	fullNotes: FullNote[];
 }
 
 export default function Octave({ fullNotes }: OctaveProps): JSX.Element {

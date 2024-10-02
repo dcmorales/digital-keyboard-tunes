@@ -4,10 +4,11 @@
 
 'use client';
 
+import { FullNote } from '@/types/keyboard-option-types';
 import { playNote, stopNote } from '@/utils/audio-functions';
 
 interface KeyProps {
-	note: string;
+	note: FullNote;
 }
 
 export default function Key({ note }: KeyProps): JSX.Element {

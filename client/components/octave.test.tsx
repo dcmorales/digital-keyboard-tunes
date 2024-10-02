@@ -1,9 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
 
+import { FullNote } from '@/types/keyboard-option-types';
 import Octave from './octave';
 
-const mockFullNoteOptions = [
+const mockFullNoteOptions: FullNote[] = [
 	'C3',
 	'D♭3',
 	'D3',
