@@ -15,6 +15,8 @@ interface KeyboardOptionsContextType {
 	onKeyChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 	selectedOctave: number;
 	onOctaveChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+	selectedWaveform: string;
+	onWaveformChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
 
 const KeyboardOptionsContext = createContext<
@@ -30,6 +32,7 @@ export const KeyboardOptionsProvider = ({
 }: KeyboardOptionsProviderProps) => {
 	const [selectedKey, setSelectedKey] = useState<string>('C');
 	const [selectedOctave, setSelectedOctave] = useState<number>(4);
+	const [selectedWaveform, setSelectedWaveform] = useState<string>('sine');
 
 	const onSelectionChange = (e: ChangeEvent<HTMLSelectElement>) => {
 		const { name, value } = e.target;
@@ -38,6 +41,8 @@ export const KeyboardOptionsProvider = ({
 			setSelectedKey(value);
 		} else if (name === 'octave') {
 			setSelectedOctave(Number(value));
+		} else if (name === 'waveform') {
+			setSelectedWaveform(value);
 		}
 	};
 
@@ -48,6 +53,8 @@ export const KeyboardOptionsProvider = ({
 				onKeyChange: onSelectionChange,
 				selectedOctave,
 				onOctaveChange: onSelectionChange,
+				selectedWaveform,
+				onWaveformChange: onSelectionChange,
 			}}
 		>
 			{children}
