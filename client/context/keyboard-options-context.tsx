@@ -13,6 +13,8 @@ import {
 interface KeyboardOptionsContextType {
 	selectedKey: string;
 	onKeyChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+	selectedOctave: number;
+	onOctaveChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
 
 const KeyboardOptionsContext = createContext<
@@ -27,6 +29,7 @@ export const KeyboardOptionsProvider = ({
 	children,
 }: KeyboardOptionsProviderProps) => {
 	const [selectedKey, setSelectedKey] = useState<string>('C');
+	const [selectedOctave, setSelectedOctave] = useState<number>(4);
 
 	const onKeyChange = (e: ChangeEvent<HTMLSelectElement>) => {
 		const { value } = e.target;
@@ -34,11 +37,19 @@ export const KeyboardOptionsProvider = ({
 		setSelectedKey(value);
 	};
 
+	const onOctaveChange = (e: ChangeEvent<HTMLSelectElement>) => {
+		const { value } = e.target;
+
+		setSelectedOctave(Number(value));
+	};
+
 	return (
 		<KeyboardOptionsContext.Provider
 			value={{
 				selectedKey,
 				onKeyChange,
+				selectedOctave,
+				onOctaveChange,
 			}}
 		>
 			{children}
