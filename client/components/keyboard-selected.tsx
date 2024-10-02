@@ -4,9 +4,9 @@
 
 'use client';
 
-import { noteOptions } from '@/components/keyboard-full';
 import Octave from '@/components/octave';
 import { useKeyboardOptions } from '@/context/keyboard-options-context';
+import { noteOptions } from '@/values/settingsOptions';
 
 export default function KeyboardSelected(): JSX.Element {
 	const { selectedKey, selectedOctave } = useKeyboardOptions();

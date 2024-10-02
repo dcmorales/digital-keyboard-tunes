@@ -1,8 +1,8 @@
 // keyboard-settings
 
-import { noteOptions } from '@/components/keyboard-full';
 import Dropdown from '@/components/common/dropdown';
 import { useKeyboardOptions } from '@/context/keyboard-options-context';
+import { noteOptions } from '@/values/settingsOptions';
 
 export default function KeyboardSettings(): JSX.Element {
 	const { selectedKey, onKeyChange, selectedOctave, onOctaveChange } =
