@@ -23,6 +23,8 @@ const KeyboardOptionsContext = createContext<
 	KeyboardOptionsContextType | undefined
 >(undefined);
 
+type SelectionName = 'key' | 'octave' | 'waveform';
+
 interface KeyboardOptionsProviderProps {
 	children: ReactNode;
 }
@@ -34,16 +36,17 @@ export const KeyboardOptionsProvider = ({
 	const [selectedOctave, setSelectedOctave] = useState<number>(4);
 	const [selectedWaveform, setSelectedWaveform] = useState<string>('sine');
 
+	const selectionHandlers: Record<SelectionName, (value: string) => void> = {
+		key: setSelectedKey,
+		octave: (value: string) => setSelectedOctave(Number(value)),
+		waveform: setSelectedWaveform,
+	};
+
 	const onSelectionChange = (e: ChangeEvent<HTMLSelectElement>) => {
 		const { name, value } = e.target;
+		const selectionHandler = selectionHandlers[name as SelectionName];
 
-		if (name === 'key') {
-			setSelectedKey(value);
-		} else if (name === 'octave') {
-			setSelectedOctave(Number(value));
-		} else if (name === 'waveform') {
-			setSelectedWaveform(value);
-		}
+		selectionHandler(value);
 	};
 
 	return (
