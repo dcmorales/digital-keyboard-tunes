@@ -67,56 +67,48 @@ const TestComponent = () => {
 	);
 };
 
+const renderWithProvider = () => {
+	render(
+		<KeyboardOptionsProvider>
+			<TestComponent />
+		</KeyboardOptionsProvider>
+	);
+};
+
+const changeSelection = (label: string, value: string) => {
+	const select = screen.getByLabelText(label);
+	fireEvent.change(select, { target: { value } });
+};
+
 describe('KeyboardOptionsProvider', () => {
-	it('provides the initial selected key and octave', () => {
-		render(
-			<KeyboardOptionsProvider>
-				<TestComponent />
-			</KeyboardOptionsProvider>
-		);
+	it('provides the initial values', () => {
+		renderWithProvider();
 
 		expect(screen.getByText('Selected Key: C')).toBeInTheDocument();
 		expect(screen.getByText('Selected Octave: 4')).toBeInTheDocument();
+		expect(screen.getByText('Selected Waveform: sine')).toBeInTheDocument();
 	});
 
 	it('updates the selected key on change event', () => {
-		render(
-			<KeyboardOptionsProvider>
-				<TestComponent />
-			</KeyboardOptionsProvider>
-		);
+		renderWithProvider();
 
-		const select = screen.getByLabelText('Select Key:');
-
-		fireEvent.change(select, { target: { value: 'D' } });
+		changeSelection('Select Key:', 'D');
 
 		expect(screen.getByText('Selected Key: D')).toBeInTheDocument();
 	});
 
 	it('updates the selected octave on change event', () => {
-		render(
-			<KeyboardOptionsProvider>
-				<TestComponent />
-			</KeyboardOptionsProvider>
-		);
+		renderWithProvider();
 
-		const select = screen.getByLabelText('Select Octave:');
-
-		fireEvent.change(select, { target: { value: '5' } });
+		changeSelection('Select Octave:', '5');
 
 		expect(screen.getByText('Selected Octave: 5')).toBeInTheDocument();
 	});
 
 	it('updates the selected waveform on change event', () => {
-		render(
-			<KeyboardOptionsProvider>
-				<TestComponent />
-			</KeyboardOptionsProvider>
-		);
+		renderWithProvider();
 
-		const select = screen.getByLabelText('Select Waveform:');
-
-		fireEvent.change(select, { target: { value: 'square' } });
+		changeSelection('Select Waveform:', 'square');
 
 		expect(screen.getByText('Selected Waveform: square')).toBeInTheDocument();
 	});
