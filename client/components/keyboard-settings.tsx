@@ -2,11 +2,12 @@
 
 import Dropdown from '@/components/common/dropdown';
 import { useKeyboardOptions } from '@/context/keyboard-options-context';
-import { noteOptions } from '@/values/settingsOptions';
+import { settingsOptions } from '@/values/settingsOptions';
 
 export default function KeyboardSettings(): JSX.Element {
 	const { selectedKey, onKeyChange, selectedOctave, onOctaveChange } =
 		useKeyboardOptions();
+	const { key, octave } = settingsOptions;
 
 	return (
 		<div
@@ -15,19 +16,19 @@ export default function KeyboardSettings(): JSX.Element {
 			aria-label="Keyboard settings"
 		>
 			<Dropdown
-				options={noteOptions}
-				ariaLabel="Select a key"
-				title="Key"
-				name="key"
+				options={key.options}
+				ariaLabel={key.ariaLabel}
+				title={key.title}
+				name={key.name}
 				value={selectedKey}
 				onChange={onKeyChange}
 			/>
 
 			<Dropdown
-				options={['1', '2', '3', '4', '5', '6']}
-				ariaLabel="Select an octave"
-				title="Octave"
-				name="octave"
+				options={octave.options}
+				ariaLabel={octave.ariaLabel}
+				title={octave.title}
+				name={octave.name}
 				value={`${selectedOctave}`}
 				onChange={onOctaveChange}
 			/>
