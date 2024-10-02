@@ -31,25 +31,23 @@ export const KeyboardOptionsProvider = ({
 	const [selectedKey, setSelectedKey] = useState<string>('C');
 	const [selectedOctave, setSelectedOctave] = useState<number>(4);
 
-	const onKeyChange = (e: ChangeEvent<HTMLSelectElement>) => {
-		const { value } = e.target;
+	const onSelectionChange = (e: ChangeEvent<HTMLSelectElement>) => {
+		const { name, value } = e.target;
 
-		setSelectedKey(value);
-	};
-
-	const onOctaveChange = (e: ChangeEvent<HTMLSelectElement>) => {
-		const { value } = e.target;
-
-		setSelectedOctave(Number(value));
+		if (name === 'key') {
+			setSelectedKey(value);
+		} else if (name === 'octave') {
+			setSelectedOctave(Number(value));
+		}
 	};
 
 	return (
 		<KeyboardOptionsContext.Provider
 			value={{
 				selectedKey,
-				onKeyChange,
+				onKeyChange: onSelectionChange,
 				selectedOctave,
-				onOctaveChange,
+				onOctaveChange: onSelectionChange,
 			}}
 		>
 			{children}

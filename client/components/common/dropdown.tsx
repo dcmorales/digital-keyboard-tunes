@@ -23,7 +23,13 @@ export default function Dropdown({
 		<div className="dropdown">
 			<label htmlFor={id}>{title}</label>
 
-			<select id={id} aria-label={ariaLabel} value={value} onChange={onChange}>
+			<select
+				id={id}
+				name={id}
+				aria-label={ariaLabel}
+				value={value}
+				onChange={onChange}
+			>
 				{options.map((option) => (
 					<option key={option} value={option}>
 						{option}

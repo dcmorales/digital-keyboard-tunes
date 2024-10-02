@@ -13,7 +13,12 @@ const TestComponent = () => {
 	return (
 		<div>
 			<label htmlFor="key-select">Select Key:</label>
-			<select id="key-select" value={selectedKey} onChange={onKeyChange}>
+			<select
+				id="key-select"
+				name="key"
+				value={selectedKey}
+				onChange={onKeyChange}
+			>
 				<option value="C">C</option>
 				<option value="D">D</option>
 				<option value="E">E</option>
