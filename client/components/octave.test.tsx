@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
 
+import { KeyboardOptionsProvider } from '@/context/keyboard-options-context';
 import { FullNote } from '@/types/keyboard-option-types';
 import Octave from './octave';
 
@@ -21,7 +22,11 @@ const mockFullNoteOptions: FullNote[] = [
 
 describe('Octave', () => {
 	beforeEach(() => {
-		render(<Octave fullNotes={mockFullNoteOptions} />);
+		render(
+			<KeyboardOptionsProvider>
+				<Octave fullNotes={mockFullNoteOptions} />
+			</KeyboardOptionsProvider>
+		);
 	});
 
 	it('renders a labeled group div', () => {

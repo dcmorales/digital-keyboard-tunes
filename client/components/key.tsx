@@ -4,6 +4,7 @@
 
 'use client';
 
+import { useKeyboardOptions } from '@/context/keyboard-options-context';
 import { FullNote } from '@/types/keyboard-option-types';
 import { playNote, stopNote } from '@/utils/audio-functions';
 
@@ -12,8 +13,10 @@ interface KeyProps {
 }
 
 export default function Key({ note }: KeyProps): JSX.Element {
+	const { selectedWaveform } = useKeyboardOptions();
+
 	const handleMouseDown = (): void => {
-		playNote(note);
+		playNote(note, selectedWaveform);
 	};
 
 	const handleMouseUp = (): void => {

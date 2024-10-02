@@ -1,11 +1,16 @@
 import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
 
+import { KeyboardOptionsProvider } from '@/context/keyboard-options-context';
 import KeyboardFull from './keyboard-full';
 
 describe('Full Keyboard', () => {
 	beforeEach(() => {
-		render(<KeyboardFull />);
+		render(
+			<KeyboardOptionsProvider>
+				<KeyboardFull />
+			</KeyboardOptionsProvider>
+		);
 	});
 
 	it('renders a labeled group div', () => {
