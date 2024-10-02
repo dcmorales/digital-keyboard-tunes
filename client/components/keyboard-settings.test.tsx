@@ -21,12 +21,21 @@ describe('Keyboard settings', () => {
 		expect(keyboardSettings).toBeInTheDocument();
 	});
 
-	it('renders the settings dropdowns and the options', () => {
+	it('renders the key dropdown and options', () => {
 		const dropdown = screen.getByRole('combobox', { name: 'Select a key' });
 
 		expect(dropdown).toBeInTheDocument();
 		expect(dropdown).toHaveTextContent('C');
 		expect(dropdown).toHaveTextContent('D');
 		expect(dropdown).toHaveTextContent('E');
+	});
+
+	it('renders the octave dropdown and options', () => {
+		const dropdown = screen.getByRole('combobox', { name: 'Select an octave' });
+
+		expect(dropdown).toBeInTheDocument();
+		expect(dropdown).toHaveTextContent('1');
+		expect(dropdown).toHaveTextContent('2');
+		expect(dropdown).toHaveTextContent('3');
 	});
 });

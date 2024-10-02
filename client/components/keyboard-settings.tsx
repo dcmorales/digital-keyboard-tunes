@@ -5,7 +5,8 @@ import Dropdown from '@/components/common/dropdown';
 import { useKeyboardOptions } from '@/context/keyboard-options-context';
 
 export default function KeyboardSettings(): JSX.Element {
-	const { selectedKey, onKeyChange } = useKeyboardOptions();
+	const { selectedKey, onKeyChange, selectedOctave, onOctaveChange } =
+		useKeyboardOptions();
 
 	return (
 		<div role="group" aria-label="Keyboard settings">
@@ -16,6 +17,15 @@ export default function KeyboardSettings(): JSX.Element {
 				id="key"
 				value={selectedKey}
 				onChange={onKeyChange}
+			/>
+
+			<Dropdown
+				options={['1', '2', '3', '4', '5', '6']}
+				ariaLabel="Select an octave"
+				title="Octave"
+				id="octave"
+				value={`${selectedOctave}`}
+				onChange={onOctaveChange}
 			/>
 		</div>
 	);
