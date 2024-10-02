@@ -11,3 +11,5 @@ export type NoteKey =
 	| 'A'
 	| 'B♭'
 	| 'B';
+
+export type Waveform = 'sine' | 'square' | 'triangle' | 'sawtooth';
