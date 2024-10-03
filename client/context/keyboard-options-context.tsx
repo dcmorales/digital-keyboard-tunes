@@ -14,7 +14,7 @@ import {
 	useState,
 } from 'react';
 
-import {
+import type {
 	NoteKey,
 	OctaveNum,
 	Waveform,

@@ -3,7 +3,11 @@
 // Each object in settingsOptions represents a dropdown within the settings.
 // The object provides all values except for those provided by the React context.
 
-import { NoteKey, OctaveNum, Waveform } from '@/types/keyboard-option-types';
+import type {
+	NoteKey,
+	OctaveNum,
+	Waveform,
+} from '@/types/keyboard-option-types';
 
 export const noteOptions: NoteKey[] = [
 	'C',

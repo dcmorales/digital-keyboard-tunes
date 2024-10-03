@@ -5,7 +5,7 @@
 // Each fullNote in the fullNotes array begins with a note and ends with an octave number, for example 'C3'
 
 import Key from '@/components/key';
-import { FullNote } from '@/types/keyboard-option-types';
+import type { FullNote } from '@/types/keyboard-option-types';
 
 interface OctaveProps {
 	fullNotes: FullNote[];

@@ -6,7 +6,7 @@
 // Stopping the currentOscillator stops the sound.
 
 import { noteValues } from '@/values/noteValues';
-import { FullNote, Waveform } from '@/types/keyboard-option-types';
+import type { FullNote, Waveform } from '@/types/keyboard-option-types';
 
 let audioContext: AudioContext | null = null;
 let currentOscillator: OscillatorNode | null = null;
