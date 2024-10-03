@@ -15,4 +15,10 @@ describe('Full Keyboard', () => {
 
 		expect(audioControls).toBeInTheDocument();
 	});
+
+	it('renders the play button', () => {
+		const button = screen.getByRole('button', { name: 'Play the scale' });
+
+		expect(button).toBeInTheDocument();
+	});
 });
