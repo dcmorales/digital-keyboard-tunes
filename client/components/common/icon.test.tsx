@@ -4,6 +4,13 @@ import { describe, expect, it } from 'vitest';
 import Icon from './icon';
 
 describe('Icon', () => {
+	it('renders the chevron svg', () => {
+		render(<Icon name="chevron" />);
+		const chevronIcon = screen.getByTestId('svg-chevron');
+
+		expect(chevronIcon).toBeInTheDocument();
+	});
+
 	it('renders the gear svg', () => {
 		render(<Icon name="gear" />);
 		const gearIcon = screen.getByTestId('svg-gear');
@@ -11,10 +18,10 @@ describe('Icon', () => {
 		expect(gearIcon).toBeInTheDocument();
 	});
 
-	it('renders the chevron svg', () => {
-		render(<Icon name="chevron" />);
-		const chevronIcon = screen.getByTestId('svg-chevron');
+	it('renders the play svg', () => {
+		render(<Icon name="play" />);
+		const playIcon = screen.getByTestId('svg-play');
 
-		expect(chevronIcon).toBeInTheDocument();
+		expect(playIcon).toBeInTheDocument();
 	});
 });
