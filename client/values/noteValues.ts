@@ -1,27 +1,17 @@
 // Keyboard note values
 
-// Each note is an object containing a note and a frequency value
+import { NoteKey } from '@/types/keyboard-option-types';
+
+// Each note value is an object containing a letter note and a frequency value
 // Note indicates which note on the keyboard it will represent within an octave, there are only 12 options
-// Frequency is the value for the frequency when reaching out to the Web Audio API
+// Frequency is the number value provided to the Web Audio API
 interface NoteValue {
-	note:
-		| 'C'
-		| 'D♭'
-		| 'D'
-		| 'E♭'
-		| 'E'
-		| 'F'
-		| 'G♭'
-		| 'G'
-		| 'A♭'
-		| 'A'
-		| 'B♭'
-		| 'B';
+	note: NoteKey;
 	frequency: number;
 }
 
-// Each octave is made up of 12 notes
-type Octave = [
+// Each octave is made up of 12 note values
+type OctaveKeys = [
 	NoteValue,
 	NoteValue,
 	NoteValue,
@@ -37,7 +27,15 @@ type Octave = [
 ];
 
 // The keyboard is made up of seven octaves
-type KeyboardValues = [Octave, Octave, Octave, Octave, Octave, Octave, Octave];
+type KeyboardValues = [
+	OctaveKeys,
+	OctaveKeys,
+	OctaveKeys,
+	OctaveKeys,
+	OctaveKeys,
+	OctaveKeys,
+	OctaveKeys,
+];
 
 export const noteValues: KeyboardValues = [
 	//****************************************************************************

@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { playNote, stopNote } from './audio-actions';
+import { playNote, stopNote } from './audio-functions';
 
 // create interfaces for the global objects
 interface GlobalAudioContext extends Window {
@@ -38,7 +38,7 @@ beforeEach(() => {
 
 describe('Audio Actions', () => {
 	it('plays a note', async () => {
-		await playNote('C4');
+		await playNote('C4', 'sine');
 
 		expect(audioContextMock.resume).toHaveBeenCalled();
 		expect(audioContextMock.createOscillator).toHaveBeenCalled();
@@ -51,7 +51,7 @@ describe('Audio Actions', () => {
 
 	it('stops the currently playing oscillator and resets it', async () => {
 		// start playing a note to create an oscillator
-		await playNote('C4');
+		await playNote('C4', 'sine');
 
 		stopNote();
 
