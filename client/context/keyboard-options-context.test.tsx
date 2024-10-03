@@ -14,6 +14,8 @@ const TestComponent = () => {
 		onOctaveChange,
 		selectedWaveform,
 		onWaveformChange,
+		selectedScale,
+		onScaleChange,
 	} = useKeyboardOptions();
 
 	return (
@@ -63,6 +65,20 @@ const TestComponent = () => {
 				</select>
 				<p>Selected Waveform: {selectedWaveform}</p>
 			</div>
+
+			<div>
+				<label htmlFor="scale-select">Select Scale:</label>
+				<select
+					id="scale-select"
+					name="scale"
+					value={selectedScale}
+					onChange={onScaleChange}
+				>
+					<option value="chromatic">Chromatic</option>
+					<option value="major">Major</option>
+				</select>
+				<p>Selected Scale: {selectedScale}</p>
+			</div>
 		</div>
 	);
 };
@@ -87,6 +103,7 @@ describe('KeyboardOptionsProvider', () => {
 		expect(screen.getByText('Selected Key: C')).toBeInTheDocument();
 		expect(screen.getByText('Selected Octave: 4')).toBeInTheDocument();
 		expect(screen.getByText('Selected Waveform: sine')).toBeInTheDocument();
+		expect(screen.getByText('Selected Scale: chromatic')).toBeInTheDocument();
 	});
 
 	it('updates the selected key on change event', () => {
@@ -111,6 +128,14 @@ describe('KeyboardOptionsProvider', () => {
 		changeSelection('Select Waveform:', 'square');
 
 		expect(screen.getByText('Selected Waveform: square')).toBeInTheDocument();
+	});
+
+	it('updates the selected scale on change event', () => {
+		renderWithProvider();
+
+		changeSelection('Select Scale:', 'major');
+
+		expect(screen.getByText('Selected Scale: major')).toBeInTheDocument();
 	});
 
 	it('throws an error when used outside of the provider', () => {
