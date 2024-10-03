@@ -1,18 +1,23 @@
 // key
 // Each key within the keyboard. A client component with click actions.
 // The note prop will determine the keys style, label, and the sound played.
+// From the context, selectedWaveform will also help determine the sound played.
 
 'use client';
 
+import { useKeyboardOptions } from '@/context/keyboard-options-context';
+import { FullNote } from '@/types/keyboard-option-types';
 import { playNote, stopNote } from '@/utils/audio-functions';
 
 interface KeyProps {
-	note: string;
+	note: FullNote;
 }
 
 export default function Key({ note }: KeyProps): JSX.Element {
+	const { selectedWaveform } = useKeyboardOptions();
+
 	const handleMouseDown = (): void => {
-		playNote(note);
+		playNote(note, selectedWaveform);
 	};
 
 	const handleMouseUp = (): void => {

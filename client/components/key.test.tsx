@@ -1,6 +1,7 @@
+import { fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 
+import { KeyboardOptionsProvider } from '@/context/keyboard-options-context';
 import { playNote, stopNote } from '@/utils/audio-functions';
 import Key from './key';
 
@@ -13,27 +14,30 @@ describe('Key', () => {
 	let button: HTMLButtonElement;
 
 	beforeEach(() => {
-		render(<Key note="C4" />);
+		render(
+			<KeyboardOptionsProvider>
+				<Key note="C4" />
+			</KeyboardOptionsProvider>
+		);
 		button = screen.getByRole('button', { name: 'Play the C4 note' });
 	});
 
 	afterEach(() => {
 		vi.clearAllMocks();
-		cleanup();
 	});
 
 	it('renders a button with the correct aria label', () => {
-		expect(button).toBeDefined();
+		expect(button).toBeInTheDocument();
 	});
 
 	it('applies the correct class name', () => {
-		expect(button.classList.contains('key--white')).toBe(true);
+		expect(button).toHaveClass('key--white');
 	});
 
 	it('plays the note on mouse down event', () => {
 		fireEvent.mouseDown(button);
 
-		expect(playNote).toHaveBeenCalledWith('C4');
+		expect(playNote).toHaveBeenCalledWith('C4', 'sine');
 	});
 
 	it('stops the note on mouse up event', () => {
@@ -45,7 +49,7 @@ describe('Key', () => {
 	it('plays the note on touch start event', () => {
 		fireEvent.touchStart(button);
 
-		expect(playNote).toHaveBeenCalledWith('C4');
+		expect(playNote).toHaveBeenCalledWith('C4', 'sine');
 	});
 
 	it('stops the note on touch end event', () => {

@@ -6,6 +6,7 @@
 // Stopping the currentOscillator stops the sound.
 
 import { noteValues } from '@/values/noteValues';
+import { FullNote, Waveform } from '@/types/keyboard-option-types';
 
 let audioContext: AudioContext | null = null;
 let currentOscillator: OscillatorNode | null = null;
@@ -17,7 +18,7 @@ const initializeAudioContext = () => {
 	return audioContext.resume();
 };
 
-function splitNoteString(note: string): [string, number] {
+function splitNoteString(note: FullNote): [string, number] {
 	// match a letter with optional flat symbol (note letter) followed by a digit (octaveNum)
 	const regex = /^([A-G][♭]?)([1-7])$/;
 	const match = note.match(regex)!;
@@ -27,7 +28,10 @@ function splitNoteString(note: string): [string, number] {
 	return [match[1], octaveNum];
 }
 
-export async function playNote(note: string): Promise<void> {
+export async function playNote(
+	note: FullNote,
+	waveform: Waveform
+): Promise<void> {
 	await initializeAudioContext(); // ensure AudioContext is ready
 
 	const noteInfo = splitNoteString(note);
@@ -38,9 +42,10 @@ export async function playNote(note: string): Promise<void> {
 	// stop any currently playing note before starting a new one
 	stopNote();
 
-	// create and connect a new oscillator node, default waveform is sine
+	// create and connect a new oscillator node using the provided info
 	currentOscillator = audioContext!.createOscillator();
 	currentOscillator.frequency.value = pitch;
+	currentOscillator.type = waveform;
 	currentOscillator.connect(audioContext!.destination);
 	currentOscillator.start();
 }

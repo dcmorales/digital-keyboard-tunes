@@ -1,9 +1,11 @@
-import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it } from 'vitest';
 
+import { KeyboardOptionsProvider } from '@/context/keyboard-options-context';
+import { FullNote } from '@/types/keyboard-option-types';
 import Octave from './octave';
 
-const mockNoteOptions = [
+const mockFullNoteOptions: FullNote[] = [
 	'C3',
 	'D♭3',
 	'D3',
@@ -19,21 +21,27 @@ const mockNoteOptions = [
 ];
 
 describe('Octave', () => {
-	render(<Octave fullNotes={mockNoteOptions} />);
+	beforeEach(() => {
+		render(
+			<KeyboardOptionsProvider>
+				<Octave fullNotes={mockFullNoteOptions} />
+			</KeyboardOptionsProvider>
+		);
+	});
 
 	it('renders a labeled group div', () => {
-		expect(
-			screen.getByRole('group', {
-				name: 'Octave for C3',
-			})
-		).toBeDefined();
+		const octave = screen.getByRole('group', {
+			name: 'Octave for C3',
+		});
+
+		expect(octave).toBeInTheDocument();
 	});
 
 	it('renders each note as a child', () => {
-		expect(
-			screen.getByRole('group', {
-				name: 'Octave for C3',
-			}).children.length
-		).toBe(12);
+		const octave = screen.getByRole('group', {
+			name: 'Octave for C3',
+		});
+
+		expect(octave.children.length).toBe(12);
 	});
 });
