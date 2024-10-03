@@ -12,9 +12,11 @@ export default function Home(): JSX.Element {
 
 			<KeyboardFull />
 
-			<AudioControls />
+			<div className="home__controls-container">
+				<AudioControls />
 
-			<KeyboardSelected />
+				<KeyboardSelected />
+			</div>
 		</div>
 	);
 }
