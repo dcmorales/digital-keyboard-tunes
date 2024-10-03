@@ -46,4 +46,10 @@ export const settingsOptions = {
 		title: 'Waveform',
 		name: 'waveform',
 	},
+	scale: {
+		options: ['chromatic', 'major'],
+		ariaLabel: 'Select a scale',
+		title: 'Scale',
+		name: 'scale',
+	},
 };
