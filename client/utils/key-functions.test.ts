@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { playNote, stopNote } from './audio-functions';
+import { playNote, stopNote } from './key-functions';
 
 // create interfaces for the global objects
 interface GlobalAudioContext extends Window {

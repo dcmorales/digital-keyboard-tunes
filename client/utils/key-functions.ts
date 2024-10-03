@@ -1,5 +1,5 @@
-// audio-actions
-// Contains the actions for the Key buttons.
+// key-functions
+// Contains the functions for the Key buttons.
 // playNote initializes an audio context if there isn't one or resumes an existing one.
 // The note info is then used in the noteValues array to find the proper frequency value.
 // This value is passed into the audioContext to create the sound.

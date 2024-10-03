@@ -7,7 +7,7 @@
 
 import { useKeyboardOptions } from '@/context/keyboard-options-context';
 import { FullNote } from '@/types/keyboard-option-types';
-import { playNote, stopNote } from '@/utils/audio-functions';
+import { playNote, stopNote } from '@/utils/key-functions';
 
 interface KeyProps {
 	note: FullNote;
