@@ -34,4 +34,12 @@ describe('Page', () => {
 
 		expect(keyboardFull).toBeInTheDocument();
 	});
+
+	it('renders a labeled group div', () => {
+		const audioControls = screen.getByRole('group', {
+			name: 'Audio controls',
+		});
+
+		expect(audioControls).toBeInTheDocument();
+	});
 });
