@@ -1,8 +1,7 @@
 // Home page
 
-import AudioControls from '@/components/audio-controls';
+import ControlPanel from '@/components/control-panel';
 import KeyboardFull from '@/components/keyboard-full';
-import KeyboardSelected from '@/components/keyboard-selected';
 import Header from '@/components/layout/header';
 
 export default function Home(): JSX.Element {
@@ -12,11 +11,7 @@ export default function Home(): JSX.Element {
 
 			<KeyboardFull />
 
-			<div className="home__controls-container">
-				<AudioControls />
-
-				<KeyboardSelected />
-			</div>
+			<ControlPanel />
 		</div>
 	);
 }

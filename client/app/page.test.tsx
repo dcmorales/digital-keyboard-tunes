@@ -27,19 +27,11 @@ describe('Page', () => {
 		expect(keyboardFull).toBeInTheDocument();
 	});
 
-	it('renders the selected keyboard', () => {
-		const keyboardFull = screen.getByRole('group', {
-			name: 'Selected keyboard',
+	it('renders the control panel', () => {
+		const controlPanel = screen.getByRole('region', {
+			name: 'Audio controls and selected keyboard',
 		});
 
-		expect(keyboardFull).toBeInTheDocument();
-	});
-
-	it('renders a labeled group div', () => {
-		const audioControls = screen.getByRole('group', {
-			name: 'Audio controls',
-		});
-
-		expect(audioControls).toBeInTheDocument();
+		expect(controlPanel).toBeInTheDocument();
 	});
 });
