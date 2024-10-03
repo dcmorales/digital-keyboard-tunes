@@ -2,15 +2,15 @@
 
 import { NoteKey } from '@/types/keyboard-option-types';
 
-// Each note is an object containing a note and a frequency value
+// Each note value is an object containing a letter note and a frequency value
 // Note indicates which note on the keyboard it will represent within an octave, there are only 12 options
-// Frequency is the value provided to the Web Audio API
+// Frequency is the number value provided to the Web Audio API
 interface NoteValue {
 	note: NoteKey;
 	frequency: number;
 }
 
-// Each octave is made up of 12 notes
+// Each octave is made up of 12 note values
 type OctaveKeys = [
 	NoteValue,
 	NoteValue,

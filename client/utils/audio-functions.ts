@@ -42,7 +42,7 @@ export async function playNote(
 	// stop any currently playing note before starting a new one
 	stopNote();
 
-	// create and connect a new oscillator node, default waveform is sine
+	// create and connect a new oscillator node using the provided info
 	currentOscillator = audioContext!.createOscillator();
 	currentOscillator.frequency.value = pitch;
 	currentOscillator.type = waveform;

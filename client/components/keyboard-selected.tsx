@@ -1,6 +1,6 @@
 // keyboard-selected
 // Displays one single octave beginning with the selectedKey at the selectedOctave
-// and ending with the first key of the next octave. It contains 13 keys
+// and ending with the first key of the next octave. It contains 13 keys.
 
 'use client';
 
@@ -12,7 +12,7 @@ import { noteOptions } from '@/values/settingsOptions';
 export default function KeyboardSelected(): JSX.Element {
 	const { selectedKey, selectedOctave } = useKeyboardOptions();
 
-	// Create a new array starting at the selectedKey. Add the selectedOctave to each string.
+	// Create a new array starting at the selectedKey. Add the selectedOctave to each string to create a fullNote.
 	// Any note that was originally before the selectedKey will be placed at the end of the new array.
 	// The octave will also increase for these notes.
 	// End the array with the first key of the next octave.

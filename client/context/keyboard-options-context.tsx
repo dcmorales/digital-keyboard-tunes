@@ -1,4 +1,8 @@
 // keyboard-options-context
+// Provides global state to the client.
+// The state provided here is updated through the keyboard-settings
+// The updated state affects the sounds played as well as the keys that
+// show up in keyboard-selected.
 
 'use client';
 

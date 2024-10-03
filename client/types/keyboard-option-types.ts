@@ -1,3 +1,6 @@
+// keyboard-option-types
+// Types defining specific values for common keyboard options
+
 export type NoteKey =
 	| 'C'
 	| 'D♭'

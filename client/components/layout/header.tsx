@@ -1,4 +1,6 @@
 // header
+// The header for the app. Includes a heading and a settings button.
+// Clicking on the settings button will toggle the keyboard-settings on and off.
 
 'use client';
 

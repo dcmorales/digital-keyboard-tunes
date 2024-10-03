@@ -1,4 +1,6 @@
 // dropdown
+// A dropdown menu. Displays a label and maps over the options provided.
+// When the selection changes, the event handler is called and the select value is updated.
 
 import type { ChangeEvent } from 'react';
 

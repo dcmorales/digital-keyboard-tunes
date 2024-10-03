@@ -1,4 +1,5 @@
 // icon
+// An icon that accepts a name prop. The name passed in will determine the svg provided.
 
 interface IconProps {
 	name: 'gear' | 'chevron';
