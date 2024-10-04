@@ -2,11 +2,26 @@
 
 import CustomButton from '@/components/common/custom-button';
 import Icon from '@/components/common/icon';
+import { useKeyboardOptions } from '@/context/keyboard-options-context';
+import type { FullNote } from '@/types/keyboard-option-types';
+import { playSelectedNotes } from '@/utils/audio-control-functions';
 
-export default function AudioControls() {
+interface AudioControlsProps {
+	fullNotes: FullNote[];
+}
+
+export default function AudioControls({
+	fullNotes,
+}: AudioControlsProps): JSX.Element {
+	const { selectedWaveform } = useKeyboardOptions();
+
+	const handlePlayClick = (): void => {
+		playSelectedNotes(fullNotes, selectedWaveform);
+	};
+
 	return (
 		<div role="group" aria-label="Audio controls">
-			<CustomButton ariaLabel="Play the scale">
+			<CustomButton ariaLabel="Play the scale" onClick={handlePlayClick}>
 				<Icon name="play" />
 			</CustomButton>
 		</div>

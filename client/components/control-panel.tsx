@@ -8,7 +8,7 @@ import { useKeyboardOptions } from '@/context/keyboard-options-context';
 import type { FullNote } from '@/types/keyboard-option-types';
 import { noteOptions } from '@/values/settingsOptions';
 
-export default function ControlPanel() {
+export default function ControlPanel(): JSX.Element {
 	const { selectedKey, selectedOctave } = useKeyboardOptions();
 
 	// Create a new array starting at the selectedKey. Add the selectedOctave to each string to create a fullNote.
@@ -28,11 +28,13 @@ export default function ControlPanel() {
 		return firstSegment.concat(secondSegment, endNote);
 	}
 
+	const fullNotes = rearrangeNotes();
+
 	return (
 		<div role="region" aria-label="Audio controls and selected keyboard">
-			<AudioControls />
+			<AudioControls fullNotes={fullNotes} />
 
-			<KeyboardSelected fullNotes={rearrangeNotes()} />
+			<KeyboardSelected fullNotes={fullNotes} />
 		</div>
 	);
 }
