@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import { KeyboardOptionsProvider } from '@/context/keyboard-options-context';
@@ -22,11 +22,11 @@ describe('Control Panel', () => {
 	});
 
 	it('renders the selected keyboard', () => {
-		const keyboardFull = screen.getByRole('group', {
+		const keyboardSelected = screen.getByRole('group', {
 			name: 'Selected keyboard',
 		});
 
-		expect(keyboardFull).toBeInTheDocument();
+		expect(keyboardSelected).toBeInTheDocument();
 	});
 
 	it('renders the audio controls div', () => {
@@ -35,5 +35,32 @@ describe('Control Panel', () => {
 		});
 
 		expect(audioControls).toBeInTheDocument();
+	});
+
+	it('rearranges the 13 notes correctly', () => {
+		const keyboardSelected = screen.getByRole('group', {
+			name: 'Selected keyboard',
+		});
+		const noteButtons = within(keyboardSelected).getAllByRole('button');
+		const noteTexts = noteButtons.map((button) =>
+			// remove whitespace
+			button.textContent?.trim().replace(/\s+/g, '')
+		);
+
+		expect(noteTexts).toEqual([
+			'C4',
+			'D♭4',
+			'D4',
+			'E♭4',
+			'E4',
+			'F4',
+			'G♭4',
+			'G4',
+			'A♭4',
+			'A4',
+			'B♭4',
+			'B4',
+			'C5',
+		]);
 	});
 });
