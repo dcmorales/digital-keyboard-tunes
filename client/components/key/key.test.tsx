@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { KeyboardOptionsProvider } from '@/context/keyboard-options-context';
 import { playNote, stopNote } from '@/utils/key-functions';
-import Key from './key';
+import Key from '.';
 
 vi.mock('@/utils/key-functions', () => ({
 	playNote: vi.fn(),

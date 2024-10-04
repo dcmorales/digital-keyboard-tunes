@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 
 import { KeyboardOptionsProvider } from '@/context/keyboard-options-context';
 import type { FullNote } from '@/types/keyboard-option-types';
-import Octave from './octave';
+import Octave from '.';
 
 const mockFullNoteOptions: FullNote[] = [
 	'C4',

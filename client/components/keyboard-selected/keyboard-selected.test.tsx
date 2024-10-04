@@ -2,7 +2,7 @@ import { render, screen, within } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import { KeyboardOptionsProvider } from '@/context/keyboard-options-context';
-import KeyboardSelected from './keyboard-selected';
+import KeyboardSelected from '.';
 
 describe('Selected Keyboard', () => {
 	beforeEach(() => {
