@@ -3,6 +3,8 @@
 
 import type { ReactNode } from 'react';
 
+import styles from './scrollbar.module.scss';
+
 interface ScrollbarProps {
 	children: ReactNode;
 }
@@ -10,7 +12,7 @@ interface ScrollbarProps {
 export default function Scrollbar({ children }: ScrollbarProps): JSX.Element {
 	return (
 		<div
-			className="scrollbar"
+			className={styles.scrollbar}
 			role="scrollbar"
 			aria-controls="scrollable-content"
 			aria-valuenow={0}
