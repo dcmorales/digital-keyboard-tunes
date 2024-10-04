@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import Scrollbar from './scrollbar';
+import Scrollbar from '.';
 
 describe('Scrollbar', () => {
 	beforeEach(() => {

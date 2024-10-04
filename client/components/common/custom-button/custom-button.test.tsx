@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import CustomButton from './custom-button';
+import CustomButton from '.';
 
 describe('Custom Button', () => {
 	let handleClick: () => void;

@@ -2,7 +2,7 @@ import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import type { ChangeEvent } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import Dropdown from './dropdown';
+import Dropdown from '.';
 
 describe('Dropdown', () => {
 	let handleChange: (e: ChangeEvent<HTMLSelectElement>) => void;
