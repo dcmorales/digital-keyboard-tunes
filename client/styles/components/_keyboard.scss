@@ -28,6 +28,10 @@
 		z-index: 2;
 	}
 
+	&--active {
+		color: lightblue;
+	}
+
 	&__flat {
 		margin-left: -0.1rem;
 	}
