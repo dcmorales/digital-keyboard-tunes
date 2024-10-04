@@ -14,20 +14,24 @@ interface KeyProps {
 }
 
 export default function Key({ note }: KeyProps): JSX.Element {
-	const { selectedWaveform } = useKeyboardOptions();
+	const { activeNote, setActiveNote, selectedWaveform } = useKeyboardOptions();
 
 	const handleMouseDown = (): void => {
 		playNote(note, selectedWaveform);
+		setActiveNote(note);
 	};
 
 	const handleMouseUp = (): void => {
 		stopNote();
+		setActiveNote(null);
 	};
+
+	const isActive = activeNote === note;
 
 	return (
 		<button
 			aria-label={`Play the ${note} note`}
-			className={`key key--${note.includes('♭') ? 'black' : 'white'}`}
+			className={`key key--${note.includes('♭') ? 'black' : 'white'} ${isActive ? 'key--active' : ''}`}
 			onMouseDown={handleMouseDown}
 			onMouseUp={handleMouseUp}
 			onTouchStart={handleMouseDown}

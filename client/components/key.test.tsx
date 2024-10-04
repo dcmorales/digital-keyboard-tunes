@@ -38,23 +38,27 @@ describe('Key', () => {
 		fireEvent.mouseDown(button);
 
 		expect(playNote).toHaveBeenCalledWith('C4', 'sine');
+		expect(button).toHaveClass('key--active');
 	});
 
 	it('stops the note on mouse up event', () => {
 		fireEvent.mouseUp(button);
 
 		expect(stopNote).toHaveBeenCalled();
+		expect(button).not.toHaveClass('key--active');
 	});
 
 	it('plays the note on touch start event', () => {
 		fireEvent.touchStart(button);
 
 		expect(playNote).toHaveBeenCalledWith('C4', 'sine');
+		expect(button).toHaveClass('key--active');
 	});
 
 	it('stops the note on touch end event', () => {
 		fireEvent.touchEnd(button);
 
 		expect(stopNote).toHaveBeenCalled();
+		expect(button).not.toHaveClass('key--active');
 	});
 });
