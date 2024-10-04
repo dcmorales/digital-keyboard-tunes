@@ -9,6 +9,7 @@ import { useState } from 'react';
 import CustomButton from '@/components/common/custom-button';
 import Icon from '@/components/common/icon';
 import KeyboardSettings from '@/components/keyboard-settings';
+import styles from './header.module.scss';
 
 export default function Header(): JSX.Element {
 	const [showSettings, setShowSettings] = useState(false);
@@ -18,8 +19,8 @@ export default function Header(): JSX.Element {
 	};
 
 	return (
-		<header className="header">
-			<div className="header__main-items">
+		<header className={styles.header}>
+			<div className={styles.mainItems}>
 				<h1>Digital Keyboard Tunes</h1>
 
 				<CustomButton
