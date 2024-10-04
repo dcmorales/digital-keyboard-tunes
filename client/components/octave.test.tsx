@@ -2,22 +2,22 @@ import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import { KeyboardOptionsProvider } from '@/context/keyboard-options-context';
-import { FullNote } from '@/types/keyboard-option-types';
+import type { FullNote } from '@/types/keyboard-option-types';
 import Octave from './octave';
 
 const mockFullNoteOptions: FullNote[] = [
-	'C3',
-	'D♭3',
-	'D3',
-	'E♭3',
-	'E3',
-	'F3',
-	'G♭3',
-	'G3',
-	'A♭3',
-	'A3',
-	'B♭3',
-	'B3',
+	'C4',
+	'D♭4',
+	'D4',
+	'E♭4',
+	'E4',
+	'F4',
+	'G♭4',
+	'G4',
+	'A♭4',
+	'A4',
+	'B♭4',
+	'B4',
 ];
 
 describe('Octave', () => {
@@ -29,9 +29,9 @@ describe('Octave', () => {
 		);
 	});
 
-	it('renders a labeled group div', () => {
+	it('renders the octave div', () => {
 		const octave = screen.getByRole('group', {
-			name: 'Octave for C3',
+			name: 'Octave for C4',
 		});
 
 		expect(octave).toBeInTheDocument();
@@ -39,7 +39,7 @@ describe('Octave', () => {
 
 	it('renders each note as a child', () => {
 		const octave = screen.getByRole('group', {
-			name: 'Octave for C3',
+			name: 'Octave for C4',
 		});
 
 		expect(octave.children.length).toBe(12);

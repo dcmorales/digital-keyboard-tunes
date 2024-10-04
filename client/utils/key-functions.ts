@@ -1,12 +1,12 @@
-// audio-actions
-// Contains the actions for the Key buttons.
+// key-functions
+// Contains the functions for the Key buttons.
 // playNote initializes an audio context if there isn't one or resumes an existing one.
 // The note info is then used in the noteValues array to find the proper frequency value.
 // This value is passed into the audioContext to create the sound.
 // Stopping the currentOscillator stops the sound.
 
 import { noteValues } from '@/values/noteValues';
-import { FullNote, Waveform } from '@/types/keyboard-option-types';
+import type { FullNote, Waveform } from '@/types/keyboard-option-types';
 
 let audioContext: AudioContext | null = null;
 let currentOscillator: OscillatorNode | null = null;

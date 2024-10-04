@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { KeyboardOptionsProvider } from '@/context/keyboard-options-context';
 import Page from './page';
 
-describe('Page', () => {
+describe('Home Page', () => {
 	beforeEach(() => {
 		render(
 			<KeyboardOptionsProvider>
@@ -28,10 +28,10 @@ describe('Page', () => {
 	});
 
 	it('renders the selected keyboard', () => {
-		const keyboardFull = screen.getByRole('group', {
-			name: 'Selected keyboard',
+		const keyboardSelected = screen.getByRole('region', {
+			name: 'Selected Keyboard: audio controls and keys',
 		});
 
-		expect(keyboardFull).toBeInTheDocument();
+		expect(keyboardSelected).toBeInTheDocument();
 	});
 });

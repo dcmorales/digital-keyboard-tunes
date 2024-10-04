@@ -14,6 +14,10 @@ const TestComponent = () => {
 		onOctaveChange,
 		selectedWaveform,
 		onWaveformChange,
+		selectedScale,
+		onScaleChange,
+		activeNote,
+		setActiveNote,
 	} = useKeyboardOptions();
 
 	return (
@@ -63,6 +67,31 @@ const TestComponent = () => {
 				</select>
 				<p>Selected Waveform: {selectedWaveform}</p>
 			</div>
+
+			<div>
+				<label htmlFor="scale-select">Select Scale:</label>
+				<select
+					id="scale-select"
+					name="scale"
+					value={selectedScale}
+					onChange={onScaleChange}
+				>
+					<option value="chromatic">Chromatic</option>
+					<option value="major">Major</option>
+				</select>
+				<p>Selected Scale: {selectedScale}</p>
+			</div>
+
+			<div>
+				<p>Active Note: {activeNote || 'None'}</p>
+				<button onClick={() => setActiveNote('C4')}>
+					Set Active Note to C4
+				</button>
+				<button onClick={() => setActiveNote('D4')}>
+					Set Active Note to D4
+				</button>
+				<button onClick={() => setActiveNote(null)}>Clear Active Note</button>
+			</div>
 		</div>
 	);
 };
@@ -87,6 +116,8 @@ describe('KeyboardOptionsProvider', () => {
 		expect(screen.getByText('Selected Key: C')).toBeInTheDocument();
 		expect(screen.getByText('Selected Octave: 4')).toBeInTheDocument();
 		expect(screen.getByText('Selected Waveform: sine')).toBeInTheDocument();
+		expect(screen.getByText('Selected Scale: chromatic')).toBeInTheDocument();
+		expect(screen.getByText('Active Note: None')).toBeInTheDocument();
 	});
 
 	it('updates the selected key on change event', () => {
@@ -111,6 +142,31 @@ describe('KeyboardOptionsProvider', () => {
 		changeSelection('Select Waveform:', 'square');
 
 		expect(screen.getByText('Selected Waveform: square')).toBeInTheDocument();
+	});
+
+	it('updates the selected scale on change event', () => {
+		renderWithProvider();
+
+		changeSelection('Select Scale:', 'major');
+
+		expect(screen.getByText('Selected Scale: major')).toBeInTheDocument();
+	});
+
+	it('updates the active note when setActiveNote is called', () => {
+		renderWithProvider();
+
+		fireEvent.click(
+			screen.getByRole('button', { name: /set active note to C4/i })
+		);
+		expect(screen.getByText('Active Note: C4')).toBeInTheDocument();
+
+		fireEvent.click(
+			screen.getByRole('button', { name: /set active note to D4/i })
+		);
+		expect(screen.getByText('Active Note: D4')).toBeInTheDocument();
+
+		fireEvent.click(screen.getByText('Clear Active Note'));
+		expect(screen.getByText('Active Note: None')).toBeInTheDocument();
 	});
 
 	it('throws an error when used outside of the provider', () => {

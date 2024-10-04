@@ -16,8 +16,10 @@ export default function KeyboardSettings(): JSX.Element {
 		onOctaveChange,
 		selectedWaveform,
 		onWaveformChange,
+		selectedScale,
+		onScaleChange,
 	} = useKeyboardOptions();
-	const { key, octave, waveform } = settingsOptions;
+	const { key, octave, waveform, scale } = settingsOptions;
 
 	return (
 		<div
@@ -50,6 +52,15 @@ export default function KeyboardSettings(): JSX.Element {
 				name={waveform.name}
 				value={selectedWaveform}
 				onChange={onWaveformChange}
+			/>
+
+			<Dropdown
+				options={scale.options}
+				ariaLabel={scale.ariaLabel}
+				title={scale.title}
+				name={scale.name}
+				value={selectedScale}
+				onChange={onScaleChange}
 			/>
 		</div>
 	);

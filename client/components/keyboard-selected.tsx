@@ -1,12 +1,15 @@
 // keyboard-selected
-// Displays one single octave beginning with the selectedKey at the selectedOctave
-// and ending with the first key of the next octave. It contains 13 keys.
+// Contains an octave with 13 keys and audio controls for playing the octave.
+// The octave begins with the selectedKey at the selectedOctave and ends with
+// the first key of the next octave. Both the octave and the functions for the
+// audio controls depend on the selections made in the keyboard-settings.
 
 'use client';
 
+import AudioControls from '@/components/audio-controls';
 import Octave from '@/components/octave';
 import { useKeyboardOptions } from '@/context/keyboard-options-context';
-import { FullNote } from '@/types/keyboard-option-types';
+import type { FullNote } from '@/types/keyboard-option-types';
 import { noteOptions } from '@/values/settingsOptions';
 
 export default function KeyboardSelected(): JSX.Element {
@@ -29,13 +32,15 @@ export default function KeyboardSelected(): JSX.Element {
 		return firstSegment.concat(secondSegment, endNote);
 	}
 
+	const fullNotes = rearrangeNotes();
+
 	return (
-		<div
-			className="keyboard--selected"
-			role="group"
-			aria-label="Selected keyboard"
-		>
-			<Octave fullNotes={rearrangeNotes()} />
+		<div role="region" aria-label="Selected Keyboard: audio controls and keys">
+			<AudioControls fullNotes={fullNotes} />
+
+			<div className="keyboard--selected">
+				<Octave fullNotes={fullNotes} />
+			</div>
 		</div>
 	);
 }

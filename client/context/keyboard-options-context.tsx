@@ -1,8 +1,9 @@
 // keyboard-options-context
-// Provides global state to the client.
-// The state provided here is updated through the keyboard-settings
-// The updated state affects the sounds played as well as the keys that
-// show up in keyboard-selected.
+// Provides global state to the client. Manages the selection change
+// in the keyboard-settings using a selection handler. This updated state affects
+// the sounds played as well as the keys that show up in keyboard-selected.
+// The activeNote updates whenever a key is pressed or when the play button
+// plays a series of notes. This will update the styles of the key at that note.
 
 'use client';
 
@@ -14,7 +15,13 @@ import {
 	useState,
 } from 'react';
 
-import { NoteKey, OctaveNum, Waveform } from '@/types/keyboard-option-types';
+import type {
+	FullNote,
+	NoteKey,
+	OctaveNum,
+	Waveform,
+	Scale,
+} from '@/types/keyboard-option-types';
 
 interface KeyboardOptionsContextType {
 	selectedKey: NoteKey;
@@ -23,13 +30,17 @@ interface KeyboardOptionsContextType {
 	onOctaveChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 	selectedWaveform: Waveform;
 	onWaveformChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+	selectedScale: Scale;
+	onScaleChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+	activeNote: FullNote | null;
+	setActiveNote: (note: FullNote | null) => void;
 }
 
 const KeyboardOptionsContext = createContext<
 	KeyboardOptionsContextType | undefined
 >(undefined);
 
-type SelectionName = 'key' | 'octave' | 'waveform';
+type SelectionName = 'key' | 'octave' | 'waveform' | 'scale';
 
 interface KeyboardOptionsProviderProps {
 	children: ReactNode;
@@ -41,11 +52,14 @@ export const KeyboardOptionsProvider = ({
 	const [selectedKey, setSelectedKey] = useState<NoteKey>('C');
 	const [selectedOctave, setSelectedOctave] = useState<OctaveNum>(4);
 	const [selectedWaveform, setSelectedWaveform] = useState<Waveform>('sine');
+	const [selectedScale, setSelectedScale] = useState<Scale>('chromatic');
+	const [activeNote, setActiveNote] = useState<FullNote | null>(null);
 
 	const selectionHandlers: Record<SelectionName, (value: string) => void> = {
 		key: (value: string) => setSelectedKey(value as NoteKey),
 		octave: (value: string) => setSelectedOctave(Number(value) as OctaveNum),
 		waveform: (value: string) => setSelectedWaveform(value as Waveform),
+		scale: (value: string) => setSelectedScale(value as Scale),
 	};
 
 	const onSelectionChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -64,6 +78,10 @@ export const KeyboardOptionsProvider = ({
 				onOctaveChange: onSelectionChange,
 				selectedWaveform,
 				onWaveformChange: onSelectionChange,
+				selectedScale,
+				onScaleChange: onSelectionChange,
+				activeNote,
+				setActiveNote,
 			}}
 		>
 			{children}

@@ -49,4 +49,14 @@ describe('Keyboard settings', () => {
 		expect(dropdown).toHaveTextContent('square');
 		expect(dropdown).toHaveTextContent('triangle');
 	});
+
+	it('renders the scale dropdown and options', () => {
+		const dropdown = screen.getByRole('combobox', {
+			name: 'Select a scale',
+		});
+
+		expect(dropdown).toBeInTheDocument();
+		expect(dropdown).toHaveTextContent('chromatic');
+		expect(dropdown).toHaveTextContent('major');
+	});
 });
