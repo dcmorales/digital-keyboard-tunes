@@ -7,6 +7,7 @@
 import Dropdown from '@/components/common/dropdown';
 import { useKeyboardOptions } from '@/context/keyboard-options-context';
 import { settingsOptions } from '@/values/settingsOptions';
+import styles from './keyboard-settings.module.scss';
 
 export default function KeyboardSettings(): JSX.Element {
 	const {
@@ -23,7 +24,7 @@ export default function KeyboardSettings(): JSX.Element {
 
 	return (
 		<div
-			className="keyboard-settings"
+			className={styles.container}
 			role="group"
 			aria-label="Keyboard settings"
 		>
