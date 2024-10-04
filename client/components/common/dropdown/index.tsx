@@ -5,6 +5,8 @@
 
 import type { ChangeEvent } from 'react';
 
+import styles from './dropdown.module.scss';
+
 interface DropdownProps {
 	options: string[] | number[];
 	ariaLabel: string;
@@ -23,7 +25,7 @@ export default function Dropdown({
 	onChange,
 }: DropdownProps): JSX.Element {
 	return (
-		<div className="dropdown">
+		<div className={styles.dropdown}>
 			<label htmlFor={name}>{title}</label>
 
 			<select
