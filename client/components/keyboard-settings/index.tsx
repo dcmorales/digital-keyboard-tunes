@@ -24,7 +24,7 @@ export default function KeyboardSettings(): JSX.Element {
 
 	return (
 		<div
-			className={styles.container}
+			className={styles.keyboardSettings}
 			role="group"
 			aria-label="Keyboard settings"
 		>

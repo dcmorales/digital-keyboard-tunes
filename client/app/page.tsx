@@ -7,7 +7,7 @@ import styles from './page.module.scss';
 
 export default function Home(): JSX.Element {
 	return (
-		<div className={styles.container}>
+		<div className={styles.homePage}>
 			<Header />
 
 			<KeyboardFull />
