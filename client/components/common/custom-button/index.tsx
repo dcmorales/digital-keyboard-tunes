@@ -4,6 +4,8 @@
 
 import type { ReactNode } from 'react';
 
+import styles from './custom-button.module.scss';
+
 interface CustomButtonProps {
 	children: ReactNode;
 	ariaLabel: string;
@@ -16,7 +18,7 @@ export default function CustomButton({
 	onClick,
 }: CustomButtonProps): JSX.Element {
 	return (
-		<button className="custom-button" aria-label={ariaLabel} onClick={onClick}>
+		<button className={styles.button} aria-label={ariaLabel} onClick={onClick}>
 			{children}
 		</button>
 	);
