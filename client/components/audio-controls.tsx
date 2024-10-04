@@ -13,10 +13,10 @@ interface AudioControlsProps {
 export default function AudioControls({
 	fullNotes,
 }: AudioControlsProps): JSX.Element {
-	const { selectedWaveform } = useKeyboardOptions();
+	const { selectedWaveform, setActiveNote } = useKeyboardOptions();
 
 	const handlePlayClick = (): void => {
-		playSelectedNotes(fullNotes, selectedWaveform);
+		playSelectedNotes(fullNotes, selectedWaveform, setActiveNote);
 	};
 
 	return (

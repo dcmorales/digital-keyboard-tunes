@@ -1,8 +1,9 @@
-import { render, screen } from '@testing-library/react';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { KeyboardOptionsProvider } from '@/context/keyboard-options-context';
 import type { FullNote } from '@/types/keyboard-option-types';
+import { playSelectedNotes } from '@/utils/audio-control-functions';
 import AudioControls from './audio-controls';
 
 const mockFullNoteOptions: FullNote[] = [
@@ -19,6 +20,10 @@ const mockFullNoteOptions: FullNote[] = [
 	'B♭4',
 	'B4',
 ];
+
+vi.mock('@/utils/audio-control-functions', () => ({
+	playSelectedNotes: vi.fn(),
+}));
 
 describe('Audio Controls', () => {
 	beforeEach(() => {
@@ -41,5 +46,17 @@ describe('Audio Controls', () => {
 		const button = screen.getByRole('button', { name: 'Play the scale' });
 
 		expect(button).toBeInTheDocument();
+	});
+
+	it('handles the play click', () => {
+		const button = screen.getByRole('button', { name: 'Play the scale' });
+
+		fireEvent.click(button);
+
+		expect(playSelectedNotes).toHaveBeenCalledWith(
+			mockFullNoteOptions,
+			expect.any(String),
+			expect.any(Function)
+		);
 	});
 });

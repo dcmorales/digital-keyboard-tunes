@@ -4,7 +4,10 @@ import { FullNote } from '@/types/keyboard-option-types';
 import { playNote, stopNote } from '@/utils/key-functions';
 import { playSelectedNotes } from './audio-control-functions';
 
-vi.mock('@/utils/key-functions');
+vi.mock('@/utils/key-functions', () => ({
+	playNote: vi.fn(),
+	stopNote: vi.fn(),
+}));
 
 describe('Audio Control Functions', () => {
 	beforeEach(() => {
