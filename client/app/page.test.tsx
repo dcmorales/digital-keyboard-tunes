@@ -27,11 +27,11 @@ describe('Home Page', () => {
 		expect(keyboardFull).toBeInTheDocument();
 	});
 
-	it('renders the control panel', () => {
-		const controlPanel = screen.getByRole('region', {
-			name: 'Audio controls and selected keyboard',
+	it('renders the selected keyboard', () => {
+		const keyboardSelected = screen.getByRole('region', {
+			name: 'Selected Keyboard: audio controls and keys',
 		});
 
-		expect(controlPanel).toBeInTheDocument();
+		expect(keyboardSelected).toBeInTheDocument();
 	});
 });
