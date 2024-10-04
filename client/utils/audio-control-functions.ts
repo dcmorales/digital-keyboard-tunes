@@ -1,4 +1,8 @@
 // audio-control-functions
+// Contains the functions for the audio-control buttons.
+// For playSelectedNotes, each note in the fullNotes array will play and
+// be set as active (which will highlight the note). After a delay,
+// the note will be stopped and removed from active (removing the highlight).
 
 import type { FullNote, Waveform } from '@/types/keyboard-option-types';
 import { playNote, stopNote } from '@/utils/key-functions';

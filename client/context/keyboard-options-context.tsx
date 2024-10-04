@@ -1,8 +1,9 @@
 // keyboard-options-context
-// Provides global state to the client.
-// The state provided here is updated through the keyboard-settings
-// The updated state affects the sounds played as well as the keys that
-// show up in keyboard-selected.
+// Provides global state to the client. Manages the selection change
+// in the keyboard-settings using a selection handler. This updated state affects
+// the sounds played as well as the keys that show up in keyboard-selected.
+// The activeNote updates whenever a key is pressed or when the play button
+// plays a series of notes. This will update the styles of the key at that note.
 
 'use client';
 

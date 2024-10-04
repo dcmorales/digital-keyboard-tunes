@@ -1,7 +1,8 @@
 // key
-// Each key within the keyboard. A client component with click actions.
+// Each key within the keyboard. Contains click actions to play and highlight a specific note.
 // The note prop will determine the keys style, label, and the sound played.
 // From the context, selectedWaveform will also help determine the sound played.
+// If the activeNote matches the key's note, the key will be highlighted.
 
 'use client';
 
