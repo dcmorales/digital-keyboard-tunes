@@ -1,0 +1,16 @@
+@use '@/styles/abstracts' as *;
+
+.octaveContainer {
+	display: flex;
+	height: 40vh;
+	justify-content: center;
+	margin: 0 auto;
+
+	@include breakpoint(large) {
+		width: 80%;
+	}
+
+	@include breakpoint(xl) {
+		width: 60%;
+	}
+}

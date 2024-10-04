@@ -1,0 +1,11 @@
+@use '@/styles/abstracts' as *;
+
+.keyboardFull {
+	display: none;
+
+	@include breakpoint(large) {
+		display: flex;
+		height: 40vh;
+		margin: 0 0.5rem;
+	}
+}

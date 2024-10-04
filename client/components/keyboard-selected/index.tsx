@@ -11,6 +11,7 @@ import Octave from '@/components/octave';
 import { useKeyboardOptions } from '@/context/keyboard-options-context';
 import type { FullNote } from '@/types/keyboard-option-types';
 import { noteOptions } from '@/values/settingsOptions';
+import styles from './keyboard-selected.module.scss';
 
 export default function KeyboardSelected(): JSX.Element {
 	const { selectedKey, selectedOctave } = useKeyboardOptions();
@@ -38,7 +39,7 @@ export default function KeyboardSelected(): JSX.Element {
 		<div role="region" aria-label="Selected Keyboard: audio controls and keys">
 			<AudioControls fullNotes={fullNotes} />
 
-			<div className="keyboard--selected">
+			<div className={styles.octaveContainer}>
 				<Octave fullNotes={fullNotes} />
 			</div>
 		</div>

@@ -6,20 +6,27 @@
 
 import Key from '@/components/key';
 import type { FullNote } from '@/types/keyboard-option-types';
+import styles from './octave.module.scss';
 
 interface OctaveProps {
 	fullNotes: FullNote[];
 }
 
 export default function Octave({ fullNotes }: OctaveProps): JSX.Element {
+	const isSelectedKeyboard = fullNotes.length === 13;
+
 	return (
 		<div
-			className="octave"
+			className={`${styles.octave} ${isSelectedKeyboard ? styles.keyboardSelected : styles.keyboardFull}`}
 			role="group"
 			aria-label={`Octave for ${fullNotes[0]}`}
 		>
 			{fullNotes.map((fullNote) => (
-				<Key key={fullNote} note={fullNote} />
+				<Key
+					key={fullNote}
+					note={fullNote}
+					isSelectedKeyboard={isSelectedKeyboard}
+				/>
 			))}
 		</div>
 	);

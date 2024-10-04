@@ -1,0 +1,51 @@
+@use '@/styles/abstracts' as *;
+
+.key {
+	align-items: flex-end;
+	display: flex;
+	justify-content: center;
+	padding-bottom: 0.5rem;
+
+	&.white {
+		background: $color-white;
+		border: 1px solid $color-black;
+		color: $color-black;
+		font-size: 0.8rem;
+		height: 100%;
+		width: 100%;
+		z-index: 1;
+
+		&.keyboardFull {
+			border-right: none;
+		}
+	}
+
+	&.black {
+		background: $color-black;
+		border: 0.5px solid $color-black;
+		color: $color-white;
+		font-size: 0.7rem;
+		height: 65%;
+		letter-spacing: -0.12em;
+		margin: 0 -6%;
+		width: 80%;
+		z-index: 2;
+	}
+
+	&.active {
+		color: lightblue;
+	}
+
+	.flatSymbol {
+		margin-left: -0.1rem;
+	}
+
+	&.keyboardSelected {
+		font-size: 2rem;
+
+		.flatSymbol {
+			font-size: 1.5rem;
+			padding-bottom: 0.5rem;
+		}
+	}
+}
