@@ -3,12 +3,12 @@ import { beforeEach, describe, expect, it } from 'vitest';
 
 import AudioControls from './audio-controls';
 
-describe('Full Keyboard', () => {
+describe('Audio Controls', () => {
 	beforeEach(() => {
 		render(<AudioControls />);
 	});
 
-	it('renders a labeled group div', () => {
+	it('renders the audio controls div', () => {
 		const audioControls = screen.getByRole('group', {
 			name: 'Audio controls',
 		});

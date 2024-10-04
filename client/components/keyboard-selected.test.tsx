@@ -29,7 +29,7 @@ describe('Selected Keyboard', () => {
 		);
 	});
 
-	it('renders a labeled group div', () => {
+	it('renders the selected keyboard div', () => {
 		const selectedKeyboard = screen.getByRole('group', {
 			name: 'Selected keyboard',
 		});

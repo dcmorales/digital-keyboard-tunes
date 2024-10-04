@@ -36,7 +36,7 @@ beforeEach(() => {
 	} as unknown as OscillatorNode;
 });
 
-describe('Audio Actions', () => {
+describe('Key Functions', () => {
 	it('plays a note', async () => {
 		await playNote('C4', 'sine');
 

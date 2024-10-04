@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { KeyboardOptionsProvider } from '@/context/keyboard-options-context';
 import ControlPanel from './control-panel';
 
-describe('Page', () => {
+describe('Control Panel', () => {
 	beforeEach(() => {
 		render(
 			<KeyboardOptionsProvider>
@@ -29,7 +29,7 @@ describe('Page', () => {
 		expect(keyboardFull).toBeInTheDocument();
 	});
 
-	it('renders a labeled group div', () => {
+	it('renders the audio controls div', () => {
 		const audioControls = screen.getByRole('group', {
 			name: 'Audio controls',
 		});

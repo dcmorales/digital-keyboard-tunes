@@ -13,7 +13,7 @@ describe('Full Keyboard', () => {
 		);
 	});
 
-	it('renders a labeled group div', () => {
+	it('renders the full keyboard div', () => {
 		const fullKeyboard = screen.getByRole('group', {
 			name: 'Full keyboard keys',
 		});

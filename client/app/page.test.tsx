@@ -4,7 +4,7 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { KeyboardOptionsProvider } from '@/context/keyboard-options-context';
 import Page from './page';
 
-describe('Page', () => {
+describe('Home Page', () => {
 	beforeEach(() => {
 		render(
 			<KeyboardOptionsProvider>

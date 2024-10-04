@@ -29,7 +29,7 @@ describe('Octave', () => {
 		);
 	});
 
-	it('renders a labeled group div', () => {
+	it('renders the octave div', () => {
 		const octave = screen.getByRole('group', {
 			name: 'Octave for C4',
 		});
