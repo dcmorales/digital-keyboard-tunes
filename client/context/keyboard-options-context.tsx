@@ -15,6 +15,7 @@ import {
 } from 'react';
 
 import type {
+	FullNote,
 	NoteKey,
 	OctaveNum,
 	Waveform,
@@ -30,6 +31,8 @@ interface KeyboardOptionsContextType {
 	onWaveformChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 	selectedScale: Scale;
 	onScaleChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+	activeNote: FullNote | null;
+	setActiveNote: (note: FullNote | null) => void;
 }
 
 const KeyboardOptionsContext = createContext<
@@ -49,6 +52,7 @@ export const KeyboardOptionsProvider = ({
 	const [selectedOctave, setSelectedOctave] = useState<OctaveNum>(4);
 	const [selectedWaveform, setSelectedWaveform] = useState<Waveform>('sine');
 	const [selectedScale, setSelectedScale] = useState<Scale>('chromatic');
+	const [activeNote, setActiveNote] = useState<FullNote | null>(null);
 
 	const selectionHandlers: Record<SelectionName, (value: string) => void> = {
 		key: (value: string) => setSelectedKey(value as NoteKey),
@@ -75,6 +79,8 @@ export const KeyboardOptionsProvider = ({
 				onWaveformChange: onSelectionChange,
 				selectedScale,
 				onScaleChange: onSelectionChange,
+				activeNote,
+				setActiveNote,
 			}}
 		>
 			{children}
