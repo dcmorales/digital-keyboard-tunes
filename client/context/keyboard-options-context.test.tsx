@@ -18,6 +18,7 @@ const TestComponent = () => {
 		onScaleChange,
 		activeNote,
 		setActiveNote,
+		selectedScaleNotes,
 	} = useKeyboardOptions();
 
 	return (
@@ -91,6 +92,10 @@ const TestComponent = () => {
 					Set Active Note to D4
 				</button>
 				<button onClick={() => setActiveNote(null)}>Clear Active Note</button>
+			</div>
+
+			<div>
+				<p>Selected Scale Notes: {selectedScaleNotes.join('-')}</p>
 			</div>
 		</div>
 	);
@@ -167,6 +172,18 @@ describe('KeyboardOptionsProvider', () => {
 
 		fireEvent.click(screen.getByText('Clear Active Note'));
 		expect(screen.getByText('Active Note: None')).toBeInTheDocument();
+	});
+
+	it('returns the correct set of selected notes based on octave and key', () => {
+		renderWithProvider();
+
+		changeSelection('Select Key:', 'D');
+		changeSelection('Select Octave:', '5');
+		changeSelection('Select Scale:', 'major');
+
+		expect(
+			screen.getByText('Selected Scale Notes: D5-E5-G♭5-G5-A5-B5-D♭6-D6')
+		).toBeInTheDocument();
 	});
 
 	it('throws an error when used outside of the provider', () => {

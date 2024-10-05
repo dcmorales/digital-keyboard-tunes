@@ -10,16 +10,19 @@ vi.mock('@/utils/key-functions', () => ({
 	stopNote: vi.fn(),
 }));
 
+const mockNote = 'D♭4';
+const mockWaveform = 'sine';
+
 describe('Key', () => {
 	let button: HTMLButtonElement;
 
 	beforeEach(() => {
 		render(
 			<KeyboardOptionsProvider>
-				<Key note="C4" isSelectedKeyboard />
+				<Key note={mockNote} isSelectedKeyboard />
 			</KeyboardOptionsProvider>
 		);
-		button = screen.getByRole('button', { name: 'Play the C4 note' });
+		button = screen.getByRole('button', { name: 'Play the D♭4 note' });
 	});
 
 	afterEach(() => {
@@ -31,13 +34,13 @@ describe('Key', () => {
 	});
 
 	it('applies the correct class name', () => {
-		expect(button.className.includes('white')).toBe(true);
+		expect(button.className.includes('black')).toBe(true);
 	});
 
 	it('plays the note on mouse down event', () => {
 		fireEvent.mouseDown(button);
 
-		expect(playNote).toHaveBeenCalledWith('C4', 'sine');
+		expect(playNote).toHaveBeenCalledWith(mockNote, mockWaveform);
 		expect(button.className.includes('active')).toBe(true);
 	});
 
@@ -51,7 +54,7 @@ describe('Key', () => {
 	it('plays the note on touch start event', () => {
 		fireEvent.touchStart(button);
 
-		expect(playNote).toHaveBeenCalledWith('C4', 'sine');
+		expect(playNote).toHaveBeenCalledWith(mockNote, mockWaveform);
 		expect(button.className.includes('active')).toBe(true);
 	});
 

@@ -22,6 +22,7 @@ import type {
 	Waveform,
 	Scale,
 } from '@/types/keyboard-option-types';
+import { noteOptions } from '@/values/settingsOptions';
 
 interface KeyboardOptionsContextType {
 	selectedKey: NoteKey;
@@ -34,6 +35,8 @@ interface KeyboardOptionsContextType {
 	onScaleChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 	activeNote: FullNote | null;
 	setActiveNote: (note: FullNote | null) => void;
+	fullNotesOctave: FullNote[];
+	selectedScaleNotes: FullNote[];
 }
 
 const KeyboardOptionsContext = createContext<
@@ -69,6 +72,40 @@ export const KeyboardOptionsProvider = ({
 		selectionHandler(value);
 	};
 
+	// Create a new array starting at the selectedKey. Add the selectedOctave to each string to create a fullNote.
+	// Any note that was originally before the selectedKey will be placed at the end of the new array.
+	// The octave will also increase for these notes.
+	// End the array with the first key of the next octave.
+	function rearrangeNotes(): FullNote[] {
+		const startIndex = noteOptions.indexOf(selectedKey);
+		const firstSegment = noteOptions
+			.slice(startIndex)
+			.map((note) => note + selectedOctave) as FullNote[];
+		const secondSegment = noteOptions
+			.slice(0, startIndex)
+			.map((note) => note + (selectedOctave + 1)) as FullNote[];
+		const endNote = (selectedKey + (selectedOctave + 1)) as FullNote;
+
+		return firstSegment.concat(secondSegment, endNote);
+	}
+	const fullNotesOctave = rearrangeNotes();
+
+	function defineScaleNotes(
+		fullNotesOctave: FullNote[],
+		selectedScale: Scale
+	): FullNote[] {
+		switch (selectedScale) {
+			case 'major':
+				const indexesToSelect = [0, 2, 4, 5, 7, 9, 11, 12];
+				return indexesToSelect.map((index) => fullNotesOctave[index]);
+
+			default:
+				// chromatic
+				return fullNotesOctave;
+		}
+	}
+	const selectedScaleNotes = defineScaleNotes(fullNotesOctave, selectedScale);
+
 	return (
 		<KeyboardOptionsContext.Provider
 			value={{
@@ -82,6 +119,8 @@ export const KeyboardOptionsProvider = ({
 				onScaleChange: onSelectionChange,
 				activeNote,
 				setActiveNote,
+				fullNotesOctave,
+				selectedScaleNotes,
 			}}
 		>
 			{children}

@@ -1,35 +1,23 @@
 import { fireEvent, render, screen } from '@testing-library/react';
+import { act } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { KeyboardOptionsProvider } from '@/context/keyboard-options-context';
-import type { FullNote } from '@/types/keyboard-option-types';
-import { playSelectedNotes } from '@/utils/audio-control-functions';
+import { playNote, stopNote } from '@/utils/key-functions';
 import AudioControls from '.';
 
-const mockFullNoteOptions: FullNote[] = [
-	'C4',
-	'D♭4',
-	'D4',
-	'E♭4',
-	'E4',
-	'F4',
-	'G♭4',
-	'G4',
-	'A♭4',
-	'A4',
-	'B♭4',
-	'B4',
-];
-
-vi.mock('@/utils/audio-control-functions', () => ({
-	playSelectedNotes: vi.fn(),
+vi.mock('@/utils/key-functions', () => ({
+	playNote: vi.fn(),
+	stopNote: vi.fn(),
 }));
 
 describe('Audio Controls', () => {
 	beforeEach(() => {
+		vi.clearAllMocks();
+
 		render(
 			<KeyboardOptionsProvider>
-				<AudioControls fullNotes={mockFullNoteOptions} />
+				<AudioControls />
 			</KeyboardOptionsProvider>
 		);
 	});
@@ -48,15 +36,26 @@ describe('Audio Controls', () => {
 		expect(button).toBeInTheDocument();
 	});
 
-	it('handles the play click', () => {
+	it('handles the play click', async () => {
+		vi.useFakeTimers();
+
 		const button = screen.getByRole('button', { name: 'Play the scale' });
+		const mockNumberOfNotes = 13; // length of chromatic scale
 
-		fireEvent.click(button);
+		await act(async () => {
+			fireEvent.click(button);
 
-		expect(playSelectedNotes).toHaveBeenCalledWith(
-			mockFullNoteOptions,
-			expect.any(String),
-			expect.any(Function)
-		);
+			vi.advanceTimersByTime(0); // start timer
+
+			Array.from({ length: mockNumberOfNotes }, (_, index) => {
+				// fast-forward time to when the note should be played
+				vi.advanceTimersByTime(200);
+				expect(playNote).toHaveBeenCalledTimes(index + 1);
+
+				// fast-forward time to when the next note should be stopped
+				vi.advanceTimersByTime(200);
+				expect(stopNote).toHaveBeenCalledTimes(index + 1);
+			});
+		});
 	});
 });
