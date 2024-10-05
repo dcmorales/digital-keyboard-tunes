@@ -3,10 +3,10 @@
 .octave {
 	display: flex;
 	height: 40vh;
-	width: 100%;
 
 	&.keyboardFull {
 		border: 1.5px solid $color-black;
+		width: 100%;
 
 		&:first-child {
 			border-left: 3px solid $color-black;
@@ -19,5 +19,6 @@
 
 	&.keyboardSelected {
 		border: 1px solid $color-black;
+		width: 80%;
 	}
 }
