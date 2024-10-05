@@ -1,16 +1,11 @@
 @use '@/styles/abstracts' as *;
 
-.octaveContainer {
+.keyboardSelected {
+	align-items: center;
 	display: flex;
+	gap: 1rem;
 	height: 40vh;
 	justify-content: center;
 	margin: 0 auto;
-
-	@include breakpoint(large) {
-		width: 80%;
-	}
-
-	@include breakpoint(xl) {
-		width: 60%;
-	}
+	width: 90vw;
 }

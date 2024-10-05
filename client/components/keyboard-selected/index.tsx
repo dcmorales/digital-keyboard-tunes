@@ -36,12 +36,14 @@ export default function KeyboardSelected(): JSX.Element {
 	const fullNotes = rearrangeNotes();
 
 	return (
-		<div role="region" aria-label="Selected Keyboard: audio controls and keys">
+		<div
+			className={styles.keyboardSelected}
+			role="region"
+			aria-label="Selected Keyboard: audio controls and keys"
+		>
 			<AudioControls fullNotes={fullNotes} />
 
-			<div className={styles.octaveContainer}>
-				<Octave fullNotes={fullNotes} />
-			</div>
+			<Octave fullNotes={fullNotes} />
 		</div>
 	);
 }
