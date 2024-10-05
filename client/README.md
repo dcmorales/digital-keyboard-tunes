@@ -63,13 +63,13 @@ COMING SOON: Digital Keyboard Tunes client is a web application built with Next.
 
 ## 👾 Features
 
-|     | Feature           | Description                                                                                                                                                                                                                       |
-| --- | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ⚙️  | **Architecture**  | This project's frontend is built using Next.js and TypeScript. It follows a structured architecture that includes the app-router, components, and styles. Unit tests are co-located by the units they are testing.                |
-| 🔩  | **Code Quality**  | The frontend of the codebase uses TypeScript for type safety and improved code readability. Automated workflows run Vitest testing on PR requests to ensure consistency and Prettier updates to maintain a consistent code style. |
-| 📄  | **Documentation** | The project includes detailed README files and comments within the codebase.                                                                                                                                                      |
-| 🧪  | **Testing**       | Testing the frontend is done through Vitest and React Testing Library.                                                                                                                                                            |
-| 📦  | **Dependencies**  | Key dependencies on the frontend include Next.js, React, TypeScript, Sass, and Vitest.                                                                                                                                            |
+|     | Feature           | Description                                                                                                                                                                                                                                     |
+| --- | ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ⚙️  | **Architecture**  | This project's frontend is built using Next.js and TypeScript. It follows a structured architecture that includes the app-router, components, and styles. Unit tests and SCSS modules are co-located by the units they are testing and styling. |
+| 🔩  | **Code Quality**  | The frontend of the codebase uses TypeScript for type safety and improved code readability. Automated workflows run testing on PR requests to ensure consistency and Prettier updates to maintain a consistent code style.                      |
+| 📄  | **Documentation** | The project includes detailed README files and comments within the codebase (either inline or on top of the file) to provide further context.                                                                                                   |
+| 🧪  | **Testing**       | Testing the frontend is done through Vitest and React Testing Library.                                                                                                                                                                          |
+| 📦  | **Dependencies**  | Key dependencies on the frontend include Next.js, React, TypeScript, Sass, and Vitest.                                                                                                                                                          |
 
 ---
 
@@ -80,9 +80,11 @@ COMING SOON: Digital Keyboard Tunes client is a web application built with Next.
     ├── app/
     │   ├── *.test.tsx
     │   └── *.tsx
-    ├── components/
-    │   ├── *.test.tsx
-    │   └── *.tsx
+    ├── components
+    │   └── */
+    │       ├── index.tsx
+    │       ├── *.test.tsx
+    │       └── *.module.scss
     ├── context/
     │   ├── *.test.tsx
     │   └── *.tsx
@@ -153,25 +155,27 @@ To run the client, execute the following command from the `client` directory:
 ### 🎨 CSS / SCSS
 
 - Components should be designed with a mobile-first approach.
-- When considering class names, try to stick to using the [BEM](https://css-tricks.com/bem-101/) naming convention where possible.
-- CSS properties should be ordered alphabetically.
-- Prefer CSS custom properties (variables) over SCSS variables where possible
+- Style components using modules, though there are global styles available (variables, reset, etc).
+- Selectors should be grouped in a logical manner and their CSS properties should be ordered alphabetically.
+- For class names, try to be clear and concise; for multi-word classes prefer camelCase.
+- If a component's style is dependent on the parent, add a class to the child that makes this clear.
+- Use the defined SCSS variables if possible; CSS custom properties are also welcome for runtime updates.
 - Use the `@include breakpoint()` mixin to handle media queries.
 
 ```css
 .example {
-	&--secondary {
-		background-color: var(--color-background);
-		color: var(--color-primary);
+	&.primaryParent {
+		background-color: $color-blue;
+		width: 80%;
 	}
 
-	&__child {
-		border-radius: var(--radius-small)
-		font-size: var(--font-small);
+	&.secondaryParent {
+		border-radius: 50%;
+		font-size: $font-small;
 
-        @include breakpoint(large) {
-            font-size: var(--font-large);
-        }
+		@include breakpoint(large) {
+			font-size: $font-large;
+		}
 	}
 }
 ```
