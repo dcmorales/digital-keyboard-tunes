@@ -16,7 +16,7 @@ describe('Key', () => {
 	beforeEach(() => {
 		render(
 			<KeyboardOptionsProvider>
-				<Key note="C4" />
+				<Key note="C4" isSelectedKeyboard />
 			</KeyboardOptionsProvider>
 		);
 		button = screen.getByRole('button', { name: 'Play the C4 note' });
@@ -31,34 +31,34 @@ describe('Key', () => {
 	});
 
 	it('applies the correct class name', () => {
-		expect(button).toHaveClass('key--white');
+		expect(button.className.includes('white')).toBe(true);
 	});
 
 	it('plays the note on mouse down event', () => {
 		fireEvent.mouseDown(button);
 
 		expect(playNote).toHaveBeenCalledWith('C4', 'sine');
-		expect(button).toHaveClass('key--active');
+		expect(button.className.includes('active')).toBe(true);
 	});
 
 	it('stops the note on mouse up event', () => {
 		fireEvent.mouseUp(button);
 
 		expect(stopNote).toHaveBeenCalled();
-		expect(button).not.toHaveClass('key--active');
+		expect(button.className.includes('active')).toBe(false);
 	});
 
 	it('plays the note on touch start event', () => {
 		fireEvent.touchStart(button);
 
 		expect(playNote).toHaveBeenCalledWith('C4', 'sine');
-		expect(button).toHaveClass('key--active');
+		expect(button.className.includes('active')).toBe(true);
 	});
 
 	it('stops the note on touch end event', () => {
 		fireEvent.touchEnd(button);
 
 		expect(stopNote).toHaveBeenCalled();
-		expect(button).not.toHaveClass('key--active');
+		expect(button.className.includes('active')).toBe(false);
 	});
 });
