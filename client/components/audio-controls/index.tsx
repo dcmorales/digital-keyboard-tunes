@@ -3,20 +3,30 @@
 import CustomButton from '@/components/common/custom-button';
 import Icon from '@/components/common/icon';
 import { useKeyboardOptions } from '@/context/keyboard-options-context';
-import type { FullNote } from '@/types/keyboard-option-types';
-import { playSelectedNotes } from '@/utils/audio-control-functions';
+import { playNote, stopNote } from '@/utils/key-functions';
 
-interface AudioControlsProps {
-	fullNotes: FullNote[];
-}
+export default function AudioControls(): JSX.Element {
+	const { selectedWaveform, setActiveNote, selectedScaleNotes } =
+		useKeyboardOptions();
 
-export default function AudioControls({
-	fullNotes,
-}: AudioControlsProps): JSX.Element {
-	const { selectedWaveform, setActiveNote } = useKeyboardOptions();
+	function playSelectedScaleNotes(): void {
+		selectedScaleNotes.forEach((fullNote, index) => {
+			const playDelay = index * 400;
+
+			setTimeout(() => {
+				setActiveNote(fullNote);
+				playNote(fullNote, selectedWaveform);
+
+				setTimeout(() => {
+					stopNote();
+					setActiveNote(null);
+				}, 200);
+			}, playDelay);
+		});
+	}
 
 	const handlePlayClick = (): void => {
-		playSelectedNotes(fullNotes, selectedWaveform, setActiveNote);
+		playSelectedScaleNotes();
 	};
 
 	return (
