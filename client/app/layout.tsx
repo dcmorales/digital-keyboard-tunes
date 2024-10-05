@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 
 import { KeyboardOptionsProvider } from '@/context/keyboard-options-context';
-import '@/styles/main.scss';
+import '@/styles/global.scss';
 
 export const metadata: Metadata = {
 	title: 'Digital Keyboard Tunes',
