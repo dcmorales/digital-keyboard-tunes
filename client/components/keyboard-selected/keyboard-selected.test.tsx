@@ -15,7 +15,7 @@ describe('Selected Keyboard', () => {
 
 	it('renders the selected keyboard', () => {
 		const keyboardSelected = screen.getByRole('region', {
-			name: 'Selected Keyboard: audio controls and keys',
+			name: /Selected Keyboard: audio controls and keys/i,
 		});
 
 		expect(keyboardSelected).toBeInTheDocument();
@@ -23,7 +23,7 @@ describe('Selected Keyboard', () => {
 
 	it('renders the audio controls div', () => {
 		const audioControls = screen.getByRole('group', {
-			name: 'Audio controls',
+			name: /Audio controls/i,
 		});
 
 		expect(audioControls).toBeInTheDocument();
@@ -31,7 +31,7 @@ describe('Selected Keyboard', () => {
 
 	it('renders the default octave with the correct selection of keys', () => {
 		const octave = screen.getByRole('group', {
-			name: 'Octave for C4',
+			name: /Octave for C4/i,
 		});
 
 		expect(octave).toBeInTheDocument();

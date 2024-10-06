@@ -22,7 +22,7 @@ describe('Key', () => {
 				<Key note={mockNote} isSelectedKeyboard />
 			</KeyboardOptionsProvider>
 		);
-		button = screen.getByRole('button', { name: 'Play the D♭4 note' });
+		button = screen.getByRole('button', { name: /Play the D♭4 note/i });
 	});
 
 	afterEach(() => {

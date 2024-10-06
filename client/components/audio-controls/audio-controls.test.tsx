@@ -24,14 +24,14 @@ describe('Audio Controls', () => {
 
 	it('renders the audio controls div', () => {
 		const audioControls = screen.getByRole('group', {
-			name: 'Audio controls',
+			name: /Audio controls/i,
 		});
 
 		expect(audioControls).toBeInTheDocument();
 	});
 
 	it('renders the play button', () => {
-		const button = screen.getByRole('button', { name: 'Play the scale' });
+		const button = screen.getByRole('button', { name: /Play the scale/i });
 
 		expect(button).toBeInTheDocument();
 	});
@@ -39,7 +39,7 @@ describe('Audio Controls', () => {
 	it('handles the play click', async () => {
 		vi.useFakeTimers();
 
-		const button = screen.getByRole('button', { name: 'Play the scale' });
+		const button = screen.getByRole('button', { name: /Play the scale/i });
 		const mockNumberOfNotes = 13; // length of chromatic scale
 
 		await act(async () => {

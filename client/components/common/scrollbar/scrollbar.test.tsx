@@ -14,7 +14,7 @@ describe('Scrollbar', () => {
 
 	it('renders correctly with children', () => {
 		const scrollbar = screen.getByRole('scrollbar', {
-			name: 'Scrollable area',
+			name: /Scrollable area/i,
 		});
 		const childElement = screen.getByText('Test Child');
 
@@ -24,7 +24,7 @@ describe('Scrollbar', () => {
 
 	it('has the correct aria attributes', () => {
 		const scrollbar = screen.getByRole('scrollbar', {
-			name: 'Scrollable area',
+			name: /Scrollable area/i,
 		});
 
 		expect(scrollbar).toHaveAttribute('aria-controls', 'scrollable-content');
@@ -33,7 +33,7 @@ describe('Scrollbar', () => {
 
 	it('is focusable', () => {
 		const scrollbar = screen.getByRole('scrollbar', {
-			name: 'Scrollable area',
+			name: /Scrollable area/i,
 		});
 
 		scrollbar.focus();

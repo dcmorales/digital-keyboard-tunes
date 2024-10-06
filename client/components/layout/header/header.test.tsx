@@ -30,7 +30,7 @@ describe('Header', () => {
 
 	it('renders the settings button', () => {
 		const button = screen.getByRole('button', {
-			name: 'Open keyboard settings',
+			name: /Open keyboard settings/i,
 		});
 
 		expect(button).toBeInTheDocument();
@@ -38,13 +38,13 @@ describe('Header', () => {
 
 	it('toggles the settings after clicking settings button', () => {
 		const button = screen.getByRole('button', {
-			name: 'Open keyboard settings',
+			name: /Open keyboard settings/i,
 		});
 
 		fireEvent.click(button);
 
 		const keyboardSettings = screen.getByRole('group', {
-			name: 'Keyboard settings',
+			name: /Keyboard settings/i,
 		});
 
 		expect(keyboardSettings).toBeInTheDocument();
