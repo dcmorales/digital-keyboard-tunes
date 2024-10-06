@@ -1,4 +1,7 @@
+@use '@/styles/abstracts' as *;
+
 body {
+	background-color: $color-blue-lightest;
 	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
