@@ -46,11 +46,11 @@
 	}
 
 	&.highlight {
-		color: red;
+		color: $color-blue;
 		padding-bottom: 2rem;
 	}
 
 	&.active {
-		color: lightblue;
+		color: $color-blue-dark;
 	}
 }
