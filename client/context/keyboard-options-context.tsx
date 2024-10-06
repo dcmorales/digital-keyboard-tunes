@@ -95,6 +95,8 @@ export const KeyboardOptionsProvider = ({
 	function defineScaleNotes(fullNotesOctave: FullNote[]): FullNote[] {
 		let indexesToSelect: number[];
 
+		// using the selectedScale, follow the provided array pattern to
+		// return only the notes that are included in that scale
 		switch (selectedScale) {
 			case 'major':
 				indexesToSelect = [0, 2, 4, 5, 7, 9, 11, 12];
