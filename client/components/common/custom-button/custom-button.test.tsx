@@ -16,14 +16,14 @@ describe('Custom Button', () => {
 	});
 
 	it('renders the button with children', () => {
-		const button = screen.getByRole('button', { name: 'Test the Button' });
+		const button = screen.getByRole('button', { name: /Test the Button/i });
 
 		expect(button).toBeInTheDocument();
 		expect(screen.getByText('Test Button')).toBeInTheDocument();
 	});
 
 	it('calls onClick when clicked', () => {
-		const button = screen.getByRole('button', { name: 'Test the Button' });
+		const button = screen.getByRole('button', { name: /Test the Button/i });
 
 		fireEvent.click(button);
 

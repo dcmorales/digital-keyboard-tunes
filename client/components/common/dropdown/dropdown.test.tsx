@@ -23,7 +23,7 @@ describe('Dropdown', () => {
 
 	it('renders the dropdown with all options', () => {
 		const dropdown = screen.getByRole('combobox', {
-			name: 'Select an option',
+			name: /Select an option/i,
 		});
 
 		expect(dropdown).toBeInTheDocument();
@@ -34,18 +34,18 @@ describe('Dropdown', () => {
 
 	it('renders the label for the dropdown', () => {
 		const dropdown = screen.getByRole('combobox', {
-			name: 'Select an option',
+			name: /Select an option/i,
 		});
 		const label = screen.getByText('Test dropdown');
 
 		expect(dropdown).toBeInTheDocument();
 		expect(label).toBeInTheDocument();
-		expect(label).toHaveTextContent('Test dropdown');
+		expect(label).toHaveTextContent(/Test dropdown/i);
 	});
 
 	it('displays the selected value correctly', () => {
 		const dropdown = screen.getByRole('combobox', {
-			name: 'Select an option',
+			name: /Select an option/i,
 		});
 
 		expect(dropdown).toHaveValue('b');
@@ -64,7 +64,7 @@ describe('Dropdown', () => {
 			/>
 		);
 		const dropdown = screen.getByRole('combobox', {
-			name: 'Select an option',
+			name: /Select an option/i,
 		});
 
 		fireEvent.change(dropdown, { target: { value: 'c' } });

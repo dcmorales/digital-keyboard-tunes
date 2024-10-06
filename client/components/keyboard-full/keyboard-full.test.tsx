@@ -15,7 +15,7 @@ describe('Full Keyboard', () => {
 
 	it('renders the full keyboard div', () => {
 		const fullKeyboard = screen.getByRole('group', {
-			name: 'Full keyboard keys',
+			name: /Full keyboard keys/i,
 		});
 
 		expect(fullKeyboard).toBeInTheDocument();
@@ -23,7 +23,7 @@ describe('Full Keyboard', () => {
 
 	it('renders 7 octaves', () => {
 		const fullKeyboard = screen.getByRole('group', {
-			name: 'Full keyboard keys',
+			name: /Full keyboard keys/i,
 		});
 
 		expect(fullKeyboard.children.length).toBe(7);
@@ -31,7 +31,7 @@ describe('Full Keyboard', () => {
 
 	it('renders a scrollbar', () => {
 		const scrollbar = screen.getByRole('scrollbar', {
-			name: 'Scrollable area',
+			name: /Scrollable area/i,
 		});
 
 		expect(scrollbar).toBeInTheDocument();

@@ -15,14 +15,14 @@ describe('Keyboard settings', () => {
 
 	it('renders the keyboard settings group', () => {
 		const keyboardSettings = screen.getByRole('group', {
-			name: 'Keyboard settings',
+			name: /Keyboard settings/i,
 		});
 
 		expect(keyboardSettings).toBeInTheDocument();
 	});
 
 	it('renders the key dropdown and options', () => {
-		const dropdown = screen.getByRole('combobox', { name: 'Select a key' });
+		const dropdown = screen.getByRole('combobox', { name: /Select a key/i });
 
 		expect(dropdown).toBeInTheDocument();
 		expect(dropdown).toHaveTextContent('C');
@@ -31,7 +31,9 @@ describe('Keyboard settings', () => {
 	});
 
 	it('renders the octave dropdown and options', () => {
-		const dropdown = screen.getByRole('combobox', { name: 'Select an octave' });
+		const dropdown = screen.getByRole('combobox', {
+			name: /Select an octave/i,
+		});
 
 		expect(dropdown).toBeInTheDocument();
 		expect(dropdown).toHaveTextContent('1');
@@ -41,7 +43,7 @@ describe('Keyboard settings', () => {
 
 	it('renders the waveform dropdown and options', () => {
 		const dropdown = screen.getByRole('combobox', {
-			name: 'Select a waveform',
+			name: /Select a waveform/i,
 		});
 
 		expect(dropdown).toBeInTheDocument();
@@ -52,7 +54,7 @@ describe('Keyboard settings', () => {
 
 	it('renders the scale dropdown and options', () => {
 		const dropdown = screen.getByRole('combobox', {
-			name: 'Select a scale',
+			name: /Select a scale/i,
 		});
 
 		expect(dropdown).toBeInTheDocument();

@@ -31,7 +31,7 @@ describe('Octave', () => {
 
 	it('renders the octave div', () => {
 		const octave = screen.getByRole('group', {
-			name: 'Octave for C4',
+			name: /Octave for C4/i,
 		});
 
 		expect(octave).toBeInTheDocument();
@@ -39,7 +39,7 @@ describe('Octave', () => {
 
 	it('renders each note as a child', () => {
 		const octave = screen.getByRole('group', {
-			name: 'Octave for C4',
+			name: /Octave for C4/i,
 		});
 
 		expect(octave.children.length).toBe(12);

@@ -1,10 +1,32 @@
 import { render, screen, fireEvent } from '@testing-library/react';
+import type { ChangeEvent } from 'react';
 import { describe, it, expect, vi } from 'vitest';
 
 import {
 	KeyboardOptionsProvider,
 	useKeyboardOptions,
 } from './keyboard-options-context';
+
+interface SelectInputProps {
+	label: string;
+	value: string | number;
+	options: string[] | number[];
+	onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+}
+
+const SelectInput = ({ label, value, options, onChange }: SelectInputProps) => (
+	<div>
+		<label htmlFor={label}>Select {label}:</label>
+		<select id={label} name={label} value={value} onChange={onChange}>
+			{options.map((option) => (
+				<option key={option} value={option}>
+					{option}
+				</option>
+			))}
+		</select>
+		<p>{`Selected ${label}: ${value}`}</p>
+	</div>
+);
 
 const TestComponent = () => {
 	const {
@@ -23,65 +45,42 @@ const TestComponent = () => {
 
 	return (
 		<div>
-			<div>
-				<label htmlFor="key-select">Select Key:</label>
-				<select
-					id="key-select"
-					name="key"
-					value={selectedKey}
-					onChange={onKeyChange}
-				>
-					<option value="C">C</option>
-					<option value="D">D</option>
-					<option value="E">E</option>
-				</select>
-				<p>Selected Key: {selectedKey}</p>
-			</div>
+			<SelectInput
+				label="key"
+				value={selectedKey}
+				options={['C', 'D', 'E']}
+				onChange={onKeyChange}
+			/>
 
-			<div>
-				<label htmlFor="octave-select">Select Octave:</label>
-				<select
-					id="octave-select"
-					name="octave"
-					value={selectedOctave}
-					onChange={onOctaveChange}
-				>
-					<option value={3}>3</option>
-					<option value={4}>4</option>
-					<option value={5}>5</option>
-				</select>
-				<p>Selected Octave: {selectedOctave}</p>
-			</div>
+			<SelectInput
+				label="octave"
+				value={selectedOctave}
+				options={[3, 4, 5]}
+				onChange={onOctaveChange}
+			/>
 
-			<div>
-				<label htmlFor="waveform-select">Select Waveform:</label>
-				<select
-					id="waveform-select"
-					name="waveform"
-					value={selectedWaveform}
-					onChange={onWaveformChange}
-				>
-					<option value="sine">Sine</option>
-					<option value="square">Square</option>
-					<option value="triangle">Triangle</option>
-					<option value="sawtooth">Sawtooth</option>
-				</select>
-				<p>Selected Waveform: {selectedWaveform}</p>
-			</div>
+			<SelectInput
+				label="waveform"
+				value={selectedWaveform}
+				options={['sine', 'square', 'triangle', 'sawtooth']}
+				onChange={onWaveformChange}
+			/>
 
-			<div>
-				<label htmlFor="scale-select">Select Scale:</label>
-				<select
-					id="scale-select"
-					name="scale"
-					value={selectedScale}
-					onChange={onScaleChange}
-				>
-					<option value="chromatic">Chromatic</option>
-					<option value="major">Major</option>
-				</select>
-				<p>Selected Scale: {selectedScale}</p>
-			</div>
+			<SelectInput
+				label="scale"
+				value={selectedScale}
+				options={[
+					'chromatic',
+					'major',
+					'natural minor',
+					'harmonic minor',
+					'melodic minor',
+					'major pentatonic',
+					'minor pentatonic',
+					'blues',
+				]}
+				onChange={onScaleChange}
+			/>
 
 			<div>
 				<p>Active Note: {activeNote || 'None'}</p>
@@ -93,9 +92,8 @@ const TestComponent = () => {
 				</button>
 				<button onClick={() => setActiveNote(null)}>Clear Active Note</button>
 			</div>
-
 			<div>
-				<p>Selected Scale Notes: {selectedScaleNotes.join('-')}</p>
+				<p>Selected scale notes: {selectedScaleNotes.join('-')}</p>
 			</div>
 		</div>
 	);
@@ -118,43 +116,43 @@ describe('KeyboardOptionsProvider', () => {
 	it('provides the initial values', () => {
 		renderWithProvider();
 
-		expect(screen.getByText('Selected Key: C')).toBeInTheDocument();
-		expect(screen.getByText('Selected Octave: 4')).toBeInTheDocument();
-		expect(screen.getByText('Selected Waveform: sine')).toBeInTheDocument();
-		expect(screen.getByText('Selected Scale: chromatic')).toBeInTheDocument();
-		expect(screen.getByText('Active Note: None')).toBeInTheDocument();
+		expect(screen.getByText(/Selected key: C/i)).toBeInTheDocument();
+		expect(screen.getByText(/Selected octave: 4/i)).toBeInTheDocument();
+		expect(screen.getByText(/Selected waveform: sine/i)).toBeInTheDocument();
+		expect(screen.getByText(/Selected scale: chromatic/i)).toBeInTheDocument();
+		expect(screen.getByText(/Active note: None/i)).toBeInTheDocument();
 	});
 
 	it('updates the selected key on change event', () => {
 		renderWithProvider();
 
-		changeSelection('Select Key:', 'D');
+		changeSelection('Select key:', 'D');
 
-		expect(screen.getByText('Selected Key: D')).toBeInTheDocument();
+		expect(screen.getByText(/Selected key: D/i)).toBeInTheDocument();
 	});
 
 	it('updates the selected octave on change event', () => {
 		renderWithProvider();
 
-		changeSelection('Select Octave:', '5');
+		changeSelection('Select octave:', '5');
 
-		expect(screen.getByText('Selected Octave: 5')).toBeInTheDocument();
+		expect(screen.getByText(/Selected octave: 5/i)).toBeInTheDocument();
 	});
 
 	it('updates the selected waveform on change event', () => {
 		renderWithProvider();
 
-		changeSelection('Select Waveform:', 'square');
+		changeSelection('Select waveform:', 'square');
 
-		expect(screen.getByText('Selected Waveform: square')).toBeInTheDocument();
+		expect(screen.getByText(/Selected waveform: square/i)).toBeInTheDocument();
 	});
 
 	it('updates the selected scale on change event', () => {
 		renderWithProvider();
 
-		changeSelection('Select Scale:', 'major');
+		changeSelection('Select scale:', 'major');
 
-		expect(screen.getByText('Selected Scale: major')).toBeInTheDocument();
+		expect(screen.getByText(/Selected scale: major/i)).toBeInTheDocument();
 	});
 
 	it('updates the active note when setActiveNote is called', () => {
@@ -163,27 +161,43 @@ describe('KeyboardOptionsProvider', () => {
 		fireEvent.click(
 			screen.getByRole('button', { name: /set active note to C4/i })
 		);
-		expect(screen.getByText('Active Note: C4')).toBeInTheDocument();
+		expect(screen.getByText(/Active Note: C4/i)).toBeInTheDocument();
 
 		fireEvent.click(
 			screen.getByRole('button', { name: /set active note to D4/i })
 		);
-		expect(screen.getByText('Active Note: D4')).toBeInTheDocument();
+		expect(screen.getByText(/Active Note: D4/i)).toBeInTheDocument();
 
 		fireEvent.click(screen.getByText('Clear Active Note'));
-		expect(screen.getByText('Active Note: None')).toBeInTheDocument();
+		expect(screen.getByText(/Active Note: None/i)).toBeInTheDocument();
 	});
 
-	it('returns the correct set of selected notes based on octave and key', () => {
+	it('defines the correct set of selected notes based on octave and key', () => {
 		renderWithProvider();
 
-		changeSelection('Select Key:', 'D');
-		changeSelection('Select Octave:', '5');
-		changeSelection('Select Scale:', 'major');
+		changeSelection('Select key:', 'D');
+		changeSelection('Select octave:', '5');
 
-		expect(
-			screen.getByText('Selected Scale Notes: D5-E5-G♭5-G5-A5-B5-D♭6-D6')
-		).toBeInTheDocument();
+		const scaleTests = [
+			{
+				scale: 'chromatic',
+				expected: 'D5-E♭5-E5-F5-G♭5-G5-A♭5-A5-B♭5-B5-C6-D♭6-D6',
+			},
+			{ scale: 'major', expected: 'D5-E5-G♭5-G5-A5-B5-D♭6-D6' },
+			{ scale: 'natural minor', expected: 'D5-E5-F5-G5-A5-B♭5-C6-D6' },
+			{ scale: 'harmonic minor', expected: 'D5-E5-F5-G5-A5-B♭5-D♭6-D6' },
+			{ scale: 'melodic minor', expected: 'D5-E5-F5-G5-A5-B5-D♭6-D6' },
+			{ scale: 'major pentatonic', expected: 'D5-E5-G♭5-A5-B5-D6' },
+			{ scale: 'minor pentatonic', expected: 'D5-F5-G5-A5-C6-D6' },
+			{ scale: 'blues', expected: 'D5-F5-G5-A♭5-A5-C6-D6' },
+		];
+
+		scaleTests.forEach(({ scale, expected }) => {
+			changeSelection('Select scale:', scale);
+			expect(
+				screen.getByText(`Selected scale notes: ${expected}`)
+			).toBeInTheDocument();
+		});
 	});
 
 	it('throws an error when used outside of the provider', () => {
