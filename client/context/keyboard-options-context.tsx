@@ -93,11 +93,30 @@ export const KeyboardOptionsProvider = ({
 	const fullNotesOctave = rearrangeNotes();
 
 	function defineScaleNotes(fullNotesOctave: FullNote[]): FullNote[] {
+		let indexesToSelect: number[];
+
 		switch (selectedScale) {
 			case 'major':
-				const indexesToSelect = [0, 2, 4, 5, 7, 9, 11, 12];
+				indexesToSelect = [0, 2, 4, 5, 7, 9, 11, 12];
 				return indexesToSelect.map((index) => fullNotesOctave[index]);
-
+			case 'natural minor':
+				indexesToSelect = [0, 2, 3, 5, 7, 8, 10, 12];
+				return indexesToSelect.map((index) => fullNotesOctave[index]);
+			case 'harmonic minor':
+				indexesToSelect = [0, 2, 3, 5, 7, 8, 11, 12];
+				return indexesToSelect.map((index) => fullNotesOctave[index]);
+			case 'melodic minor':
+				indexesToSelect = [0, 2, 3, 5, 7, 9, 11, 12];
+				return indexesToSelect.map((index) => fullNotesOctave[index]);
+			case 'major pentatonic':
+				indexesToSelect = [0, 2, 4, 7, 9, 12];
+				return indexesToSelect.map((index) => fullNotesOctave[index]);
+			case 'minor pentatonic':
+				indexesToSelect = [0, 3, 5, 7, 10, 12];
+				return indexesToSelect.map((index) => fullNotesOctave[index]);
+			case 'blues':
+				indexesToSelect = [0, 3, 5, 6, 7, 10, 12];
+				return indexesToSelect.map((index) => fullNotesOctave[index]);
 			default:
 				// chromatic
 				return fullNotesOctave;

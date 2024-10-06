@@ -6,6 +6,7 @@
 import type {
 	NoteKey,
 	OctaveNum,
+	Scale,
 	Waveform,
 } from '@/types/keyboard-option-types';
 
@@ -31,6 +32,17 @@ const octaveOptions: OctaveNum[] = Array.from(
 
 const waveformOptions: Waveform[] = ['sine', 'sawtooth', 'triangle', 'square'];
 
+const scaleOptions: Scale[] = [
+	'chromatic',
+	'major',
+	'natural minor',
+	'harmonic minor',
+	'melodic minor',
+	'major pentatonic',
+	'minor pentatonic',
+	'blues',
+];
+
 export const settingsOptions = {
 	key: {
 		options: noteOptions,
@@ -51,7 +63,7 @@ export const settingsOptions = {
 		name: 'waveform',
 	},
 	scale: {
-		options: ['chromatic', 'major'],
+		options: scaleOptions,
 		ariaLabel: 'Select a scale',
 		title: 'Scale',
 		name: 'scale',

@@ -79,6 +79,12 @@ const TestComponent = () => {
 				>
 					<option value="chromatic">Chromatic</option>
 					<option value="major">Major</option>
+					<option value="natural minor">Natural Minor</option>
+					<option value="harmonic minor">Harmonic Minor</option>
+					<option value="melodic minor">Melodic Minor</option>
+					<option value="major pentatonic">Major Pentatonic</option>
+					<option value="minor pentatonic">Minor Pentatonic</option>
+					<option value="blues">Blues</option>
 				</select>
 				<p>Selected Scale: {selectedScale}</p>
 			</div>
@@ -179,10 +185,46 @@ describe('KeyboardOptionsProvider', () => {
 
 		changeSelection('Select Key:', 'D');
 		changeSelection('Select Octave:', '5');
-		changeSelection('Select Scale:', 'major');
 
 		expect(
+			screen.getByText(
+				'Selected Scale Notes: D5-E♭5-E5-F5-G♭5-G5-A♭5-A5-B♭5-B5-C6-D♭6-D6'
+			)
+		).toBeInTheDocument();
+
+		changeSelection('Select Scale:', 'major');
+		expect(
 			screen.getByText('Selected Scale Notes: D5-E5-G♭5-G5-A5-B5-D♭6-D6')
+		).toBeInTheDocument();
+
+		changeSelection('Select Scale:', 'natural minor');
+		expect(
+			screen.getByText('Selected Scale Notes: D5-E5-F5-G5-A5-B♭5-C6-D6')
+		).toBeInTheDocument();
+
+		changeSelection('Select Scale:', 'harmonic minor');
+		expect(
+			screen.getByText('Selected Scale Notes: D5-E5-F5-G5-A5-B♭5-D♭6-D6')
+		).toBeInTheDocument();
+
+		changeSelection('Select Scale:', 'melodic minor');
+		expect(
+			screen.getByText('Selected Scale Notes: D5-E5-F5-G5-A5-B5-D♭6-D6')
+		).toBeInTheDocument();
+
+		changeSelection('Select Scale:', 'major pentatonic');
+		expect(
+			screen.getByText('Selected Scale Notes: D5-E5-G♭5-A5-B5-D6')
+		).toBeInTheDocument();
+
+		changeSelection('Select Scale:', 'minor pentatonic');
+		expect(
+			screen.getByText('Selected Scale Notes: D5-F5-G5-A5-C6-D6')
+		).toBeInTheDocument();
+
+		changeSelection('Select Scale:', 'blues');
+		expect(
+			screen.getByText('Selected Scale Notes: D5-F5-G5-A♭5-A5-C6-D6')
 		).toBeInTheDocument();
 	});
 
