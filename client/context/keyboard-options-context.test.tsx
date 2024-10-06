@@ -7,14 +7,14 @@ import {
 	useKeyboardOptions,
 } from './keyboard-options-context';
 
-interface selectInputProps {
+interface SelectInputProps {
 	label: string;
 	value: string | number;
 	options: string[] | number[];
 	onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
 
-const SelectInput = ({ label, value, options, onChange }: selectInputProps) => (
+const SelectInput = ({ label, value, options, onChange }: SelectInputProps) => (
 	<div>
 		<label htmlFor={label}>Select {label}:</label>
 		<select id={label} name={label} value={value} onChange={onChange}>
