@@ -1,0 +1,24 @@
+@use '@/styles/abstracts' as *;
+
+.octave {
+	display: flex;
+	height: 40vh;
+
+	&.keyboardFull {
+		border: 1.5px solid $color-black;
+		width: 100%;
+
+		&:first-child {
+			border-left: 3px solid $color-black;
+		}
+
+		&:last-child {
+			border-right: 4px solid $color-black;
+		}
+	}
+
+	&.keyboardSelected {
+		border: 1px solid $color-black;
+		width: 80%;
+	}
+}

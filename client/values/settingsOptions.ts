@@ -3,7 +3,12 @@
 // Each object in settingsOptions represents a dropdown within the settings.
 // The object provides all values except for those provided by the React context.
 
-import { NoteKey, OctaveNum, Waveform } from '@/types/keyboard-option-types';
+import type {
+	NoteKey,
+	OctaveNum,
+	Scale,
+	Waveform,
+} from '@/types/keyboard-option-types';
 
 export const noteOptions: NoteKey[] = [
 	'C',
@@ -27,6 +32,17 @@ const octaveOptions: OctaveNum[] = Array.from(
 
 const waveformOptions: Waveform[] = ['sine', 'sawtooth', 'triangle', 'square'];
 
+const scaleOptions: Scale[] = [
+	'chromatic',
+	'major',
+	'natural minor',
+	'harmonic minor',
+	'melodic minor',
+	'major pentatonic',
+	'minor pentatonic',
+	'blues',
+];
+
 export const settingsOptions = {
 	key: {
 		options: noteOptions,
@@ -45,5 +61,11 @@ export const settingsOptions = {
 		ariaLabel: 'Select a waveform',
 		title: 'Waveform',
 		name: 'waveform',
+	},
+	scale: {
+		options: scaleOptions,
+		ariaLabel: 'Select a scale',
+		title: 'Scale',
+		name: 'scale',
 	},
 };

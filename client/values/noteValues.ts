@@ -1,6 +1,7 @@
 // Keyboard note values
+// Provides the values for each key on the keyboard.
 
-import { NoteKey } from '@/types/keyboard-option-types';
+import type { NoteKey } from '@/types/keyboard-option-types';
 
 // Each note value is an object containing a letter note and a frequency value
 // Note indicates which note on the keyboard it will represent within an octave, there are only 12 options
