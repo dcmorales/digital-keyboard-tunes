@@ -26,9 +26,12 @@ export default function Dropdown({
 }: DropdownProps): JSX.Element {
 	return (
 		<div className={styles.dropdown}>
-			<label htmlFor={name}>{title}</label>
+			<label className={styles.label} htmlFor={name}>
+				{title}
+			</label>
 
 			<select
+				className={styles.select}
 				id={name}
 				name={name}
 				aria-label={ariaLabel}
