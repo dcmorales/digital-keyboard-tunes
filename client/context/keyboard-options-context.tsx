@@ -98,32 +98,32 @@ export const KeyboardOptionsProvider = ({
 	const fullNotesOctave = rearrangeNotes();
 
 	function defineScaleNotes(fullNotesOctave: FullNote[]): FullNote[] {
-		let indexesToSelect: number[];
+		let scaleNoteIndexes: number[];
 
 		// using the selectedScale, follow the provided array pattern to
 		// return only the notes that are included in that scale
 		switch (selectedScale) {
 			case 'major':
-				indexesToSelect = [0, 2, 4, 5, 7, 9, 11, 12];
-				return indexesToSelect.map((index) => fullNotesOctave[index]);
+				scaleNoteIndexes = [0, 2, 4, 5, 7, 9, 11, 12];
+				return scaleNoteIndexes.map((index) => fullNotesOctave[index]);
 			case 'natural minor':
-				indexesToSelect = [0, 2, 3, 5, 7, 8, 10, 12];
-				return indexesToSelect.map((index) => fullNotesOctave[index]);
+				scaleNoteIndexes = [0, 2, 3, 5, 7, 8, 10, 12];
+				return scaleNoteIndexes.map((index) => fullNotesOctave[index]);
 			case 'harmonic minor':
-				indexesToSelect = [0, 2, 3, 5, 7, 8, 11, 12];
-				return indexesToSelect.map((index) => fullNotesOctave[index]);
+				scaleNoteIndexes = [0, 2, 3, 5, 7, 8, 11, 12];
+				return scaleNoteIndexes.map((index) => fullNotesOctave[index]);
 			case 'melodic minor':
-				indexesToSelect = [0, 2, 3, 5, 7, 9, 11, 12];
-				return indexesToSelect.map((index) => fullNotesOctave[index]);
+				scaleNoteIndexes = [0, 2, 3, 5, 7, 9, 11, 12];
+				return scaleNoteIndexes.map((index) => fullNotesOctave[index]);
 			case 'major pentatonic':
-				indexesToSelect = [0, 2, 4, 7, 9, 12];
-				return indexesToSelect.map((index) => fullNotesOctave[index]);
+				scaleNoteIndexes = [0, 2, 4, 7, 9, 12];
+				return scaleNoteIndexes.map((index) => fullNotesOctave[index]);
 			case 'minor pentatonic':
-				indexesToSelect = [0, 3, 5, 7, 10, 12];
-				return indexesToSelect.map((index) => fullNotesOctave[index]);
+				scaleNoteIndexes = [0, 3, 5, 7, 10, 12];
+				return scaleNoteIndexes.map((index) => fullNotesOctave[index]);
 			case 'blues':
-				indexesToSelect = [0, 3, 5, 6, 7, 10, 12];
-				return indexesToSelect.map((index) => fullNotesOctave[index]);
+				scaleNoteIndexes = [0, 3, 5, 6, 7, 10, 12];
+				return scaleNoteIndexes.map((index) => fullNotesOctave[index]);
 			default:
 				// chromatic
 				return fullNotesOctave;
