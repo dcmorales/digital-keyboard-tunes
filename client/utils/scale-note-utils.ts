@@ -4,6 +4,7 @@ import type {
 	FullNote,
 	NoteKey,
 	OctaveNum,
+	Order,
 	Scale,
 } from '@/types/keyboard-option-types';
 import { noteOptions } from '@/values/settingsOptions';
@@ -64,5 +65,26 @@ export function defineScaleNotes(
 		default:
 			// chromatic
 			return fullNotesOctave;
+	}
+}
+
+export function setNotesOrder(
+	selectedKey: NoteKey,
+	selectedOctave: OctaveNum,
+	selectedScale: Scale,
+	selectedOrder: Order
+): FullNote[] {
+	const scaleNotes = defineScaleNotes(
+		selectedKey,
+		selectedOctave,
+		selectedScale
+	);
+
+	switch (selectedOrder) {
+		case 'descending':
+			return scaleNotes.reverse();
+		default:
+			// ascending
+			return scaleNotes;
 	}
 }
