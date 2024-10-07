@@ -38,6 +38,8 @@ const TestComponent = () => {
 		onWaveformChange,
 		selectedScale,
 		onScaleChange,
+		selectedOrder,
+		onOrderChange,
 		activeNote,
 		setActiveNote,
 		selectedScaleNotes,
@@ -82,6 +84,13 @@ const TestComponent = () => {
 				onChange={onScaleChange}
 			/>
 
+			<SelectInput
+				label="order"
+				value={selectedOrder}
+				options={['ascending', 'descending', 'random']}
+				onChange={onOrderChange}
+			/>
+
 			<div>
 				<p>Active Note: {activeNote || 'None'}</p>
 				<button onClick={() => setActiveNote('C4')}>
@@ -120,6 +129,7 @@ describe('KeyboardOptionsProvider', () => {
 		expect(screen.getByText(/Selected octave: 4/i)).toBeInTheDocument();
 		expect(screen.getByText(/Selected waveform: sine/i)).toBeInTheDocument();
 		expect(screen.getByText(/Selected scale: chromatic/i)).toBeInTheDocument();
+		expect(screen.getByText(/Selected order: ascending/i)).toBeInTheDocument();
 		expect(screen.getByText(/Active note: None/i)).toBeInTheDocument();
 	});
 
@@ -153,6 +163,14 @@ describe('KeyboardOptionsProvider', () => {
 		changeSelection('Select scale:', 'major');
 
 		expect(screen.getByText(/Selected scale: major/i)).toBeInTheDocument();
+	});
+
+	it('updates the selected order on change event', () => {
+		renderWithProvider();
+
+		changeSelection('Select order:', 'random');
+
+		expect(screen.getByText(/Selected order: random/i)).toBeInTheDocument();
 	});
 
 	it('updates the active note when setActiveNote is called', () => {

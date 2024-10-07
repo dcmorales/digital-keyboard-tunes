@@ -21,6 +21,7 @@ import type {
 	FullNote,
 	NoteKey,
 	OctaveNum,
+	Order,
 	Waveform,
 	Scale,
 } from '@/types/keyboard-option-types';
@@ -35,6 +36,8 @@ interface KeyboardOptionsContextType {
 	onWaveformChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 	selectedScale: Scale;
 	onScaleChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+	selectedOrder: Order;
+	onOrderChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 	activeNote: FullNote | null;
 	setActiveNote: (note: FullNote | null) => void;
 	fullNotesOctave: FullNote[];
@@ -45,7 +48,7 @@ const KeyboardOptionsContext = createContext<
 	KeyboardOptionsContextType | undefined
 >(undefined);
 
-type SelectionName = 'key' | 'octave' | 'waveform' | 'scale';
+type SelectionName = 'key' | 'octave' | 'waveform' | 'scale' | 'order';
 
 interface KeyboardOptionsProviderProps {
 	children: ReactNode;
@@ -58,6 +61,7 @@ export const KeyboardOptionsProvider = ({
 	const [selectedOctave, setSelectedOctave] = useState<OctaveNum>(4);
 	const [selectedWaveform, setSelectedWaveform] = useState<Waveform>('sine');
 	const [selectedScale, setSelectedScale] = useState<Scale>('chromatic');
+	const [selectedOrder, setSelectedOrder] = useState<Order>('ascending');
 	const [activeNote, setActiveNote] = useState<FullNote | null>(null);
 
 	const selectionHandlers: Record<SelectionName, (value: string) => void> = {
@@ -65,6 +69,7 @@ export const KeyboardOptionsProvider = ({
 		octave: (value: string) => setSelectedOctave(Number(value) as OctaveNum),
 		waveform: (value: string) => setSelectedWaveform(value as Waveform),
 		scale: (value: string) => setSelectedScale(value as Scale),
+		order: (value: string) => setSelectedOrder(value as Order),
 	};
 
 	const onSelectionChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -137,6 +142,8 @@ export const KeyboardOptionsProvider = ({
 				onWaveformChange: onSelectionChange,
 				selectedScale,
 				onScaleChange: onSelectionChange,
+				selectedOrder,
+				onOrderChange: onSelectionChange,
 				activeNote,
 				setActiveNote,
 				fullNotesOctave,
