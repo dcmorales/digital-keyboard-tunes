@@ -6,6 +6,7 @@
 import type {
 	NoteKey,
 	OctaveNum,
+	Order,
 	Scale,
 	Waveform,
 } from '@/types/keyboard-option-types';
@@ -43,6 +44,8 @@ const scaleOptions: Scale[] = [
 	'blues',
 ];
 
+const orderOptions: Order[] = ['ascending', 'descending', 'random'];
+
 export const settingsOptions = {
 	key: {
 		options: noteOptions,
@@ -67,5 +70,11 @@ export const settingsOptions = {
 		ariaLabel: 'Select a scale',
 		title: 'Scale',
 		name: 'scale',
+	},
+	order: {
+		options: orderOptions,
+		ariaLabel: 'Select an order',
+		title: 'Order',
+		name: 'order',
 	},
 };

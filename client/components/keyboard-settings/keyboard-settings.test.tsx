@@ -61,4 +61,14 @@ describe('Keyboard settings', () => {
 		expect(dropdown).toHaveTextContent('chromatic');
 		expect(dropdown).toHaveTextContent('major');
 	});
+
+	it('renders the order dropdown and options', () => {
+		const dropdown = screen.getByRole('combobox', {
+			name: /Select an order/i,
+		});
+
+		expect(dropdown).toBeInTheDocument();
+		expect(dropdown).toHaveTextContent('descending');
+		expect(dropdown).toHaveTextContent('random');
+	});
 });
