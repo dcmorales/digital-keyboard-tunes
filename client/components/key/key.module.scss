@@ -30,6 +30,10 @@
 		&.active {
 			color: $color-blue-dark;
 		}
+
+		&:hover {
+			background-color: darken($color-white, 5%);
+		}
 	}
 
 	&.black {
@@ -49,6 +53,10 @@
 
 		&.active {
 			color: $color-blue;
+		}
+
+		&:hover {
+			background-color: lighten($color-black, 10%);
 		}
 	}
 
