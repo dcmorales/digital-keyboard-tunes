@@ -3,10 +3,10 @@ import { act } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { KeyboardOptionsProvider } from '@/context/keyboard-options-context';
-import { playNote, stopNote } from '@/utils/key-functions';
+import { playNote, stopNote } from '@/utils/key-utils';
 import AudioControls from '.';
 
-vi.mock('@/utils/key-functions', () => ({
+vi.mock('@/utils/key-utils', () => ({
 	playNote: vi.fn(),
 	stopNote: vi.fn(),
 }));

@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { playNote, stopNote } from './key-functions';
+import { playNote, stopNote } from './key-utils';
 
 // create interfaces for the global objects
 interface GlobalAudioContext extends Window {
@@ -36,7 +36,7 @@ beforeEach(() => {
 	} as unknown as OscillatorNode;
 });
 
-describe('Key Functions', () => {
+describe('Key Utils', () => {
 	it('plays a note', async () => {
 		await playNote('C4', 'sine');
 

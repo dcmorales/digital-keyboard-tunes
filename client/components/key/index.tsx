@@ -9,7 +9,7 @@
 
 import { useKeyboardOptions } from '@/context/keyboard-options-context';
 import type { FullNote } from '@/types/keyboard-option-types';
-import { playNote, stopNote } from '@/utils/key-functions';
+import { playNote, stopNote } from '@/utils/key-utils';
 import styles from './key.module.scss';
 
 interface KeyProps {
