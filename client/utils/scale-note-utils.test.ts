@@ -131,4 +131,34 @@ describe('Scale Note Utils', () => {
 
 		expect(descendingOrder).toStrictEqual(descendingExpectedResult);
 	});
+
+	it('correctly assembles notes using the random order', () => {
+		const randomOrder = setNotesOrder(
+			mockSelectedKey,
+			mockSelectedOctave,
+			mockSelectedScale,
+			'random'
+		);
+
+		const expectedLength = 8; // major scale has 8 notes.
+
+		expect(randomOrder).toHaveLength(expectedLength);
+
+		// check that all original notes are present
+		const scaleNotes = defineScaleNotes(
+			mockSelectedKey,
+			mockSelectedOctave,
+			mockSelectedScale
+		);
+		expect(randomOrder).toEqual(expect.arrayContaining(scaleNotes));
+
+		// check that the order is different from the expected ascending order
+		const ascendingOrder = setNotesOrder(
+			mockSelectedKey,
+			mockSelectedOctave,
+			mockSelectedScale,
+			'ascending'
+		);
+		expect(randomOrder).not.toEqual(ascendingOrder);
+	});
 });

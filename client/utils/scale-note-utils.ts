@@ -68,6 +68,16 @@ export function defineScaleNotes(
 	}
 }
 
+// Fisher-Yates shuffle
+function shuffleNotes(notes: FullNote[]): FullNote[] {
+	for (let i = notes.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+
+		[notes[i], notes[j]] = [notes[j], notes[i]];
+	}
+	return notes;
+}
+
 export function setNotesOrder(
 	selectedKey: NoteKey,
 	selectedOctave: OctaveNum,
@@ -83,6 +93,8 @@ export function setNotesOrder(
 	switch (selectedOrder) {
 		case 'descending':
 			return scaleNotes.reverse();
+		case 'random':
+			return shuffleNotes(scaleNotes);
 		default:
 			// ascending
 			return scaleNotes;
