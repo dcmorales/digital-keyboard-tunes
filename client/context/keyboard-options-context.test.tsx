@@ -42,7 +42,7 @@ const TestComponent = () => {
 		onOrderChange,
 		activeNote,
 		setActiveNote,
-		selectedScaleNotes,
+		orderedScaleNotes,
 	} = useKeyboardOptions();
 
 	return (
@@ -93,7 +93,7 @@ const TestComponent = () => {
 				<button onClick={() => setActiveNote(null)}>Clear Active Note</button>
 			</div>
 			<div>
-				<p>Selected scale notes: {selectedScaleNotes.join('-')}</p>
+				<p>Ordered scale notes: {orderedScaleNotes.join('-')}</p>
 			</div>
 		</div>
 	);
@@ -181,28 +181,22 @@ describe('KeyboardOptionsProvider', () => {
 		expect(screen.getByText(/Active Note: None/i)).toBeInTheDocument();
 	});
 
-	it('defines the correct set of selected notes based on octave, key, and scale', () => {
+	it('defines the selected notes in the correct order based on octave, key, and scale', () => {
 		renderWithProvider();
 
 		changeSelection('Select key:', 'D');
 		changeSelection('Select octave:', '5');
+		changeSelection('Select scale:', 'major');
 
-		// all scales are tested in scale-note-utils.ts
-		const scaleTests = [
-			{
-				scale: 'chromatic',
-				expected: 'D5-E♭5-E5-F5-G♭5-G5-A♭5-A5-B♭5-B5-C6-D♭6-D6',
-			},
-			{ scale: 'major', expected: 'D5-E5-G♭5-G5-A5-B5-D♭6-D6' },
-			{ scale: 'blues', expected: 'D5-F5-G5-A♭5-A5-C6-D6' },
-		];
+		expect(
+			screen.getByText('Ordered scale notes: D5-E5-G♭5-G5-A5-B5-D♭6-D6')
+		).toBeInTheDocument();
 
-		scaleTests.forEach(({ scale, expected }) => {
-			changeSelection('Select scale:', scale);
-			expect(
-				screen.getByText(`Selected scale notes: ${expected}`)
-			).toBeInTheDocument();
-		});
+		changeSelection('Select order:', 'descending');
+
+		expect(
+			screen.getByText('Ordered scale notes: D6-D♭6-B5-A5-G5-G♭5-E5-D5')
+		).toBeInTheDocument();
 	});
 
 	it('throws an error when used outside of the provider', () => {

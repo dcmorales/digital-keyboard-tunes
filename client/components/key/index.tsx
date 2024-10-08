@@ -21,7 +21,7 @@ export default function Key({
 	note,
 	isSelectedKeyboard,
 }: KeyProps): JSX.Element {
-	const { activeNote, setActiveNote, selectedWaveform, selectedScaleNotes } =
+	const { activeNote, setActiveNote, selectedWaveform, orderedScaleNotes } =
 		useKeyboardOptions();
 
 	const handleMouseDown = (): void => {
@@ -49,7 +49,7 @@ export default function Key({
 	return (
 		<button
 			aria-label={`Play the ${note} note`}
-			className={`${key} ${note.includes('♭') ? black : white} ${isSelectedKeyboard ? keyboardSelected : keyboardFull} ${isActive ? active : ''} ${selectedScaleNotes.includes(note) ? highlight : ''}`}
+			className={`${key} ${note.includes('♭') ? black : white} ${isSelectedKeyboard ? keyboardSelected : keyboardFull} ${isActive ? active : ''} ${orderedScaleNotes.includes(note) ? highlight : ''}`}
 			onMouseDown={handleMouseDown}
 			onMouseUp={handleMouseUp}
 			onTouchStart={handleMouseDown}

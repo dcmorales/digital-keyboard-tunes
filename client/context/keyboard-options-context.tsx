@@ -25,7 +25,7 @@ import type {
 	Waveform,
 	Scale,
 } from '@/types/keyboard-option-types';
-import { defineScaleNotes, rearrangeNotes } from '@/utils/scale-note-utils';
+import { rearrangeNotes, setNotesOrder } from '@/utils/scale-note-utils';
 
 interface KeyboardOptionsContextType {
 	selectedKey: NoteKey;
@@ -41,7 +41,7 @@ interface KeyboardOptionsContextType {
 	activeNote: FullNote | null;
 	setActiveNote: (note: FullNote | null) => void;
 	fullNotesOctave: FullNote[];
-	selectedScaleNotes: FullNote[];
+	orderedScaleNotes: FullNote[];
 }
 
 const KeyboardOptionsContext = createContext<
@@ -81,10 +81,11 @@ export const KeyboardOptionsProvider = ({
 
 	const fullNotesOctave = rearrangeNotes(selectedKey, selectedOctave);
 
-	const selectedScaleNotes = defineScaleNotes(
+	const orderedScaleNotes = setNotesOrder(
 		selectedKey,
 		selectedOctave,
-		selectedScale
+		selectedScale,
+		selectedOrder
 	);
 
 	return (
@@ -103,7 +104,7 @@ export const KeyboardOptionsProvider = ({
 				activeNote,
 				setActiveNote,
 				fullNotesOctave,
-				selectedScaleNotes,
+				orderedScaleNotes,
 			}}
 		>
 			{children}

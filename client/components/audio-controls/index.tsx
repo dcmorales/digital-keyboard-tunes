@@ -1,6 +1,6 @@
 // audio-controls
 // Contains the buttons that control whether the selected scale plays.
-// Clicking the play button will play each note in the selectedScaleNotes array and set
+// Clicking the play button will play each note in the orderedScaleNotes array and set
 // it as active (changing the appearance of the key). After a delay, it will then stop
 // the note and remove it from active (resetting the appearance of the key).
 
@@ -11,11 +11,11 @@ import { playNote, stopNote } from '@/utils/key-utils';
 import styles from './audio-controls.module.scss';
 
 export default function AudioControls(): JSX.Element {
-	const { selectedWaveform, setActiveNote, selectedScaleNotes } =
+	const { selectedWaveform, setActiveNote, orderedScaleNotes } =
 		useKeyboardOptions();
 
-	function playSelectedScaleNotes(): void {
-		selectedScaleNotes.forEach((fullNote, index) => {
+	function playOrderedScaleNotes(): void {
+		orderedScaleNotes.forEach((fullNote, index) => {
 			const playDelay = index * 400;
 
 			setTimeout(() => {
@@ -31,7 +31,7 @@ export default function AudioControls(): JSX.Element {
 	}
 
 	const handlePlayClick = (): void => {
-		playSelectedScaleNotes();
+		playOrderedScaleNotes();
 	};
 
 	return (
