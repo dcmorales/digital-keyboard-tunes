@@ -23,9 +23,12 @@ export default function KeyboardSettings(): JSX.Element {
 		onOrderChange,
 		selectedNoteLength,
 		onNoteLengthChange,
+		selectedBpm,
+		onBpmChange,
 	} = useKeyboardOptions();
 
-	const { key, octave, waveform, scale, order, noteLength } = settingsOptions;
+	const { key, octave, waveform, scale, order, noteLength, bpm } =
+		settingsOptions;
 
 	const settingDropdowns = [
 		{ setting: key, value: selectedKey, onChange: onKeyChange },
@@ -38,6 +41,7 @@ export default function KeyboardSettings(): JSX.Element {
 			value: selectedNoteLength,
 			onChange: onNoteLengthChange,
 		},
+		{ setting: bpm, value: selectedBpm, onChange: onBpmChange },
 	];
 
 	return (

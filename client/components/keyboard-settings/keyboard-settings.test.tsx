@@ -81,4 +81,14 @@ describe('Keyboard settings', () => {
 		expect(dropdown).toHaveTextContent('1/8');
 		expect(dropdown).toHaveTextContent('1/16');
 	});
+
+	it('renders the bpm dropdown and options', () => {
+		const dropdown = screen.getByRole('combobox', {
+			name: /Select a beats per minute value/i,
+		});
+
+		expect(dropdown).toBeInTheDocument();
+		expect(dropdown).toHaveTextContent('110');
+		expect(dropdown).toHaveTextContent('120');
+	});
 });

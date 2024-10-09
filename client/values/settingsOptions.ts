@@ -49,6 +49,12 @@ const orderOptions: Order[] = ['ascending', 'descending', 'random'];
 
 const noteLengthOptions: NoteLength[] = ['1/4', '1/8', '1/16'];
 
+// 100-130
+const bpmOptions: number[] = Array.from(
+	{ length: 31 },
+	(_, index) => 100 + index
+);
+
 export const settingsOptions = {
 	key: {
 		options: noteOptions,
@@ -85,5 +91,11 @@ export const settingsOptions = {
 		ariaLabel: 'Select a note length',
 		title: 'Note Length',
 		name: 'note-length',
+	},
+	bpm: {
+		options: bpmOptions,
+		ariaLabel: 'Select a beats per minute value',
+		title: 'BPM',
+		name: 'bpm',
 	},
 };
