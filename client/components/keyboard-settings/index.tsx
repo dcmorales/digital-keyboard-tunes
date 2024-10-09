@@ -24,7 +24,21 @@ export default function KeyboardSettings(): JSX.Element {
 		selectedNoteLength,
 		onNoteLengthChange,
 	} = useKeyboardOptions();
+
 	const { key, octave, waveform, scale, order, noteLength } = settingsOptions;
+
+	const settingDropdowns = [
+		{ setting: key, value: selectedKey, onChange: onKeyChange },
+		{ setting: octave, value: selectedOctave, onChange: onOctaveChange },
+		{ setting: waveform, value: selectedWaveform, onChange: onWaveformChange },
+		{ setting: scale, value: selectedScale, onChange: onScaleChange },
+		{ setting: order, value: selectedOrder, onChange: onOrderChange },
+		{
+			setting: noteLength,
+			value: selectedNoteLength,
+			onChange: onNoteLengthChange,
+		},
+	];
 
 	return (
 		<div
@@ -32,59 +46,17 @@ export default function KeyboardSettings(): JSX.Element {
 			role="group"
 			aria-label="Keyboard settings"
 		>
-			<Dropdown
-				options={key.options}
-				ariaLabel={key.ariaLabel}
-				title={key.title}
-				name={key.name}
-				value={selectedKey}
-				onChange={onKeyChange}
-			/>
-
-			<Dropdown
-				options={octave.options}
-				ariaLabel={octave.ariaLabel}
-				title={octave.title}
-				name={octave.name}
-				value={selectedOctave}
-				onChange={onOctaveChange}
-			/>
-
-			<Dropdown
-				options={waveform.options}
-				ariaLabel={waveform.ariaLabel}
-				title={waveform.title}
-				name={waveform.name}
-				value={selectedWaveform}
-				onChange={onWaveformChange}
-			/>
-
-			<Dropdown
-				options={scale.options}
-				ariaLabel={scale.ariaLabel}
-				title={scale.title}
-				name={scale.name}
-				value={selectedScale}
-				onChange={onScaleChange}
-			/>
-
-			<Dropdown
-				options={order.options}
-				ariaLabel={order.ariaLabel}
-				title={order.title}
-				name={order.name}
-				value={selectedOrder}
-				onChange={onOrderChange}
-			/>
-
-			<Dropdown
-				options={noteLength.options}
-				ariaLabel={noteLength.ariaLabel}
-				title={noteLength.title}
-				name={noteLength.name}
-				value={selectedNoteLength}
-				onChange={onNoteLengthChange}
-			/>
+			{settingDropdowns.map(({ setting, value, onChange }) => (
+				<Dropdown
+					key={setting.name}
+					options={setting.options}
+					ariaLabel={setting.ariaLabel}
+					title={setting.title}
+					name={setting.name}
+					value={value}
+					onChange={onChange}
+				/>
+			))}
 		</div>
 	);
 }
