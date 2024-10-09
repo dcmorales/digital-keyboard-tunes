@@ -41,6 +41,9 @@ export function defineScaleNotes(
 	let scaleNoteIndexes: number[];
 
 	switch (selectedScale) {
+		case 'chromatic':
+			scaleNoteIndexes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+			break;
 		case 'major':
 			scaleNoteIndexes = [0, 2, 4, 5, 7, 9, 11, 12];
 			break;
@@ -62,9 +65,6 @@ export function defineScaleNotes(
 		case 'blues':
 			scaleNoteIndexes = [0, 3, 5, 6, 7, 10, 12];
 			break;
-		default:
-			// chromatic
-			scaleNoteIndexes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 	}
 
 	return scaleNoteIndexes.map((index) => fullNotesOctave[index]);
@@ -93,12 +93,11 @@ export function setNotesOrder(
 	);
 
 	switch (selectedOrder) {
+		case 'ascending':
+			return scaleNotes;
 		case 'descending':
 			return scaleNotes.reverse();
 		case 'random':
 			return shuffleNotes(scaleNotes);
-		default:
-			// ascending
-			return scaleNotes;
 	}
 }
