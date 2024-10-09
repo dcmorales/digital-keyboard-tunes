@@ -20,6 +20,7 @@ import {
 import type {
 	FullNote,
 	NoteKey,
+	NoteLength,
 	OctaveNum,
 	Order,
 	Waveform,
@@ -38,6 +39,8 @@ interface KeyboardOptionsContextType {
 	onScaleChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 	selectedOrder: Order;
 	onOrderChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+	selectedNoteLength: NoteLength;
+	onNoteLengthChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 	activeNote: FullNote | null;
 	setActiveNote: (note: FullNote | null) => void;
 	fullNotesOctave: FullNote[];
@@ -48,7 +51,13 @@ const KeyboardOptionsContext = createContext<
 	KeyboardOptionsContextType | undefined
 >(undefined);
 
-type SelectionName = 'key' | 'octave' | 'waveform' | 'scale' | 'order';
+type SelectionName =
+	| 'key'
+	| 'octave'
+	| 'waveform'
+	| 'scale'
+	| 'order'
+	| 'note-length';
 
 interface KeyboardOptionsProviderProps {
 	children: ReactNode;
@@ -62,6 +71,8 @@ export const KeyboardOptionsProvider = ({
 	const [selectedWaveform, setSelectedWaveform] = useState<Waveform>('sine');
 	const [selectedScale, setSelectedScale] = useState<Scale>('chromatic');
 	const [selectedOrder, setSelectedOrder] = useState<Order>('ascending');
+	const [selectedNoteLength, setSelectedNoteLength] =
+		useState<NoteLength>('1/4');
 	const [activeNote, setActiveNote] = useState<FullNote | null>(null);
 
 	const selectionHandlers: Record<SelectionName, (value: string) => void> = {
@@ -70,6 +81,8 @@ export const KeyboardOptionsProvider = ({
 		waveform: (value: string) => setSelectedWaveform(value as Waveform),
 		scale: (value: string) => setSelectedScale(value as Scale),
 		order: (value: string) => setSelectedOrder(value as Order),
+		'note-length': (value: string) =>
+			setSelectedNoteLength(value as NoteLength),
 	};
 
 	const onSelectionChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -101,6 +114,8 @@ export const KeyboardOptionsProvider = ({
 				onScaleChange: onSelectionChange,
 				selectedOrder,
 				onOrderChange: onSelectionChange,
+				selectedNoteLength,
+				onNoteLengthChange: onSelectionChange,
 				activeNote,
 				setActiveNote,
 				fullNotesOctave,
