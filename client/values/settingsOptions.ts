@@ -5,6 +5,7 @@
 
 import type {
 	NoteKey,
+	NoteLength,
 	OctaveNum,
 	Order,
 	Scale,
@@ -46,6 +47,8 @@ const scaleOptions: Scale[] = [
 
 const orderOptions: Order[] = ['ascending', 'descending', 'random'];
 
+const noteLengthOptions: NoteLength[] = ['1/4', '1/8', '1/16'];
+
 export const settingsOptions = {
 	key: {
 		options: noteOptions,
@@ -76,5 +79,11 @@ export const settingsOptions = {
 		ariaLabel: 'Select an order',
 		title: 'Order',
 		name: 'order',
+	},
+	noteLength: {
+		options: noteLengthOptions,
+		ariaLabel: 'Select a note length',
+		title: 'Note Length',
+		name: 'note-length',
 	},
 };

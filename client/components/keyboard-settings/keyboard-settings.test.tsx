@@ -71,4 +71,14 @@ describe('Keyboard settings', () => {
 		expect(dropdown).toHaveTextContent('descending');
 		expect(dropdown).toHaveTextContent('random');
 	});
+
+	it('renders the note length dropdown and options', () => {
+		const dropdown = screen.getByRole('combobox', {
+			name: /Select a note length/i,
+		});
+
+		expect(dropdown).toBeInTheDocument();
+		expect(dropdown).toHaveTextContent('1/8');
+		expect(dropdown).toHaveTextContent('1/16');
+	});
 });

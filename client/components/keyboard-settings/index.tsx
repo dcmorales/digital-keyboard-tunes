@@ -21,8 +21,10 @@ export default function KeyboardSettings(): JSX.Element {
 		onScaleChange,
 		selectedOrder,
 		onOrderChange,
+		selectedNoteLength,
+		onNoteLengthChange,
 	} = useKeyboardOptions();
-	const { key, octave, waveform, scale, order } = settingsOptions;
+	const { key, octave, waveform, scale, order, noteLength } = settingsOptions;
 
 	return (
 		<div
@@ -73,6 +75,15 @@ export default function KeyboardSettings(): JSX.Element {
 				name={order.name}
 				value={selectedOrder}
 				onChange={onOrderChange}
+			/>
+
+			<Dropdown
+				options={noteLength.options}
+				ariaLabel={noteLength.ariaLabel}
+				title={noteLength.title}
+				name={noteLength.name}
+				value={selectedNoteLength}
+				onChange={onNoteLengthChange}
 			/>
 		</div>
 	);

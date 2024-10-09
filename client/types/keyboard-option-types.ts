@@ -32,3 +32,5 @@ export type Scale =
 	| 'blues';
 
 export type Order = 'ascending' | 'descending' | 'random';
+
+export type NoteLength = '1/4' | '1/8' | '1/16';
