@@ -42,6 +42,8 @@ const TestComponent = () => {
 		onOrderChange,
 		selectedNoteLength,
 		onNoteLengthChange,
+		selectedBpm,
+		onBpmChange,
 		activeNote,
 		setActiveNote,
 		orderedScaleNotes,
@@ -91,6 +93,13 @@ const TestComponent = () => {
 				onChange={onNoteLengthChange}
 			/>
 
+			<SelectInput
+				label="bpm"
+				value={selectedBpm}
+				options={[100, 110, 120]}
+				onChange={onBpmChange}
+			/>
+
 			<div>
 				<p>Active Note: {activeNote || 'None'}</p>
 				<button onClick={() => setActiveNote('C4')}>
@@ -131,6 +140,7 @@ describe('KeyboardOptionsProvider', () => {
 		expect(screen.getByText(/Selected scale: chromatic/i)).toBeInTheDocument();
 		expect(screen.getByText(/Selected order: ascending/i)).toBeInTheDocument();
 		expect(screen.getByText(/Selected note-length: 1\/4/i)).toBeInTheDocument();
+		expect(screen.getByText(/Selected bpm: 100/i)).toBeInTheDocument();
 		expect(screen.getByText(/Active note: None/i)).toBeInTheDocument();
 	});
 
@@ -182,6 +192,14 @@ describe('KeyboardOptionsProvider', () => {
 		expect(
 			screen.getByText(/Selected note-length: 1\/16/i)
 		).toBeInTheDocument();
+	});
+
+	it('updates the selected bpm on change event', () => {
+		renderWithProvider();
+
+		changeSelection('Select bpm:', '110');
+
+		expect(screen.getByText(/Selected bpm: 110/i)).toBeInTheDocument();
 	});
 	it('updates the active note when setActiveNote is called', () => {
 		renderWithProvider();
