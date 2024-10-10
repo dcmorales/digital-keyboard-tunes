@@ -27,12 +27,10 @@ beforeEach(() => {
 		destination: {},
 	} as unknown as AudioContext;
 
-	// initialize currentOscillator to null
-	(global as unknown as GlobalAudioContext).currentOscillator = null;
-
 	// create a mock oscillator
 	oscillatorMock = {
 		connect: vi.fn(),
+		disconnect: vi.fn(),
 		start: vi.fn(),
 		stop: vi.fn(),
 		frequency: { value: 0, setValueAtTime: vi.fn() },
@@ -82,5 +80,19 @@ describe('Key Utils', () => {
 			audioContextMock.currentTime
 		);
 		expect(oscillatorMock.frequency.setValueAtTime).toHaveBeenCalledTimes(1);
+	});
+
+	it('stops the currently playing note', async () => {
+		await playNote('C4', 'sine');
+
+		expect(oscillatorMock).not.toBeNull();
+		expect(gainNodeMock).not.toBeNull();
+
+		stopNote();
+
+		expect(oscillatorMock.stop).toHaveBeenCalled();
+		expect(oscillatorMock.disconnect).toHaveBeenCalled();
+		expect(gainNodeMock.disconnect).toHaveBeenCalled();
+		expect(gainNodeMock.gain.setValueAtTime).toHaveBeenCalled();
 	});
 });

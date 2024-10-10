@@ -61,10 +61,18 @@ export async function playNote(
 	}
 }
 
-// stop and reset oscillator
+// stop and reset oscillator and gain node
 export function stopNote(): void {
 	if (currentOscillator) {
 		currentOscillator.stop();
+		currentOscillator.disconnect();
 		currentOscillator = null;
 	}
+
+	if (gainNode) {
+		gainNode.disconnect();
+		gainNode = null;
+	}
+}
+
 }
