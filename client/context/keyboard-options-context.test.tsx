@@ -31,6 +31,7 @@ describe('KeyboardOptionsProvider', () => {
 		expect(screen.getByText(/Selected order: ascending/i)).toBeInTheDocument();
 		expect(screen.getByText(/Selected note-length: 1\/4/i)).toBeInTheDocument();
 		expect(screen.getByText(/Selected bpm: 100/i)).toBeInTheDocument();
+		expect(screen.getByText(/Selected total-notes: 13/i)).toBeInTheDocument();
 		expect(screen.getByText(/Active note: None/i)).toBeInTheDocument();
 	});
 
@@ -91,6 +92,15 @@ describe('KeyboardOptionsProvider', () => {
 
 		expect(screen.getByText(/Selected bpm: 110/i)).toBeInTheDocument();
 	});
+
+	it('updates the selected note total on change event', () => {
+		renderWithProvider();
+
+		changeSelection('Select total-notes:', '10');
+
+		expect(screen.getByText(/Selected total-notes: 10/i)).toBeInTheDocument();
+	});
+
 	it('updates the active note when setActiveNote is called', () => {
 		renderWithProvider();
 

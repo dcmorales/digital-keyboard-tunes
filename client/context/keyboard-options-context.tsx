@@ -23,6 +23,7 @@ import type {
 	NoteLength,
 	OctaveNum,
 	Order,
+	TotalNotes,
 	Waveform,
 	Scale,
 } from '@/types/keyboard-option-types';
@@ -43,6 +44,8 @@ interface KeyboardOptionsContextType {
 	onNoteLengthChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 	selectedBpm: number;
 	onBpmChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+	selectedTotalNotes: TotalNotes;
+	onTotalNotesChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 	activeNote: FullNote | null;
 	setActiveNote: (note: FullNote | null) => void;
 	fullNotesOctave: FullNote[];
@@ -60,7 +63,8 @@ type SelectionName =
 	| 'scale'
 	| 'order'
 	| 'note-length'
-	| 'bpm';
+	| 'bpm'
+	| 'total-notes';
 
 interface KeyboardOptionsProviderProps {
 	children: ReactNode;
@@ -77,6 +81,7 @@ export const KeyboardOptionsProvider = ({
 	const [selectedNoteLength, setSelectedNoteLength] =
 		useState<NoteLength>('1/4');
 	const [selectedBpm, setSelectedBpm] = useState<number>(100);
+	const [selectedTotalNotes, setSelectedTotalNotes] = useState<TotalNotes>(13);
 	const [activeNote, setActiveNote] = useState<FullNote | null>(null);
 
 	const selectionHandlers: Record<SelectionName, (value: string) => void> = {
@@ -88,6 +93,8 @@ export const KeyboardOptionsProvider = ({
 		'note-length': (value: string) =>
 			setSelectedNoteLength(value as NoteLength),
 		bpm: (value: string) => setSelectedBpm(Number(value)),
+		'total-notes': (value: string) =>
+			setSelectedTotalNotes(Number(value) as TotalNotes),
 	};
 
 	const onSelectionChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -123,6 +130,8 @@ export const KeyboardOptionsProvider = ({
 				onNoteLengthChange: onSelectionChange,
 				selectedBpm,
 				onBpmChange: onSelectionChange,
+				selectedTotalNotes,
+				onTotalNotesChange: onSelectionChange,
 				activeNote,
 				setActiveNote,
 				fullNotesOctave,

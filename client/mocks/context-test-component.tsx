@@ -42,6 +42,8 @@ export default function ContextTestComponent(): JSX.Element {
 		onNoteLengthChange,
 		selectedBpm,
 		onBpmChange,
+		selectedTotalNotes,
+		onTotalNotesChange,
 		activeNote,
 		setActiveNote,
 		orderedScaleNotes,
@@ -96,6 +98,13 @@ export default function ContextTestComponent(): JSX.Element {
 				value={selectedBpm}
 				options={[100, 110, 120]}
 				onChange={onBpmChange}
+			/>
+
+			<SelectInput
+				label="total-notes"
+				value={selectedTotalNotes}
+				options={[10, 11, 12, 13]}
+				onChange={onTotalNotesChange}
 			/>
 
 			<div>
