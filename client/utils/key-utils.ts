@@ -33,16 +33,21 @@ function splitNoteString(note: FullNote): [string, number] {
 	return [match[1], octaveNum];
 }
 
+function definePitch(note: FullNote) {
+	const noteInfo = splitNoteString(note);
+
+	return noteValues[noteInfo[1] - 1] // reduce octaveNum by 1 to get correct index of octave
+		.filter((info) => note.includes(info.note)) // find object based on note letter provided
+		.map((note) => note.frequency)[0]; // use frequency provided in the note object
+}
+
 export async function playNote(
 	note: FullNote,
 	waveform: Waveform
 ): Promise<void> {
 	await initializeAudioContext(); // ensure AudioContext is ready
 
-	const noteInfo = splitNoteString(note);
-	const pitch = noteValues[noteInfo[1] - 1] // reduce octaveNum by 1 to get correct index of octave
-		.filter((info) => note.includes(info.note)) // find object based on note letter provided
-		.map((note) => note.frequency)[0]; // use frequency provided in the note object
+	const pitch = definePitch(note);
 
 	if (currentOscillator) {
 		// if an oscillator is already playing, change its frequency
