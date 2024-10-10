@@ -7,7 +7,7 @@
 import CustomButton from '@/components/common/custom-button';
 import Icon from '@/components/common/icon';
 import { useKeyboardOptions } from '@/context/keyboard-options-context';
-import { fadeOutNote, noteDurationInMs, playNote } from '@/utils/key-utils';
+import { fadeOutNote, noteDurationInMs, playNote } from '@/utils/audio-utils';
 import styles from './audio-controls.module.scss';
 
 export default function AudioControls(): JSX.Element {

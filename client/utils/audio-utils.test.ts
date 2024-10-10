@@ -1,6 +1,11 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { fadeOutNote, noteDurationInMs, playNote, stopNote } from './key-utils';
+import {
+	fadeOutNote,
+	noteDurationInMs,
+	playNote,
+	stopNote,
+} from './audio-utils';
 
 // create interfaces for the global objects
 interface GlobalAudioContext extends Window {
@@ -54,7 +59,7 @@ afterEach(() => {
 	stopNote();
 });
 
-describe('Key Utils', () => {
+describe('Audio Utils', () => {
 	it('plays a note', async () => {
 		await playNote('C4', 'sine');
 

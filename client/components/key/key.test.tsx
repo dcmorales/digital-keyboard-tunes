@@ -2,10 +2,10 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { KeyboardOptionsProvider } from '@/context/keyboard-options-context';
-import { playNote, stopNote } from '@/utils/key-utils';
+import { playNote, stopNote } from '@/utils/audio-utils';
 import Key from '.';
 
-vi.mock('@/utils/key-utils', () => ({
+vi.mock('@/utils/audio-utils', () => ({
 	playNote: vi.fn(),
 	stopNote: vi.fn(),
 }));

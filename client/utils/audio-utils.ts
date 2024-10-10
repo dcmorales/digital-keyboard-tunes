@@ -1,4 +1,4 @@
-// key-utils
+// audio-utils
 // Contains the functions for the Key buttons.
 // playNote initializes an audio context if there isn't one or resumes an existing one.
 // The note info is then used in the noteValues array to find the proper frequency value.
