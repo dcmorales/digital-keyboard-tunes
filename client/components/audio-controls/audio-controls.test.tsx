@@ -3,12 +3,13 @@ import { act } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { KeyboardOptionsProvider } from '@/context/keyboard-options-context';
-import { playNote, stopNote } from '@/utils/key-utils';
+import { fadeOutNote, noteDurationInMs, playNote } from '@/utils/key-utils';
 import AudioControls from '.';
 
 vi.mock('@/utils/key-utils', () => ({
+	fadeOutNote: vi.fn(),
+	noteDurationInMs: vi.fn(),
 	playNote: vi.fn(),
-	stopNote: vi.fn(),
 }));
 
 describe('Audio Controls', () => {
@@ -40,22 +41,23 @@ describe('Audio Controls', () => {
 		vi.useFakeTimers();
 
 		const button = screen.getByRole('button', { name: /Play the scale/i });
-		const mockNumberOfNotes = 13; // length of chromatic scale
+		const mockOrderedScaleNotes = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4'];
+
+		vi.mocked(noteDurationInMs).mockReturnValue(200); // simulate 200ms per note
+		vi.mocked(playNote).mockImplementation(() => Promise.resolve());
+		vi.mocked(fadeOutNote).mockImplementation(() => {});
 
 		await act(async () => {
 			fireEvent.click(button);
-
-			vi.advanceTimersByTime(0); // start timer
-
-			Array.from({ length: mockNumberOfNotes }, (_, index) => {
-				// fast-forward time to when the note should be played
-				vi.advanceTimersByTime(200);
-				expect(playNote).toHaveBeenCalledTimes(index + 1);
-
-				// fast-forward time to when the next note should be stopped
-				vi.advanceTimersByTime(200);
-				expect(stopNote).toHaveBeenCalledTimes(index + 1);
-			});
 		});
+
+		for (let i = 0; i < mockOrderedScaleNotes.length; i++) {
+			vi.advanceTimersByTime(200 * (i + 1)); // move forward by the note duration
+
+			expect(playNote).toHaveBeenCalledWith(mockOrderedScaleNotes[i], 'sine');
+		}
+
+		vi.advanceTimersByTime(200 * mockOrderedScaleNotes.length); // move to the end
+		expect(fadeOutNote).toHaveBeenCalled();
 	});
 });

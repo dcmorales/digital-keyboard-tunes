@@ -7,26 +7,35 @@
 import CustomButton from '@/components/common/custom-button';
 import Icon from '@/components/common/icon';
 import { useKeyboardOptions } from '@/context/keyboard-options-context';
-import { playNote, stopNote } from '@/utils/key-utils';
+import { fadeOutNote, noteDurationInMs, playNote } from '@/utils/key-utils';
 import styles from './audio-controls.module.scss';
 
 export default function AudioControls(): JSX.Element {
-	const { selectedWaveform, setActiveNote, orderedScaleNotes } =
-		useKeyboardOptions();
+	const {
+		orderedScaleNotes,
+		selectedBpm,
+		selectedNoteLength,
+		selectedWaveform,
+		setActiveNote,
+	} = useKeyboardOptions();
 
 	function playOrderedScaleNotes(): void {
+		const noteDuration = noteDurationInMs(selectedBpm, selectedNoteLength);
+
 		orderedScaleNotes.forEach((fullNote, index) => {
-			const playDelay = index * 400;
+			const playDelay = index * noteDuration;
 
 			setTimeout(() => {
 				setActiveNote(fullNote);
 				playNote(fullNote, selectedWaveform);
-
-				setTimeout(() => {
-					stopNote();
-					setActiveNote(null);
-				}, 200);
 			}, playDelay);
+
+			if (index === orderedScaleNotes.length - 1) {
+				setTimeout(() => {
+					fadeOutNote();
+					setActiveNote(null);
+				}, playDelay + noteDuration);
+			}
 		});
 	}
 
