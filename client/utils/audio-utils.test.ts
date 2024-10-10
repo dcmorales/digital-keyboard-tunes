@@ -128,6 +128,15 @@ describe('Audio Utils', () => {
 		vi.useRealTimers();
 	});
 
+	it('does not disconnect from oscillator or gain node unless they are defined', () => {
+		// execute without any oscillators
+		fadeOutNote();
+
+		expect(oscillatorMock.stop).not.toHaveBeenCalled();
+		expect(oscillatorMock.disconnect).not.toHaveBeenCalled();
+		expect(gainNodeMock.disconnect).not.toHaveBeenCalled();
+	});
+
 	it('calculates note durations correctly', () => {
 		expect(noteDurationInMs(120, '1/4')).toBe(500); // 60000 / 120 = 500 ms
 		expect(noteDurationInMs(60, '1/4')).toBe(1000); // 60000 / 60 = 1000 ms

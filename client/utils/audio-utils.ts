@@ -102,15 +102,12 @@ export function fadeOutNote(): void {
 
 		// stop the oscillator after the fade-out duration
 		setTimeout(() => {
-			if (currentOscillator) {
-				currentOscillator.stop();
-				currentOscillator.disconnect();
-				currentOscillator = null;
-			}
-			if (gainNode) {
-				gainNode.disconnect();
-				gainNode = null;
-			}
+			currentOscillator!.stop();
+			currentOscillator!.disconnect();
+			currentOscillator = null;
+
+			gainNode!.disconnect();
+			gainNode = null;
 		}, fadeDuration * 1000);
 	}
 }
