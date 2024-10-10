@@ -10,6 +10,7 @@ import type { FullNote, Waveform } from '@/types/keyboard-option-types';
 
 let audioContext: AudioContext | null = null;
 let currentOscillator: OscillatorNode | null = null;
+let gainNode: GainNode | null = null;
 
 const initializeAudioContext = () => {
 	if (!audioContext) {
@@ -39,15 +40,25 @@ export async function playNote(
 		.filter((info) => note.includes(info.note)) // find object based on note letter provided
 		.map((note) => note.frequency)[0]; // use frequency provided in the note object
 
-	// stop any currently playing note before starting a new one
-	stopNote();
+	if (currentOscillator) {
+		// if an oscillator is already playing, change its frequency
+		currentOscillator.frequency.setValueAtTime(
+			pitch,
+			audioContext!.currentTime
+		);
+	} else {
+		// create and connect a new oscillator node and gain node
+		currentOscillator = audioContext!.createOscillator();
+		currentOscillator.frequency.value = pitch;
+		currentOscillator.type = waveform;
 
-	// create and connect a new oscillator node using the provided info
-	currentOscillator = audioContext!.createOscillator();
-	currentOscillator.frequency.value = pitch;
-	currentOscillator.type = waveform;
-	currentOscillator.connect(audioContext!.destination);
-	currentOscillator.start();
+		gainNode = audioContext!.createGain();
+		gainNode.gain.setValueAtTime(1, audioContext!.currentTime); // start at full volume
+		gainNode.connect(audioContext!.destination);
+		currentOscillator.connect(gainNode);
+
+		currentOscillator.start();
+	}
 }
 
 // stop and reset oscillator

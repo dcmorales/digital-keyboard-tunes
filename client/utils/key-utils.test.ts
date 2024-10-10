@@ -10,6 +10,7 @@ interface GlobalAudioContext extends Window {
 
 let audioContextMock: AudioContext;
 let oscillatorMock: OscillatorNode;
+let gainNodeMock: GainNode;
 
 beforeEach(() => {
 	// mock global AudioContext
@@ -21,6 +22,8 @@ beforeEach(() => {
 	audioContextMock = {
 		resume: vi.fn().mockResolvedValue(undefined),
 		createOscillator: vi.fn(() => oscillatorMock),
+		createGain: vi.fn(() => gainNodeMock),
+		currentTime: 0,
 		destination: {},
 	} as unknown as AudioContext;
 
@@ -32,8 +35,25 @@ beforeEach(() => {
 		connect: vi.fn(),
 		start: vi.fn(),
 		stop: vi.fn(),
-		frequency: { value: 0 },
+		frequency: { value: 0, setValueAtTime: vi.fn() },
 	} as unknown as OscillatorNode;
+
+	// create a mock gain node
+	gainNodeMock = {
+		connect: vi.fn(),
+		disconnect: vi.fn(),
+		gain: {
+			setValueAtTime: vi.fn(),
+			linearRampToValueAtTime: vi.fn(),
+			value: 1,
+		},
+	} as unknown as GainNode;
+});
+
+afterEach(() => {
+	vi.clearAllMocks();
+	// reset oscillator
+	stopNote();
 });
 
 describe('Key Utils', () => {
@@ -42,8 +62,10 @@ describe('Key Utils', () => {
 
 		expect(audioContextMock.resume).toHaveBeenCalled();
 		expect(audioContextMock.createOscillator).toHaveBeenCalled();
+		expect(audioContextMock.createGain).toHaveBeenCalled();
 		expect(oscillatorMock.frequency.value).toBe(261.625565300598634);
-		expect(oscillatorMock.connect).toHaveBeenCalledWith(
+		expect(oscillatorMock.connect).toHaveBeenCalledWith(gainNodeMock);
+		expect(gainNodeMock.connect).toHaveBeenCalledWith(
 			audioContextMock.destination
 		);
 		expect(oscillatorMock.start).toHaveBeenCalled();
