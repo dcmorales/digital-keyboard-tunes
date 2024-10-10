@@ -6,7 +6,11 @@
 // Stopping the currentOscillator stops the sound.
 
 import { noteValues } from '@/values/noteValues';
-import type { FullNote, Waveform } from '@/types/keyboard-option-types';
+import type {
+	FullNote,
+	NoteLength,
+	Waveform,
+} from '@/types/keyboard-option-types';
 
 let audioContext: AudioContext | null = null;
 let currentOscillator: OscillatorNode | null = null;
@@ -72,6 +76,20 @@ export function stopNote(): void {
 	if (gainNode) {
 		gainNode.disconnect();
 		gainNode = null;
+	}
+}
+
+export function noteDurationInMs(
+	selectedBpm: number,
+	noteLength: NoteLength
+): number {
+	switch (noteLength) {
+		case '1/4':
+			return 60000 / selectedBpm;
+		case '1/8':
+			return 60000 / selectedBpm / 2;
+		case '1/16':
+			return 60000 / selectedBpm / 4;
 	}
 }
 

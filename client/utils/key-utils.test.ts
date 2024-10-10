@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { playNote, stopNote } from './key-utils';
+import { noteDurationInMs, playNote, stopNote } from './key-utils';
 
 // create interfaces for the global objects
 interface GlobalAudioContext extends Window {
@@ -94,5 +94,16 @@ describe('Key Utils', () => {
 		expect(oscillatorMock.disconnect).toHaveBeenCalled();
 		expect(gainNodeMock.disconnect).toHaveBeenCalled();
 		expect(gainNodeMock.gain.setValueAtTime).toHaveBeenCalled();
+	});
+
+	it('calculates note durations correctly', () => {
+		expect(noteDurationInMs(120, '1/4')).toBe(500); // 60000 / 120 = 500 ms
+		expect(noteDurationInMs(60, '1/4')).toBe(1000); // 60000 / 60 = 1000 ms
+
+		expect(noteDurationInMs(120, '1/8')).toBe(250); // 60000 / 120 / 2 = 250 ms
+		expect(noteDurationInMs(60, '1/8')).toBe(500); // 60000 / 60 / 2 = 500 ms
+
+		expect(noteDurationInMs(120, '1/16')).toBe(125); // 60000 / 120 / 4 = 125 ms
+		expect(noteDurationInMs(60, '1/16')).toBe(250); // 60000 / 60 / 4 = 250 ms
 	});
 });
