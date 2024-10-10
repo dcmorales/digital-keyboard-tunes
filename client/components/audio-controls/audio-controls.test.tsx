@@ -41,23 +41,26 @@ describe('Audio Controls', () => {
 		vi.useFakeTimers();
 
 		const button = screen.getByRole('button', { name: /Play the scale/i });
-		const mockOrderedScaleNotes = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4'];
+		const mockOrderedScaleNotes = ['C4', 'D♭4', 'D4', 'E♭4', 'E4', 'F4', 'G♭4'];
 
 		vi.mocked(noteDurationInMs).mockReturnValue(200); // simulate 200ms per note
 		vi.mocked(playNote).mockImplementation(() => Promise.resolve());
 		vi.mocked(fadeOutNote).mockImplementation(() => {});
 
-		await act(async () => {
-			fireEvent.click(button);
-		});
+		fireEvent.click(button);
 
 		for (let i = 0; i < mockOrderedScaleNotes.length; i++) {
-			vi.advanceTimersByTime(200 * (i + 1)); // move forward by the note duration
+			await act(async () => {
+				vi.advanceTimersByTime(200); // move forward by the note duration
+			});
 
 			expect(playNote).toHaveBeenCalledWith(mockOrderedScaleNotes[i], 'sine');
 		}
 
-		vi.advanceTimersByTime(200 * mockOrderedScaleNotes.length); // move to the end
+		await act(async () => {
+			vi.advanceTimersByTime(200 * mockOrderedScaleNotes.length); // move to the end
+		});
+
 		expect(fadeOutNote).toHaveBeenCalled();
 	});
 });
