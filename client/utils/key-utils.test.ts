@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { playNote, stopNote } from './key-utils';
 
@@ -71,15 +71,16 @@ describe('Key Utils', () => {
 		expect(oscillatorMock.start).toHaveBeenCalled();
 	});
 
-	it('stops the currently playing oscillator and resets it', async () => {
-		// start playing a note to create an oscillator
+	it('changes the frequency of an existing oscillator', async () => {
 		await playNote('C4', 'sine');
 
-		stopNote();
+		// call playNote again with a different note to change frequency
+		await playNote('D4', 'sine');
 
-		expect(oscillatorMock.stop).toHaveBeenCalled();
-		expect(
-			(global as unknown as GlobalAudioContext).currentOscillator
-		).toBeNull();
+		expect(oscillatorMock.frequency.setValueAtTime).toHaveBeenCalledWith(
+			293.66476791740756,
+			audioContextMock.currentTime
+		);
+		expect(oscillatorMock.frequency.setValueAtTime).toHaveBeenCalledTimes(1);
 	});
 });
