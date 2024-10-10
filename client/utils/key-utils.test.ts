@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { noteDurationInMs, playNote, stopNote } from './key-utils';
+import { fadeOutNote, noteDurationInMs, playNote, stopNote } from './key-utils';
 
 // create interfaces for the global objects
 interface GlobalAudioContext extends Window {
@@ -50,7 +50,7 @@ beforeEach(() => {
 
 afterEach(() => {
 	vi.clearAllMocks();
-	// reset oscillator
+	// reset oscillator and gain node
 	stopNote();
 });
 
@@ -94,6 +94,33 @@ describe('Key Utils', () => {
 		expect(oscillatorMock.disconnect).toHaveBeenCalled();
 		expect(gainNodeMock.disconnect).toHaveBeenCalled();
 		expect(gainNodeMock.gain.setValueAtTime).toHaveBeenCalled();
+	});
+
+	it('fades out and stops the oscillator', async () => {
+		vi.useFakeTimers();
+
+		await playNote('C4', 'sine');
+
+		expect(gainNodeMock.gain.setValueAtTime).toHaveBeenCalledWith(
+			1,
+			audioContextMock.currentTime
+		);
+
+		fadeOutNote();
+
+		expect(gainNodeMock.gain.linearRampToValueAtTime).toHaveBeenCalledWith(
+			0,
+			audioContextMock.currentTime + 0.2
+		);
+
+		// fast-forward time by 200 ms to simulate the fade-out duration
+		vi.advanceTimersByTime(200);
+
+		expect(oscillatorMock.stop).toHaveBeenCalled();
+		expect(oscillatorMock.disconnect).toHaveBeenCalled();
+		expect(gainNodeMock.disconnect).toHaveBeenCalled();
+
+		vi.useRealTimers();
 	});
 
 	it('calculates note durations correctly', () => {

@@ -79,6 +79,37 @@ export function stopNote(): void {
 	}
 }
 
+// stop the note with a fade-out effect.
+// used when stopping the final note in a scale
+export function fadeOutNote(): void {
+	if (currentOscillator && gainNode) {
+		const fadeDuration = 0.2; // duration in seconds
+
+		// set the gain to its current value immediately
+		const currentGainValue = gainNode.gain.value;
+
+		// start fading out
+		gainNode.gain.setValueAtTime(currentGainValue, audioContext!.currentTime);
+		gainNode.gain.linearRampToValueAtTime(
+			0,
+			audioContext!.currentTime + fadeDuration
+		);
+
+		// stop the oscillator after the fade-out duration
+		setTimeout(() => {
+			if (currentOscillator) {
+				currentOscillator.stop();
+				currentOscillator.disconnect();
+				currentOscillator = null;
+			}
+			if (gainNode) {
+				gainNode.disconnect();
+				gainNode = null;
+			}
+		}, fadeDuration * 1000);
+	}
+}
+
 export function noteDurationInMs(
 	selectedBpm: number,
 	noteLength: NoteLength
@@ -91,6 +122,4 @@ export function noteDurationInMs(
 		case '1/16':
 			return 60000 / selectedBpm / 4;
 	}
-}
-
 }
