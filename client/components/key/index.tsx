@@ -21,8 +21,13 @@ export default function Key({
 	note,
 	isSelectedKeyboard,
 }: KeyProps): JSX.Element {
-	const { activeNote, setActiveNote, selectedWaveform, orderedScaleNotes } =
-		useKeyboardOptions();
+	const {
+		activeNote,
+		setActiveNote,
+		selectedWaveform,
+		orderedScaleNotes,
+		isPlaying,
+	} = useKeyboardOptions();
 
 	const handleMouseDown = (): void => {
 		playNote(note, selectedWaveform);
@@ -54,6 +59,7 @@ export default function Key({
 			onMouseUp={handleMouseUp}
 			onTouchStart={handleMouseDown}
 			onTouchEnd={handleMouseUp}
+			disabled={isPlaying}
 		>
 			{note.includes('♭') ? (
 				<>
