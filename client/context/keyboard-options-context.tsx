@@ -46,6 +46,8 @@ interface KeyboardOptionsContextType {
 	onBpmChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 	selectedTotalNotes: TotalNotesNum;
 	onTotalNotesChange: (e: ChangeEvent<HTMLSelectElement>) => void;
+	selectedRepeatNum: number;
+	onRepeatNumChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 	activeNote: FullNote | null;
 	setActiveNote: (note: FullNote | null) => void;
 	fullNotesOctave: FullNote[];
@@ -64,7 +66,8 @@ type SelectionName =
 	| 'order'
 	| 'note-length'
 	| 'bpm'
-	| 'total-notes';
+	| 'total-notes'
+	| 'repeat-num';
 
 interface KeyboardOptionsProviderProps {
 	children: ReactNode;
@@ -83,6 +86,7 @@ export const KeyboardOptionsProvider = ({
 	const [selectedBpm, setSelectedBpm] = useState<number>(100);
 	const [selectedTotalNotes, setSelectedTotalNotes] =
 		useState<TotalNotesNum>(13);
+	const [selectedRepeatNum, setSelectedRepeatNum] = useState<number>(0);
 	const [activeNote, setActiveNote] = useState<FullNote | null>(null);
 
 	const selectionHandlers: Record<SelectionName, (value: string) => void> = {
@@ -96,6 +100,7 @@ export const KeyboardOptionsProvider = ({
 		bpm: (value: string) => setSelectedBpm(Number(value)),
 		'total-notes': (value: string) =>
 			setSelectedTotalNotes(Number(value) as TotalNotesNum),
+		'repeat-num': (value: string) => setSelectedRepeatNum(Number(value)),
 	};
 
 	const onSelectionChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -133,6 +138,8 @@ export const KeyboardOptionsProvider = ({
 				onBpmChange: onSelectionChange,
 				selectedTotalNotes,
 				onTotalNotesChange: onSelectionChange,
+				selectedRepeatNum,
+				onRepeatNumChange: onSelectionChange,
 				activeNote,
 				setActiveNote,
 				fullNotesOctave,

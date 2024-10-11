@@ -32,6 +32,7 @@ describe('KeyboardOptionsProvider', () => {
 		expect(screen.getByText(/Selected note-length: 1\/4/i)).toBeInTheDocument();
 		expect(screen.getByText(/Selected bpm: 100/i)).toBeInTheDocument();
 		expect(screen.getByText(/Selected total-notes: 13/i)).toBeInTheDocument();
+		expect(screen.getByText(/Selected repeat-num: 0/i)).toBeInTheDocument();
 		expect(screen.getByText(/Active note: None/i)).toBeInTheDocument();
 	});
 
@@ -99,6 +100,14 @@ describe('KeyboardOptionsProvider', () => {
 		changeSelection('Select total-notes:', '10');
 
 		expect(screen.getByText(/Selected total-notes: 10/i)).toBeInTheDocument();
+	});
+
+	it('updates the selected repeat number on change event', () => {
+		renderWithProvider();
+
+		changeSelection('Select repeat-num:', '2');
+
+		expect(screen.getByText(/Selected repeat-num: 2/i)).toBeInTheDocument();
 	});
 
 	it('updates the active note when setActiveNote is called', () => {

@@ -44,6 +44,8 @@ export default function ContextTestComponent(): JSX.Element {
 		onBpmChange,
 		selectedTotalNotes,
 		onTotalNotesChange,
+		selectedRepeatNum,
+		onRepeatNumChange,
 		activeNote,
 		setActiveNote,
 		orderedScaleNotes,
@@ -105,6 +107,13 @@ export default function ContextTestComponent(): JSX.Element {
 				value={selectedTotalNotes}
 				options={[10, 11, 12, 13]}
 				onChange={onTotalNotesChange}
+			/>
+
+			<SelectInput
+				label="repeat-num"
+				value={selectedRepeatNum}
+				options={[0, 1, 2, 3]}
+				onChange={onRepeatNumChange}
 			/>
 
 			<div>
