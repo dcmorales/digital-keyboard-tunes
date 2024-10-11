@@ -1,13 +1,14 @@
 import { describe, expect, it } from 'vitest';
 
+import { FullNote, Scale } from '@/types/keyboard-option-types';
 import {
 	defineScaleNotes,
+	getAllNotes,
 	rearrangeNotes,
 	setNotesOrder,
 } from './scale-note-utils';
-import { Scale } from '@/types/keyboard-option-types';
 
-const mockNotes = [
+const mockNotes: FullNote[] = [
 	'D5',
 	'E♭5',
 	'E5',
@@ -160,5 +161,27 @@ describe('Scale Note Utils', () => {
 			'ascending'
 		);
 		expect(randomOrder).not.toEqual(ascendingOrder);
+	});
+
+	it('correctly gets all notes based on repeat number and total number of notes', () => {
+		const mockTotalNotes = 3; // only get the first three notes of the mock notes
+		const mockRepeatNum = 2; // repeat the array twice
+
+		const totalNotes = getAllNotes(mockNotes, mockTotalNotes, mockRepeatNum);
+
+		// the first three notes of the mockNotes array repeated twice
+		const expectedNotes = [
+			'D5',
+			'E♭5',
+			'E5',
+			'D5',
+			'E♭5',
+			'E5',
+			'D5',
+			'E♭5',
+			'E5',
+		];
+
+		expect(totalNotes).toEqual(expectedNotes);
 	});
 });

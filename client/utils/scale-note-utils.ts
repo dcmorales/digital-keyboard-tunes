@@ -6,6 +6,7 @@ import type {
 	OctaveNum,
 	Order,
 	Scale,
+	TotalNotesNum,
 } from '@/types/keyboard-option-types';
 import { noteOptions } from '@/values/settingsOptions';
 
@@ -100,4 +101,14 @@ export function setNotesOrder(
 		case 'random':
 			return shuffleNotes(scaleNotes);
 	}
+}
+
+export function getAllNotes(
+	orderedScaleNotes: FullNote[],
+	totalNotesNum: TotalNotesNum,
+	repeatNum: number
+): FullNote[] {
+	const totalNotes = orderedScaleNotes.slice(0, totalNotesNum);
+
+	return Array.from({ length: repeatNum + 1 }, () => totalNotes).flat();
 }
