@@ -13,6 +13,7 @@ interface DropdownProps {
 	title: string;
 	name: string;
 	value: string | number;
+	disabled?: boolean;
 	onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
 
@@ -22,6 +23,7 @@ export default function Dropdown({
 	title,
 	name,
 	value,
+	disabled,
 	onChange,
 }: DropdownProps): JSX.Element {
 	return (
@@ -36,6 +38,7 @@ export default function Dropdown({
 				name={name}
 				aria-label={ariaLabel}
 				value={value}
+				disabled={disabled}
 				onChange={onChange}
 			>
 				{options.map((option) => (
