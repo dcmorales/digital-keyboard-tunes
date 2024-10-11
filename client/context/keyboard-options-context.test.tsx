@@ -110,7 +110,7 @@ describe('KeyboardOptionsProvider', () => {
 		expect(screen.getByText(/Selected repeat-num: 2/i)).toBeInTheDocument();
 	});
 
-	it('updates the active note when setActiveNote is called', () => {
+	it('updates the active note state correctly', () => {
 		renderWithProvider();
 
 		fireEvent.click(
@@ -125,6 +125,20 @@ describe('KeyboardOptionsProvider', () => {
 
 		fireEvent.click(screen.getByText('Clear Active Note'));
 		expect(screen.getByText(/Active Note: None/i)).toBeInTheDocument();
+	});
+
+	it('updates isPlaying state correctly', () => {
+		renderWithProvider();
+
+		fireEvent.click(
+			screen.getByRole('button', { name: /set isPlaying to true/i })
+		);
+		expect(screen.getByText(/Is playing: true/i)).toBeInTheDocument();
+
+		fireEvent.click(
+			screen.getByRole('button', { name: /set isPlaying to false/i })
+		);
+		expect(screen.getByText(/Is playing: false/i)).toBeInTheDocument();
 	});
 
 	it('defines the selected notes in the correct order based on octave, key, and scale', () => {
