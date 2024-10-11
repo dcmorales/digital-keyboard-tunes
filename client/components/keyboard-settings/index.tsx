@@ -32,6 +32,7 @@ export default function KeyboardSettings(): JSX.Element {
 		selectedRepeatNum,
 		onRepeatNumChange,
 		orderedScaleNotes,
+		isPlaying,
 	} = useKeyboardOptions();
 
 	const {
@@ -90,6 +91,7 @@ export default function KeyboardSettings(): JSX.Element {
 						title={setting.title}
 						name={setting.name}
 						value={value}
+						disabled={isPlaying}
 						onChange={onChange}
 					/>
 				</div>
