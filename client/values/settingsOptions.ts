@@ -62,6 +62,11 @@ const totalNotesOptions: TotalNotesNum[] = Array.from(
 	(_, index) => (13 - index) as TotalNotesNum
 );
 
+const repeatNumOptions: number[] = Array.from(
+	{ length: 9 },
+	(_, index) => index
+);
+
 export const settingsOptions = {
 	key: {
 		options: noteOptions,
@@ -110,5 +115,11 @@ export const settingsOptions = {
 		ariaLabel: 'Select a number of total notes',
 		title: 'Total Notes',
 		name: 'total-notes',
+	},
+	repeatNum: {
+		options: repeatNumOptions,
+		ariaLabel: 'Select the number of times to repeat the scale',
+		title: 'Repeat',
+		name: 'repeat-num',
 	},
 };

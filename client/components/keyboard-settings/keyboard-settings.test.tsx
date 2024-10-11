@@ -101,4 +101,14 @@ describe('Keyboard settings', () => {
 		expect(dropdown).toHaveTextContent('1');
 		expect(dropdown).toHaveTextContent('5');
 	});
+
+	it('renders the repeat num dropdown and options', () => {
+		const dropdown = screen.getByRole('combobox', {
+			name: /Select the number of times to repeat the scale/i,
+		});
+
+		expect(dropdown).toBeInTheDocument();
+		expect(dropdown).toHaveTextContent('1');
+		expect(dropdown).toHaveTextContent('5');
+	});
 });

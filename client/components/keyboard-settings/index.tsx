@@ -28,11 +28,22 @@ export default function KeyboardSettings(): JSX.Element {
 		onBpmChange,
 		selectedTotalNotes,
 		onTotalNotesChange,
+		selectedRepeatNum,
+		onRepeatNumChange,
 		orderedScaleNotes,
 	} = useKeyboardOptions();
 
-	const { key, octave, waveform, scale, order, noteLength, bpm, totalNotes } =
-		settingsOptions;
+	const {
+		key,
+		octave,
+		waveform,
+		scale,
+		order,
+		noteLength,
+		bpm,
+		totalNotes,
+		repeatNum,
+	} = settingsOptions;
 
 	const scaleLength = orderedScaleNotes.length;
 	totalNotes.options = Array.from(
@@ -56,6 +67,11 @@ export default function KeyboardSettings(): JSX.Element {
 			setting: totalNotes,
 			value: selectedTotalNotes,
 			onChange: onTotalNotesChange,
+		},
+		{
+			setting: repeatNum,
+			value: selectedRepeatNum,
+			onChange: onRepeatNumChange,
 		},
 	];
 
