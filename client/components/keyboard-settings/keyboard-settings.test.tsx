@@ -61,4 +61,54 @@ describe('Keyboard settings', () => {
 		expect(dropdown).toHaveTextContent('chromatic');
 		expect(dropdown).toHaveTextContent('major');
 	});
+
+	it('renders the order dropdown and options', () => {
+		const dropdown = screen.getByRole('combobox', {
+			name: /Select an order/i,
+		});
+
+		expect(dropdown).toBeInTheDocument();
+		expect(dropdown).toHaveTextContent('descending');
+		expect(dropdown).toHaveTextContent('random');
+	});
+
+	it('renders the note length dropdown and options', () => {
+		const dropdown = screen.getByRole('combobox', {
+			name: /Select a note length/i,
+		});
+
+		expect(dropdown).toBeInTheDocument();
+		expect(dropdown).toHaveTextContent('1/8');
+		expect(dropdown).toHaveTextContent('1/16');
+	});
+
+	it('renders the bpm dropdown and options', () => {
+		const dropdown = screen.getByRole('combobox', {
+			name: /Select a beats per minute value/i,
+		});
+
+		expect(dropdown).toBeInTheDocument();
+		expect(dropdown).toHaveTextContent('110');
+		expect(dropdown).toHaveTextContent('120');
+	});
+
+	it('renders the total notes dropdown and options', () => {
+		const dropdown = screen.getByRole('combobox', {
+			name: /Select a number of total notes/i,
+		});
+
+		expect(dropdown).toBeInTheDocument();
+		expect(dropdown).toHaveTextContent('1');
+		expect(dropdown).toHaveTextContent('5');
+	});
+
+	it('renders the repeat num dropdown and options', () => {
+		const dropdown = screen.getByRole('combobox', {
+			name: /Select the number of times to repeat the scale/i,
+		});
+
+		expect(dropdown).toBeInTheDocument();
+		expect(dropdown).toHaveTextContent('1');
+		expect(dropdown).toHaveTextContent('5');
+	});
 });

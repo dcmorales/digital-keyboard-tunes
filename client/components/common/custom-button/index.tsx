@@ -1,6 +1,6 @@
 // custom-button
 // A button component that must have an ariaLabel and onClick provided.
-// It will display its children.
+// It displays its children.
 
 import type { ReactNode } from 'react';
 

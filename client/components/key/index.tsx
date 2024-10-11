@@ -2,14 +2,14 @@
 // Each key within the keyboard. Contains click actions to play and highlight a specific note.
 // The note prop will determine the keys style, label, and the sound played.
 // From the context, selectedWaveform will also help determine the sound played.
-// If the activeNote matches the key's note, the key will be appear 'active.
-// If they key's note is included in the selected scale, it will appear highlighted.
+// If the activeNote matches the key's note, the key will be appear 'active'.
+// If the key's note is included in the selected scale, it will appear highlighted.
 
 'use client';
 
 import { useKeyboardOptions } from '@/context/keyboard-options-context';
 import type { FullNote } from '@/types/keyboard-option-types';
-import { playNote, stopNote } from '@/utils/key-functions';
+import { playNote, stopNote } from '@/utils/audio-utils';
 import styles from './key.module.scss';
 
 interface KeyProps {
@@ -21,7 +21,7 @@ export default function Key({
 	note,
 	isSelectedKeyboard,
 }: KeyProps): JSX.Element {
-	const { activeNote, setActiveNote, selectedWaveform, selectedScaleNotes } =
+	const { activeNote, setActiveNote, selectedWaveform, orderedScaleNotes } =
 		useKeyboardOptions();
 
 	const handleMouseDown = (): void => {
@@ -49,7 +49,7 @@ export default function Key({
 	return (
 		<button
 			aria-label={`Play the ${note} note`}
-			className={`${key} ${note.includes('♭') ? black : white} ${isSelectedKeyboard ? keyboardSelected : keyboardFull} ${isActive ? active : ''} ${selectedScaleNotes.includes(note) ? highlight : ''}`}
+			className={`${key} ${note.includes('♭') ? black : white} ${isSelectedKeyboard ? keyboardSelected : keyboardFull} ${isActive ? active : ''} ${orderedScaleNotes.includes(note) ? highlight : ''}`}
 			onMouseDown={handleMouseDown}
 			onMouseUp={handleMouseUp}
 			onTouchStart={handleMouseDown}

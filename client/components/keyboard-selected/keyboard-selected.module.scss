@@ -3,8 +3,12 @@
 .keyboardSelected {
 	align-items: center;
 	display: flex;
+	flex-direction: column;
 	gap: 1rem;
-	height: 40vh;
 	justify-content: center;
 	padding: 1rem;
+
+	@include breakpoint(large) {
+		flex-direction: row;
+	}
 }
