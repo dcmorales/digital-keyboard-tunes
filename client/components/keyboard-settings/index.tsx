@@ -6,6 +6,7 @@
 
 import Dropdown from '@/components/common/dropdown';
 import { useKeyboardOptions } from '@/context/keyboard-options-context';
+import type { TotalNotesNum } from '@/types/keyboard-option-types';
 import { settingsOptions } from '@/values/settingsOptions';
 import styles from './keyboard-settings.module.scss';
 
@@ -25,10 +26,19 @@ export default function KeyboardSettings(): JSX.Element {
 		onNoteLengthChange,
 		selectedBpm,
 		onBpmChange,
+		selectedTotalNotes,
+		onTotalNotesChange,
+		orderedScaleNotes,
 	} = useKeyboardOptions();
 
-	const { key, octave, waveform, scale, order, noteLength, bpm } =
+	const { key, octave, waveform, scale, order, noteLength, bpm, totalNotes } =
 		settingsOptions;
+
+	const scaleLength = orderedScaleNotes.length;
+	totalNotes.options = Array.from(
+		{ length: scaleLength },
+		(_, index) => (scaleLength - index) as TotalNotesNum
+	);
 
 	const settingDropdowns = [
 		{ setting: key, value: selectedKey, onChange: onKeyChange },
@@ -42,6 +52,11 @@ export default function KeyboardSettings(): JSX.Element {
 			onChange: onNoteLengthChange,
 		},
 		{ setting: bpm, value: selectedBpm, onChange: onBpmChange },
+		{
+			setting: totalNotes,
+			value: selectedTotalNotes,
+			onChange: onTotalNotesChange,
+		},
 	];
 
 	return (

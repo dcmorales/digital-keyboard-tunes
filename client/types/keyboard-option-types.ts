@@ -35,4 +35,17 @@ export type Order = 'ascending' | 'descending' | 'random';
 
 export type NoteLength = '1/4' | '1/8' | '1/16';
 
-export type TotalNotes = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13;
+export type TotalNotesNum =
+	| 1
+	| 2
+	| 3
+	| 4
+	| 5
+	| 6
+	| 7
+	| 8
+	| 9
+	| 10
+	| 11
+	| 12
+	| 13;

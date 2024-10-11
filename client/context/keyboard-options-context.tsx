@@ -23,7 +23,7 @@ import type {
 	NoteLength,
 	OctaveNum,
 	Order,
-	TotalNotes,
+	TotalNotesNum,
 	Waveform,
 	Scale,
 } from '@/types/keyboard-option-types';
@@ -44,7 +44,7 @@ interface KeyboardOptionsContextType {
 	onNoteLengthChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 	selectedBpm: number;
 	onBpmChange: (e: ChangeEvent<HTMLSelectElement>) => void;
-	selectedTotalNotes: TotalNotes;
+	selectedTotalNotes: TotalNotesNum;
 	onTotalNotesChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 	activeNote: FullNote | null;
 	setActiveNote: (note: FullNote | null) => void;
@@ -81,7 +81,8 @@ export const KeyboardOptionsProvider = ({
 	const [selectedNoteLength, setSelectedNoteLength] =
 		useState<NoteLength>('1/4');
 	const [selectedBpm, setSelectedBpm] = useState<number>(100);
-	const [selectedTotalNotes, setSelectedTotalNotes] = useState<TotalNotes>(13);
+	const [selectedTotalNotes, setSelectedTotalNotes] =
+		useState<TotalNotesNum>(13);
 	const [activeNote, setActiveNote] = useState<FullNote | null>(null);
 
 	const selectionHandlers: Record<SelectionName, (value: string) => void> = {
@@ -94,7 +95,7 @@ export const KeyboardOptionsProvider = ({
 			setSelectedNoteLength(value as NoteLength),
 		bpm: (value: string) => setSelectedBpm(Number(value)),
 		'total-notes': (value: string) =>
-			setSelectedTotalNotes(Number(value) as TotalNotes),
+			setSelectedTotalNotes(Number(value) as TotalNotesNum),
 	};
 
 	const onSelectionChange = (e: ChangeEvent<HTMLSelectElement>) => {

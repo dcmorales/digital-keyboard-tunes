@@ -9,6 +9,7 @@ import type {
 	OctaveNum,
 	Order,
 	Scale,
+	TotalNotesNum,
 	Waveform,
 } from '@/types/keyboard-option-types';
 
@@ -55,6 +56,12 @@ const bpmOptions: number[] = Array.from(
 	(_, index) => 100 + index
 );
 
+// total number of notes in default scale (chromatic)
+const totalNotesOptions: TotalNotesNum[] = Array.from(
+	{ length: 13 },
+	(_, index) => (13 - index) as TotalNotesNum
+);
+
 export const settingsOptions = {
 	key: {
 		options: noteOptions,
@@ -97,5 +104,11 @@ export const settingsOptions = {
 		ariaLabel: 'Select a beats per minute value',
 		title: 'BPM',
 		name: 'bpm',
+	},
+	totalNotes: {
+		options: totalNotesOptions,
+		ariaLabel: 'Select a number of total notes',
+		title: 'Total Notes',
+		name: 'total-notes',
 	},
 };
