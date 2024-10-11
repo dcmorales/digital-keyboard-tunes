@@ -82,15 +82,16 @@ export default function KeyboardSettings(): JSX.Element {
 			aria-label="Keyboard settings"
 		>
 			{settingDropdowns.map(({ setting, value, onChange }) => (
-				<Dropdown
-					key={setting.name}
-					options={setting.options}
-					ariaLabel={setting.ariaLabel}
-					title={setting.title}
-					name={setting.name}
-					value={value}
-					onChange={onChange}
-				/>
+				<div className={styles.dropdownContainer} key={setting.name}>
+					<Dropdown
+						options={setting.options}
+						ariaLabel={setting.ariaLabel}
+						title={setting.title}
+						name={setting.name}
+						value={value}
+						onChange={onChange}
+					/>
+				</div>
 			))}
 		</div>
 	);
