@@ -16,13 +16,16 @@ export default function AudioControls(): JSX.Element {
 		selectedBpm,
 		selectedNoteLength,
 		selectedWaveform,
+		selectedTotalNotes,
 		setActiveNote,
 	} = useKeyboardOptions();
 
 	function playOrderedScaleNotes(): void {
 		const noteDuration = noteDurationInMs(selectedBpm, selectedNoteLength);
 
-		orderedScaleNotes.forEach((fullNote, index) => {
+		const totalNotes = orderedScaleNotes.slice(0, selectedTotalNotes);
+
+		totalNotes.forEach((fullNote, index) => {
 			const playDelay = index * noteDuration;
 
 			setTimeout(() => {
@@ -30,7 +33,7 @@ export default function AudioControls(): JSX.Element {
 				playNote(fullNote, selectedWaveform);
 			}, playDelay);
 
-			if (index === orderedScaleNotes.length - 1) {
+			if (index === totalNotes.length - 1) {
 				setTimeout(() => {
 					fadeOutNote();
 					setActiveNote(null);
