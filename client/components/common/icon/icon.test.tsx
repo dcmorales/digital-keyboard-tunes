@@ -24,4 +24,11 @@ describe('Icon', () => {
 
 		expect(playIcon).toBeInTheDocument();
 	});
+
+	it('renders the stop svg', () => {
+		render(<Icon name="stop" />);
+		const stopIcon = screen.getByTestId('svg-stop');
+
+		expect(stopIcon).toBeInTheDocument();
+	});
 });

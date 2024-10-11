@@ -2,7 +2,7 @@
 // An icon that accepts a name prop. The name passed in will determine the svg provided.
 
 interface IconProps {
-	name: 'chevron' | 'gear' | 'play';
+	name: 'chevron' | 'gear' | 'play' | 'stop';
 }
 
 const icons = {
@@ -62,6 +62,17 @@ const icons = {
 				</g>
 				<g id="Capa_1_78_"></g>
 			</g>
+		</svg>
+	),
+	stop: (
+		<svg
+			data-testid="svg-stop"
+			xmlns="http://www.w3.org/2000/svg"
+			width="30"
+			height="30"
+			viewBox="0 0 20 20"
+		>
+			<path d="M2,20H18a2,2,0,0,0,2-2V2a2,2,0,0,0-2-2H2A2,2,0,0,0,0,2V18A2,2,0,0,0,2,20Z" />
 		</svg>
 	),
 };
