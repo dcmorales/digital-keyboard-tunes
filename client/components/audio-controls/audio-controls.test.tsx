@@ -48,6 +48,7 @@ describe('Audio Controls', () => {
 		vi.mocked(fadeOutNote).mockImplementation(() => {});
 
 		fireEvent.click(button);
+		expect(button).toBeDisabled();
 
 		for (let i = 0; i < mockOrderedScaleNotes.length; i++) {
 			await act(async () => {
@@ -62,5 +63,6 @@ describe('Audio Controls', () => {
 		});
 
 		expect(fadeOutNote).toHaveBeenCalled();
+		expect(button).not.toBeDisabled();
 	});
 });

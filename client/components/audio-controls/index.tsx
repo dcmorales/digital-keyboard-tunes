@@ -4,6 +4,8 @@
 // at the calculated noteDuration. Provided context values are used to
 // calculate the totalNotes array and the noteDuration.
 
+import { useState } from 'react';
+
 import CustomButton from '@/components/common/custom-button';
 import Icon from '@/components/common/icon';
 import { useKeyboardOptions } from '@/context/keyboard-options-context';
@@ -22,8 +24,11 @@ export default function AudioControls(): JSX.Element {
 		selectedRepeatNum,
 		setActiveNote,
 	} = useKeyboardOptions();
+	const [isPlaying, setIsPlaying] = useState(false);
 
 	function playOrderedScaleNotes(): void {
+		setIsPlaying(true);
+
 		const noteDuration = noteDurationInMs(selectedBpm, selectedNoteLength);
 
 		// get new array of all notes that will be played
@@ -48,6 +53,7 @@ export default function AudioControls(): JSX.Element {
 				setTimeout(() => {
 					fadeOutNote();
 					setActiveNote(null);
+					setIsPlaying(false);
 				}, playDelay + noteDuration);
 			}
 		});
@@ -63,7 +69,11 @@ export default function AudioControls(): JSX.Element {
 			role="group"
 			aria-label="Audio controls"
 		>
-			<CustomButton ariaLabel="Play the scale" onClick={handlePlayClick}>
+			<CustomButton
+				ariaLabel="Play the scale"
+				disabled={isPlaying}
+				onClick={handlePlayClick}
+			>
 				<Icon name="play" />
 			</CustomButton>
 		</div>
