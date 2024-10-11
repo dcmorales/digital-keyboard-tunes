@@ -4,7 +4,7 @@
 // at the calculated noteDuration. Provided context values are used to
 // calculate the totalNotes array and the noteDuration.
 
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
 import CustomButton from '@/components/common/custom-button';
 import Icon from '@/components/common/icon';
@@ -22,9 +22,10 @@ export default function AudioControls(): JSX.Element {
 		selectedWaveform,
 		selectedTotalNotes,
 		selectedRepeatNum,
+		isPlaying,
+		setIsPlaying,
 		setActiveNote,
 	} = useKeyboardOptions();
-	const [isPlaying, setIsPlaying] = useState(false);
 	const playbackTimeoutsRef = useRef<NodeJS.Timeout[]>([]);
 	const finalNoteTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
