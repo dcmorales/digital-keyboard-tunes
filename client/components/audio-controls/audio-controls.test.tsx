@@ -48,7 +48,7 @@ describe('Audio Controls', () => {
 		vi.mocked(fadeOutNote).mockImplementation(() => {});
 
 		fireEvent.click(button);
-		expect(button).toBeDisabled();
+		expect(button).toBeDisabled(); // ensure button is disabled when playing
 
 		for (let i = 0; i < mockOrderedScaleNotes.length; i++) {
 			await act(async () => {
@@ -63,6 +63,29 @@ describe('Audio Controls', () => {
 		});
 
 		expect(fadeOutNote).toHaveBeenCalled();
-		expect(button).not.toBeDisabled();
+		expect(button).not.toBeDisabled(); // ensure button is re-enabled
+	});
+
+	it('handles the stop click', async () => {
+		vi.useFakeTimers();
+
+		const playButton = screen.getByRole('button', { name: /Play the scale/i });
+		const stopButton = screen.getByRole('button', { name: /Stop the scale/i });
+
+		fireEvent.click(playButton); // start playback
+		expect(playButton).toBeDisabled();
+		expect(stopButton).not.toBeDisabled();
+
+		// simulate time passing for a note
+		await act(async () => {
+			vi.advanceTimersByTime(200);
+		});
+		expect(playNote).toHaveBeenCalled();
+
+		fireEvent.click(stopButton);
+
+		expect(playButton).not.toBeDisabled();
+		expect(stopButton).toBeDisabled();
+		expect(fadeOutNote).toHaveBeenCalled();
 	});
 });

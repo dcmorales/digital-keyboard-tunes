@@ -4,7 +4,7 @@
 // at the calculated noteDuration. Provided context values are used to
 // calculate the totalNotes array and the noteDuration.
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import CustomButton from '@/components/common/custom-button';
 import Icon from '@/components/common/icon';
@@ -25,23 +25,27 @@ export default function AudioControls(): JSX.Element {
 		setActiveNote,
 	} = useKeyboardOptions();
 	const [isPlaying, setIsPlaying] = useState(false);
+	const playbackTimeoutsRef = useRef<NodeJS.Timeout[]>([]);
+	const finalNoteTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
 	function playOrderedScaleNotes(): void {
 		setIsPlaying(true);
 
 		const noteDuration = noteDurationInMs(selectedBpm, selectedNoteLength);
-
-		// get new array of all notes that will be played
 		const totalNotes = getAllNotes(
 			orderedScaleNotes,
 			selectedTotalNotes,
 			selectedRepeatNum
 		) as FullNote[];
 
+		// clear any existing timeouts
+		playbackTimeoutsRef.current.forEach((timeoutId) => clearTimeout(timeoutId));
+		playbackTimeoutsRef.current = []; // Reset the ref array
+
 		totalNotes.forEach((fullNote, index) => {
 			const playDelay = index * noteDuration;
 
-			setTimeout(() => {
+			const timeoutId = setTimeout(() => {
 				// setting note to active will update the key's appearance
 				setActiveNote(fullNote);
 				playNote(fullNote, selectedWaveform);
@@ -50,17 +54,31 @@ export default function AudioControls(): JSX.Element {
 			// since playNote updates frequency as new values are passed in,
 			// fadeOutNote only needs to be called on the very last note
 			if (index === totalNotes.length - 1) {
-				setTimeout(() => {
+				finalNoteTimeoutRef.current = setTimeout(() => {
 					fadeOutNote();
 					setActiveNote(null);
 					setIsPlaying(false);
 				}, playDelay + noteDuration);
 			}
+
+			playbackTimeoutsRef.current.push(timeoutId);
 		});
 	}
 
 	const handlePlayClick = (): void => {
 		playOrderedScaleNotes();
+	};
+
+	const handleStopClick = (): void => {
+		playbackTimeoutsRef.current.forEach((timeoutId) => clearTimeout(timeoutId));
+		playbackTimeoutsRef.current = []; // reset the ref array
+
+		clearTimeout(finalNoteTimeoutRef.current as NodeJS.Timeout);
+		finalNoteTimeoutRef.current = null;
+
+		fadeOutNote();
+		setIsPlaying(false);
+		setActiveNote(null);
 	};
 
 	return (
@@ -75,6 +93,14 @@ export default function AudioControls(): JSX.Element {
 				onClick={handlePlayClick}
 			>
 				<Icon name="play" />
+			</CustomButton>
+
+			<CustomButton
+				ariaLabel="Stop the scale"
+				disabled={!isPlaying}
+				onClick={handleStopClick}
+			>
+				<Icon name="stop" />
 			</CustomButton>
 		</div>
 	);
