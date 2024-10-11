@@ -29,4 +29,27 @@ describe('Custom Button', () => {
 
 		expect(handleClick).toHaveBeenCalledTimes(1);
 	});
+
+	it('renders the button as disabled when the disabled prop is true', () => {
+		render(
+			<CustomButton
+				ariaLabel="Test disabled Button"
+				onClick={handleClick}
+				disabled
+			>
+				Test Button
+			</CustomButton>
+		);
+
+		const button = screen.getByRole('button', {
+			name: /Test disabled Button/i,
+		});
+
+		expect(button).toBeInTheDocument();
+		expect(button).toBeDisabled();
+
+		fireEvent.click(button);
+
+		expect(handleClick).toHaveBeenCalledTimes(0);
+	});
 });
