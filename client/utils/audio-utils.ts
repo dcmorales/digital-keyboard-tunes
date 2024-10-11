@@ -1,9 +1,6 @@
 // audio-utils
-// Contains the functions for the Key buttons.
-// playNote initializes an audio context if there isn't one or resumes an existing one.
-// The note info is then used in the noteValues array to find the proper frequency value.
-// This value is passed into the audioContext to create the sound.
-// Stopping the currentOscillator stops the sound.
+// Contains the functions for the audio context. Handles playing and stopping sounds.
+// Also determines how long sounds should play in a given scale.
 
 import { noteValues } from '@/values/noteValues';
 import type {
@@ -84,8 +81,8 @@ export function stopNote(): void {
 	}
 }
 
-// stop the note with a fade-out effect.
-// used when stopping the final note in a scale
+// stop the note with a fade-out effect. Used when stopping the final note in a scale.
+// not used for all keys so that there is no delay when playing keys in rapid succession
 export function fadeOutNote(): void {
 	if (currentOscillator && gainNode) {
 		const fadeDuration = 0.2; // duration in seconds
@@ -112,6 +109,9 @@ export function fadeOutNote(): void {
 	}
 }
 
+// convert the beats per minute value to milliseconds by dividing it by
+// 60000 (1 second = 1000ms so 60 * 1000 = 60000). Divide that value again
+// depending on the note length value. This is how long the note will play
 export function noteDurationInMs(
 	selectedBpm: number,
 	noteLength: NoteLength

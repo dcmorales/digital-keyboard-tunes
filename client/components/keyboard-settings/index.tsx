@@ -1,8 +1,9 @@
 // keyboard-settings
 // A group of dropdown menus that act as settings for the keyboard.
 // Each dropdown has static values provided from the settingsOptions object.
-// The other values are provided by the global context and affect either the
-// keys displayed in keyboard-selected or how the keys sound when played.
+// The select tag values and the event handlers are provided by the global context.
+// Together these settings affect either the keys displayed in
+// keyboard-selected or how the keys sound when played.
 
 import Dropdown from '@/components/common/dropdown';
 import { useKeyboardOptions } from '@/context/keyboard-options-context';

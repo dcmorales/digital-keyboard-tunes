@@ -1,7 +1,7 @@
 // settingsOptions
 // Defines options for keyboard-settings.
 // Each object in settingsOptions represents a dropdown within the settings.
-// The object provides all values except for those provided by the React context.
+// The object provides all props except for those provided by the React context.
 
 import type {
 	NoteKey,
@@ -28,6 +28,7 @@ export const noteOptions: NoteKey[] = [
 	'B',
 ];
 
+// 1-6
 const octaveOptions: OctaveNum[] = Array.from(
 	{ length: 6 },
 	(_, index) => (index + 1) as OctaveNum
@@ -56,12 +57,13 @@ const bpmOptions: number[] = Array.from(
 	(_, index) => 100 + index
 );
 
-// total number of notes in default scale (chromatic)
+// total number of notes in default (chromatic) scale
 const totalNotesOptions: TotalNotesNum[] = Array.from(
 	{ length: 13 },
 	(_, index) => (13 - index) as TotalNotesNum
 );
 
+// 0-8
 const repeatNumOptions: number[] = Array.from(
 	{ length: 9 },
 	(_, index) => index

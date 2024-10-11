@@ -2,8 +2,8 @@
 // Each key within the keyboard. Contains click actions to play and highlight a specific note.
 // The note prop will determine the keys style, label, and the sound played.
 // From the context, selectedWaveform will also help determine the sound played.
-// If the activeNote matches the key's note, the key will be appear 'active.
-// If they key's note is included in the selected scale, it will appear highlighted.
+// If the activeNote matches the key's note, the key will be appear 'active'.
+// If the key's note is included in the selected scale, it will appear highlighted.
 
 'use client';
 

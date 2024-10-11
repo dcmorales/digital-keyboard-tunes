@@ -1,8 +1,8 @@
 // audio-controls
 // Contains the buttons that control whether the selected scale plays.
-// Clicking the play button will play each note in the orderedScaleNotes array and set
-// it as active (changing the appearance of the key). After a delay, it will then stop
-// the note and remove it from active (resetting the appearance of the key).
+// Clicking the play button will play each note in the totalNotes array
+// at the calculated noteDuration. Provided context values are used to
+// calculate the totalNotes array and the noteDuration.
 
 import CustomButton from '@/components/common/custom-button';
 import Icon from '@/components/common/icon';
@@ -26,6 +26,7 @@ export default function AudioControls(): JSX.Element {
 	function playOrderedScaleNotes(): void {
 		const noteDuration = noteDurationInMs(selectedBpm, selectedNoteLength);
 
+		// get new array of all notes that will be played
 		const totalNotes = getAllNotes(
 			orderedScaleNotes,
 			selectedTotalNotes,
@@ -36,10 +37,13 @@ export default function AudioControls(): JSX.Element {
 			const playDelay = index * noteDuration;
 
 			setTimeout(() => {
+				// setting note to active will update the key's appearance
 				setActiveNote(fullNote);
 				playNote(fullNote, selectedWaveform);
 			}, playDelay);
 
+			// since playNote updates frequency as new values are passed in,
+			// fadeOutNote only needs to be called on the very last note
 			if (index === totalNotes.length - 1) {
 				setTimeout(() => {
 					fadeOutNote();

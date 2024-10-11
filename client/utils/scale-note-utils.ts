@@ -1,4 +1,5 @@
 // scale-note-utils
+// Functions for defining the scale notes and their order.
 
 import type {
 	FullNote,
@@ -10,6 +11,7 @@ import type {
 } from '@/types/keyboard-option-types';
 import { noteOptions } from '@/values/settingsOptions';
 
+// note options: ['C','D♭','D','E♭','E','F','G♭','G','A♭','A','B♭','B',]
 // Create a new array starting at the selectedKey. Add the selectedOctave to each string to create a fullNote.
 // Any note that was originally before the selectedKey will be placed at the end of the new array.
 // The octave will also increase for these notes.
@@ -103,6 +105,9 @@ export function setNotesOrder(
 	}
 }
 
+// Take the orderedScaleNotes and create a new array with total of notes equal to the totalNotesNum.
+// Then take this new array and repeat it by the number repeatNum. Flatten the result for a
+// single-layered array containing all of the notes to be played.
 export function getAllNotes(
 	orderedScaleNotes: FullNote[],
 	totalNotesNum: TotalNotesNum,
