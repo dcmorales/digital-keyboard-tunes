@@ -32,6 +32,13 @@ describe('Icon', () => {
 		expect(repeatIcon).toBeInTheDocument();
 	});
 
+	it('renders the shuffle svg', () => {
+		render(<Icon name="shuffle" />);
+		const repeatIcon = screen.getByTestId('svg-shuffle');
+
+		expect(repeatIcon).toBeInTheDocument();
+	});
+
 	it('renders the stop svg', () => {
 		render(<Icon name="stop" />);
 		const stopIcon = screen.getByTestId('svg-stop');
