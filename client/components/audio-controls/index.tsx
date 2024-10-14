@@ -29,6 +29,7 @@ export default function AudioControls(): JSX.Element {
 	const playbackTimeoutsRef = useRef<NodeJS.Timeout[]>([]);
 	const finalNoteTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 	const [lastPlayedNotes, setLastPlayedNotes] = useState<FullNote[]>([]);
+	const [hasPlayed, setHasPlayed] = useState<boolean>(false);
 
 	const totalNotes = getAllNotes(
 		orderedScaleNotes,
@@ -37,6 +38,7 @@ export default function AudioControls(): JSX.Element {
 	) as FullNote[];
 
 	function playOrderedScaleNotes(notes: FullNote[]): void {
+		setHasPlayed(true);
 		setIsPlaying(true);
 
 		const noteDuration = noteDurationInMs(selectedBpm, selectedNoteLength);
@@ -95,13 +97,15 @@ export default function AudioControls(): JSX.Element {
 			role="group"
 			aria-label="Audio controls"
 		>
-			<CustomButton
-				ariaLabel="Play the scale"
-				disabled={isPlaying}
-				onClick={handlePlayClick}
-			>
-				<Icon name="play" />
-			</CustomButton>
+			{!hasPlayed && (
+				<CustomButton
+					ariaLabel="Play the scale"
+					disabled={isPlaying}
+					onClick={handlePlayClick}
+				>
+					<Icon name="play" />
+				</CustomButton>
+			)}
 				<CustomButton
 					ariaLabel="Repeat the scale"
 					disabled={isPlaying}

@@ -31,13 +31,13 @@ describe('Audio Controls', () => {
 		expect(audioControls).toBeInTheDocument();
 	});
 
-	it('renders the play button', () => {
+	it('renders the play button initially', () => {
 		const playButton = screen.getByRole('button', { name: /Play the scale/i });
 
 		expect(playButton).toBeInTheDocument();
 	});
 
-	it('handles the play click', async () => {
+	it('handles the play click and removes play button', async () => {
 		vi.useFakeTimers();
 
 		const playButton = screen.getByRole('button', { name: /Play the scale/i });
@@ -48,7 +48,7 @@ describe('Audio Controls', () => {
 		vi.mocked(fadeOutNote).mockImplementation(() => {});
 
 		fireEvent.click(playButton);
-		expect(playButton).toBeDisabled(); // ensure button is disabled when playing
+		expect(playButton).not.toBeInTheDocument();
 
 		for (let i = 0; i < mockOrderedScaleNotes.length; i++) {
 			await act(() => {
@@ -63,7 +63,6 @@ describe('Audio Controls', () => {
 		});
 
 		expect(fadeOutNote).toHaveBeenCalled();
-		expect(playButton).not.toBeDisabled(); // ensure button is re-enabled
 	});
 
 	it('handles the repeat click', async () => {
@@ -103,7 +102,6 @@ describe('Audio Controls', () => {
 		const stopButton = screen.getByRole('button', { name: /Stop the scale/i });
 
 		fireEvent.click(playButton); // start playback
-		expect(playButton).toBeDisabled();
 		expect(stopButton).not.toBeDisabled();
 
 		// simulate time passing for a note
@@ -114,7 +112,6 @@ describe('Audio Controls', () => {
 
 		fireEvent.click(stopButton);
 
-		expect(playButton).not.toBeDisabled();
 		expect(stopButton).toBeDisabled();
 		expect(fadeOutNote).toHaveBeenCalled();
 	});
