@@ -1,29 +1,16 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import {
-	KeyboardOptionsProvider,
-	useKeyboardOptions,
-} from '@/context/keyboard-options-context';
+import { KeyboardOptionsProvider } from '@/context/keyboard-options-context';
+import ContextTestComponent from '@/mocks/context-test-component';
 import KeyboardSettings from '.';
-
-function MockIsPlayingButton({ value }: { value: boolean }): JSX.Element {
-	const { setIsPlaying } = useKeyboardOptions();
-
-	return (
-		<button onClick={() => setIsPlaying(value)}>
-			Set isPlaying to {value ? 'true' : 'false'}
-		</button>
-	);
-}
 
 describe('Keyboard settings', () => {
 	beforeEach(() => {
 		render(
 			<KeyboardOptionsProvider>
 				<KeyboardSettings />
-				<MockIsPlayingButton value={true} />
-				<MockIsPlayingButton value={false} />
+				<ContextTestComponent />
 			</KeyboardOptionsProvider>
 		);
 	});

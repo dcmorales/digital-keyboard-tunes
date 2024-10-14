@@ -1,10 +1,8 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import {
-	KeyboardOptionsProvider,
-	useKeyboardOptions,
-} from '@/context/keyboard-options-context';
+import { KeyboardOptionsProvider } from '@/context/keyboard-options-context';
+import ContextTestComponent from '@/mocks/context-test-component';
 import { playNote, stopNote } from '@/utils/audio-utils';
 import Key from '.';
 
@@ -16,16 +14,6 @@ vi.mock('@/utils/audio-utils', () => ({
 const mockNote = 'D♭4';
 const mockWaveform = 'sine';
 
-function MockIsPlayingButton({ value }: { value: boolean }): JSX.Element {
-	const { setIsPlaying } = useKeyboardOptions();
-
-	return (
-		<button onClick={() => setIsPlaying(value)}>
-			Set isPlaying to {value ? 'true' : 'false'}
-		</button>
-	);
-}
-
 describe('Key', () => {
 	let button: HTMLButtonElement;
 
@@ -33,6 +21,7 @@ describe('Key', () => {
 		render(
 			<KeyboardOptionsProvider>
 				<Key note={mockNote} isSelectedKeyboard />
+				<ContextTestComponent />
 			</KeyboardOptionsProvider>
 		);
 		button = screen.getByRole('button', { name: /Play the D♭4 note/i });
@@ -79,16 +68,8 @@ describe('Key', () => {
 	});
 
 	it('is disabled when isPlaying is true and enabled otherwise', () => {
-		render(
-			<KeyboardOptionsProvider>
-				<Key note="D4" isSelectedKeyboard />
-				<MockIsPlayingButton value={true} />
-				<MockIsPlayingButton value={false} />
-			</KeyboardOptionsProvider>
-		);
-
 		const noteKey = screen.getByRole('button', {
-			name: /Play the D4 note/i,
+			name: /Play the D♭4 note/i,
 		});
 
 		fireEvent.click(
