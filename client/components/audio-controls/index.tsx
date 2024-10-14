@@ -4,7 +4,7 @@
 // at the calculated noteDuration. Provided context values are used to
 // calculate the totalNotes array and the noteDuration.
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import CustomButton from '@/components/common/custom-button';
 import Icon from '@/components/common/icon';
@@ -22,6 +22,7 @@ export default function AudioControls(): JSX.Element {
 		selectedWaveform,
 		selectedTotalNotes,
 		selectedRepeatNum,
+		selectedOrder,
 		isPlaying,
 		setIsPlaying,
 		setActiveNote,
@@ -29,7 +30,7 @@ export default function AudioControls(): JSX.Element {
 	const playbackTimeoutsRef = useRef<NodeJS.Timeout[]>([]);
 	const finalNoteTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 	const [lastPlayedNotes, setLastPlayedNotes] = useState<FullNote[]>([]);
-	const [hasPlayed, setHasPlayed] = useState<boolean>(false);
+	const [hasPlayedRandom, setHasPlayedRandom] = useState<boolean>(false);
 
 	const totalNotes = getAllNotes(
 		orderedScaleNotes,
@@ -37,8 +38,15 @@ export default function AudioControls(): JSX.Element {
 		selectedRepeatNum
 	) as FullNote[];
 
+	useEffect(() => {
+		setHasPlayedRandom(false);
+	}, [selectedOrder]);
+
 	function playOrderedScaleNotes(notes: FullNote[]): void {
-		setHasPlayed(true);
+		if (selectedOrder === 'random') {
+			setHasPlayedRandom(true);
+		}
+
 		setIsPlaying(true);
 
 		const noteDuration = noteDurationInMs(selectedBpm, selectedNoteLength);
@@ -97,7 +105,7 @@ export default function AudioControls(): JSX.Element {
 			role="group"
 			aria-label="Audio controls"
 		>
-			{!hasPlayed && (
+			{selectedOrder !== 'random' && (
 				<CustomButton
 					ariaLabel="Play the scale"
 					disabled={isPlaying}
@@ -107,7 +115,7 @@ export default function AudioControls(): JSX.Element {
 				</CustomButton>
 			)}
 
-			{hasPlayed && (
+			{selectedOrder === 'random' && (
 				<>
 					<CustomButton
 						ariaLabel="Shuffle the scale"
@@ -119,7 +127,7 @@ export default function AudioControls(): JSX.Element {
 
 					<CustomButton
 						ariaLabel="Repeat the scale"
-						disabled={isPlaying}
+						disabled={isPlaying || !hasPlayedRandom}
 						onClick={handleRepeatClick}
 					>
 						<Icon name="repeat" />
