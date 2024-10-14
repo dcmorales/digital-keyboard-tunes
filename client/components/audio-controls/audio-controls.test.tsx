@@ -37,7 +37,7 @@ describe('Audio Controls', () => {
 		expect(playButton).toBeInTheDocument();
 	});
 
-	it('handles the play click and removes play button', async () => {
+	it('handles the play click', async () => {
 		vi.useFakeTimers();
 
 		const playButton = screen.getByRole('button', { name: /Play the scale/i });
@@ -48,7 +48,6 @@ describe('Audio Controls', () => {
 		vi.mocked(fadeOutNote).mockImplementation(() => {});
 
 		fireEvent.click(playButton);
-		expect(playButton).not.toBeInTheDocument();
 
 		for (let i = 0; i < mockOrderedScaleNotes.length; i++) {
 			await act(() => {
@@ -65,16 +64,33 @@ describe('Audio Controls', () => {
 		expect(fadeOutNote).toHaveBeenCalled();
 	});
 
+	it('renders repeat and shuffle buttons and removes play button after playing', async () => {
+		const playButton = screen.getByRole('button', { name: /Play the scale/i });
+		fireEvent.click(playButton);
+
+		const repeatButton = screen.getByRole('button', {
+			name: /Repeat the scale/i,
+		});
+		const shuffleButton = screen.getByRole('button', {
+			name: /Shuffle the scale/i,
+		});
+
+		expect(repeatButton).toBeInTheDocument();
+		expect(shuffleButton).toBeInTheDocument();
+		expect(playButton).not.toBeInTheDocument();
+	});
+
 	it('handles the repeat click', async () => {
 		vi.useFakeTimers();
 
 		const playButton = screen.getByRole('button', { name: /Play the scale/i });
+		const mockNotes = ['C4', 'D♭4', 'D4', 'E♭4', 'E4', 'F4', 'G♭4', 'G4'];
+
+		fireEvent.click(playButton); // make repeat button visible with initial playback
+
 		const repeatButton = screen.getByRole('button', {
 			name: /Repeat the scale/i,
 		});
-		const mockNotes = ['C4', 'D♭4', 'D4', 'E♭4', 'E4', 'F4', 'G♭4', 'G4'];
-
-		fireEvent.click(playButton);
 
 		await act(() => {
 			vi.advanceTimersByTime(200 * mockNotes.length); // move to the end

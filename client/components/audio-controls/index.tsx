@@ -106,13 +106,26 @@ export default function AudioControls(): JSX.Element {
 					<Icon name="play" />
 				</CustomButton>
 			)}
-				<CustomButton
-					ariaLabel="Repeat the scale"
-					disabled={isPlaying}
-					onClick={handleRepeatClick}
-				>
-					<Icon name="repeat" />
-				</CustomButton>
+
+			{hasPlayed && (
+				<>
+					<CustomButton
+						ariaLabel="Shuffle the scale"
+						disabled={isPlaying}
+						onClick={handlePlayClick}
+					>
+						<Icon name="shuffle" />
+					</CustomButton>
+
+					<CustomButton
+						ariaLabel="Repeat the scale"
+						disabled={isPlaying}
+						onClick={handleRepeatClick}
+					>
+						<Icon name="repeat" />
+					</CustomButton>
+				</>
+			)}
 
 			<CustomButton
 				ariaLabel="Stop the scale"
