@@ -32,33 +32,33 @@ describe('Audio Controls', () => {
 	});
 
 	it('renders the play button', () => {
-		const button = screen.getByRole('button', { name: /Play the scale/i });
+		const playButton = screen.getByRole('button', { name: /Play the scale/i });
 
-		expect(button).toBeInTheDocument();
+		expect(playButton).toBeInTheDocument();
 	});
 
 	it('handles the play click', async () => {
 		vi.useFakeTimers();
 
-		const button = screen.getByRole('button', { name: /Play the scale/i });
+		const playButton = screen.getByRole('button', { name: /Play the scale/i });
 		const mockOrderedScaleNotes = ['C4', 'D♭4', 'D4', 'E♭4', 'E4', 'F4', 'G♭4'];
 
 		vi.mocked(noteDurationInMs).mockReturnValue(200); // simulate 200ms per note
 		vi.mocked(playNote).mockImplementation(() => Promise.resolve());
 		vi.mocked(fadeOutNote).mockImplementation(() => {});
 
-		fireEvent.click(button);
-		expect(button).toBeDisabled(); // ensure button is disabled when playing
+		fireEvent.click(playButton);
+		expect(playButton).toBeDisabled(); // ensure button is disabled when playing
 
 		for (let i = 0; i < mockOrderedScaleNotes.length; i++) {
-			await act(async () => {
+			await act(() => {
 				vi.advanceTimersByTime(200); // move forward by the note duration
 			});
 
 			expect(playNote).toHaveBeenCalledWith(mockOrderedScaleNotes[i], 'sine');
 		}
 
-		await act(async () => {
+		await act(() => {
 			vi.advanceTimersByTime(200 * mockOrderedScaleNotes.length); // move to the end
 		});
 
@@ -77,7 +77,7 @@ describe('Audio Controls', () => {
 		expect(stopButton).not.toBeDisabled();
 
 		// simulate time passing for a note
-		await act(async () => {
+		await act(() => {
 			vi.advanceTimersByTime(200);
 		});
 		expect(playNote).toHaveBeenCalled();
