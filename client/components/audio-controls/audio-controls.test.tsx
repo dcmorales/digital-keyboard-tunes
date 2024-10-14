@@ -63,7 +63,37 @@ describe('Audio Controls', () => {
 		});
 
 		expect(fadeOutNote).toHaveBeenCalled();
-		expect(button).not.toBeDisabled(); // ensure button is re-enabled
+		expect(playButton).not.toBeDisabled(); // ensure button is re-enabled
+	});
+
+	it('handles the repeat click', async () => {
+		vi.useFakeTimers();
+
+		const playButton = screen.getByRole('button', { name: /Play the scale/i });
+		const repeatButton = screen.getByRole('button', {
+			name: /Repeat the scale/i,
+		});
+		const mockNotes = ['C4', 'D♭4', 'D4', 'E♭4', 'E4', 'F4', 'G♭4', 'G4'];
+
+		fireEvent.click(playButton);
+
+		await act(() => {
+			vi.advanceTimersByTime(200 * mockNotes.length); // move to the end
+		});
+
+		fireEvent.click(repeatButton);
+		expect(repeatButton).toBeDisabled();
+
+		// ensure the same notes are played again
+		for (let i = 0; i < mockNotes.length; i++) {
+			await act(() => {
+				vi.advanceTimersByTime(200); // move forward by the note duration
+			});
+
+			expect(playNote).toHaveBeenCalledWith(mockNotes[i], 'sine');
+		}
+
+		expect(repeatButton).not.toBeDisabled();
 	});
 
 	it('handles the stop click', async () => {

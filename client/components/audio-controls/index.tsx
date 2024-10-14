@@ -4,7 +4,7 @@
 // at the calculated noteDuration. Provided context values are used to
 // calculate the totalNotes array and the noteDuration.
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 import CustomButton from '@/components/common/custom-button';
 import Icon from '@/components/common/icon';
@@ -28,22 +28,24 @@ export default function AudioControls(): JSX.Element {
 	} = useKeyboardOptions();
 	const playbackTimeoutsRef = useRef<NodeJS.Timeout[]>([]);
 	const finalNoteTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+	const [lastPlayedNotes, setLastPlayedNotes] = useState<FullNote[]>([]);
 
-	function playOrderedScaleNotes(): void {
+	const totalNotes = getAllNotes(
+		orderedScaleNotes,
+		selectedTotalNotes,
+		selectedRepeatNum
+	) as FullNote[];
+
+	function playOrderedScaleNotes(notes: FullNote[]): void {
 		setIsPlaying(true);
 
 		const noteDuration = noteDurationInMs(selectedBpm, selectedNoteLength);
-		const totalNotes = getAllNotes(
-			orderedScaleNotes,
-			selectedTotalNotes,
-			selectedRepeatNum
-		) as FullNote[];
 
 		// clear any existing timeouts
 		playbackTimeoutsRef.current.forEach((timeoutId) => clearTimeout(timeoutId));
 		playbackTimeoutsRef.current = []; // Reset the ref array
 
-		totalNotes.forEach((fullNote, index) => {
+		notes.forEach((fullNote, index) => {
 			const playDelay = index * noteDuration;
 
 			const timeoutId = setTimeout(() => {
@@ -54,7 +56,7 @@ export default function AudioControls(): JSX.Element {
 
 			// since playNote updates frequency as new values are passed in,
 			// fadeOutNote only needs to be called on the very last note
-			if (index === totalNotes.length - 1) {
+			if (index === notes.length - 1) {
 				finalNoteTimeoutRef.current = setTimeout(() => {
 					fadeOutNote();
 					setActiveNote(null);
@@ -67,7 +69,12 @@ export default function AudioControls(): JSX.Element {
 	}
 
 	const handlePlayClick = (): void => {
-		playOrderedScaleNotes();
+		setLastPlayedNotes(totalNotes);
+		playOrderedScaleNotes(totalNotes);
+	};
+
+	const handleRepeatClick = (): void => {
+		playOrderedScaleNotes(lastPlayedNotes);
 	};
 
 	const handleStopClick = (): void => {
@@ -95,6 +102,13 @@ export default function AudioControls(): JSX.Element {
 			>
 				<Icon name="play" />
 			</CustomButton>
+				<CustomButton
+					ariaLabel="Repeat the scale"
+					disabled={isPlaying}
+					onClick={handleRepeatClick}
+				>
+					<Icon name="repeat" />
+				</CustomButton>
 
 			<CustomButton
 				ariaLabel="Stop the scale"
