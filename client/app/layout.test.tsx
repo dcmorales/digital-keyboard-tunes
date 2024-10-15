@@ -1,29 +1,8 @@
 import { fireEvent, render } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { useKeyboardOptions } from '@/context/keyboard-options-context';
+import ContextTestComponent from '@/mocks/context-test-component';
 import Layout, { metadata } from './layout';
-
-const TestComponent = () => {
-	const { selectedKey, onKeyChange } = useKeyboardOptions();
-
-	return (
-		<div>
-			<label htmlFor="key-select">Select Key:</label>
-			<select
-				id="key-select"
-				name="key"
-				value={selectedKey}
-				onChange={onKeyChange}
-			>
-				<option value="C">C</option>
-				<option value="D">D</option>
-				<option value="E">E</option>
-			</select>
-			<p>Selected Key: {selectedKey}</p>
-		</div>
-	);
-};
 
 describe('Layout', () => {
 	it('renders children correctly', () => {
@@ -44,23 +23,23 @@ describe('Layout', () => {
 	it('provides the default selected values from context', () => {
 		const { getByText } = render(
 			<Layout>
-				<TestComponent />
+				<ContextTestComponent />
 			</Layout>
 		);
 
-		expect(getByText('Selected Key: C')).toBeInTheDocument();
+		expect(getByText(/Selected key: C/i)).toBeInTheDocument();
 	});
 
 	it('changes the selected value when a new option is selected', () => {
 		const { getByLabelText, getByText } = render(
 			<Layout>
-				<TestComponent />
+				<ContextTestComponent />
 			</Layout>
 		);
-		const select = getByLabelText('Select Key:');
+		const select = getByLabelText(/Select key:/i);
 
 		fireEvent.change(select, { target: { value: 'D' } });
 
-		expect(getByText('Selected Key: D')).toBeInTheDocument();
+		expect(getByText(/Selected key: D/i)).toBeInTheDocument();
 	});
 });
