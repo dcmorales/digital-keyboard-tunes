@@ -29,8 +29,8 @@ const icons = {
 	gear: (
 		<svg
 			data-testid="svg-gear"
-			width="30"
-			height="30"
+			width="40"
+			height="40"
 			version="1.1"
 			viewBox="0 0 1200 1200"
 			xmlns="http://www.w3.org/2000/svg"
@@ -45,8 +45,8 @@ const icons = {
 		<svg
 			data-testid="svg-play"
 			fill="#000000"
-			height="30"
-			width="30"
+			height="40"
+			width="40"
 			version="1.1"
 			xmlns="http://www.w3.org/2000/svg"
 			viewBox="0 0 17.804 17.804"
@@ -68,8 +68,8 @@ const icons = {
 		<svg
 			data-testid="svg-repeat"
 			fill="#000000"
-			height="30"
-			width="30"
+			height="40"
+			width="40"
 			version="1.1"
 			id="Layer_1"
 			xmlns="http://www.w3.org/2000/svg"
@@ -95,8 +95,8 @@ const icons = {
 	shuffle: (
 		<svg
 			data-testid="svg-shuffle"
-			height="30"
-			width="30"
+			height="40"
+			width="40"
 			version="1.1"
 			id="_x32_"
 			xmlns="http://www.w3.org/2000/svg"
@@ -131,8 +131,8 @@ const icons = {
 		<svg
 			data-testid="svg-stop"
 			xmlns="http://www.w3.org/2000/svg"
-			width="30"
-			height="30"
+			width="40"
+			height="40"
 			viewBox="0 0 20 20"
 		>
 			<path d="M2,20H18a2,2,0,0,0,2-2V2a2,2,0,0,0-2-2H2A2,2,0,0,0,0,2V18A2,2,0,0,0,2,20Z" />
