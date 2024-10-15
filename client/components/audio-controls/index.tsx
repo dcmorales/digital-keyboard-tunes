@@ -14,7 +14,15 @@ import { fadeOutNote, noteDurationInMs, playNote } from '@/utils/audio-utils';
 import { getAllNotes } from '@/utils/scale-note-utils';
 import styles from './audio-controls.module.scss';
 
-export default function AudioControls(): JSX.Element {
+interface AudioControlsProps {
+	lastPlayedNotes: FullNote[];
+	setLastPlayedNotes: (notes: FullNote[]) => void;
+}
+
+export default function AudioControls({
+	lastPlayedNotes,
+	setLastPlayedNotes,
+}: AudioControlsProps): JSX.Element {
 	const {
 		orderedScaleNotes,
 		selectedBpm,
@@ -29,7 +37,6 @@ export default function AudioControls(): JSX.Element {
 	} = useKeyboardOptions();
 	const playbackTimeoutsRef = useRef<NodeJS.Timeout[]>([]);
 	const finalNoteTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-	const [lastPlayedNotes, setLastPlayedNotes] = useState<FullNote[]>([]);
 	const [hasPlayedRandom, setHasPlayedRandom] = useState<boolean>(false);
 
 	const totalNotes = getAllNotes(

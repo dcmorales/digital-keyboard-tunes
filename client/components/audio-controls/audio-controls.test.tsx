@@ -4,6 +4,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { KeyboardOptionsProvider } from '@/context/keyboard-options-context';
 import ContextTestComponent from '@/mocks/context-test-component';
+import { FullNote } from '@/types/keyboard-option-types';
 import { fadeOutNote, noteDurationInMs, playNote } from '@/utils/audio-utils';
 import AudioControls from '.';
 
@@ -13,13 +14,27 @@ vi.mock('@/utils/audio-utils', () => ({
 	playNote: vi.fn(),
 }));
 
+const mockScaleNotes = [
+	'C4',
+	'D4',
+	'E4',
+	'F4',
+	'G4',
+	'A4',
+	'B4',
+	'C5',
+] as FullNote[];
+
 describe('Audio Controls', () => {
 	beforeEach(() => {
 		vi.clearAllMocks();
 
 		render(
 			<KeyboardOptionsProvider>
-				<AudioControls />
+				<AudioControls
+					lastPlayedNotes={mockScaleNotes}
+					setLastPlayedNotes={vi.fn()}
+				/>
 				<ContextTestComponent />
 			</KeyboardOptionsProvider>
 		);
@@ -130,7 +145,6 @@ describe('Audio Controls', () => {
 	it('handles the repeat click', async () => {
 		vi.useFakeTimers();
 
-		const mockScaleNotes = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5'];
 		// use mock component to update order and scale
 		const orderSelect = screen.getByLabelText('Select order:');
 		const scaleSelect = screen.getByLabelText('Select scale:');
@@ -150,7 +164,7 @@ describe('Audio Controls', () => {
 		vi.mocked(fadeOutNote).mockImplementation(() => {});
 
 		// capture notes played in an array to compare later
-		const capturePlayedNotes = async (button: HTMLElement, offset: number) => {
+		const capturePlayedNotes = async (button: HTMLElement) => {
 			fireEvent.click(button);
 			expect(button).toBeDisabled();
 			const playedNotes = [];
@@ -158,18 +172,15 @@ describe('Audio Controls', () => {
 				await act(() => {
 					vi.advanceTimersByTime(200); // move forward by the note duration
 				});
-				playedNotes.push(playNoteMock.mock.calls[offset + i][0]); // capture the note played
+				playedNotes.push(playNoteMock.mock.calls[i][0]); // capture the note played
 			}
 			expect(button).not.toBeDisabled();
 
 			return playedNotes;
 		};
 
-		const firstPlayedNotes = await capturePlayedNotes(shuffleButton, 0);
-		const secondPlayedNotes = await capturePlayedNotes(
-			repeatButton,
-			mockScaleNotes.length
-		);
+		const firstPlayedNotes = await capturePlayedNotes(shuffleButton);
+		const secondPlayedNotes = await capturePlayedNotes(repeatButton);
 
 		// check that both sets of played notes are the same
 		const notesAreTheSame =

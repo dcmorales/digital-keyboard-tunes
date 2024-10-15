@@ -9,10 +9,12 @@
 import AudioControls from '@/components/audio-controls';
 import Octave from '@/components/octave';
 import { useKeyboardOptions } from '@/context/keyboard-options-context';
+import type { FullNote } from '@/types/keyboard-option-types';
 import styles from './keyboard-selected.module.scss';
 
 export default function KeyboardSelected(): JSX.Element {
-	const { fullNotesOctave } = useKeyboardOptions();
+	const { fullNotesOctave, selectedRepeatNum } = useKeyboardOptions();
+	const [lastPlayedNotes, setLastPlayedNotes] = useState<FullNote[]>([]);
 
 	return (
 		<div
@@ -20,7 +22,10 @@ export default function KeyboardSelected(): JSX.Element {
 			role="region"
 			aria-label="Selected Keyboard: audio controls and keys"
 		>
-			<AudioControls />
+				<AudioControls
+					lastPlayedNotes={lastPlayedNotes}
+					setLastPlayedNotes={setLastPlayedNotes}
+				/>
 
 			<Octave fullNotes={fullNotesOctave} />
 		</div>
