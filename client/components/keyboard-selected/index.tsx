@@ -9,18 +9,15 @@
 import { useState } from 'react';
 
 import AudioControls from '@/components/audio-controls';
+import NotesDisplay from '@/components/notes-display';
 import Octave from '@/components/octave';
 import { useKeyboardOptions } from '@/context/keyboard-options-context';
 import type { FullNote } from '@/types/keyboard-option-types';
 import styles from './keyboard-selected.module.scss';
 
 export default function KeyboardSelected(): JSX.Element {
-	const { fullNotesOctave, selectedRepeatNum } = useKeyboardOptions();
+	const { fullNotesOctave } = useKeyboardOptions();
 	const [lastPlayedNotes, setLastPlayedNotes] = useState<FullNote[]>([]);
-
-	const uniqueNotes = lastPlayedNotes.filter(
-		(note, index) => lastPlayedNotes.indexOf(note) === index
-	);
 
 	return (
 		<div
@@ -38,25 +35,7 @@ export default function KeyboardSelected(): JSX.Element {
 			</div>
 
 			{lastPlayedNotes.length > 0 && (
-				<div className={styles.notesPlayedContainer}>
-					Notes played:
-					{uniqueNotes.map((note, index) => (
-						<span key={note}>
-							{' '}
-							{note.includes('♭') ? (
-								<>
-									{note[0]}
-									<span className={styles.flatSymbol}> {note[1]}</span>
-									{note[2]}
-								</>
-							) : (
-								note
-							)}
-							{index < uniqueNotes.length - 1 && ' - '}
-						</span>
-					))}{' '}
-					x {selectedRepeatNum + 1}
-				</div>
+				<NotesDisplay lastPlayedNotes={lastPlayedNotes} />
 			)}
 		</div>
 	);
