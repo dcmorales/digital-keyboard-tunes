@@ -24,4 +24,25 @@ describe('Icon', () => {
 
 		expect(playIcon).toBeInTheDocument();
 	});
+
+	it('renders the repeat svg', () => {
+		render(<Icon name="repeat" />);
+		const repeatIcon = screen.getByTestId('svg-repeat');
+
+		expect(repeatIcon).toBeInTheDocument();
+	});
+
+	it('renders the shuffle svg', () => {
+		render(<Icon name="shuffle" />);
+		const repeatIcon = screen.getByTestId('svg-shuffle');
+
+		expect(repeatIcon).toBeInTheDocument();
+	});
+
+	it('renders the stop svg', () => {
+		render(<Icon name="stop" />);
+		const stopIcon = screen.getByTestId('svg-stop');
+
+		expect(stopIcon).toBeInTheDocument();
+	});
 });

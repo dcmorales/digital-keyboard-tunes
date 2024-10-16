@@ -1,5 +1,6 @@
 // context-test-component
 // A component with basic ui for testing all of the state provided in the context.
+// Can be used to update state within test files.
 
 import type { ChangeEvent } from 'react';
 
@@ -48,6 +49,8 @@ export default function ContextTestComponent(): JSX.Element {
 		onRepeatNumChange,
 		activeNote,
 		setActiveNote,
+		isPlaying,
+		setIsPlaying,
 		orderedScaleNotes,
 	} = useKeyboardOptions();
 
@@ -126,6 +129,17 @@ export default function ContextTestComponent(): JSX.Element {
 				</button>
 				<button onClick={() => setActiveNote(null)}>Clear Active Note</button>
 			</div>
+
+			<div>
+				<p>Is playing: {`${isPlaying}`}</p>
+				<button onClick={() => setIsPlaying(true)}>
+					Set isPlaying to true
+				</button>
+				<button onClick={() => setIsPlaying(false)}>
+					Set isPlaying to false
+				</button>
+			</div>
+
 			<div>
 				<p>Ordered scale notes: {orderedScaleNotes.join('-')}</p>
 			</div>

@@ -1,7 +1,8 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import { KeyboardOptionsProvider } from '@/context/keyboard-options-context';
+import ContextTestComponent from '@/mocks/context-test-component';
 import KeyboardSettings from '.';
 
 describe('Keyboard settings', () => {
@@ -9,6 +10,7 @@ describe('Keyboard settings', () => {
 		render(
 			<KeyboardOptionsProvider>
 				<KeyboardSettings />
+				<ContextTestComponent />
 			</KeyboardOptionsProvider>
 		);
 	});
@@ -110,5 +112,29 @@ describe('Keyboard settings', () => {
 		expect(dropdown).toBeInTheDocument();
 		expect(dropdown).toHaveTextContent('1');
 		expect(dropdown).toHaveTextContent('5');
+	});
+
+	it('disables the dropdowns when isPlaying is true and enables otherwise', () => {
+		const keyDropdown = screen.getByRole('combobox', { name: /Select a key/i });
+		const scaleDropdown = screen.getByRole('combobox', {
+			name: /Select a scale/i,
+		});
+		const bpmDropdown = screen.getByRole('combobox', {
+			name: /Select a beats per minute value/i,
+		});
+
+		fireEvent.click(
+			screen.getByRole('button', { name: /Set isPlaying to true/i })
+		);
+		expect(keyDropdown).toBeDisabled();
+		expect(scaleDropdown).toBeDisabled();
+		expect(bpmDropdown).toBeDisabled();
+
+		fireEvent.click(
+			screen.getByRole('button', { name: /Set isPlaying to false/i })
+		);
+		expect(keyDropdown).not.toBeDisabled();
+		expect(scaleDropdown).not.toBeDisabled();
+		expect(bpmDropdown).not.toBeDisabled();
 	});
 });

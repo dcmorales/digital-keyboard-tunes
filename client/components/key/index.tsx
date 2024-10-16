@@ -1,9 +1,10 @@
 // key
 // Each key within the keyboard. Contains click actions to play and highlight a specific note.
-// The note prop will determine the keys style, label, and the sound played.
+// The note prop will determine the key's style, label, and the sound played.
 // From the context, selectedWaveform will also help determine the sound played.
 // If the activeNote matches the key's note, the key will be appear 'active'.
 // If the key's note is included in the selected scale, it will appear highlighted.
+// If a scale is playing, the key will be disabled.
 
 'use client';
 
@@ -21,8 +22,13 @@ export default function Key({
 	note,
 	isSelectedKeyboard,
 }: KeyProps): JSX.Element {
-	const { activeNote, setActiveNote, selectedWaveform, orderedScaleNotes } =
-		useKeyboardOptions();
+	const {
+		activeNote,
+		setActiveNote,
+		selectedWaveform,
+		orderedScaleNotes,
+		isPlaying,
+	} = useKeyboardOptions();
 
 	const handleMouseDown = (): void => {
 		playNote(note, selectedWaveform);
@@ -54,6 +60,7 @@ export default function Key({
 			onMouseUp={handleMouseUp}
 			onTouchStart={handleMouseDown}
 			onTouchEnd={handleMouseUp}
+			disabled={isPlaying}
 		>
 			{note.includes('♭') ? (
 				<>

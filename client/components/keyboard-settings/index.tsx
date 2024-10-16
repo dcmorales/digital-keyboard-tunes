@@ -4,6 +4,7 @@
 // The select tag values and the event handlers are provided by the global context.
 // Together these settings affect either the keys displayed in
 // keyboard-selected or how the keys sound when played.
+// All dropdowns are disabled while a scale is playing.
 
 import Dropdown from '@/components/common/dropdown';
 import { useKeyboardOptions } from '@/context/keyboard-options-context';
@@ -32,6 +33,7 @@ export default function KeyboardSettings(): JSX.Element {
 		selectedRepeatNum,
 		onRepeatNumChange,
 		orderedScaleNotes,
+		isPlaying,
 	} = useKeyboardOptions();
 
 	const {
@@ -90,6 +92,7 @@ export default function KeyboardSettings(): JSX.Element {
 						title={setting.title}
 						name={setting.name}
 						value={value}
+						disabled={isPlaying}
 						onChange={onChange}
 					/>
 				</div>

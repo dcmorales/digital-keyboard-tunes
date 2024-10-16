@@ -1,5 +1,5 @@
-import { render, screen } from '@testing-library/react';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { KeyboardOptionsProvider } from '@/context/keyboard-options-context';
 import KeyboardSelected from '.';
@@ -35,5 +35,26 @@ describe('Selected Keyboard', () => {
 		});
 
 		expect(octave).toBeInTheDocument();
+	});
+
+	it('does not render NotesDisplay when lastPlayedNotes is empty', () => {
+		const notesDisplay = screen.queryByRole('region', {
+			name: /Notes played:/i,
+		});
+
+		expect(notesDisplay).not.toBeInTheDocument();
+	});
+
+	it('renders NotesDisplay when lastPlayedNotes has values', () => {
+		// add values to lastPlayNotes by playing initial notes
+		vi.useFakeTimers();
+		const playButton = screen.getByRole('button', { name: /Play the scale/i });
+		fireEvent.click(playButton);
+
+		const notesDisplay = screen.getByRole('region', {
+			name: /Notes played:/i,
+		});
+
+		expect(notesDisplay).toBeInTheDocument();
 	});
 });

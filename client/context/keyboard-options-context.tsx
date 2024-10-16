@@ -6,12 +6,15 @@
 // selected octave as well as the notes belonging to the selected scale.
 // The activeNote updates whenever a key is pressed or when the play button
 // plays a series of notes. This will update the styles of the key at that note.
+// If isPlaying is true, dropdowns and keys will be disabled.
 
 'use client';
 
 import {
 	type ChangeEvent,
+	type Dispatch,
 	type ReactNode,
+	type SetStateAction,
 	createContext,
 	useContext,
 	useState,
@@ -49,7 +52,9 @@ interface KeyboardOptionsContextType {
 	selectedRepeatNum: number;
 	onRepeatNumChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 	activeNote: FullNote | null;
-	setActiveNote: (note: FullNote | null) => void;
+	setActiveNote: Dispatch<SetStateAction<FullNote | null>>;
+	isPlaying: boolean;
+	setIsPlaying: Dispatch<SetStateAction<boolean>>;
 	fullNotesOctave: FullNote[];
 	orderedScaleNotes: FullNote[];
 }
@@ -88,6 +93,7 @@ export const KeyboardOptionsProvider = ({
 		useState<TotalNotesNum>(13);
 	const [selectedRepeatNum, setSelectedRepeatNum] = useState<number>(0);
 	const [activeNote, setActiveNote] = useState<FullNote | null>(null);
+	const [isPlaying, setIsPlaying] = useState(false);
 
 	const selectionHandlers: Record<SelectionName, (value: string) => void> = {
 		key: (value: string) => setSelectedKey(value as NoteKey),
@@ -142,6 +148,8 @@ export const KeyboardOptionsProvider = ({
 				onRepeatNumChange: onSelectionChange,
 				activeNote,
 				setActiveNote,
+				isPlaying,
+				setIsPlaying,
 				fullNotesOctave,
 				orderedScaleNotes,
 			}}

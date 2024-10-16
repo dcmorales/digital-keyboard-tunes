@@ -51,6 +51,27 @@ describe('Dropdown', () => {
 		expect(dropdown).toHaveValue('b');
 	});
 
+	it('renders the dropdown as disabled when the disabled prop is true', () => {
+		render(
+			<Dropdown
+				options={['a', 'b', 'c']}
+				ariaLabel="Disabled dropdown"
+				title="Test dropdown"
+				name="test-id"
+				value="b"
+				disabled
+				onChange={handleChange}
+			/>
+		);
+
+		const dropdown = screen.getByRole('combobox', {
+			name: /Disabled dropdown/i,
+		});
+
+		expect(dropdown).toBeInTheDocument();
+		expect(dropdown).toBeDisabled();
+	});
+
 	it('calls onChange when a new option is selected', () => {
 		cleanup();
 		const { rerender } = render(

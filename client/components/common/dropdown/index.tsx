@@ -1,7 +1,7 @@
 // dropdown
 // A dropdown menu. Displays a label and maps over the options provided.
 // When the selection changes, the event handler is called and the select value is updated.
-// A name is applied so that the handler in the context updates the correct state.
+// A name is applied as a simple way to get the target element.
 
 import type { ChangeEvent } from 'react';
 
@@ -13,6 +13,7 @@ interface DropdownProps {
 	title: string;
 	name: string;
 	value: string | number;
+	disabled?: boolean;
 	onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
 
@@ -22,6 +23,7 @@ export default function Dropdown({
 	title,
 	name,
 	value,
+	disabled,
 	onChange,
 }: DropdownProps): JSX.Element {
 	return (
@@ -36,6 +38,7 @@ export default function Dropdown({
 				name={name}
 				aria-label={ariaLabel}
 				value={value}
+				disabled={disabled}
 				onChange={onChange}
 			>
 				{options.map((option) => (

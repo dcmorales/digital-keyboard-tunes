@@ -1,5 +1,11 @@
 @use '@/styles/abstracts' as *;
 
 .audioControls {
+	display: flex;
+	gap: 1rem;
 	margin-right: $margin-black-key * -1;
+
+	@include breakpoint(large) {
+		flex-direction: column;
+	}
 }

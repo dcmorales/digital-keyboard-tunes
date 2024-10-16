@@ -13,4 +13,9 @@
 		border-color: $color-blue-dark;
 		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 	}
+
+	&:disabled {
+		cursor: default;
+		opacity: 0.5;
+	}
 }

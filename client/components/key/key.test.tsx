@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { KeyboardOptionsProvider } from '@/context/keyboard-options-context';
+import ContextTestComponent from '@/mocks/context-test-component';
 import { playNote, stopNote } from '@/utils/audio-utils';
 import Key from '.';
 
@@ -20,6 +21,7 @@ describe('Key', () => {
 		render(
 			<KeyboardOptionsProvider>
 				<Key note={mockNote} isSelectedKeyboard />
+				<ContextTestComponent />
 			</KeyboardOptionsProvider>
 		);
 		button = screen.getByRole('button', { name: /Play the D♭4 note/i });
@@ -63,5 +65,21 @@ describe('Key', () => {
 
 		expect(stopNote).toHaveBeenCalled();
 		expect(button.className.includes('active')).toBe(false);
+	});
+
+	it('is disabled when isPlaying is true and enabled otherwise', () => {
+		const noteKey = screen.getByRole('button', {
+			name: /Play the D♭4 note/i,
+		});
+
+		fireEvent.click(
+			screen.getByRole('button', { name: /Set isPlaying to true/i })
+		);
+		expect(noteKey).toBeDisabled();
+
+		fireEvent.click(
+			screen.getByRole('button', { name: /Set isPlaying to false/i })
+		);
+		expect(noteKey).not.toBeDisabled();
 	});
 });

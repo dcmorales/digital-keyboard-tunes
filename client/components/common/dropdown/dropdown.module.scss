@@ -23,5 +23,9 @@
 		border-radius: 4px;
 		cursor: pointer;
 		text-align: center;
+
+		&:disabled {
+			cursor: default;
+		}
 	}
 }
