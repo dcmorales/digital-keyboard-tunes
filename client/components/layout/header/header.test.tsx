@@ -68,4 +68,16 @@ describe('Header', () => {
 
 		expect(button).toHaveAttribute('aria-label', 'Close menu');
 	});
+
+	it('renders the nav after clicking menu button', () => {
+		const button = screen.getByRole('button', {
+			name: /Open menu/i,
+		});
+
+		fireEvent.click(button);
+
+		const nav = screen.getByRole('navigation');
+
+		expect(nav).toBeInTheDocument();
+	});
 });

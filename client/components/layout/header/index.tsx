@@ -10,6 +10,7 @@ import { useState } from 'react';
 import CustomButton from '@/components/common/custom-button';
 import Icon from '@/components/common/icon';
 import KeyboardSettings from '@/components/keyboard-settings';
+import Nav from '@/components/layout/nav';
 import styles from './header.module.scss';
 
 export default function Header(): JSX.Element {
@@ -49,6 +50,8 @@ export default function Header(): JSX.Element {
 			</div>
 
 			{showSettings && <KeyboardSettings />}
+
+			{showMenu && <Nav />}
 		</header>
 	);
 }
