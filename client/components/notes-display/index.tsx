@@ -1,4 +1,9 @@
 // notes-display
+// Displays the unique notes that were just played based on selections made.
+// The number of times the scale played is also displayed and dependent
+// on the selectedRepeatNum. For example, if selectedRepeatNum is 2, the
+// component will display 'x 3' (1 initial play + 2 repeats). lastPlayedNotes
+// will update when either the shuffle or play button (in audio-controls) are clicked.
 
 import { useEffect, useRef, useState } from 'react';
 

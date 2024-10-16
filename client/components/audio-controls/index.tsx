@@ -1,8 +1,13 @@
 // audio-controls
-// Contains the buttons that control whether the selected scale plays.
-// Clicking the play button will play each note in the totalNotes array
-// at the calculated noteDuration. Provided context values are used to
-// calculate the totalNotes array and the noteDuration.
+// Contains the buttons that play / stop the selected scale. Play button is visible when
+// the order isn't 'random', shuffle and repeat are visible when the order is 'random',
+// and stop is alway visible. Clicking the play button will play each note in the totalNotes array
+// at the calculated noteDuration. Provided context values are used to calculate the totalNotes
+// array and the noteDuration. The shuffle button will do the same but with a shuffled notes array.
+// Both buttons will update the lastPlayedNotes from the keyboard-selected parent component.
+// After an initial play, the repeat button will use the lastPlayedNotes to replay the notes that
+// just played. The stop button will stop the scale immediately. Play, shuffle, and repeat are
+// disabled while a scale is playing. Stop is disabled if there is no scale playing.
 
 import { useEffect, useRef, useState } from 'react';
 

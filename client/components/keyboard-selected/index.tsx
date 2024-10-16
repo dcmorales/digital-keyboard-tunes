@@ -1,8 +1,9 @@
 // keyboard-selected
-// Contains an octave with 13 keys and audio controls for playing the octave.
+// Contains an octave with 13 keys, audio controls for playing / stopping
+// the octave, and displays the notes that were just played after clicking.
 // The octave begins with the selectedKey at the selectedOctave and ends with
-// the first key of the next octave. Both the octave and the functions for the
-// audio controls depend on the selections made in the keyboard-settings.
+// the first key of the next octave. After an initial play in audio-controls,
+// notes-display will show the unique notes just played.
 
 'use client';
 

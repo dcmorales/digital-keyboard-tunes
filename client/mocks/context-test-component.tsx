@@ -1,5 +1,6 @@
 // context-test-component
 // A component with basic ui for testing all of the state provided in the context.
+// Can be used to update state within test files.
 
 import type { ChangeEvent } from 'react';
 
