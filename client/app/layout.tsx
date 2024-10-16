@@ -3,6 +3,7 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 
+import Header from '@/components/layout/header';
 import { KeyboardOptionsProvider } from '@/context/keyboard-options-context';
 import '@/styles/global.scss';
 
@@ -19,7 +20,11 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body>
-				<KeyboardOptionsProvider>{children}</KeyboardOptionsProvider>
+				<KeyboardOptionsProvider>
+					<Header />
+
+					{children}
+				</KeyboardOptionsProvider>
 			</body>
 		</html>
 	);

@@ -1,10 +1,19 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
 import ContextTestComponent from '@/mocks/context-test-component';
 import Layout, { metadata } from './layout';
 
 describe('Layout', () => {
+	it('renders the Header component', () => {
+		render(
+			<Layout>
+				<div>Hello, world</div>
+			</Layout>
+		);
+		expect(screen.getByRole('heading')).toBeInTheDocument();
+	});
+
 	it('renders children correctly', () => {
 		const { getByText } = render(
 			<Layout>
