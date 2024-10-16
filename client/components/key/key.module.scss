@@ -2,7 +2,7 @@
 
 .key {
 	align-items: flex-end;
-	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 $size-s $size-m rgba(0, 0, 0, 0.2);
 	display: flex;
 	justify-content: center;
 	padding-bottom: 1.5rem;
@@ -82,7 +82,7 @@
 	}
 
 	&.active {
-		box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.3);
+		box-shadow: inset 0 $size-xs $size-s rgba(0, 0, 0, 0.3);
 		padding-bottom: 1.2rem;
 	}
 
