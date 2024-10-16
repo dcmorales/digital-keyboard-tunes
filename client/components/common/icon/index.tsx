@@ -1,8 +1,10 @@
 // icon
 // An icon that accepts a name prop. The name passed in will determine the svg provided.
 
+import styles from './icon.module.scss';
+
 interface IconProps {
-	name: 'chevron' | 'gear' | 'play' | 'repeat' | 'shuffle' | 'stop';
+	size?: 'small';
 }
 
 const icons = {
@@ -140,8 +142,8 @@ const icons = {
 	),
 };
 
-export default function Icon({ name }: IconProps): JSX.Element {
+export default function Icon({ name, size }: IconProps): JSX.Element {
 	const IconSVG = icons[name];
 
-	return <>{IconSVG}</>;
+	return <div className={styles[`${size}`]}>{IconSVG}</div>;
 }
