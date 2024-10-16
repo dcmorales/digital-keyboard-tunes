@@ -4,6 +4,7 @@
 
 'use client';
 
+import Link from 'next/link';
 import { useState } from 'react';
 
 import CustomButton from '@/components/common/custom-button';
@@ -21,7 +22,9 @@ export default function Header(): JSX.Element {
 	return (
 		<header className={styles.header}>
 			<div className={styles.mainItems}>
-				<h1>Digital Keyboard Tunes</h1>
+				<Link href="/">
+					<h1>Digital Keyboard Tunes</h1>
+				</Link>
 
 				<CustomButton
 					ariaLabel={`${!showSettings ? 'Open' : 'Close'} keyboard settings`}
