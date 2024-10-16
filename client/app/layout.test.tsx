@@ -11,6 +11,7 @@ describe('Layout', () => {
 				<div>Hello, world</div>
 			</Layout>
 		);
+
 		expect(screen.getByRole('heading')).toBeInTheDocument();
 	});
 
@@ -22,6 +23,17 @@ describe('Layout', () => {
 		);
 
 		expect(getByText('Hello, world')).toBeInTheDocument();
+	});
+
+	it('renders the footer', () => {
+		render(
+			<Layout>
+				<div>Hello, world</div>
+			</Layout>
+		);
+		const footer = screen.getByRole('contentinfo');
+
+		expect(footer).toBeInTheDocument();
 	});
 
 	it('has correct metadata', () => {
@@ -36,7 +48,10 @@ describe('Layout', () => {
 			</Layout>
 		);
 
+		// all values are tested in context test suite
 		expect(getByText(/Selected key: C/i)).toBeInTheDocument();
+		expect(getByText(/Selected octave: 4/i)).toBeInTheDocument();
+		expect(getByText(/Selected waveform: sine/i)).toBeInTheDocument();
 	});
 
 	it('changes the selected value when a new option is selected', () => {
@@ -45,10 +60,17 @@ describe('Layout', () => {
 				<ContextTestComponent />
 			</Layout>
 		);
-		const select = getByLabelText(/Select key:/i);
+		const keySelect = getByLabelText(/Select key:/i);
+		const octaveSelect = getByLabelText(/Select octave:/i);
+		const waveformSelect = getByLabelText(/Select waveform:/i);
 
-		fireEvent.change(select, { target: { value: 'D' } });
+		fireEvent.change(keySelect, { target: { value: 'D' } });
+		fireEvent.change(octaveSelect, { target: { value: '5' } });
+		fireEvent.change(waveformSelect, { target: { value: 'square' } });
 
+		// all values are tested in context test suite
 		expect(getByText(/Selected key: D/i)).toBeInTheDocument();
+		expect(getByText(/Selected octave: 5/i)).toBeInTheDocument();
+		expect(getByText(/Selected waveform: square/i)).toBeInTheDocument();
 	});
 });
