@@ -1,0 +1,17 @@
+.notesDisplay {
+	font-size: 2rem;
+	text-align: center;
+	margin: 0 2rem;
+
+	.heading {
+		display: inline;
+	}
+
+	.flatSymbol {
+		display: inline-block;
+		font-size: 0.7em;
+		margin-left: -0.4rem;
+		margin-top: -0.7rem;
+		vertical-align: middle;
+	}
+}
