@@ -1,4 +1,12 @@
 .footer {
 	display: flex;
 	justify-content: center;
+	padding: 0.5rem;
+
+	.link {
+		align-items: center;
+		display: flex;
+		gap: 0.5rem;
+		text-decoration: none;
+	}
 }
