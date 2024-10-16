@@ -9,7 +9,7 @@ interface IconProps {
 		| 'close'
 		| 'gear'
 		| 'github'
-		| 'hamburger'
+		| 'menu'
 		| 'play'
 		| 'repeat'
 		| 'shuffle'
@@ -28,14 +28,16 @@ const icons = {
 			<path
 				d="M12 4L4 12"
 				stroke="currentColor"
-				stroke-linecap="round"
-				stroke-linejoin="round"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+				strokeWidth="1.5"
 			/>
 			<path
 				d="M4 4L12 12"
 				stroke="currentColor"
-				stroke-linecap="round"
-				stroke-linejoin="round"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+				strokeWidth="1.5"
 			/>
 		</svg>
 	),
@@ -71,7 +73,7 @@ const icons = {
 			/>
 		</svg>
 	),
-	hamburger: (
+	menu: (
 		<svg
 			width="100%"
 			height="100%"
@@ -80,8 +82,8 @@ const icons = {
 			xmlns="http://www.w3.org/2000/svg"
 		>
 			<path
-				fill-rule="evenodd"
-				clip-rule="evenodd"
+				fillRule="evenodd"
+				clipRule="evenodd"
 				d="M0 0H18.375V1.75H0V0ZM0 6.125H18.375V7.875H0V6.125ZM18.375 12.25H0V14H18.375V12.25Z"
 				fill="#000"
 			/>
