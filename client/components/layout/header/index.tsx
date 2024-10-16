@@ -27,7 +27,7 @@ export default function Header(): JSX.Element {
 					ariaLabel={`${!showSettings ? 'Open' : 'Close'} keyboard settings`}
 					onClick={toggleSettings}
 				>
-					<Icon name="gear" />
+					<Icon name="gear" size="medium" />
 				</CustomButton>
 			</div>
 

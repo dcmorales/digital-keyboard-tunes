@@ -123,7 +123,7 @@ export default function AudioControls({
 					disabled={isPlaying}
 					onClick={handlePlayClick}
 				>
-					<Icon name="play" />
+					<Icon name="play" size="large" />
 				</CustomButton>
 			)}
 
@@ -134,7 +134,7 @@ export default function AudioControls({
 						disabled={isPlaying}
 						onClick={handlePlayClick}
 					>
-						<Icon name="shuffle" />
+						<Icon name="shuffle" size="large" />
 					</CustomButton>
 
 					<CustomButton
@@ -142,7 +142,7 @@ export default function AudioControls({
 						disabled={isPlaying || !hasPlayedRandom}
 						onClick={handleRepeatClick}
 					>
-						<Icon name="repeat" />
+						<Icon name="repeat" size="large" />
 					</CustomButton>
 				</>
 			)}
@@ -152,7 +152,7 @@ export default function AudioControls({
 				disabled={!isPlaying}
 				onClick={handleStopClick}
 			>
-				<Icon name="stop" />
+				<Icon name="stop" size="large" />
 			</CustomButton>
 		</div>
 	);

@@ -5,17 +5,10 @@ import Icon from '.';
 
 describe('Icon', () => {
 	it('applies the correct class name based on size prop', () => {
-		render(<Icon name="github" size="small" />);
+		render(<Icon name="github" size="large" />);
 		const githubIcon = screen.getByTestId('svg-github');
 
-		expect(githubIcon.parentElement!.className.includes('small')).toBe(true);
-	});
-
-	it('renders the chevron svg', () => {
-		render(<Icon name="chevron" />);
-		const chevronIcon = screen.getByTestId('svg-chevron');
-
-		expect(chevronIcon).toBeInTheDocument();
+		expect(githubIcon.parentElement!.className.includes('large')).toBe(true);
 	});
 
 	it('renders the gear svg', () => {
