@@ -50,4 +50,22 @@ describe('Header', () => {
 		expect(keyboardSettings).toBeInTheDocument();
 		expect(button).toHaveAttribute('aria-label', 'Close keyboard settings');
 	});
+
+	it('renders the menu button', () => {
+		const button = screen.getByRole('button', {
+			name: /Open menu/i,
+		});
+
+		expect(button).toBeInTheDocument();
+	});
+
+	it('updates the menu icon after clicking menu button', () => {
+		const button = screen.getByRole('button', {
+			name: /Open menu/i,
+		});
+
+		fireEvent.click(button);
+
+		expect(button).toHaveAttribute('aria-label', 'Close menu');
+	});
 });
