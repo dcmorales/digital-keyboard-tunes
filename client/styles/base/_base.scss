@@ -2,7 +2,14 @@
 
 body {
 	background-color: $color-blue-lightest;
+	display: flex;
+	flex-direction: column;
 	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	min-height: 100vh;
+}
+
+main {
+	flex: 1;
 }
 
 button {

@@ -24,7 +24,7 @@ export default function RootLayout({
 				<KeyboardOptionsProvider>
 					<Header />
 
-					{children}
+					<main>{children}</main>
 
 					<Footer />
 				</KeyboardOptionsProvider>

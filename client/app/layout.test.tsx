@@ -11,8 +11,9 @@ describe('Layout', () => {
 				<div>Hello, world</div>
 			</Layout>
 		);
+		const header = screen.getByRole('heading');
 
-		expect(screen.getByRole('heading')).toBeInTheDocument();
+		expect(header).toBeInTheDocument();
 	});
 
 	it('renders children correctly', () => {
