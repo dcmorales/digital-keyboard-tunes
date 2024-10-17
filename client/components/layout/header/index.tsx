@@ -50,8 +50,7 @@ export default function Header(): JSX.Element {
 			</div>
 
 			{showSettings && <KeyboardSettings />}
-
-			{showMenu && <Nav />}
+			<Nav isOpen={showMenu} />
 		</header>
 	);
 }

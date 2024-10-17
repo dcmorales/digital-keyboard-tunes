@@ -3,16 +3,27 @@
 import Link from 'next/link';
 import styles from './nav.module.scss';
 
-export default function Nav() {
+interface NavProps {
+	isOpen: boolean;
+}
+
+export default function Nav({ isOpen }: NavProps) {
 	return (
-		<nav className={styles.nav}>
+		<nav className={`${styles.nav} ${isOpen ? styles.open : styles.closed}`}>
 			<ul>
 				<li>
-					<Link href="/">Home</Link>
+					<Link href="/about">About</Link>
 				</li>
 
 				<li>
-					<Link href="/about">About</Link>
+					<a
+						className={styles.link}
+						href="https://github.com/dcmorales/digital-keyboard-tunes"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						Github Repository
+					</a>
 				</li>
 			</ul>
 		</nav>

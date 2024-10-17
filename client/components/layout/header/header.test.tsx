@@ -49,6 +49,10 @@ describe('Header', () => {
 
 		expect(keyboardSettings).toBeInTheDocument();
 		expect(button).toHaveAttribute('aria-label', 'Close keyboard settings');
+
+		fireEvent.click(button);
+		expect(keyboardSettings).not.toBeInTheDocument();
+		expect(button).toHaveAttribute('aria-label', 'Open keyboard settings');
 	});
 
 	it('renders the menu button', () => {
@@ -79,5 +83,10 @@ describe('Header', () => {
 		const nav = screen.getByRole('navigation');
 
 		expect(nav).toBeInTheDocument();
+		expect(nav.className.includes('open')).toBe(true);
+
+		fireEvent.click(button);
+
+		expect(nav.className.includes('closed')).toBe(true);
 	});
 });
