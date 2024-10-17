@@ -34,7 +34,7 @@ const octaveOptions: OctaveNum[] = Array.from(
 	(_, index) => (index + 1) as OctaveNum
 );
 
-const waveformOptions: Waveform[] = ['sine', 'sawtooth', 'triangle', 'square'];
+const waveformOptions: Waveform[] = ['sine', 'square', 'sawtooth', 'triangle'];
 
 const scaleOptions: Scale[] = [
 	'chromatic',
