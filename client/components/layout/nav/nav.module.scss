@@ -17,15 +17,21 @@
 
 .nav {
 	background: $color-blue-lightest;
-	bottom: 0;
 	font-size: $rem-xl;
 	height: 100%;
 	padding: $rem-l;
 	position: fixed;
 	right: -100%;
+	top: 0;
 	transition: right 0.5s ease;
 	width: 100%;
 	z-index: 100;
+
+	button {
+		position: absolute;
+		right: $rem-s;
+		top: $rem-s;
+	}
 
 	ul {
 		align-items: center;

@@ -23,10 +23,6 @@ export default function Header(): JSX.Element {
 		setShowSettings((prevState) => !prevState);
 	};
 
-	const toggleMenu = (): void => {
-		setShowMenu((prevState) => !prevState);
-	};
-
 	return (
 		<header className={styles.header}>
 			<div className={styles.mainItems}>
@@ -44,11 +40,8 @@ export default function Header(): JSX.Element {
 						</CustomButton>
 					)}
 
-					<CustomButton
-						ariaLabel={`${!showMenu ? 'Open' : 'Close'} menu`}
-						onClick={toggleMenu}
-					>
-						<Icon name={!showMenu ? 'menu' : 'close'} size="medium" />
+					<CustomButton ariaLabel="Open menu" onClick={() => setShowMenu(true)}>
+						<Icon name="menu" size="medium" />
 					</CustomButton>
 				</div>
 			</div>

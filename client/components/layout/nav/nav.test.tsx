@@ -20,6 +20,20 @@ describe('Nav', () => {
 		expect(nav.className.includes('open')).toBe(true);
 	});
 
+	it('renders the close menu button and closes when clicked', () => {
+		const setShowMenu = vi.fn();
+		render(<Nav isOpen={true} setShowMenu={setShowMenu} />);
+
+		const button = screen.getByRole('button', {
+			name: /Close menu/i,
+		});
+
+		expect(button).toBeInTheDocument();
+
+		fireEvent.click(button);
+		expect(setShowMenu).toHaveBeenCalledWith(false);
+	});
+
 	it('renders navigation links', () => {
 		render(<Nav isOpen={true} setShowMenu={vi.fn()} />);
 		const homeLink = screen.getByRole('link', { name: /home/i });
@@ -48,9 +62,9 @@ describe('Nav', () => {
 	});
 
 	it('closes the nav when overlay is clicked', () => {
-		const setShowMenu = vi.fn(); // Mock the function
+		const setShowMenu = vi.fn();
 		render(<Nav isOpen={true} setShowMenu={setShowMenu} />);
-		const overlay = screen.getByRole('presentation'); // You can give the overlay a role or use a query selector
+		const overlay = screen.getByRole('presentation');
 
 		fireEvent.click(overlay);
 		expect(setShowMenu).toHaveBeenCalledWith(false);

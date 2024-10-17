@@ -107,30 +107,17 @@ describe('Header', () => {
 		expect(button).toBeInTheDocument();
 	});
 
-	it('updates the menu icon after clicking menu button', () => {
-		const button = screen.getByRole('button', {
-			name: /Open menu/i,
-		});
-
-		fireEvent.click(button);
-
-		expect(button).toHaveAttribute('aria-label', 'Close menu');
-	});
-
 	it('renders the nav after clicking menu button', () => {
 		const button = screen.getByRole('button', {
 			name: /Open menu/i,
 		});
-
-		fireEvent.click(button);
-
 		const nav = screen.getByRole('navigation');
 
 		expect(nav).toBeInTheDocument();
-		expect(nav.className.includes('open')).toBe(true);
+		expect(nav.className.includes('closed')).toBe(true);
 
 		fireEvent.click(button);
 
-		expect(nav.className.includes('closed')).toBe(true);
+		expect(nav.className.includes('open')).toBe(true);
 	});
 });

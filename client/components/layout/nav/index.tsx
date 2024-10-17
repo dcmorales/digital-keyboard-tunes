@@ -1,6 +1,9 @@
 // nav
 
 import Link from 'next/link';
+
+import CustomButton from '@/components/common/custom-button';
+import Icon from '@/components/common/icon';
 import styles from './nav.module.scss';
 
 interface NavProps {
@@ -24,6 +27,10 @@ export default function Nav({ isOpen, setShowMenu }: NavProps) {
 			)}
 
 			<nav className={`${styles.nav} ${isOpen ? styles.open : styles.closed}`}>
+				<CustomButton ariaLabel="Close menu" onClick={closeMenu}>
+					<Icon name="close" size="medium" />
+				</CustomButton>
+
 				<ul>
 					<li>
 						<Link href="/" onClick={closeMenu}>
