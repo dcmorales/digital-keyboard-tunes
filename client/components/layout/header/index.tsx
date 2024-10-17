@@ -23,6 +23,11 @@ export default function Header(): JSX.Element {
 		setShowSettings((prevState) => !prevState);
 	};
 
+	const handleMenuClick = (): void => {
+		setShowSettings(false);
+		setShowMenu(true);
+	};
+
 	return (
 		<header className={styles.header}>
 			<div className={styles.mainItems}>
@@ -40,7 +45,7 @@ export default function Header(): JSX.Element {
 						</CustomButton>
 					)}
 
-					<CustomButton ariaLabel="Open menu" onClick={() => setShowMenu(true)}>
+					<CustomButton ariaLabel="Open menu" onClick={handleMenuClick}>
 						<Icon name="menu" size="medium" />
 					</CustomButton>
 				</div>

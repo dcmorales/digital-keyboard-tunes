@@ -60,6 +60,32 @@ describe('Header', () => {
 		expect(button).toHaveAttribute('aria-label', 'Open keyboard settings');
 	});
 
+	it('renders the menu button', () => {
+		const button = screen.getByRole('button', {
+			name: /Open menu/i,
+		});
+
+		expect(button).toBeInTheDocument();
+	});
+
+	it('removes settings after clicking menu button', () => {
+		const menuButton = screen.getByRole('button', {
+			name: /Open menu/i,
+		});
+		const settingsButton = screen.getByRole('button', {
+			name: /Open keyboard settings/i,
+		});
+
+		fireEvent.click(settingsButton);
+		const keyboardSettings = screen.getByRole('group', {
+			name: /Keyboard settings/i,
+		});
+
+		fireEvent.click(menuButton);
+
+		expect(keyboardSettings).not.toBeInTheDocument();
+	});
+
 	it('does not render the settings button if menu is open', () => {
 		const menuButton = screen.getByRole('button', {
 			name: /Open menu/i,
@@ -97,14 +123,6 @@ describe('Header', () => {
 		});
 
 		expect(settingsButton).not.toBeInTheDocument();
-	});
-
-	it('renders the menu button', () => {
-		const button = screen.getByRole('button', {
-			name: /Open menu/i,
-		});
-
-		expect(button).toBeInTheDocument();
 	});
 
 	it('renders the nav after clicking menu button', () => {
