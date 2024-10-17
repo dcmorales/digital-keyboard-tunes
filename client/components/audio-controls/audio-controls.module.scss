@@ -2,7 +2,7 @@
 
 .audioControls {
 	display: flex;
-	gap: 1rem;
+	gap: $rem-s;
 	margin-right: $margin-black-key * -1;
 
 	@include breakpoint(large) {

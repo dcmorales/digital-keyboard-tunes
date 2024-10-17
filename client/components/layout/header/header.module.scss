@@ -1,14 +1,16 @@
+@use '@/styles/abstracts' as *;
+
 .header {
 	align-items: center;
 	display: flex;
 	flex-direction: column;
-	margin: 0.5rem;
+	margin: $rem-xs;
 
 	.mainItems {
 		align-items: center;
 		display: flex;
 		justify-content: space-between;
-		padding: 0 1rem;
+		padding: 0 $rem-s;
 		width: 100%;
 
 		.buttonsContainer {

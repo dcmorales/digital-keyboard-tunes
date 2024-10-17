@@ -1,7 +1,9 @@
+@use '@/styles/abstracts' as *;
+
 .notesDisplay {
-	font-size: 2rem;
+	font-size: $rem-l;
 	text-align: center;
-	margin: 0 2rem;
+	margin: 0 $rem-l;
 
 	.heading {
 		display: inline;

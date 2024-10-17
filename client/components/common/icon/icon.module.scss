@@ -1,6 +1,8 @@
+@use '@/styles/abstracts' as *;
+
 .small {
-	height: 2rem;
-	width: 2rem;
+	height: $rem-l;
+	width: $rem-l;
 }
 
 .medium {

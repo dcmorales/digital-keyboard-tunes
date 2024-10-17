@@ -8,9 +8,9 @@
 		align-items: center;
 		display: flex;
 		flex-direction: column;
-		gap: 1rem;
+		gap: $rem-s;
 		justify-content: center;
-		padding: 1rem;
+		padding: $rem-s;
 
 		@include breakpoint(large) {
 			flex-direction: row;
@@ -18,10 +18,10 @@
 	}
 
 	.notesPlayedContainer {
-		font-size: 2rem;
+		font-size: $rem-l;
 		font-weight: 400;
 		text-align: center;
-		margin: 0 2rem;
+		margin: 0 $rem-l;
 	}
 
 	.flatSymbol {

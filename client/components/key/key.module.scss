@@ -5,7 +5,7 @@
 	box-shadow: 0 $size-s $size-m rgba(0, 0, 0, 0.2);
 	display: flex;
 	justify-content: center;
-	padding-bottom: 1.5rem;
+	padding-bottom: $rem-m;
 	transition:
 		box-shadow 0.1s ease,
 		padding-bottom 0.1s ease;
@@ -69,16 +69,16 @@
 	}
 
 	&.keyboardSelected {
-		font-size: 2rem;
+		font-size: $rem-l;
 
 		.flatSymbol {
-			font-size: 1.5rem;
-			padding-bottom: 0.5rem;
+			font-size: $rem-m;
+			padding-bottom: $rem-xs;
 		}
 	}
 
 	&.highlight {
-		padding-bottom: 2rem;
+		padding-bottom: $rem-l;
 	}
 
 	&.active {
@@ -89,6 +89,6 @@
 	// the highlighted keys have a slightly larger difference in padding
 	// for a more visible pressing effect
 	&.highlight.active {
-		padding-bottom: 1.5rem;
+		padding-bottom: $rem-m;
 	}
 }
