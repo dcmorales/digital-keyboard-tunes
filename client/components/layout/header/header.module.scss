@@ -4,11 +4,11 @@
 	align-items: center;
 	display: flex;
 	flex-direction: column;
-	margin: $rem-xs;
 
 	.mainItems {
 		align-items: center;
 		display: flex;
+		height: 4.5rem;
 		justify-content: space-between;
 		padding: 0 $rem-s;
 		width: 100%;
