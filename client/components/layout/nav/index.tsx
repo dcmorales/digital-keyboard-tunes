@@ -9,23 +9,27 @@ interface NavProps {
 
 export default function Nav({ isOpen }: NavProps) {
 	return (
-		<nav className={`${styles.nav} ${isOpen ? styles.open : styles.closed}`}>
-			<ul>
-				<li>
-					<Link href="/about">About</Link>
-				</li>
+		<>
+			{isOpen && <div className={styles.overlay} />}
 
-				<li>
-					<a
-						className={styles.link}
-						href="https://github.com/dcmorales/digital-keyboard-tunes"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						Github Repository
-					</a>
-				</li>
-			</ul>
-		</nav>
+			<nav className={`${styles.nav} ${isOpen ? styles.open : styles.closed}`}>
+				<ul>
+					<li>
+						<Link href="/about">About</Link>
+					</li>
+
+					<li>
+						<a
+							className={styles.link}
+							href="https://github.com/dcmorales/digital-keyboard-tunes"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							Github Repository
+						</a>
+					</li>
+				</ul>
+			</nav>
+		</>
 	);
 }
