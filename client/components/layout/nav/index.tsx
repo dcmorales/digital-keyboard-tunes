@@ -5,17 +5,36 @@ import styles from './nav.module.scss';
 
 interface NavProps {
 	isOpen: boolean;
+	setShowMenu: (showMenu: boolean) => void;
 }
 
-export default function Nav({ isOpen }: NavProps) {
+export default function Nav({ isOpen, setShowMenu }: NavProps) {
+	const closeMenu = (): void => {
+		setShowMenu(false);
+	};
+
 	return (
 		<>
-			{isOpen && <div className={styles.overlay} />}
+			{isOpen && (
+				<div
+					className={styles.overlay}
+					onClick={closeMenu}
+					role="presentation"
+				/>
+			)}
 
 			<nav className={`${styles.nav} ${isOpen ? styles.open : styles.closed}`}>
 				<ul>
 					<li>
-						<Link href="/about">About</Link>
+						<Link href="/" onClick={closeMenu}>
+							Home
+						</Link>
+					</li>
+
+					<li>
+						<Link href="/about" onClick={closeMenu}>
+							About
+						</Link>
 					</li>
 
 					<li>

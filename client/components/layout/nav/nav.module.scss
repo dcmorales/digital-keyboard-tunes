@@ -7,8 +7,7 @@
 		background: rgba(0, 0, 0, 0.5);
 		bottom: 0;
 		display: block;
-		// total height minus header height
-		height: calc(100% - 4.5rem);
+		height: 100%;
 		left: 0;
 		position: fixed;
 		width: 100%;
@@ -20,8 +19,7 @@
 	background: $color-blue-lightest;
 	bottom: 0;
 	font-size: $rem-xl;
-	// total height minus header height
-	height: calc(100% - 4.5rem);
+	height: 100%;
 	padding: $rem-l;
 	position: fixed;
 	right: -100%;
