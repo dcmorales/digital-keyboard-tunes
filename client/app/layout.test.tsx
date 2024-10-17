@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest';
 import ContextTestComponent from '@/mocks/context-test-component';
 import Layout, { metadata } from './layout';
 
-describe('Layout', () => {
+describe('Root Layout', () => {
 	it('renders the Header component', () => {
 		render(
 			<Layout>
