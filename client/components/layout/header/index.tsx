@@ -5,6 +5,7 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
 import CustomButton from '@/components/common/custom-button';
@@ -14,6 +15,7 @@ import Nav from '@/components/layout/nav';
 import styles from './header.module.scss';
 
 export default function Header(): JSX.Element {
+	const pathname = usePathname();
 	const [showSettings, setShowSettings] = useState(false);
 	const [showMenu, setShowMenu] = useState(false);
 
@@ -33,12 +35,14 @@ export default function Header(): JSX.Element {
 				</Link>
 
 				<div className={styles.buttonsContainer}>
-					<CustomButton
-						ariaLabel={`${!showSettings ? 'Open' : 'Close'} keyboard settings`}
-						onClick={toggleSettings}
-					>
-						<Icon name="gear" size="medium" />
-					</CustomButton>
+					{pathname !== '/about' && !showMenu && (
+						<CustomButton
+							ariaLabel={`${!showSettings ? 'Open' : 'Close'} keyboard settings`}
+							onClick={toggleSettings}
+						>
+							<Icon name="gear" size="medium" />
+						</CustomButton>
+					)}
 
 					<CustomButton
 						ariaLabel={`${!showMenu ? 'Open' : 'Close'} menu`}
@@ -50,6 +54,7 @@ export default function Header(): JSX.Element {
 			</div>
 
 			{showSettings && <KeyboardSettings />}
+
 			<Nav isOpen={showMenu} />
 		</header>
 	);

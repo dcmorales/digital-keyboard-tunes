@@ -1,8 +1,13 @@
-import { fireEvent, render, screen } from '@testing-library/react';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { usePathname } from 'next/navigation';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { KeyboardOptionsProvider } from '@/context/keyboard-options-context';
 import Header from '.';
+
+vi.mock('next/navigation', () => ({
+	usePathname: vi.fn(),
+}));
 
 describe('Header', () => {
 	beforeEach(() => {
@@ -28,7 +33,7 @@ describe('Header', () => {
 		expect(heading).toBeInTheDocument();
 	});
 
-	it('renders the settings button', () => {
+	it('renders the settings button initially', () => {
 		const button = screen.getByRole('button', {
 			name: /Open keyboard settings/i,
 		});
@@ -53,6 +58,45 @@ describe('Header', () => {
 		fireEvent.click(button);
 		expect(keyboardSettings).not.toBeInTheDocument();
 		expect(button).toHaveAttribute('aria-label', 'Open keyboard settings');
+	});
+
+	it('does not render the settings button if menu is open', () => {
+		const menuButton = screen.getByRole('button', {
+			name: /Open menu/i,
+		});
+		const settingsButton = screen.getByRole('button', {
+			name: /Open keyboard settings/i,
+		});
+
+		fireEvent.click(menuButton);
+
+		expect(settingsButton).not.toBeInTheDocument();
+	});
+
+	it('does not render the settings button if on the about page', () => {
+		cleanup();
+		const { rerender } = render(
+			<KeyboardOptionsProvider>
+				<Header />
+			</KeyboardOptionsProvider>
+		);
+
+		const mockedUsePathname = usePathname as unknown as ReturnType<
+			typeof vi.fn
+		>;
+		mockedUsePathname.mockReturnValue('/about');
+
+		rerender(
+			<KeyboardOptionsProvider>
+				<Header />
+			</KeyboardOptionsProvider>
+		);
+
+		const settingsButton = screen.queryByRole('button', {
+			name: /Open keyboard settings/i,
+		});
+
+		expect(settingsButton).not.toBeInTheDocument();
 	});
 
 	it('renders the menu button', () => {
