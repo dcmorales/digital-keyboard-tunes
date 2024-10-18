@@ -57,7 +57,7 @@
 
 ## 📍 Overview
 
-COMING SOON: Digital Keyboard Tunes client is a web application built with Next.js and TypeScript. It utilizes the Web Audio API and plays musical scales in key. Users can customize options to create their own unique sounds.
+Digital Keyboard Tunes client is a web application built with Next.js and TypeScript. It utilizes the Web Audio API and plays musical scales in key. Users can customize options to create their own unique sounds.
 
 ---
 
