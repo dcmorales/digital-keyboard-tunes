@@ -1,4 +1,7 @@
 // nav
+// The nav menu for the app. Hidden until the menu button in the
+// header is clicked. Slides out from the right side. Contains
+// the main links for pages.
 
 import Link from 'next/link';
 

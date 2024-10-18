@@ -1,5 +1,6 @@
 // icon
-// An icon that accepts a name prop. The name passed in will determine the svg provided.
+// An svg icon. The name passed in will determine the svg provided.
+// The size prop determines how big the svg will be.
 
 import styles from './icon.module.scss';
 

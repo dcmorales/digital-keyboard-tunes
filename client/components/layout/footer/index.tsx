@@ -1,4 +1,5 @@
 // footer
+// The footer for the app. Displayed at the bottom of the page.
 
 import Icon from '@/components/common/icon';
 import styles from './footer.module.scss';

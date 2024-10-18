@@ -1,4 +1,6 @@
 // about page
+// Displays general app information, specifically around the
+// available settings and controls.
 
 import Icon from '@/components/common/icon';
 

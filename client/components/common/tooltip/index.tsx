@@ -1,4 +1,6 @@
 // tooltip
+// A tooltip component that displays an info icon. When hovered over,
+// focused on, or clicked the tooltip text becomes visible.
 
 'use client';
 

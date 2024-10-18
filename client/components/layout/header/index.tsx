@@ -1,6 +1,7 @@
 // header
-// The header for the app. Includes a heading and a settings button.
-// Clicking on the settings button will toggle the keyboard-settings on and off.
+// The header for the app. Includes a clickable heading, a settings button, and
+// a menu button. Clicking on the settings button will toggle the keyboard-settings
+// on and off. Clicking on the menu will open the nav.
 
 'use client';
 
