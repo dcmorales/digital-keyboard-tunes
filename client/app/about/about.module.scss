@@ -1,9 +1,19 @@
 @use '@/styles/abstracts' as *;
 
 .about {
+	font-size: $rem-m;
 	padding: $rem-l;
 
 	h2 {
-		font-size: $rem-xl;
+		font-size: $rem-xxl;
+	}
+
+	h3 {
+		font-size: $rem-l;
+	}
+
+	.flatSymbol {
+		margin-left: -0.2rem;
+		font-size: 0.7em;
 	}
 }
