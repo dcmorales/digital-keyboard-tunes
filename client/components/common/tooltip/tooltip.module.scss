@@ -28,11 +28,6 @@
 			svg {
 				fill: $color-white;
 			}
-
-			+ .tooltip {
-				opacity: 1;
-				visibility: visible;
-			}
 		}
 	}
 
@@ -41,13 +36,10 @@
 		border-radius: $size-xs;
 		color: $color-white;
 		min-width: 6rem;
-		opacity: 0;
-		padding: $size-xs;
+		padding: $size-s;
 		position: absolute;
-		text-align: center;
 		top: 125%;
 		transition: opacity 0.2s;
-		visibility: hidden;
 		z-index: 1;
 	}
 }
