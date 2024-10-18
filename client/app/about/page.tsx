@@ -72,26 +72,27 @@ export default function AboutPage() {
 
 				<ul>
 					<li>
-						Sine: Smooth and pure sound with no harmonics. Often used for
-						creating simple tones.
+						<strong>Sine</strong>: Smooth and pure sound with no harmonics.
+						Often used for creating simple tones.
 					</li>
 
 					<li>
-						Square: A waveform with a sharp, abrupt sound characterized by
-						strong harmonics. Commonly used in electronic music for bass lines
-						and leads due to its rich sound.
+						<strong>Square</strong>: A waveform with a sharp, abrupt sound
+						characterized by strong harmonics. Commonly used in electronic music
+						for bass lines and leads due to its rich sound.
 					</li>
 
 					<li>
-						Sawtooth: A waveform that ramps upward and then sharply drops,
-						containing a full spectrum of harmonics. Popular in synthesizers for
-						pads and leads, creating a bright and aggressive sound.
+						<strong>Sawtooth</strong>: A waveform that ramps upward and then
+						sharply drops, containing a full spectrum of harmonics. Popular in
+						synthesizers for pads and leads, creating a bright and aggressive
+						sound.
 					</li>
 
 					<li>
-						Triangle: Similar to the sine wave but with a more pronounced sound
-						due to its harmonics. Often used for softer sounds and is ideal for
-						creating mellow tones.
+						<strong>Triangle</strong>: Similar to the sine wave but with a more
+						pronounced sound due to its harmonics. Often used for softer sounds
+						and is ideal for creating mellow tones.
 					</li>
 				</ul>
 
@@ -109,45 +110,49 @@ export default function AboutPage() {
 				</p>
 				<ul>
 					<li>
-						Chromatic: Made up entirely of half steps (semitones). Consists of
-						all pitches within an octave including both natural notes and their
-						corresponding flats.
+						<strong>Chromatic</strong>: Made up entirely of half steps
+						(semitones). Consists of all pitches within an octave including both
+						natural notes and their corresponding flats.
 					</li>
 
 					<li>
-						Major: Characterized by a happy and bright sound, it follows a
-						specific pattern of whole and half steps (W-W-H-W-W-W-H).
+						<strong>Major</strong>: Characterized by a happy and bright sound,
+						it follows a specific pattern of whole and half steps
+						(W-W-H-W-W-W-H).
 					</li>
 
 					<li>
-						Natural Minor: Known for its somber tone, it follows the pattern
-						(W-H-W-W-H-W-W), offering a darker sound compared to major.
+						<strong>Natural Minor</strong>: Known for its somber tone, it
+						follows the pattern (W-H-W-W-H-W-W), offering a darker sound
+						compared to major.
 					</li>
 
 					<li>
-						Harmonic Minor: Similar to the natural minor but with a raised
-						seventh degree, creating a leading tone (W-H-W-W-H-A2-H).
+						<strong>Harmonic Minor</strong>: Similar to the natural minor but
+						with a raised seventh degree, creating a leading tone
+						(W-H-W-W-H-A2-H).
 					</li>
 					<li>
-						Melodic Minor: Creates a sense of movement and tension, making it
-						ideal for expressive melodies and jazz improvisation. Follows the
-						pattern (W-H-W-W-W-W-H).
-					</li>
-
-					<li>
-						Major Pentatonic: Contains five notes and is often associated with a
-						bright, uplifting sound; follows the pattern (W-W-W+H-W-W+H).
+						<strong>Melodic Minor</strong>: Creates a sense of movement and
+						tension, making it ideal for expressive melodies and jazz
+						improvisation. Follows the pattern (W-H-W-W-W-W-H).
 					</li>
 
 					<li>
-						Minor Pentatonic: A five-note scale with a more melancholic tone;
-						follows the pattern (W+H-W-W-W+H-W).
+						<strong>Major Pentatonic</strong>: Contains five notes and is often
+						associated with a bright, uplifting sound; follows the pattern
+						(W-W-W+H-W-W+H).
 					</li>
 
 					<li>
-						Blues: A variant of the pentatonic scale with an added “blue note,”
-						commonly used in blues and jazz music. Follows the pattern
-						(W+H-W-H-H-W+H-W)/.
+						<strong>Minor Pentatonic</strong>: A five-note scale with a more
+						melancholic tone; follows the pattern (W+H-W-W-W+H-W).
+					</li>
+
+					<li>
+						<strong>Blues</strong>: A variant of the pentatonic scale with an
+						added “blue note,” commonly used in blues and jazz music. Follows
+						the pattern (W+H-W-H-H-W+H-W)/.
 					</li>
 				</ul>
 
@@ -158,20 +163,22 @@ export default function AboutPage() {
 				</p>
 				<ul>
 					<li>
-						Ascending order: The pitches increase in frequency, moving from
-						lower to higher notes. For instance, in a C major scale, the notes
-						progress from C to D to E, and so on, culminating at the higher C.
+						<strong>Ascending order</strong>: The pitches increase in frequency,
+						moving from lower to higher notes. For instance, in a C major scale,
+						the notes progress from C to D to E, and so on, culminating at the
+						higher C.
 					</li>
 
 					<li>
-						Descending order: The pitches decrease in frequency, moving from
-						higher to lower notes. Using the same C major scale, descending
-						would move from C to B to A, and so forth, down to the lower C.
+						<strong>Descending order</strong>: The pitches decrease in
+						frequency, moving from higher to lower notes. Using the same C major
+						scale, descending would move from C to B to A, and so forth, down to
+						the lower C.
 					</li>
 
 					<li>
-						Random order: All of the notes in the scale will be shuffled and
-						played in a random order.
+						<strong>Random order</strong>: All of the notes in the scale will be
+						shuffled and played in a random order.
 					</li>
 				</ul>
 
@@ -179,16 +186,18 @@ export default function AboutPage() {
 				<p>Note lengths represent the durations a note will play for.</p>
 				<ul>
 					<li>
-						1/4: A quarter note. Represents one beat in common time (4/4).
-					</li>
-
-					<li>
-						1/8: An eighth note. Represents half a beat in common time (4/4).
-					</li>
-
-					<li>
-						1/16: A sixteenth note. Represents a quarter of a beat in common
+						<strong>1/4</strong>: A quarter note. Represents one beat in common
 						time (4/4).
+					</li>
+
+					<li>
+						<strong>1/8</strong>: An eighth note. Represents half a beat in
+						common time (4/4).
+					</li>
+
+					<li>
+						<strong>1/16</strong>: A sixteenth note. Represents a quarter of a
+						beat in common time (4/4).
 					</li>
 				</ul>
 

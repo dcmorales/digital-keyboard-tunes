@@ -2,18 +2,34 @@
 
 .about {
 	font-size: $rem-m;
-	padding: $rem-l;
+	padding: $rem-l $rem-xxl;
+
+	section {
+		padding-bottom: $rem-l;
+	}
 
 	h2 {
+		color: $color-blue-dark;
 		font-size: $rem-xxl;
 	}
 
 	h3 {
+		color: $color-blue-darkest;
 		font-size: $rem-l;
 	}
 
+	p,
+	ul {
+		list-style: none;
+		padding: $rem-s 0;
+	}
+
+	li {
+		padding-bottom: $rem-xs;
+	}
+
 	.flatSymbol {
-		margin-left: -0.2rem;
 		font-size: 0.7em;
+		margin-left: -0.2rem;
 	}
 }
