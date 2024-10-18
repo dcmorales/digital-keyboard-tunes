@@ -31,12 +31,9 @@ export default function AboutPage() {
 					octave. The 12 options are C, D
 					<span className={styles.flatSymbol}>♭</span>, D, E
 					<span className={styles.flatSymbol}>♭</span>, E, F, G
-					<span className={styles.flatSymbol}>♭</span>, G4, A
+					<span className={styles.flatSymbol}>♭</span>, G, A
 					<span className={styles.flatSymbol}>♭</span>, A, B
-					<span className={styles.flatSymbol}>
-						<span className={styles.flatSymbol}>♭</span>
-					</span>
-					, and B.
+					<span className={styles.flatSymbol}>♭</span>, and B.
 				</p>
 
 				<h3>Octave</h3>
