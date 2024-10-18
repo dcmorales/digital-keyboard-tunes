@@ -1,12 +1,14 @@
 @use '@/styles/abstracts' as *;
 
 .icon {
-	display: inline-block;
+	align-items: center;
+	display: inline-flex;
+	justify-content: center;
 	vertical-align: middle;
 
 	&.x-small {
-		height: $rem-s;
-		width: $rem-s;
+		height: 0.75rem;
+		width: 0.75rem;
 	}
 
 	&.small {
