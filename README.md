@@ -67,7 +67,7 @@
 
 ## 📍 Overview
 
-COMING SOON: Digital Keyboard Tunes is a web application built with Next.js and TypeScript on the frontend. It utilizes the Web Audio API and plays musical scales in key. Users can customize options to create their own unique sounds.
+Digital Keyboard Tunes is a web application built with Next.js and TypeScript on the frontend. It utilizes the Web Audio API and plays musical scales in key. Users can customize options to create their own unique sounds.
 
 ---
 
@@ -130,7 +130,7 @@ The repo uses Github Actions for CI/CD. Testing and linting have been automated 
 
 ## 📌 Project Roadmap
 
-- [ ] **`Initial keyboard`**: Set up basic functionality for keyboard
+- [x] **`Initial keyboard`**: Set up basic functionality for keyboard
 - [ ] **`Add backend`**: Add backend to repo to allow users to save custom tunes.
 - [ ] **`Expand user options`**: Consider options to mark tunes as public and save as favorites.
 - [ ] **`Expand keyboard options`**: Consider more advanced options in customizing and editing parts of tunes.
