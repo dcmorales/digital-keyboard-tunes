@@ -106,4 +106,34 @@ describe('Dropdown', () => {
 		expect(handleChange).toHaveBeenCalledWith(expect.any(Object));
 		expect(dropdown).toHaveValue('c');
 	});
+
+	it('renders a tooltip if provided', () => {
+		render(
+			<Dropdown
+				options={['a', 'b', 'c']}
+				ariaLabel="Select an option"
+				title="Test dropdown"
+				name="test-id"
+				value="b"
+				tooltip={{ text: 'Helpful tooltip', topic: 'Tooltip topic' }}
+				onChange={handleChange}
+			/>
+		);
+
+		const tooltipButton = screen.getByRole('button', {
+			name: /Information for Tooltip topic/i,
+		});
+		expect(tooltipButton).toBeInTheDocument();
+
+		// show tooltip
+		fireEvent.mouseEnter(tooltipButton);
+
+		const tooltip = screen.getByRole('tooltip');
+		expect(tooltip).toBeInTheDocument();
+		expect(tooltip).toHaveTextContent('Helpful tooltip');
+
+		// hide tooltip
+		fireEvent.mouseLeave(tooltipButton);
+		expect(tooltip).not.toBeVisible();
+	});
 });

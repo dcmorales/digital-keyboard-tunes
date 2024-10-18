@@ -6,6 +6,7 @@
 
 import type { ChangeEvent } from 'react';
 
+import Tooltip from '@/components/common/tooltip';
 import styles from './dropdown.module.scss';
 
 interface DropdownProps {
@@ -15,6 +16,10 @@ interface DropdownProps {
 	name: string;
 	value: string | number;
 	disabled?: boolean;
+	tooltip?: {
+		text: string;
+		topic: string;
+	};
 	onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
 
@@ -25,13 +30,18 @@ export default function Dropdown({
 	name,
 	value,
 	disabled,
+	tooltip,
 	onChange,
 }: DropdownProps): JSX.Element {
 	return (
 		<div className={styles.dropdown}>
-			<label className={styles.label} htmlFor={name}>
-				{title}
-			</label>
+			<div className={styles.labelContainer}>
+				<label className={styles.label} htmlFor={name}>
+					{title}
+				</label>
+
+				{tooltip && <Tooltip topic={tooltip.topic} text={tooltip.text} />}
+			</div>
 
 			<select
 				className={styles.select}
