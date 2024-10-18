@@ -91,6 +91,7 @@ export default function KeyboardSettings(): JSX.Element {
 						ariaLabel={setting.ariaLabel}
 						title={setting.title}
 						name={setting.name}
+						tooltip={setting.tooltip}
 						value={value}
 						disabled={isPlaying}
 						onChange={onChange}
