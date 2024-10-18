@@ -1,16 +1,21 @@
 @use '@/styles/abstracts' as *;
 
-.small {
-	height: $rem-l;
-	width: $rem-l;
-}
+.icon {
+	display: inline-block;
+	vertical-align: middle;
 
-.medium {
-	height: 2.75rem;
-	width: 2.75rem;
-}
+	&.small {
+		height: $rem-l;
+		width: $rem-l;
+	}
 
-.large {
-	height: 3.25rem;
-	width: 3.25rem;
+	&.medium {
+		height: 2.75rem;
+		width: 2.75rem;
+	}
+
+	&.large {
+		height: 3.25rem;
+		width: 3.25rem;
+	}
 }

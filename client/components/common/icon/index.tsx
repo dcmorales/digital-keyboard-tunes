@@ -191,5 +191,7 @@ const icons = {
 export default function Icon({ name, size = 'small' }: IconProps): JSX.Element {
 	const IconSVG = icons[name];
 
-	return <div className={styles[`${size}`]}>{IconSVG}</div>;
+	return (
+		<span className={`${styles.icon} ${styles[`${size}`]}`}>{IconSVG}</span>
+	);
 }

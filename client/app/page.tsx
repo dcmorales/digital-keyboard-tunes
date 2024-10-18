@@ -1,4 +1,4 @@
-// Home page
+// home page
 
 import KeyboardSelected from '@/components/keyboard-selected';
 import KeyboardFull from '@/components/keyboard-full';
