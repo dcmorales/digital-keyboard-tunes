@@ -4,6 +4,11 @@
 	display: inline-block;
 	vertical-align: middle;
 
+	&.x-small {
+		height: $rem-s;
+		width: $rem-s;
+	}
+
 	&.small {
 		height: $rem-l;
 		width: $rem-l;
