@@ -6,12 +6,6 @@
 	flex-direction: column;
 	padding: 0 $rem-s;
 
-	&:hover {
-		.select {
-			background-color: $color-white;
-		}
-	}
-
 	.labelContainer {
 		position: relative;
 	}
@@ -30,6 +24,10 @@
 
 		&:disabled {
 			cursor: default;
+		}
+
+		&:hover {
+			background-color: $color-white;
 		}
 	}
 }
