@@ -1,3 +1,7 @@
+// about page
+
+import Icon from '@/components/common/icon';
+
 import styles from './about.module.scss';
 
 export default function AboutPage() {
@@ -215,16 +219,33 @@ export default function AboutPage() {
 				<h2>Audio controls</h2>
 
 				<h3>Play</h3>
-				<p></p>
+				<p>
+					A button that is visible if the order is set to ascending or
+					descending. It will play the scale based on the selections made.
+					Represented by the play icon <Icon name="play" />
+				</p>
 
 				<h3>Shuffle</h3>
-				<p></p>
+				<p>
+					A button that is only visible if the order is set to random. Similar
+					to the play button, it will play the scale based on the selections
+					made but the order of the notes will be random. Represented by the
+					shuffle icon <Icon name="shuffle" />
+				</p>
 
 				<h3>Repeat</h3>
-				<p></p>
+				<p>
+					A button that is only visible if the order is set to random. It will
+					repeat the last scale played with the same previous settings.
+					Represented by the repeat icon <Icon name="repeat" />
+				</p>
 
 				<h3>Stop</h3>
-				<p></p>
+				<p>
+					A button that is always visible. Pressing it will immediately stop the
+					playing scale. It is disabled if a scale isn&apos;t playing
+					Represented by the stop icon <Icon name="stop" />
+				</p>
 			</section>
 		</article>
 	);
