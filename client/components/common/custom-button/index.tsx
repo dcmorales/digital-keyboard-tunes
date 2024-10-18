@@ -1,6 +1,7 @@
 // custom-button
 // A button component that must have an ariaLabel and onClick provided.
-// It displays its children.
+// It displays its children. Since the event handler is not defined in the
+// component itself, this component can only be added to client components.
 
 import type { ReactNode } from 'react';
 

@@ -4,11 +4,11 @@ import { describe, expect, it } from 'vitest';
 import Icon from '.';
 
 describe('Icon', () => {
-	it('renders the chevron svg', () => {
-		render(<Icon name="chevron" />);
-		const chevronIcon = screen.getByTestId('svg-chevron');
+	it('applies the correct class name based on size prop', () => {
+		render(<Icon name="github" size="large" />);
+		const githubIcon = screen.getByTestId('svg-github');
 
-		expect(chevronIcon).toBeInTheDocument();
+		expect(githubIcon.parentElement!.className.includes('large')).toBe(true);
 	});
 
 	it('renders the gear svg', () => {

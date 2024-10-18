@@ -1,0 +1,63 @@
+@use '@/styles/abstracts' as *;
+
+.overlay {
+	display: none;
+
+	@include breakpoint(large) {
+		background: rgba(0, 0, 0, 0.5);
+		bottom: 0;
+		display: block;
+		height: 100%;
+		left: 0;
+		position: fixed;
+		width: 100%;
+		z-index: 50;
+	}
+}
+
+.nav {
+	background: $color-blue-lightest;
+	font-size: $rem-xl;
+	height: 100%;
+	padding: $rem-l;
+	position: fixed;
+	right: -100%;
+	top: 0;
+	transition: right 0.5s ease;
+	width: 100%;
+	z-index: 100;
+
+	button {
+		position: absolute;
+		right: $rem-s;
+		top: $rem-s;
+	}
+
+	ul {
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		gap: $rem-m;
+		height: 100%;
+		justify-content: center;
+		list-style: none;
+		text-align: center;
+	}
+
+	&.open {
+		right: 0;
+	}
+
+	&.closed {
+		right: -100%;
+	}
+
+	@include breakpoint(large) {
+		right: -30%;
+		width: 30%;
+
+		&.closed {
+			right: -30%;
+		}
+	}
+}

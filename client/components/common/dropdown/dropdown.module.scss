@@ -4,12 +4,10 @@
 	align-items: center;
 	display: flex;
 	flex-direction: column;
-	padding: 0 1rem;
+	padding: 0 $rem-s;
 
-	&:hover {
-		.select {
-			background-color: $color-white;
-		}
+	.labelContainer {
+		position: relative;
 	}
 
 	.label {
@@ -20,12 +18,16 @@
 
 	.select {
 		background-color: transparent;
-		border-radius: 4px;
+		border-radius: $size-xs;
 		cursor: pointer;
 		text-align: center;
 
 		&:disabled {
 			cursor: default;
+		}
+
+		&:hover {
+			background-color: $color-white;
 		}
 	}
 }

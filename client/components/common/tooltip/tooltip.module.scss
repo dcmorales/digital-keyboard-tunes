@@ -1,0 +1,44 @@
+@use '@/styles/abstracts' as *;
+
+.tooltipContainer {
+	display: inline-block;
+	position: absolute;
+
+	button {
+		align-items: center;
+		background-color: $color-white;
+		border: 1px solid $color-blue-darkest;
+		border-radius: 50%;
+		display: flex;
+		height: $rem-s;
+		justify-content: center;
+		outline: none;
+		transition: background-color 0.3s;
+		width: $rem-s;
+
+		svg {
+			fill: $color-blue-darkest;
+			transition: fill 0.3s;
+		}
+
+		&:hover,
+		&:focus {
+			background-color: $color-blue-dark;
+
+			svg {
+				fill: $color-white;
+			}
+		}
+	}
+
+	.tooltip {
+		background-color: $color-blue-darkest;
+		border-radius: $size-xs;
+		color: $color-white;
+		min-width: 6rem;
+		padding: $size-s;
+		position: absolute;
+		top: 125%;
+		z-index: 1;
+	}
+}

@@ -1,1 +1,17 @@
 $margin-black-key: -6%;
+
+// general purpose sizes with fixed values
+// for things like borders, box-shadows, etc.
+$size-xs: 4px;
+$size-s: 8px;
+$size-m: 16px;
+$size-l: 24px;
+
+// general purpose sizes with flexible values
+// for things like padding, margin, font-size etc.
+$rem-xs: 0.5rem;
+$rem-s: 1rem;
+$rem-m: 1.5rem;
+$rem-l: 2rem;
+$rem-xl: 2.5rem;
+$rem-xxl: 3rem;

@@ -73,7 +73,7 @@ export default function ContextTestComponent(): JSX.Element {
 			<SelectInput
 				label="waveform"
 				value={selectedWaveform}
-				options={['sine', 'square', 'triangle', 'sawtooth']}
+				options={['sine', 'square', 'sawtooth', 'triangle']}
 				onChange={onWaveformChange}
 			/>
 
