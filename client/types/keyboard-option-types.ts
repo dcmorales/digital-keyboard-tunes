@@ -1,5 +1,5 @@
 // keyboard-option-types
-// Types defining specific values for common keyboard options
+// Strict type definitions for common keyboard options
 
 export type NoteKey =
 	| 'C'
@@ -17,7 +17,9 @@ export type NoteKey =
 
 export type OctaveNum = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
-export type Waveform = 'sine' | 'square' | 'triangle' | 'sawtooth';
+export type FullNote = `${NoteKey}${OctaveNum}`;
+
+export type Waveform = 'sine' | 'square' | 'sawtooth' | 'triangle';
 
 export type Scale =
 	| 'chromatic'
@@ -29,4 +31,21 @@ export type Scale =
 	| 'minor pentatonic'
 	| 'blues';
 
-export type FullNote = `${NoteKey}${OctaveNum}`;
+export type Order = 'ascending' | 'descending' | 'random';
+
+export type NoteLength = '1/4' | '1/8' | '1/16';
+
+export type TotalNotesNum =
+	| 1
+	| 2
+	| 3
+	| 4
+	| 5
+	| 6
+	| 7
+	| 8
+	| 9
+	| 10
+	| 11
+	| 12
+	| 13;

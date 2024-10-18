@@ -2,10 +2,10 @@
 
 .octave {
 	display: flex;
-	height: 40vh;
 
 	&.keyboardFull {
 		border: 1.5px solid $color-black;
+		height: 35vh;
 		width: 100%;
 
 		&:first-child {
@@ -13,12 +13,17 @@
 		}
 
 		&:last-child {
-			border-right: 4px solid $color-black;
+			border-right: $size-xs solid $color-black;
 		}
 	}
 
 	&.keyboardSelected {
 		border: 1px solid $color-black;
+		height: 55vh;
 		width: 80%;
+
+		@include breakpoint(large) {
+			height: 40vh;
+		}
 	}
 }

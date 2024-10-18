@@ -1,31 +1,21 @@
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { useKeyboardOptions } from '@/context/keyboard-options-context';
+import ContextTestComponent from '@/mocks/context-test-component';
 import Layout, { metadata } from './layout';
 
-const TestComponent = () => {
-	const { selectedKey, onKeyChange } = useKeyboardOptions();
+describe('Root Layout', () => {
+	it('renders the Header component', () => {
+		render(
+			<Layout>
+				<div>Hello, world</div>
+			</Layout>
+		);
+		const header = screen.getByRole('heading');
 
-	return (
-		<div>
-			<label htmlFor="key-select">Select Key:</label>
-			<select
-				id="key-select"
-				name="key"
-				value={selectedKey}
-				onChange={onKeyChange}
-			>
-				<option value="C">C</option>
-				<option value="D">D</option>
-				<option value="E">E</option>
-			</select>
-			<p>Selected Key: {selectedKey}</p>
-		</div>
-	);
-};
+		expect(header).toBeInTheDocument();
+	});
 
-describe('Layout', () => {
 	it('renders children correctly', () => {
 		const { getByText } = render(
 			<Layout>
@@ -36,6 +26,17 @@ describe('Layout', () => {
 		expect(getByText('Hello, world')).toBeInTheDocument();
 	});
 
+	it('renders the footer', () => {
+		render(
+			<Layout>
+				<div>Hello, world</div>
+			</Layout>
+		);
+		const footer = screen.getByRole('contentinfo');
+
+		expect(footer).toBeInTheDocument();
+	});
+
 	it('has correct metadata', () => {
 		expect(metadata.title).toBe('Digital Keyboard Tunes');
 		expect(metadata.description).toBe('Create custom tunes in key!');
@@ -44,23 +45,33 @@ describe('Layout', () => {
 	it('provides the default selected values from context', () => {
 		const { getByText } = render(
 			<Layout>
-				<TestComponent />
+				<ContextTestComponent />
 			</Layout>
 		);
 
-		expect(getByText('Selected Key: C')).toBeInTheDocument();
+		// all values are tested in context test suite
+		expect(getByText(/Selected key: C/i)).toBeInTheDocument();
+		expect(getByText(/Selected octave: 4/i)).toBeInTheDocument();
+		expect(getByText(/Selected waveform: sine/i)).toBeInTheDocument();
 	});
 
 	it('changes the selected value when a new option is selected', () => {
 		const { getByLabelText, getByText } = render(
 			<Layout>
-				<TestComponent />
+				<ContextTestComponent />
 			</Layout>
 		);
-		const select = getByLabelText('Select Key:');
+		const keySelect = getByLabelText(/Select key:/i);
+		const octaveSelect = getByLabelText(/Select octave:/i);
+		const waveformSelect = getByLabelText(/Select waveform:/i);
 
-		fireEvent.change(select, { target: { value: 'D' } });
+		fireEvent.change(keySelect, { target: { value: 'D' } });
+		fireEvent.change(octaveSelect, { target: { value: '5' } });
+		fireEvent.change(waveformSelect, { target: { value: 'square' } });
 
-		expect(getByText('Selected Key: D')).toBeInTheDocument();
+		// all values are tested in context test suite
+		expect(getByText(/Selected key: D/i)).toBeInTheDocument();
+		expect(getByText(/Selected octave: 5/i)).toBeInTheDocument();
+		expect(getByText(/Selected waveform: square/i)).toBeInTheDocument();
 	});
 });

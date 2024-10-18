@@ -1,0 +1,28 @@
+@use '@/styles/abstracts' as *;
+
+.icon {
+	align-items: center;
+	display: inline-flex;
+	justify-content: center;
+	vertical-align: middle;
+
+	&.x-small {
+		height: 0.6rem;
+		width: 0.6rem;
+	}
+
+	&.small {
+		height: $rem-l;
+		width: $rem-l;
+	}
+
+	&.medium {
+		height: 2.75rem;
+		width: 2.75rem;
+	}
+
+	&.large {
+		height: 3.25rem;
+		width: 3.25rem;
+	}
+}

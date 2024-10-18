@@ -1,0 +1,13 @@
+@use '@/styles/abstracts' as *;
+
+.footer {
+	display: flex;
+	justify-content: center;
+	padding: $rem-xs;
+
+	.link {
+		align-items: center;
+		display: flex;
+		gap: $rem-xs;
+	}
+}

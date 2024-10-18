@@ -88,6 +88,8 @@ COMING SOON: Digital Keyboard Tunes client is a web application built with Next.
     ├── context/
     │   ├── *.test.tsx
     │   └── *.tsx
+    ├── mocks/
+    │   └── *.tsx
     ├── styles/
     │   └── *.scss
     ├── types/
@@ -99,7 +101,7 @@ COMING SOON: Digital Keyboard Tunes client is a web application built with Next.
     │   └── *.ts
     ├── next.config.mjs
     ├── tsconfig.json
-    ├── vitest.config.ts
+    ├── vitest.config.mts
     ├── package.json
     └── pnpm-lock.yaml
 ```

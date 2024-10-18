@@ -13,12 +13,6 @@ describe('Home Page', () => {
 		);
 	});
 
-	it('renders the header', () => {
-		const header = screen.getByRole('banner');
-
-		expect(header).toBeInTheDocument();
-	});
-
 	it('renders the full keyboard', () => {
 		const keyboardFull = screen.getByRole('group', {
 			name: /Full keyboard keys/i,

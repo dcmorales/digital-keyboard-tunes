@@ -51,6 +51,27 @@ describe('Dropdown', () => {
 		expect(dropdown).toHaveValue('b');
 	});
 
+	it('renders the dropdown as disabled when the disabled prop is true', () => {
+		render(
+			<Dropdown
+				options={['a', 'b', 'c']}
+				ariaLabel="Disabled dropdown"
+				title="Test dropdown"
+				name="test-id"
+				value="b"
+				disabled
+				onChange={handleChange}
+			/>
+		);
+
+		const dropdown = screen.getByRole('combobox', {
+			name: /Disabled dropdown/i,
+		});
+
+		expect(dropdown).toBeInTheDocument();
+		expect(dropdown).toBeDisabled();
+	});
+
 	it('calls onChange when a new option is selected', () => {
 		cleanup();
 		const { rerender } = render(
@@ -84,5 +105,35 @@ describe('Dropdown', () => {
 		expect(handleChange).toHaveBeenCalledTimes(1);
 		expect(handleChange).toHaveBeenCalledWith(expect.any(Object));
 		expect(dropdown).toHaveValue('c');
+	});
+
+	it('renders a tooltip if provided', () => {
+		render(
+			<Dropdown
+				options={['a', 'b', 'c']}
+				ariaLabel="Select an option"
+				title="Test dropdown"
+				name="test-id"
+				value="b"
+				tooltip={{ text: 'Helpful tooltip', topic: 'Tooltip topic' }}
+				onChange={handleChange}
+			/>
+		);
+
+		const tooltipButton = screen.getByRole('button', {
+			name: /Information for Tooltip topic/i,
+		});
+		expect(tooltipButton).toBeInTheDocument();
+
+		// show tooltip
+		fireEvent.mouseEnter(tooltipButton);
+
+		const tooltip = screen.getByRole('tooltip');
+		expect(tooltip).toBeInTheDocument();
+		expect(tooltip).toHaveTextContent('Helpful tooltip');
+
+		// hide tooltip
+		fireEvent.mouseLeave(tooltipButton);
+		expect(tooltip).not.toBeVisible();
 	});
 });

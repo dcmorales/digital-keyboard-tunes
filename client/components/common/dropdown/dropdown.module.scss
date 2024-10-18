@@ -1,17 +1,33 @@
+@use '@/styles/abstracts' as *;
+
 .dropdown {
 	align-items: center;
 	display: flex;
 	flex-direction: column;
-	padding: 0 1rem;
+	padding: 0 $rem-s;
+
+	.labelContainer {
+		position: relative;
+	}
 
 	.label {
 		font-size: 20px;
 		font-weight: 700;
+		text-align: center;
 	}
 
 	.select {
 		background-color: transparent;
-		border-radius: 4px;
+		border-radius: $size-xs;
+		cursor: pointer;
 		text-align: center;
+
+		&:disabled {
+			cursor: default;
+		}
+
+		&:hover {
+			background-color: $color-white;
+		}
 	}
 }
