@@ -251,7 +251,7 @@ export default function AboutPage() {
 				<h3>Stop</h3>
 				<p>
 					A button that is always visible. Pressing it will immediately stop the
-					playing scale. It is disabled if a scale isn&apos;t playing
+					playing scale. It is disabled if a scale isn&apos;t playing.
 					Represented by the stop icon <Icon name="stop" />
 				</p>
 			</section>
