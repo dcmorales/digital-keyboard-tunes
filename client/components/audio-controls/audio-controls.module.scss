@@ -6,6 +6,6 @@
 
 	@include breakpoint(large) {
 		flex-direction: column;
-		margin-right: $margin-black-key * -1;
+		margin-right: -$margin-black-key;
 	}
 }
