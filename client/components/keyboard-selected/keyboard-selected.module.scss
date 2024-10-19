@@ -7,13 +7,14 @@
 	.keysAndControlsContainer {
 		align-items: center;
 		display: flex;
-		flex-direction: column;
-		gap: $rem-s;
+		flex-direction: column-reverse;
+		gap: $rem-m;
 		justify-content: center;
-		padding: $rem-l;
+		padding: $rem-xs $rem-l;
 
 		@include breakpoint(large) {
 			flex-direction: row;
+			gap: $rem-s;
 			padding: $rem-s;
 		}
 	}
