@@ -3,9 +3,9 @@
 .audioControls {
 	display: flex;
 	gap: $rem-s;
-	margin-right: $margin-black-key * -1;
 
 	@include breakpoint(large) {
 		flex-direction: column;
+		margin-right: $margin-black-key * -1;
 	}
 }
