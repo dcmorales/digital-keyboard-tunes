@@ -14,8 +14,28 @@
 		padding: 0 $rem-s;
 		width: 100%;
 
+		h1 {
+			font-size: $rem-s;
+		}
+
 		.buttonsContainer {
 			display: flex;
+		}
+	}
+
+	@include breakpoint(medium) {
+		.mainItems {
+			h1 {
+				font-size: $rem-m;
+			}
+		}
+	}
+
+	@include breakpoint(large) {
+		.mainItems {
+			h1 {
+				font-size: $rem-l;
+			}
 		}
 	}
 }
