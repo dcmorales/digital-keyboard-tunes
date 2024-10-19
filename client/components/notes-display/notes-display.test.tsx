@@ -39,9 +39,9 @@ describe('Notes Display', () => {
 			});
 		};
 
-		expect(sectionSpans.length).toBe(4); // 3 from notes, 1 from flat symbol
+		expect(sectionSpans.length).toBe(5); // 3 from notes, 1 from flat note, 1 from flat symbol
 		expect(notesArray('C4').length).toBe(1);
-		expect(notesArray('D♭4').length).toBe(1);
+		expect(notesArray('D♭4').length).toBe(2); // 1 from flat note container, 1 from flat symbol
 		expect(notesArray('E4').length).toBe(1);
 	});
 

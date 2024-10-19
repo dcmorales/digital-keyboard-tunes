@@ -30,12 +30,27 @@ export default function AboutPage() {
 				<p>
 					A musical key defines the pitch hierarchy and tonal center of the
 					scale. The key that is selected will determine the starting note of an
-					octave. The 12 options are C, D
-					<span className={styles.flatSymbol}>♭</span>, D, E
-					<span className={styles.flatSymbol}>♭</span>, E, F, G
-					<span className={styles.flatSymbol}>♭</span>, G, A
-					<span className={styles.flatSymbol}>♭</span>, A, B
-					<span className={styles.flatSymbol}>♭</span>, and B.
+					octave. The 12 options are C,{' '}
+					<span className={styles.flatNote}>
+						D<span className={styles.flatSymbol}>♭</span>
+					</span>
+					, D,{' '}
+					<span className={styles.flatNote}>
+						E<span className={styles.flatSymbol}>♭</span>
+					</span>
+					, E, F,{' '}
+					<span className={styles.flatNote}>
+						G<span className={styles.flatSymbol}>♭</span>
+					</span>
+					, G,{' '}
+					<span className={styles.flatNote}>
+						A<span className={styles.flatSymbol}>♭</span>
+					</span>
+					, A,{' '}
+					<span className={styles.flatNote}>
+						B<span className={styles.flatSymbol}>♭</span>
+					</span>
+					, and B.
 				</p>
 
 				<h3>Octave</h3>

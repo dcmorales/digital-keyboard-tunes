@@ -35,11 +35,11 @@ export default function NotesDisplay({ lastPlayedNotes }: NotesDisplayProps) {
 	const renderNote = (note: FullNote): JSX.Element | string => {
 		if (note.includes('♭')) {
 			return (
-				<>
+				<span className={styles.flatNote}>
 					{note[0]}
 					<span className={styles.flatSymbol}>{note[1]}</span>
 					{note[2]}
-				</>
+				</span>
 			);
 		}
 		return note;

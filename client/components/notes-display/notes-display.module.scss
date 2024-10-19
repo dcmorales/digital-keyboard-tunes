@@ -8,10 +8,14 @@
 		display: inline;
 	}
 
-	.flatSymbol {
-		display: inline-block;
-		margin-top: -$rem-xs;
-		vertical-align: middle;
+	.flatNote {
+		white-space: nowrap;
+
+		.flatSymbol {
+			display: inline-block;
+			margin-top: -$rem-xs;
+			vertical-align: middle;
+		}
 	}
 
 	@include breakpoint(medium) {
