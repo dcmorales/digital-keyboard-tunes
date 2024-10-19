@@ -10,10 +10,11 @@
 		flex-direction: column;
 		gap: $rem-s;
 		justify-content: center;
-		padding: $rem-s;
+		padding: $rem-l;
 
 		@include breakpoint(large) {
 			flex-direction: row;
+			padding: $rem-s;
 		}
 	}
 
