@@ -10,13 +10,17 @@
 
 	.flatSymbol {
 		display: inline-block;
-		font-size: 0.7em;
-		margin-left: -0.4rem;
-		margin-top: -0.7rem;
+		margin-top: -$rem-xs;
 		vertical-align: middle;
 	}
 
 	@include breakpoint(medium) {
 		font-size: $rem-l;
+
+		.flatSymbol {
+			font-size: 0.7em;
+			margin-left: -0.4rem;
+			margin-top: -0.7rem;
+		}
 	}
 }
