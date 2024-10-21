@@ -35,10 +35,14 @@
 		background-color: $color-blue-darkest;
 		border-radius: $size-xs;
 		color: $color-white;
-		min-width: 6rem;
+		min-width: 10rem;
 		padding: $size-s;
 		position: absolute;
 		top: 125%;
 		z-index: 1;
+
+		@include breakpoint(large) {
+			min-width: 7rem;
+		}
 	}
 }
