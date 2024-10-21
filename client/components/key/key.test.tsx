@@ -53,8 +53,15 @@ describe('Key', () => {
 		expect(button.className.includes('active')).toBe(false);
 	});
 
-	it('plays the note on key down event', () => {
+	it('plays the note on enter key down event', () => {
 		fireEvent.keyDown(button, { key: 'Enter' });
+
+		expect(playNote).toHaveBeenCalledWith(mockNote, mockWaveform);
+		expect(button.className.includes('active')).toBe(true);
+	});
+
+	it('plays the note on space key down event', () => {
+		fireEvent.keyDown(button, { key: ' ' });
 
 		expect(playNote).toHaveBeenCalledWith(mockNote, mockWaveform);
 		expect(button.className.includes('active')).toBe(true);
