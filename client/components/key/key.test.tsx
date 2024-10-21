@@ -53,6 +53,20 @@ describe('Key', () => {
 		expect(button.className.includes('active')).toBe(false);
 	});
 
+	it('plays the note on key down event', () => {
+		fireEvent.keyDown(button, { key: 'Enter' });
+
+		expect(playNote).toHaveBeenCalledWith(mockNote, mockWaveform);
+		expect(button.className.includes('active')).toBe(true);
+	});
+
+	it('stops the note on key up event', () => {
+		fireEvent.keyUp(button);
+
+		expect(stopNote).toHaveBeenCalled();
+		expect(button.className.includes('active')).toBe(false);
+	});
+
 	it('plays the note on touch start event', () => {
 		fireEvent.touchStart(button);
 
