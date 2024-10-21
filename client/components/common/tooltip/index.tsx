@@ -17,10 +17,6 @@ interface TooltipProps {
 export default function Tooltip({ topic, text }: TooltipProps) {
 	const [isVisible, setIsVisible] = useState(false);
 
-	const handleTooltipToggle = (): void => {
-		setIsVisible((prev) => !prev);
-	};
-
 	const showTooltip = (): void => {
 		setIsVisible(true);
 	};
@@ -33,7 +29,6 @@ export default function Tooltip({ topic, text }: TooltipProps) {
 		<div className={styles.tooltipContainer} aria-describedby="tooltip">
 			<button
 				aria-label={`Information for ${topic}`}
-				onClick={handleTooltipToggle}
 				onMouseEnter={showTooltip}
 				onMouseLeave={hideTooltip}
 				onFocus={showTooltip}

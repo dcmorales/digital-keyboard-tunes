@@ -51,20 +51,6 @@ describe('Tooltip Component', () => {
 		expect(tooltip).not.toBeInTheDocument();
 	});
 
-	it('toggles tooltip on button click', () => {
-		const button = screen.getByRole('button', {
-			name: `Information for ${mockTopic}`,
-		});
-
-		fireEvent.click(button);
-		const tooltip = screen.getByRole('tooltip');
-		expect(tooltip).toBeInTheDocument();
-
-		fireEvent.click(button);
-		const hiddenTooltip = screen.queryByRole('tooltip');
-		expect(hiddenTooltip).not.toBeInTheDocument();
-	});
-
 	it('shows tooltip on button focus and hides on blur', () => {
 		const button = screen.getByRole('button', {
 			name: `Information for ${mockTopic}`,

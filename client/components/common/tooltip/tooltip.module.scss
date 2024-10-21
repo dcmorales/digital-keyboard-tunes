@@ -28,6 +28,10 @@
 			svg {
 				fill: $color-white;
 			}
+
+			+ .tooltip {
+				visibility: visible;
+			}
 		}
 	}
 
@@ -39,6 +43,7 @@
 		padding: $size-s;
 		position: absolute;
 		top: 125%;
+		visibility: hidden;
 		z-index: 1;
 
 		@include breakpoint(large) {
