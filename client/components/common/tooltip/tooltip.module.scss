@@ -28,6 +28,10 @@
 			svg {
 				fill: $color-white;
 			}
+
+			+ .tooltip {
+				visibility: visible;
+			}
 		}
 	}
 
@@ -35,10 +39,19 @@
 		background-color: $color-blue-darkest;
 		border-radius: $size-xs;
 		color: $color-white;
-		min-width: 6rem;
 		padding: $size-s;
 		position: absolute;
 		top: 125%;
+		visibility: hidden;
+		width: 10rem;
 		z-index: 1;
+
+		&.positionedLeft {
+			right: -150%;
+		}
+
+		@include breakpoint(large) {
+			width: 7rem;
+		}
 	}
 }

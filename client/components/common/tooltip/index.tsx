@@ -1,10 +1,12 @@
 // tooltip
-// A tooltip component that displays an info icon. When hovered over,
-// focused on, or clicked the tooltip text becomes visible.
+// A tooltip component that displays an info icon. When hovered over
+// or focused on, the tooltip text becomes visible. If the tooltip is too
+// far to the right, the position will be updated to the left so that it
+// isn't cut off from view.
 
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import Icon from '@/components/common/icon';
 import styles from './tooltip.module.scss';
@@ -16,10 +18,8 @@ interface TooltipProps {
 
 export default function Tooltip({ topic, text }: TooltipProps) {
 	const [isVisible, setIsVisible] = useState(false);
-
-	const handleTooltipToggle = (): void => {
-		setIsVisible((prev) => !prev);
-	};
+	const [isPositionedLeft, setIsPositionedLeft] = useState(false);
+	const tooltipRef = useRef<HTMLDivElement | null>(null);
 
 	const showTooltip = (): void => {
 		setIsVisible(true);
@@ -29,11 +29,30 @@ export default function Tooltip({ topic, text }: TooltipProps) {
 		setIsVisible(false);
 	};
 
+	useEffect(() => {
+		const checkPosition = (): void => {
+			if (tooltipRef.current) {
+				const rect = tooltipRef.current.getBoundingClientRect();
+				setIsPositionedLeft(rect.right > window.innerWidth / 1.5);
+			}
+		};
+
+		checkPosition(); // check position after render
+		window.addEventListener('resize', checkPosition); // update on resize
+
+		return () => {
+			window.removeEventListener('resize', checkPosition);
+		};
+	}, [isVisible]);
+
 	return (
-		<div className={styles.tooltipContainer} aria-describedby="tooltip">
+		<div
+			ref={tooltipRef}
+			className={styles.tooltipContainer}
+			aria-describedby="tooltip"
+		>
 			<button
 				aria-label={`Information for ${topic}`}
-				onClick={handleTooltipToggle}
 				onMouseEnter={showTooltip}
 				onMouseLeave={hideTooltip}
 				onFocus={showTooltip}
@@ -46,7 +65,7 @@ export default function Tooltip({ topic, text }: TooltipProps) {
 				<div
 					id="tooltip"
 					role="tooltip"
-					className={styles.tooltip}
+					className={`${styles.tooltip} ${isPositionedLeft ? styles.positionedLeft : ''}`}
 					aria-hidden={!isVisible}
 				>
 					{text}

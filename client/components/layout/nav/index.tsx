@@ -31,7 +31,7 @@ export default function Nav({ isOpen, setShowMenu }: NavProps) {
 
 			<nav className={`${styles.nav} ${isOpen ? styles.open : styles.closed}`}>
 				<CustomButton ariaLabel="Close menu" onClick={closeMenu}>
-					<Icon name="close" size="medium" />
+					<Icon name="close" />
 				</CustomButton>
 
 				<ul>
