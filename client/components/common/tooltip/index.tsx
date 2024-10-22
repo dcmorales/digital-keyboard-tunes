@@ -30,7 +30,7 @@ export default function Tooltip({ topic, text }: TooltipProps) {
 	};
 
 	useEffect(() => {
-		const checkPosition = () => {
+		const checkPosition = (): void => {
 			if (tooltipRef.current) {
 				const rect = tooltipRef.current.getBoundingClientRect();
 				setIsPositionedLeft(rect.right > window.innerWidth / 1.5);
