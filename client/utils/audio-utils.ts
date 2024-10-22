@@ -81,8 +81,7 @@ export function stopNote(): void {
 	}
 }
 
-// stop the note with a fade-out effect. Used when stopping the final note in a scale.
-// not used for all keys so that there is no delay when playing keys in rapid succession
+// stop the note with a fade-out effect
 export function fadeOutNote(): void {
 	if (currentOscillator && gainNode) {
 		const fadeDuration = 0.1; // duration in seconds
