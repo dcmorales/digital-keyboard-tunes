@@ -115,11 +115,11 @@ describe('Audio Utils', () => {
 
 		expect(gainNodeMock.gain.linearRampToValueAtTime).toHaveBeenCalledWith(
 			0,
-			audioContextMock.currentTime + 0.2
+			audioContextMock.currentTime + 0.1
 		);
 
 		// fast-forward time by 200 ms to simulate the fade-out duration
-		vi.advanceTimersByTime(200);
+		vi.advanceTimersByTime(100);
 
 		expect(oscillatorMock.stop).toHaveBeenCalled();
 		expect(oscillatorMock.disconnect).toHaveBeenCalled();

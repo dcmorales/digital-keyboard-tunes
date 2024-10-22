@@ -3,12 +3,12 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { KeyboardOptionsProvider } from '@/context/keyboard-options-context';
 import ContextTestComponent from '@/mocks/context-test-component';
-import { playNote, stopNote } from '@/utils/audio-utils';
+import { fadeOutNote, playNote } from '@/utils/audio-utils';
 import Key from '.';
 
 vi.mock('@/utils/audio-utils', () => ({
+	fadeOutNote: vi.fn(),
 	playNote: vi.fn(),
-	stopNote: vi.fn(),
 }));
 
 const mockNote = 'D♭4';
@@ -49,7 +49,36 @@ describe('Key', () => {
 	it('stops the note on mouse up event', () => {
 		fireEvent.mouseUp(button);
 
-		expect(stopNote).toHaveBeenCalled();
+		expect(fadeOutNote).toHaveBeenCalled();
+		expect(button.className.includes('active')).toBe(false);
+	});
+
+	it('plays the note on enter key down event', () => {
+		fireEvent.keyDown(button, { key: 'Enter' });
+
+		expect(playNote).toHaveBeenCalledWith(mockNote, mockWaveform);
+		expect(button.className.includes('active')).toBe(true);
+	});
+
+	it('plays the note on space key down event', () => {
+		fireEvent.keyDown(button, { key: ' ' });
+
+		expect(playNote).toHaveBeenCalledWith(mockNote, mockWaveform);
+		expect(button.className.includes('active')).toBe(true);
+	});
+
+	it('does not play the note on key down event with keys other than Enter or Space', () => {
+		const otherKey = 'a';
+		fireEvent.keyDown(button, { key: otherKey });
+
+		expect(playNote).not.toHaveBeenCalled();
+		expect(button.className.includes('active')).toBe(false);
+	});
+
+	it('stops the note on key up event', () => {
+		fireEvent.keyUp(button);
+
+		expect(fadeOutNote).toHaveBeenCalled();
 		expect(button.className.includes('active')).toBe(false);
 	});
 
@@ -63,7 +92,7 @@ describe('Key', () => {
 	it('stops the note on touch end event', () => {
 		fireEvent.touchEnd(button);
 
-		expect(stopNote).toHaveBeenCalled();
+		expect(fadeOutNote).toHaveBeenCalled();
 		expect(button.className.includes('active')).toBe(false);
 	});
 

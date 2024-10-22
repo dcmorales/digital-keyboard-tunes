@@ -1,7 +1,6 @@
 @use '@/styles/abstracts' as *;
 
 .notesDisplay {
-	font-size: $rem-l;
 	text-align: center;
 	margin: 0 $rem-l;
 
@@ -9,11 +8,23 @@
 		display: inline;
 	}
 
-	.flatSymbol {
-		display: inline-block;
-		font-size: 0.7em;
-		margin-left: -0.4rem;
-		margin-top: -0.7rem;
-		vertical-align: middle;
+	.flatNote {
+		white-space: nowrap;
+
+		.flatSymbol {
+			display: inline-block;
+			margin-top: -$rem-xs;
+			vertical-align: middle;
+		}
+	}
+
+	@include breakpoint(medium) {
+		font-size: $rem-l;
+
+		.flatSymbol {
+			font-size: 0.7em;
+			margin-left: -0.4rem;
+			margin-top: -0.7rem;
+		}
 	}
 }

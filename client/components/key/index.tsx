@@ -8,9 +8,11 @@
 
 'use client';
 
+import type { KeyboardEvent } from 'react';
+
 import { useKeyboardOptions } from '@/context/keyboard-options-context';
 import type { FullNote } from '@/types/keyboard-option-types';
-import { playNote, stopNote } from '@/utils/audio-utils';
+import { fadeOutNote, playNote } from '@/utils/audio-utils';
 import styles from './key.module.scss';
 
 interface KeyProps {
@@ -35,8 +37,14 @@ export default function Key({
 		setActiveNote(note);
 	};
 
+	const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>): void => {
+		if (event.key === 'Enter' || event.key === ' ') {
+			handleMouseDown();
+		}
+	};
+
 	const handleMouseUp = (): void => {
-		stopNote();
+		fadeOutNote();
 		setActiveNote(null);
 	};
 
@@ -58,6 +66,8 @@ export default function Key({
 			className={`${key} ${note.includes('♭') ? black : white} ${isSelectedKeyboard ? keyboardSelected : keyboardFull} ${isActive ? active : ''} ${orderedScaleNotes.includes(note) ? highlight : ''}`}
 			onMouseDown={handleMouseDown}
 			onMouseUp={handleMouseUp}
+			onKeyDown={handleKeyDown}
+			onKeyUp={handleMouseUp}
 			onTouchStart={handleMouseDown}
 			onTouchEnd={handleMouseUp}
 			disabled={isPlaying}

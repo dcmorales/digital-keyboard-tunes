@@ -1,8 +1,8 @@
 @use '@/styles/abstracts' as *;
 
 .about {
-	font-size: $rem-m;
-	padding: $rem-l $rem-xxl;
+	font-size: $rem-s;
+	padding: $rem-xs $rem-xl;
 
 	section {
 		padding-bottom: $rem-l;
@@ -10,34 +10,58 @@
 
 	h2 {
 		color: $color-blue-dark;
-		font-size: $rem-xxl;
 	}
 
 	h3 {
 		color: $color-blue-darkest;
-		font-size: $rem-l;
 	}
 
 	p,
 	ul {
 		list-style: none;
-		padding: $rem-s 0;
+		padding: $rem-xs 0;
+
+		svg {
+			height: $rem-s;
+			width: $rem-s;
+		}
 	}
 
 	li {
 		padding-bottom: $rem-xs;
 	}
 
-	.flatSymbol {
-		font-size: 0.7em;
-		margin-left: -0.2rem;
+	.flatNote {
+		white-space: nowrap;
+
+		.flatSymbol {
+			display: inline-block;
+			margin-top: -$rem-xs;
+			vertical-align: middle;
+		}
+	}
+
+	@include breakpoint(medium) {
+		.flatSymbol {
+			font-size: 0.75em;
+			margin-left: -0.1rem;
+		}
 	}
 
 	@include breakpoint(large) {
+		font-size: $rem-m;
 		padding: $rem-s 5rem;
 
 		section {
 			padding-bottom: $rem-s;
+		}
+
+		h2 {
+			font-size: $rem-xl;
+		}
+
+		h3 {
+			font-size: $rem-l;
 		}
 
 		p {
@@ -46,6 +70,16 @@
 
 		li {
 			width: 70%;
+		}
+
+		p,
+		ul {
+			padding: $rem-s 0;
+		}
+
+		.flatSymbol {
+			font-size: 0.6em;
+			margin-left: -0.2rem;
 		}
 	}
 }
