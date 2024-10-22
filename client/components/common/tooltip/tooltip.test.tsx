@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import Tooltip from '.';
@@ -25,7 +25,7 @@ describe('Tooltip Component', () => {
 		expect(tooltip).not.toBeInTheDocument();
 	});
 
-	it('shows tooltip on mouse enter', () => {
+	it('shows tooltip on mouse enter and hides on mouse leave', () => {
 		const button = screen.getByRole('button', {
 			name: `Information for ${mockTopic}`,
 		});
@@ -36,17 +36,8 @@ describe('Tooltip Component', () => {
 
 		expect(tooltip).toBeInTheDocument();
 		expect(tooltip).toHaveTextContent(mockText);
-	});
 
-	it('hides tooltip on mouse leave', () => {
-		const button = screen.getByRole('button', {
-			name: `Information for ${mockTopic}`,
-		});
-
-		fireEvent.mouseEnter(button);
 		fireEvent.mouseLeave(button);
-
-		const tooltip = screen.queryByRole('tooltip');
 
 		expect(tooltip).not.toBeInTheDocument();
 	});
