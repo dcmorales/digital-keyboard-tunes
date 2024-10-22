@@ -57,4 +57,22 @@ describe('Tooltip Component', () => {
 		const hiddenTooltip = screen.queryByRole('tooltip');
 		expect(hiddenTooltip).not.toBeInTheDocument();
 	});
+
+	it('positions tooltip to the left when too far right', () => {
+		const button = screen.getByRole('button', {
+			name: `Information for ${mockTopic}`,
+		});
+
+		// simulate a situation where the tooltip is too far right
+		Object.defineProperty(HTMLElement.prototype, 'getBoundingClientRect', {
+			value: () => ({
+				right: window.innerWidth + 100,
+			}),
+		});
+
+		fireEvent.mouseEnter(button);
+
+		const tooltip = screen.getByRole('tooltip');
+		expect(tooltip.className.includes('positionedLeft')).toBe(true);
+	});
 });
