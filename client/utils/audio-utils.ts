@@ -85,7 +85,7 @@ export function stopNote(): void {
 // not used for all keys so that there is no delay when playing keys in rapid succession
 export function fadeOutNote(): void {
 	if (currentOscillator && gainNode) {
-		const fadeDuration = 0.2; // duration in seconds
+		const fadeDuration = 0.1; // duration in seconds
 
 		// set the gain to its current value immediately
 		const currentGainValue = gainNode.gain.value;
