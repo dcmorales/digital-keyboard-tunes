@@ -67,6 +67,14 @@ describe('Key', () => {
 		expect(button.className.includes('active')).toBe(true);
 	});
 
+	it('does not play the note on key down event with keys other than Enter or Space', () => {
+		const otherKey = 'a';
+		fireEvent.keyDown(button, { key: otherKey });
+
+		expect(playNote).not.toHaveBeenCalled();
+		expect(button.className.includes('active')).toBe(false);
+	});
+
 	it('stops the note on key up event', () => {
 		fireEvent.keyUp(button);
 
