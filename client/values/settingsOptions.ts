@@ -3,6 +3,7 @@
 // Each object in settingsOptions represents a dropdown within the settings.
 // The object provides all props except for those provided by the React context.
 
+import { TooltipProps as Tooltip } from '@/components/common/tooltip';
 import type {
 	NoteKey,
 	NoteLength,
@@ -57,7 +58,7 @@ const bpmOptions: number[] = Array.from(
 	(_, index) => 100 + index
 );
 
-// total number of notes in default (chromatic) scale
+// number of notes in default (chromatic) scale in descending order
 const totalNotesOptions: TotalNotesNum[] = Array.from(
 	{ length: 13 },
 	(_, index) => (13 - index) as TotalNotesNum
@@ -69,7 +70,27 @@ const repeatNumOptions: number[] = Array.from(
 	(_, index) => index
 );
 
-export const settingsOptions = {
+interface SettingOption<T> {
+	options: T[];
+	ariaLabel: string;
+	title: string;
+	name: string;
+	tooltip: Tooltip;
+}
+
+type SettingsOptions = {
+	key: SettingOption<NoteKey>;
+	octave: SettingOption<OctaveNum>;
+	waveform: SettingOption<Waveform>;
+	scale: SettingOption<Scale>;
+	order: SettingOption<Order>;
+	noteLength: SettingOption<NoteLength>;
+	bpm: SettingOption<number>;
+	totalNotes: SettingOption<TotalNotesNum>;
+	repeatNum: SettingOption<number>;
+};
+
+export const settingsOptions: SettingsOptions = {
 	key: {
 		options: noteOptions,
 		ariaLabel: 'Select a key',

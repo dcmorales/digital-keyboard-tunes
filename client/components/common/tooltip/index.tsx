@@ -11,7 +11,7 @@ import { useEffect, useRef, useState } from 'react';
 import Icon from '@/components/common/icon';
 import styles from './tooltip.module.scss';
 
-interface TooltipProps {
+export interface TooltipProps {
 	topic: string;
 	text: string;
 }
