@@ -118,7 +118,7 @@ describe('Audio Utils', () => {
 			audioContextMock.currentTime + 0.1
 		);
 
-		// fast-forward time by 200 ms to simulate the fade-out duration
+		// fast-forward time to simulate the fade-out duration
 		vi.advanceTimersByTime(100);
 
 		expect(oscillatorMock.stop).toHaveBeenCalled();

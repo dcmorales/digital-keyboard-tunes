@@ -11,7 +11,7 @@ import type {
 } from '@/types/keyboard-option-types';
 import { noteOptions } from '@/values/settingsOptions';
 
-// note options: ['C','D♭','D','E♭','E','F','G♭','G','A♭','A','B♭','B',]
+// note options: ['C','D♭','D','E♭','E','F','G♭','G','A♭','A','B♭','B']
 // Create a new array starting at the selectedKey. Add the selectedOctave to each string to create a fullNote.
 // Any note that was originally before the selectedKey will be placed at the end of the new array.
 // The octave will also increase for these notes.

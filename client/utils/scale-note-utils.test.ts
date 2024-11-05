@@ -8,6 +8,7 @@ import {
 	setNotesOrder,
 } from './scale-note-utils';
 
+// full octave of notes
 const mockNotes: FullNote[] = [
 	'D5',
 	'E♭5',
