@@ -2,11 +2,9 @@
 // Provides global state to the client. Manages the selection change
 // in the keyboard-settings using a selection handler. This updated state affects
 // the sounds played as well as the keys that show up in keyboard-selected.
-// Based on the selections made, the context will also provide all notes in the
-// selected octave as well as the notes belonging to the selected scale.
-// The activeNote updates whenever a key is pressed or when the play button
-// plays a series of notes. This will update the styles of the key at that note.
-// If isPlaying is true, dropdowns and keys will be disabled.
+// Based on the selections made, the context will also provide all notes in the selected
+// octave as well as the notes belonging to the selected scale. Other items such as
+// activeNote (for key styles) and isPlaying (for disabling elements) are also provided.
 
 'use client';
 
@@ -81,6 +79,7 @@ interface KeyboardOptionsProviderProps {
 export const KeyboardOptionsProvider = ({
 	children,
 }: KeyboardOptionsProviderProps) => {
+	// state update through dropdowns
 	const [selectedKey, setSelectedKey] = useState<NoteKey>('C');
 	const [selectedOctave, setSelectedOctave] = useState<OctaveNum>(4);
 	const [selectedWaveform, setSelectedWaveform] = useState<Waveform>('sine');
@@ -92,9 +91,16 @@ export const KeyboardOptionsProvider = ({
 	const [selectedTotalNotes, setSelectedTotalNotes] =
 		useState<TotalNotesNum>(13);
 	const [selectedRepeatNum, setSelectedRepeatNum] = useState<number>(0);
+
+	// the activeNote updates whenever a key is pressed or when the play button
+	// plays a series of notes; this will update the styles of the key at that note
 	const [activeNote, setActiveNote] = useState<FullNote | null>(null);
+	// if isPlaying is true, dropdowns and keys will be disabled
 	const [isPlaying, setIsPlaying] = useState(false);
 
+
+	// an object that maps different selection names to corresponding handler functions;
+	// the handler functions update a specific piece of state with the value provided
 	const selectionHandlers: Record<SelectionName, (value: string) => void> = {
 		key: (value: string) => setSelectedKey(value as NoteKey),
 		octave: (value: string) => setSelectedOctave(Number(value) as OctaveNum),
@@ -109,6 +115,8 @@ export const KeyboardOptionsProvider = ({
 		'repeat-num': (value: string) => setSelectedRepeatNum(Number(value)),
 	};
 
+	// an event handler to find the appropriate selectionHandler based on name,
+	// then calls that handler with the selected value
 	const onSelectionChange = (e: ChangeEvent<HTMLSelectElement>) => {
 		const { name, value } = e.target;
 		const selectionHandler = selectionHandlers[name as SelectionName];
@@ -116,8 +124,10 @@ export const KeyboardOptionsProvider = ({
 		selectionHandler(value);
 	};
 
+	// all notes for the keyboard-selected component
 	const fullNotesOctave = rearrangeNotes(selectedKey, selectedOctave);
 
+	// scale notes array ordered according to the selectedOrder
 	const orderedScaleNotes = setNotesOrder(
 		selectedKey,
 		selectedOctave,
