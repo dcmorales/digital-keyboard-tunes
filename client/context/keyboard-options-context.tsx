@@ -2,9 +2,9 @@
 // Provides global state to the client. Manages the selection change
 // in the keyboard-settings using a selection handler. This updated state affects
 // the sounds played as well as the keys that show up in keyboard-selected.
-// Based on the selections made, the context will also provide all notes in the selected
-// octave as well as the notes belonging to the selected scale. Other items such as
-// activeNote (for key styles) and isPlaying (for disabling elements) are also provided.
+// Based on the selections made, the context will also provide all notes belonging to
+// the selected scale in the selected order. Other items such as activeNote (for key styles)
+// and isPlaying (for disabling elements) are also provided.
 
 'use client';
 
@@ -28,7 +28,7 @@ import type {
 	Waveform,
 	Scale,
 } from '@/types/keyboard-option-types';
-import { rearrangeNotes, setNotesOrder } from '@/utils/scale-note-utils';
+import { setNotesOrder } from '@/utils/scale-note-utils';
 
 interface KeyboardOptionsContextType {
 	selectedKey: NoteKey;
@@ -53,7 +53,6 @@ interface KeyboardOptionsContextType {
 	setActiveNote: Dispatch<SetStateAction<FullNote | null>>;
 	isPlaying: boolean;
 	setIsPlaying: Dispatch<SetStateAction<boolean>>;
-	fullNotesOctave: FullNote[];
 	orderedScaleNotes: FullNote[];
 }
 
@@ -79,7 +78,7 @@ interface KeyboardOptionsProviderProps {
 export const KeyboardOptionsProvider = ({
 	children,
 }: KeyboardOptionsProviderProps) => {
-	// state update through dropdowns
+	// state updates through dropdowns
 	const [selectedKey, setSelectedKey] = useState<NoteKey>('C');
 	const [selectedOctave, setSelectedOctave] = useState<OctaveNum>(4);
 	const [selectedWaveform, setSelectedWaveform] = useState<Waveform>('sine');
@@ -124,9 +123,6 @@ export const KeyboardOptionsProvider = ({
 		selectionHandler(value);
 	};
 
-	// all notes for the keyboard-selected component
-	const fullNotesOctave = rearrangeNotes(selectedKey, selectedOctave);
-
 	// scale notes array ordered according to the selectedOrder
 	const orderedScaleNotes = setNotesOrder(
 		selectedKey,
@@ -160,7 +156,6 @@ export const KeyboardOptionsProvider = ({
 				setActiveNote,
 				isPlaying,
 				setIsPlaying,
-				fullNotesOctave,
 				orderedScaleNotes,
 			}}
 		>

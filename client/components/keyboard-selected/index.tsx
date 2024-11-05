@@ -14,11 +14,13 @@ import NotesDisplay from '@/components/notes-display';
 import Octave from '@/components/octave';
 import { useKeyboardOptions } from '@/context/keyboard-options-context';
 import type { FullNote } from '@/types/keyboard-option-types';
+import { rearrangeNotes } from '@/utils/scale-note-utils';
 import styles from './keyboard-selected.module.scss';
 
 export default function KeyboardSelected(): JSX.Element {
-	const { fullNotesOctave } = useKeyboardOptions();
+	const { selectedKey, selectedOctave } = useKeyboardOptions();
 	const [lastPlayedNotes, setLastPlayedNotes] = useState<FullNote[]>([]);
+	const fullNotesOctave = rearrangeNotes(selectedKey, selectedOctave);
 
 	return (
 		<div
