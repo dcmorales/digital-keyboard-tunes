@@ -22,6 +22,7 @@ export default function NotesDisplay({ lastPlayedNotes }: NotesDisplayProps) {
 
 	useEffect(() => {
 		// static repeat number reflects selections from lastPlayedNotes
+		// and not the current selection from the dropdown in settings
 		setStaticRepeatNum(selectedRepeatNumRef.current);
 	}, [lastPlayedNotes]);
 
@@ -33,6 +34,8 @@ export default function NotesDisplay({ lastPlayedNotes }: NotesDisplayProps) {
 	const uniqueNotes = Array.from(new Set(lastPlayedNotes));
 
 	const renderNote = (note: FullNote): JSX.Element | string => {
+		// notes that include the flat symbol will render in a span
+		// so that the symbol can be styled / positioned correctly
 		if (note.includes('♭')) {
 			return (
 				<span className={styles.flatNote}>

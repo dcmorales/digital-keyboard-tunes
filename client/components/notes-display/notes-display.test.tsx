@@ -18,6 +18,8 @@ describe('Notes Display', () => {
 		);
 	});
 
+
+
 	it('renders the notes display section', () => {
 		const notesDisplay = screen.getByRole('region', { name: /Notes played:/i });
 
@@ -25,6 +27,7 @@ describe('Notes Display', () => {
 	});
 
 	it('displays only the unique notes', () => {
+		// change repeat number in context using test component
 		const repeatNumDropdown = screen.getByRole('combobox', {
 			name: /Select repeat-num/i,
 		});
@@ -32,20 +35,22 @@ describe('Notes Display', () => {
 
 		const section = screen.getByRole('region', { name: /Notes played:/i });
 		const sectionSpans = section.querySelectorAll('span');
+		// an array containing every occurrence of a note and its spans (flat notes will contain 2)
 		const notesArray = (note: FullNote) => {
 			return Array.from(sectionSpans).filter((span) => {
-				const trimmedText = span.textContent!.replace(/\s*-\s*/g, '').trim(); // trim for flat symbol
+				const trimmedText = span.textContent!.replace(/\s*-\s*/g, '').trim(); // remove hyphen and trim white space
 				return trimmedText === note;
 			});
 		};
 
 		expect(sectionSpans.length).toBe(5); // 3 from notes, 1 from flat note, 1 from flat symbol
 		expect(notesArray('C4').length).toBe(1);
-		expect(notesArray('D♭4').length).toBe(2); // 1 from flat note container, 1 from flat symbol
+		expect(notesArray('D♭4').length).toBe(2); // 1 from note container, 1 from flat note container
 		expect(notesArray('E4').length).toBe(1);
 	});
 
 	it('displays the correct play number after updating lastPlayedNotes', () => {
+		// allow for rerender without worrying about previous render
 		cleanup();
 		const { rerender } = render(
 			<KeyboardOptionsProvider>
@@ -58,7 +63,7 @@ describe('Notes Display', () => {
 
 		expect(section).toHaveTextContent('x 1');
 
-		// change repeat number
+		// change repeat number in context using test component
 		const repeatNumDropdown = screen.getByRole('combobox', {
 			name: /Select repeat-num/i,
 		});
