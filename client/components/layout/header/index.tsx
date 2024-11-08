@@ -37,7 +37,7 @@ export default function Header(): JSX.Element {
 				</Link>
 
 				<div className={styles.buttonsContainer}>
-					{pathname !== '/about' && !showMenu && (
+					{pathname !== '/about' && (
 						<CustomButton
 							ariaLabel={`${!showSettings ? 'Open' : 'Close'} keyboard settings`}
 							onClick={toggleSettings}

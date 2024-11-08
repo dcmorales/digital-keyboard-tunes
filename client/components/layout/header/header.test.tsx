@@ -86,19 +86,6 @@ describe('Header', () => {
 		expect(keyboardSettings).not.toBeInTheDocument();
 	});
 
-	it('does not render the settings button if menu is open', () => {
-		const menuButton = screen.getByRole('button', {
-			name: /Open menu/i,
-		});
-		const settingsButton = screen.getByRole('button', {
-			name: /Open keyboard settings/i,
-		});
-
-		fireEvent.click(menuButton);
-
-		expect(settingsButton).not.toBeInTheDocument();
-	});
-
 	it('does not render the settings button if on the about page', () => {
 		cleanup();
 		const { rerender } = render(
