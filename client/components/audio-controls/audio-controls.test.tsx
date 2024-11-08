@@ -30,6 +30,7 @@ describe('Audio Controls', () => {
 		vi.clearAllMocks();
 
 		render(
+			// ContextTestComponent makes easy state updates in tests possible
 			<KeyboardOptionsProvider>
 				<AudioControls
 					lastPlayedNotes={mockScaleNotes}
@@ -77,7 +78,7 @@ describe('Audio Controls', () => {
 
 		vi.mocked(noteDurationInMs).mockReturnValue(200); // simulate 200ms per note
 		vi.mocked(playNote).mockImplementation(() => Promise.resolve());
-		vi.mocked(fadeOutNote).mockImplementation(() => {});
+		vi.mocked(fadeOutNote).mockImplementation(() => { });
 
 		fireEvent.click(playButton);
 
@@ -113,7 +114,7 @@ describe('Audio Controls', () => {
 		vi.mocked(noteDurationInMs).mockReturnValue(200); // simulate 200ms per note
 		const playNoteMock = vi.fn().mockImplementation(() => Promise.resolve());
 		vi.mocked(playNote).mockImplementation(playNoteMock);
-		vi.mocked(fadeOutNote).mockImplementation(() => {});
+		vi.mocked(fadeOutNote).mockImplementation(() => { });
 
 		// capture notes played in an array to compare later
 		const capturePlayedNotes = async (offset: number) => {
@@ -161,7 +162,7 @@ describe('Audio Controls', () => {
 		vi.mocked(noteDurationInMs).mockReturnValue(200); // simulate 200ms per note
 		const playNoteMock = vi.fn().mockImplementation(() => Promise.resolve());
 		vi.mocked(playNote).mockImplementation(playNoteMock);
-		vi.mocked(fadeOutNote).mockImplementation(() => {});
+		vi.mocked(fadeOutNote).mockImplementation(() => { });
 
 		// capture notes played in an array to compare later
 		const capturePlayedNotes = async (button: HTMLElement) => {

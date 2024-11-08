@@ -8,6 +8,7 @@ import KeyboardSettings from '.';
 describe('Keyboard settings', () => {
 	beforeEach(() => {
 		render(
+			// ContextTestComponent makes easy state updates in tests possible
 			<KeyboardOptionsProvider>
 				<KeyboardSettings />
 				<ContextTestComponent />

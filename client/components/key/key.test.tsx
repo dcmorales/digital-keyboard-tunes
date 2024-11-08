@@ -19,6 +19,7 @@ describe('Key', () => {
 
 	beforeEach(() => {
 		render(
+			// ContextTestComponent makes easy state updates in tests possible
 			<KeyboardOptionsProvider>
 				<Key note={mockNote} isSelectedKeyboard />
 				<ContextTestComponent />

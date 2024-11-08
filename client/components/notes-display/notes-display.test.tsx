@@ -11,6 +11,7 @@ const mockNotes = ['C4', 'D♭4', 'E4', 'C4', 'D♭4', 'E4'] as FullNote[];
 describe('Notes Display', () => {
 	beforeEach(() => {
 		render(
+			// ContextTestComponent makes easy state updates in tests possible
 			<KeyboardOptionsProvider>
 				<NotesDisplay lastPlayedNotes={mockNotes} />
 				<ContextTestComponent />
