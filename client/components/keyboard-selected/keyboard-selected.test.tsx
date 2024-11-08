@@ -29,7 +29,7 @@ describe('Selected Keyboard', () => {
 		expect(audioControls).toBeInTheDocument();
 	});
 
-	it('renders the default octave with the correct selection of keys', () => {
+	it('renders the default octave beginning with the default key', () => {
 		const octave = screen.getByRole('group', {
 			name: /Octave for C4/i,
 		});
