@@ -11,11 +11,11 @@ vi.mock('@/utils/audio-utils', () => ({
 	playNote: vi.fn(),
 }));
 
-const mockNote = 'D♭4';
+const mockNote = 'C4';
 const mockWaveform = 'sine';
 
 describe('Key', () => {
-	let button: HTMLButtonElement;
+	let naturalNoteButton: HTMLButtonElement;
 
 	beforeEach(() => {
 		render(
@@ -25,7 +25,9 @@ describe('Key', () => {
 				<ContextTestComponent />
 			</KeyboardOptionsProvider>
 		);
-		button = screen.getByRole('button', { name: /Play the D♭4 note/i });
+		naturalNoteButton = screen.getByRole('button', {
+			name: /Play the C4 note/i,
+		});
 	});
 
 	afterEach(() => {
@@ -33,83 +35,97 @@ describe('Key', () => {
 	});
 
 	it('renders a button with the correct aria label', () => {
-		expect(button).toBeInTheDocument();
+		// label defined in beforeEach hook
+		expect(naturalNoteButton).toBeInTheDocument();
 	});
 
-	it('applies the correct class name', () => {
-		expect(button.className.includes('black')).toBe(true);
+	it('applies the correct class name for natural notes', () => {
+		expect(naturalNoteButton.className.includes('white')).toBe(true);
 	});
 
-	it('plays the note on mouse down event', () => {
-		fireEvent.mouseDown(button);
-
-		expect(playNote).toHaveBeenCalledWith(mockNote, mockWaveform);
-		expect(button.className.includes('active')).toBe(true);
-	});
-
-	it('stops the note on mouse up event', () => {
-		fireEvent.mouseUp(button);
-
-		expect(fadeOutNote).toHaveBeenCalled();
-		expect(button.className.includes('active')).toBe(false);
-	});
-
-	it('plays the note on enter key down event', () => {
-		fireEvent.keyDown(button, { key: 'Enter' });
-
-		expect(playNote).toHaveBeenCalledWith(mockNote, mockWaveform);
-		expect(button.className.includes('active')).toBe(true);
-	});
-
-	it('plays the note on space key down event', () => {
-		fireEvent.keyDown(button, { key: ' ' });
-
-		expect(playNote).toHaveBeenCalledWith(mockNote, mockWaveform);
-		expect(button.className.includes('active')).toBe(true);
-	});
-
-	it('does not play the note on key down event with keys other than Enter or Space', () => {
-		const otherKey = 'a';
-		fireEvent.keyDown(button, { key: otherKey });
-
-		expect(playNote).not.toHaveBeenCalled();
-		expect(button.className.includes('active')).toBe(false);
-	});
-
-	it('stops the note on key up event', () => {
-		fireEvent.keyUp(button);
-
-		expect(fadeOutNote).toHaveBeenCalled();
-		expect(button.className.includes('active')).toBe(false);
-	});
-
-	it('plays the note on touch start event', () => {
-		fireEvent.touchStart(button);
-
-		expect(playNote).toHaveBeenCalledWith(mockNote, mockWaveform);
-		expect(button.className.includes('active')).toBe(true);
-	});
-
-	it('stops the note on touch end event', () => {
-		fireEvent.touchEnd(button);
-
-		expect(fadeOutNote).toHaveBeenCalled();
-		expect(button.className.includes('active')).toBe(false);
-	});
-
-	it('is disabled when isPlaying is true and enabled otherwise', () => {
-		const noteKey = screen.getByRole('button', {
+	it('applies the correct class name for flat notes', () => {
+		render(
+			<KeyboardOptionsProvider>
+				<Key note="D♭4" isSelectedKeyboard />
+			</KeyboardOptionsProvider>
+		);
+		const flatNoteButton = screen.getByRole('button', {
 			name: /Play the D♭4 note/i,
 		});
 
+		expect(flatNoteButton.className.includes('black')).toBe(true);
+	});
+
+	it('plays the note on mouse down event', () => {
+		fireEvent.mouseDown(naturalNoteButton);
+
+		expect(playNote).toHaveBeenCalledWith(mockNote, mockWaveform);
+		expect(naturalNoteButton.className.includes('active')).toBe(true);
+	});
+
+	it('stops the note on mouse up event', () => {
+		fireEvent.mouseUp(naturalNoteButton);
+
+		expect(fadeOutNote).toHaveBeenCalled();
+		expect(naturalNoteButton.className.includes('active')).toBe(false);
+	});
+
+	it('plays the note on enter key down event', () => {
+		fireEvent.keyDown(naturalNoteButton, { key: 'Enter' });
+
+		expect(playNote).toHaveBeenCalledWith(mockNote, mockWaveform);
+		expect(naturalNoteButton.className.includes('active')).toBe(true);
+	});
+
+	it('plays the note on space key down event', () => {
+		fireEvent.keyDown(naturalNoteButton, { key: ' ' });
+
+		expect(playNote).toHaveBeenCalledWith(mockNote, mockWaveform);
+		expect(naturalNoteButton.className.includes('active')).toBe(true);
+	});
+
+	it('does not play the note on key down event with keys other than Enter or Space', () => {
+		const otherKeys = ['Tab', 'ArrowUp', 'ArrowDown', 'Esc', ' a'];
+		otherKeys.forEach((key) => {
+			fireEvent.keyDown(naturalNoteButton, { key });
+
+			expect(playNote).not.toHaveBeenCalled();
+			expect(naturalNoteButton.className.includes('active')).toBe(false);
+		});
+	});
+
+	it('stops the note on key up event', () => {
+		fireEvent.keyUp(naturalNoteButton);
+
+		expect(fadeOutNote).toHaveBeenCalled();
+		expect(naturalNoteButton.className.includes('active')).toBe(false);
+	});
+
+	it('plays the note on touch start event', () => {
+		fireEvent.touchStart(naturalNoteButton);
+
+		expect(playNote).toHaveBeenCalledWith(mockNote, mockWaveform);
+		expect(naturalNoteButton.className.includes('active')).toBe(true);
+	});
+
+	it('stops the note on touch end event', () => {
+		fireEvent.touchEnd(naturalNoteButton);
+
+		expect(fadeOutNote).toHaveBeenCalled();
+		expect(naturalNoteButton.className.includes('active')).toBe(false);
+	});
+
+	it('is disabled when isPlaying is true and enabled otherwise', () => {
+		// change isPlaying to true using test component
 		fireEvent.click(
 			screen.getByRole('button', { name: /Set isPlaying to true/i })
 		);
-		expect(noteKey).toBeDisabled();
+		expect(naturalNoteButton).toBeDisabled();
 
+		// change isPlaying to false using test component
 		fireEvent.click(
 			screen.getByRole('button', { name: /Set isPlaying to false/i })
 		);
-		expect(noteKey).not.toBeDisabled();
+		expect(naturalNoteButton).not.toBeDisabled();
 	});
 });

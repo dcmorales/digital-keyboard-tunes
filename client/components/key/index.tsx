@@ -2,7 +2,7 @@
 // Each key within the keyboard. Contains click actions to play and highlight a specific note.
 // The note prop will determine the key's style, label, and the sound played.
 // From the context, selectedWaveform will also help determine the sound played.
-// If the activeNote matches the key's note, the key will be appear 'active'.
+// If the activeNote matches the key's note, the key will appear 'active'.
 // If the key's note is included in the selected scale, it will appear highlighted.
 // If a scale is playing, the key will be disabled.
 
@@ -37,6 +37,8 @@ export default function Key({
 		setActiveNote(note);
 	};
 
+	// limit the keyboard keys that trigger playing the note, otherwise
+	// the tab key will play each note while tabbing through for navigation
 	const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>): void => {
 		if (event.key === 'Enter' || event.key === ' ') {
 			handleMouseDown();
@@ -49,6 +51,7 @@ export default function Key({
 	};
 
 	const isActive = activeNote === note;
+
 	const {
 		key,
 		black,
