@@ -76,17 +76,20 @@ describe('Header', () => {
 			name: /Open keyboard settings/i,
 		});
 
+		// open settings
 		fireEvent.click(settingsButton);
 		const keyboardSettings = screen.getByRole('group', {
 			name: /Keyboard settings/i,
 		});
 
+		// open menu and close settings
 		fireEvent.click(menuButton);
 
 		expect(keyboardSettings).not.toBeInTheDocument();
 	});
 
 	it('does not render the settings button if on the about page', () => {
+		// allow for rerender without worrying about previous render
 		cleanup();
 		const { rerender } = render(
 			<KeyboardOptionsProvider>
@@ -94,11 +97,13 @@ describe('Header', () => {
 			</KeyboardOptionsProvider>
 		);
 
+		// mock pathname to /about
 		const mockedUsePathname = usePathname as unknown as ReturnType<
 			typeof vi.fn
 		>;
 		mockedUsePathname.mockReturnValue('/about');
 
+		// render component again now that path has been changed to mock pathname
 		rerender(
 			<KeyboardOptionsProvider>
 				<Header />
@@ -112,7 +117,7 @@ describe('Header', () => {
 		expect(settingsButton).not.toBeInTheDocument();
 	});
 
-	it('renders the nav after clicking menu button', () => {
+	it('opens the nav after clicking menu button', () => {
 		const button = screen.getByRole('button', {
 			name: /Open menu/i,
 		});
