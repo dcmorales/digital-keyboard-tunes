@@ -1,5 +1,5 @@
 // keyboard-settings
-// A group of dropdown menus that act as settings for the keyboard.
+// A group of dropdowns that act as settings for the keyboard.
 // Each dropdown has static values provided from the settingsOptions object.
 // The select tag values and the event handlers are provided by the global context.
 // Together these settings affect either the keys displayed in
@@ -48,6 +48,9 @@ export default function KeyboardSettings(): JSX.Element {
 		repeatNum,
 	} = settingsOptions;
 
+	// in the totalNotes object, update the options array to have
+	// a max length equal to the length of the selected scale,
+	// the array should start here then decrement down to 1
 	const scaleLength = orderedScaleNotes.length;
 	totalNotes.options = Array.from(
 		{ length: scaleLength },

@@ -160,6 +160,7 @@ describe('Keyboard settings', () => {
 			name: /Select a beats per minute value/i,
 		});
 
+		// change isPlaying to true using test component
 		fireEvent.click(
 			screen.getByRole('button', { name: /Set isPlaying to true/i })
 		);
@@ -167,6 +168,7 @@ describe('Keyboard settings', () => {
 		expect(scaleDropdown).toBeDisabled();
 		expect(bpmDropdown).toBeDisabled();
 
+		// change isPlaying to false using test component
 		fireEvent.click(
 			screen.getByRole('button', { name: /Set isPlaying to false/i })
 		);

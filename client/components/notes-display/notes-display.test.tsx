@@ -28,7 +28,7 @@ describe('Notes Display', () => {
 	});
 
 	it('displays only the unique notes', () => {
-		// change repeat number in context using test component
+		// change repeat number using test component
 		const repeatNumDropdown = screen.getByRole('combobox', {
 			name: /Select repeat-num/i,
 		});
@@ -64,7 +64,7 @@ describe('Notes Display', () => {
 
 		expect(section).toHaveTextContent('x 1');
 
-		// change repeat number in context using test component
+		// change repeat number using test component
 		const repeatNumDropdown = screen.getByRole('combobox', {
 			name: /Select repeat-num/i,
 		});
