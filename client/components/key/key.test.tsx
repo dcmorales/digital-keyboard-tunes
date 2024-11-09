@@ -19,7 +19,7 @@ describe('Key', () => {
 
 	beforeEach(() => {
 		render(
-			// ContextTestComponent makes easy state updates in tests possible
+			// ContextTestComponent makes context state updates in tests possible
 			<KeyboardOptionsProvider>
 				<Key note={mockNote} isSelectedKeyboard />
 				<ContextTestComponent />
@@ -116,13 +116,13 @@ describe('Key', () => {
 	});
 
 	it('is disabled when isPlaying is true and enabled otherwise', () => {
-		// change isPlaying to true using test component
+		// update isPlaying to true using test component
 		fireEvent.click(
 			screen.getByRole('button', { name: /Set isPlaying to true/i })
 		);
 		expect(naturalNoteButton).toBeDisabled();
 
-		// change isPlaying to false using test component
+		// update isPlaying to false using test component
 		fireEvent.click(
 			screen.getByRole('button', { name: /Set isPlaying to false/i })
 		);

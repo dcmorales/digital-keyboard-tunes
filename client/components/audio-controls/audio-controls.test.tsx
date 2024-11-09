@@ -30,7 +30,7 @@ describe('Audio Controls', () => {
 		vi.clearAllMocks();
 
 		render(
-			// ContextTestComponent makes easy state updates in tests possible
+			// ContextTestComponent makes context state updates in tests possible
 			<KeyboardOptionsProvider>
 				<AudioControls
 					lastPlayedNotes={mockScaleNotes}
@@ -49,15 +49,28 @@ describe('Audio Controls', () => {
 		expect(audioControls).toBeInTheDocument();
 	});
 
-	it('renders the play button initially; repeat and shuffle buttons when order is random', async () => {
+	it('renders the play button initially without shuffle or repeat buttons', () => {
 		const playButton = screen.getByRole('button', { name: /Play the scale/i });
+		const shuffleButton = screen.queryByRole('button', {
+			name: /Shuffle the scale/i,
+		});
+		const repeatButton = screen.queryByRole('button', {
+			name: /Repeat the scale/i,
+		});
 
 		expect(playButton).toBeInTheDocument();
+		expect(shuffleButton).not.toBeInTheDocument();
+		expect(repeatButton).not.toBeInTheDocument();
+	});
 
-		// use mock component to update order
+	it('renders the repeat and shuffle buttons when the order is random', () => {
+		// update order using test component
 		const orderSelect = screen.getByLabelText('Select order:');
 		fireEvent.change(orderSelect, { target: { value: 'random' } });
 
+		const playButton = screen.queryByRole('button', {
+			name: /Play the scale/i,
+		});
 		const shuffleButton = screen.getByRole('button', {
 			name: /Shuffle the scale/i,
 		});
@@ -76,12 +89,14 @@ describe('Audio Controls', () => {
 		const playButton = screen.getByRole('button', { name: /Play the scale/i });
 		const mockOrderedScaleNotes = ['C4', 'D♭4', 'D4', 'E♭4', 'E4', 'F4', 'G♭4'];
 
+		// mock functions for when the notes are played
 		vi.mocked(noteDurationInMs).mockReturnValue(200); // simulate 200ms per note
 		vi.mocked(playNote).mockImplementation(() => Promise.resolve());
-		vi.mocked(fadeOutNote).mockImplementation(() => { });
+		vi.mocked(fadeOutNote).mockImplementation(() => {});
 
 		fireEvent.click(playButton);
 
+		// check that each note in the scale plays after the specified time
 		for (let i = 0; i < mockOrderedScaleNotes.length; i++) {
 			await act(() => {
 				vi.advanceTimersByTime(200); // move forward by the note duration
@@ -101,7 +116,7 @@ describe('Audio Controls', () => {
 		vi.useFakeTimers();
 
 		const mockScaleNotes = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5'];
-		// use mock component to update order and scale
+		// update order and scale using test component
 		const orderSelect = screen.getByLabelText('Select order:');
 		const scaleSelect = screen.getByLabelText('Select scale:');
 		fireEvent.change(orderSelect, { target: { value: 'random' } });
@@ -114,7 +129,7 @@ describe('Audio Controls', () => {
 		vi.mocked(noteDurationInMs).mockReturnValue(200); // simulate 200ms per note
 		const playNoteMock = vi.fn().mockImplementation(() => Promise.resolve());
 		vi.mocked(playNote).mockImplementation(playNoteMock);
-		vi.mocked(fadeOutNote).mockImplementation(() => { });
+		vi.mocked(fadeOutNote).mockImplementation(() => {});
 
 		// capture notes played in an array to compare later
 		const capturePlayedNotes = async (offset: number) => {
@@ -146,7 +161,7 @@ describe('Audio Controls', () => {
 	it('handles the repeat click', async () => {
 		vi.useFakeTimers();
 
-		// use mock component to update order and scale
+		// update order and scale using test component
 		const orderSelect = screen.getByLabelText('Select order:');
 		const scaleSelect = screen.getByLabelText('Select scale:');
 		fireEvent.change(orderSelect, { target: { value: 'random' } });
@@ -162,7 +177,7 @@ describe('Audio Controls', () => {
 		vi.mocked(noteDurationInMs).mockReturnValue(200); // simulate 200ms per note
 		const playNoteMock = vi.fn().mockImplementation(() => Promise.resolve());
 		vi.mocked(playNote).mockImplementation(playNoteMock);
-		vi.mocked(fadeOutNote).mockImplementation(() => { });
+		vi.mocked(fadeOutNote).mockImplementation(() => {});
 
 		// capture notes played in an array to compare later
 		const capturePlayedNotes = async (button: HTMLElement) => {

@@ -11,7 +11,7 @@ const mockNotes = ['C4', 'D♭4', 'E4', 'C4', 'D♭4', 'E4'] as FullNote[];
 describe('Notes Display', () => {
 	beforeEach(() => {
 		render(
-			// ContextTestComponent makes easy state updates in tests possible
+			// ContextTestComponent makes context state updates in tests possible
 			<KeyboardOptionsProvider>
 				<NotesDisplay lastPlayedNotes={mockNotes} />
 				<ContextTestComponent />
@@ -28,7 +28,7 @@ describe('Notes Display', () => {
 	});
 
 	it('displays only the unique notes', () => {
-		// change repeat number using test component
+		// update repeat number using test component
 		const repeatNumDropdown = screen.getByRole('combobox', {
 			name: /Select repeat-num/i,
 		});
@@ -64,7 +64,7 @@ describe('Notes Display', () => {
 
 		expect(section).toHaveTextContent('x 1');
 
-		// change repeat number using test component
+		// update repeat number using test component
 		const repeatNumDropdown = screen.getByRole('combobox', {
 			name: /Select repeat-num/i,
 		});
