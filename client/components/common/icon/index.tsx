@@ -1,10 +1,12 @@
 // icon
 // An svg icon. The name passed in will determine the svg provided.
-// The size prop determines how big the svg will be.
+// The optional size prop determines how big the svg will be (default is small).
+// A test id of 'svg-' plus the icon name is added to each svg for testing.
 
 import styles from './icon.module.scss';
 
-interface IconProps {
+// also used in icon tests
+export interface IconProps {
 	size?: 'x-small' | 'small' | 'medium' | 'large';
 	name:
 		| 'close'
@@ -21,6 +23,7 @@ interface IconProps {
 const icons = {
 	close: (
 		<svg
+			data-testid="svg-close"
 			width="100%"
 			height="100%"
 			viewBox="0 0 16 16"
@@ -77,6 +80,7 @@ const icons = {
 	),
 	info: (
 		<svg
+			data-testid="svg-info"
 			fill="#000"
 			width="100%"
 			height="100%"
@@ -91,6 +95,7 @@ const icons = {
 	),
 	menu: (
 		<svg
+			data-testid="svg-menu"
 			width="100%"
 			height="100%"
 			viewBox="0 0 19 14"
@@ -124,7 +129,6 @@ const icons = {
 						c-0.136-0.065-0.222-0.207-0.222-0.361V0.402C1.844,0.25,1.93,0.107,2.067,0.043z"
 					/>
 				</g>
-				<g id="Capa_1_78_"></g>
 			</g>
 		</svg>
 	),
@@ -207,7 +211,5 @@ const icons = {
 export default function Icon({ name, size = 'small' }: IconProps): JSX.Element {
 	const IconSVG = icons[name];
 
-	return (
-		<span className={`${styles.icon} ${styles[`${size}`]}`}>{IconSVG}</span>
-	);
+	return <span className={`${styles.icon} ${styles[size]}`}>{IconSVG}</span>;
 }

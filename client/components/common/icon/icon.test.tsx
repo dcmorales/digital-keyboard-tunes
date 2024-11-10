@@ -1,48 +1,37 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import Icon from '.';
+import Icon, { type IconProps } from '.';
+
+const iconNames: IconProps['name'][] = [
+	'close',
+	'gear',
+	'github',
+	'info',
+	'menu',
+	'play',
+	'repeat',
+	'shuffle',
+	'stop',
+];
+
+const sizes: IconProps['size'][] = ['x-small', 'small', 'medium', 'large'];
 
 describe('Icon', () => {
-	it('applies the correct class name based on size prop', () => {
-		render(<Icon name="github" size="large" />);
-		const githubIcon = screen.getByTestId('svg-github');
+	it('renders the correct icon based on the name prop', () => {
+		iconNames.forEach((name) => {
+			render(<Icon name={name} />);
+			const icon = screen.getByTestId(`svg-${name}`);
 
-		expect(githubIcon.parentElement!.className.includes('large')).toBe(true);
+			expect(icon).toBeInTheDocument();
+		});
 	});
 
-	it('renders the gear svg', () => {
-		render(<Icon name="gear" />);
+	// test each size in its own test to avoid conflicting id's
+	it.each(sizes)('applies the correct class name for size "%s"', (size) => {
+		render(<Icon name="gear" size={size} />);
 		const gearIcon = screen.getByTestId('svg-gear');
 
-		expect(gearIcon).toBeInTheDocument();
-	});
-
-	it('renders the play svg', () => {
-		render(<Icon name="play" />);
-		const playIcon = screen.getByTestId('svg-play');
-
-		expect(playIcon).toBeInTheDocument();
-	});
-
-	it('renders the repeat svg', () => {
-		render(<Icon name="repeat" />);
-		const repeatIcon = screen.getByTestId('svg-repeat');
-
-		expect(repeatIcon).toBeInTheDocument();
-	});
-
-	it('renders the shuffle svg', () => {
-		render(<Icon name="shuffle" />);
-		const repeatIcon = screen.getByTestId('svg-shuffle');
-
-		expect(repeatIcon).toBeInTheDocument();
-	});
-
-	it('renders the stop svg', () => {
-		render(<Icon name="stop" />);
-		const stopIcon = screen.getByTestId('svg-stop');
-
-		expect(stopIcon).toBeInTheDocument();
+		expect(gearIcon.parentElement!.className.includes(size!)).toBe(true);
 	});
 });
