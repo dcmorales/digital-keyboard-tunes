@@ -30,6 +30,8 @@ export default function Tooltip({ topic, text }: TooltipProps) {
 	};
 
 	useEffect(() => {
+		let resizeTimeout: NodeJS.Timeout;
+
 		const checkPosition = (): void => {
 			if (tooltipTextRef.current) {
 				const rect = tooltipTextRef.current.getBoundingClientRect();
@@ -37,12 +39,22 @@ export default function Tooltip({ topic, text }: TooltipProps) {
 			}
 		};
 
-		checkPosition(); // check position after render
+		const debouncedCheckPosition = () => {
+			// clear any existing timeouts to ensure only the latest call is executed
+			clearTimeout(resizeTimeout);
 
-		window.addEventListener('resize', checkPosition); // update on resize
+			// set a new timeout to execute checkPosition
+			resizeTimeout = setTimeout(checkPosition, 300);
+		};
 
+		checkPosition(); // check position on initial render
+
+		window.addEventListener('resize', debouncedCheckPosition); // update on resize
+
+		// cleanup on component unmount
 		return () => {
-			window.removeEventListener('resize', checkPosition);
+			clearTimeout(resizeTimeout);
+			window.removeEventListener('resize', debouncedCheckPosition);
 		};
 	}, []);
 
