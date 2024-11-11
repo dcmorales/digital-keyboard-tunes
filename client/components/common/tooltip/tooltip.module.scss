@@ -39,6 +39,7 @@
 		background-color: $color-blue-darkest;
 		border-radius: $size-xs;
 		color: $color-white;
+		opacity: 0;
 		padding: $size-s;
 		position: absolute;
 		top: 125%;
@@ -47,7 +48,13 @@
 		z-index: 1;
 
 		&.positionedLeft {
-			right: -150%;
+			left: auto;
+			right: 0;
+		}
+
+		&.isVisible {
+			opacity: 1;
+			visibility: visible;
 		}
 
 		@include breakpoint(large) {
