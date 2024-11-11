@@ -13,53 +13,53 @@ interface GlobalAudioContext extends Window {
 	currentOscillator: OscillatorNode | null;
 }
 
-let audioContextMock: AudioContext;
-let oscillatorMock: OscillatorNode;
-let gainNodeMock: GainNode;
-
-beforeEach(() => {
-	// mock global AudioContext
-	(global as unknown as GlobalAudioContext).AudioContext = vi.fn(
-		() => audioContextMock
-	);
-
-	// create a mock AudioContext
-	audioContextMock = {
-		resume: vi.fn().mockResolvedValue(undefined),
-		createOscillator: vi.fn(() => oscillatorMock),
-		createGain: vi.fn(() => gainNodeMock),
-		currentTime: 0,
-		destination: {},
-	} as unknown as AudioContext;
-
-	// create a mock oscillator
-	oscillatorMock = {
-		connect: vi.fn(),
-		disconnect: vi.fn(),
-		start: vi.fn(),
-		stop: vi.fn(),
-		frequency: { value: 0, setValueAtTime: vi.fn() },
-	} as unknown as OscillatorNode;
-
-	// create a mock gain node
-	gainNodeMock = {
-		connect: vi.fn(),
-		disconnect: vi.fn(),
-		gain: {
-			setValueAtTime: vi.fn(),
-			linearRampToValueAtTime: vi.fn(),
-			value: 1,
-		},
-	} as unknown as GainNode;
-});
-
-afterEach(() => {
-	vi.clearAllMocks();
-	// reset oscillator and gain node
-	stopNote();
-});
-
 describe('Audio Utils', () => {
+	let audioContextMock: AudioContext;
+	let oscillatorMock: OscillatorNode;
+	let gainNodeMock: GainNode;
+
+	beforeEach(() => {
+		// mock global AudioContext
+		(global as unknown as GlobalAudioContext).AudioContext = vi.fn(
+			() => audioContextMock
+		);
+
+		// create a mock AudioContext
+		audioContextMock = {
+			resume: vi.fn().mockResolvedValue(undefined),
+			createOscillator: vi.fn(() => oscillatorMock),
+			createGain: vi.fn(() => gainNodeMock),
+			currentTime: 0,
+			destination: {},
+		} as unknown as AudioContext;
+
+		// create a mock oscillator
+		oscillatorMock = {
+			connect: vi.fn(),
+			disconnect: vi.fn(),
+			start: vi.fn(),
+			stop: vi.fn(),
+			frequency: { value: 0, setValueAtTime: vi.fn() },
+		} as unknown as OscillatorNode;
+
+		// create a mock gain node
+		gainNodeMock = {
+			connect: vi.fn(),
+			disconnect: vi.fn(),
+			gain: {
+				setValueAtTime: vi.fn(),
+				linearRampToValueAtTime: vi.fn(),
+				value: 1,
+			},
+		} as unknown as GainNode;
+	});
+
+	afterEach(() => {
+		vi.clearAllMocks();
+		// reset oscillator and gain node
+		stopNote();
+	});
+
 	it('plays a note', async () => {
 		await playNote('C4', 'sine');
 

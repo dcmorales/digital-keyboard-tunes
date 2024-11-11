@@ -14,42 +14,43 @@ vi.mock('@/utils/audio-utils', () => ({
 	playNote: vi.fn(),
 }));
 
-const mockScaleNotes = [
-	'C4',
-	'D4',
-	'E4',
-	'F4',
-	'G4',
-	'A4',
-	'B4',
-	'C5',
-] as FullNote[];
-
-const noteDuration = 200;
-
-let playNoteMock: ReturnType<typeof vi.fn>;
-
-// capture notes played in an array to compare in shuffle and repeat click tests
-const capturePlayedNotes = async (button: HTMLElement, offset: number = 0) => {
-	fireEvent.click(button);
-	expect(button).toBeDisabled(); // button should be disabled while notes are playing
-
-	const playedNotes = [];
-
-	for (let i = 0; i < mockScaleNotes.length; i++) {
-		await act(() => {
-			vi.advanceTimersByTime(noteDuration); // move forward by the note duration
-		});
-		// capture the note played; offset is necessary for shuffle test
-		playedNotes.push(playNoteMock.mock.calls[offset + i][0]);
-	}
-
-	expect(button).not.toBeDisabled(); // button is reset after notes play
-
-	return playedNotes;
-};
-
 describe('Audio Controls', () => {
+	const mockScaleNotes = [
+		'C4',
+		'D4',
+		'E4',
+		'F4',
+		'G4',
+		'A4',
+		'B4',
+		'C5',
+	] as FullNote[];
+	const noteDuration = 200;
+	let playNoteMock: ReturnType<typeof vi.fn>;
+
+	// capture notes played in an array to compare in shuffle and repeat click tests
+	const capturePlayedNotes = async (
+		button: HTMLElement,
+		offset: number = 0
+	) => {
+		fireEvent.click(button);
+		expect(button).toBeDisabled(); // button should be disabled while notes are playing
+
+		const playedNotes = [];
+
+		for (let i = 0; i < mockScaleNotes.length; i++) {
+			await act(() => {
+				vi.advanceTimersByTime(noteDuration); // move forward by the note duration
+			});
+			// capture the note played; offset is necessary for shuffle test
+			playedNotes.push(playNoteMock.mock.calls[offset + i][0]);
+		}
+
+		expect(button).not.toBeDisabled(); // button is reset after notes play
+
+		return playedNotes;
+	};
+
 	beforeEach(() => {
 		vi.clearAllMocks();
 

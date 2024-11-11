@@ -3,21 +3,20 @@ import { describe, expect, it } from 'vitest';
 
 import Icon, { type IconProps } from '.';
 
-const iconNames: IconProps['name'][] = [
-	'close',
-	'gear',
-	'github',
-	'info',
-	'menu',
-	'play',
-	'repeat',
-	'shuffle',
-	'stop',
-];
-
-const sizes: IconProps['size'][] = ['x-small', 'small', 'medium', 'large'];
-
 describe('Icon', () => {
+	const iconNames: IconProps['name'][] = [
+		'close',
+		'gear',
+		'github',
+		'info',
+		'menu',
+		'play',
+		'repeat',
+		'shuffle',
+		'stop',
+	];
+	const sizes: IconProps['size'][] = ['x-small', 'small', 'medium', 'large'];
+
 	it('renders the correct icon based on the name prop', () => {
 		iconNames.forEach((name) => {
 			render(<Icon name={name} />);

@@ -6,9 +6,9 @@ import ContextTestComponent from '@/mocks/context-test-component';
 import type { FullNote } from '@/types/keyboard-option-types';
 import NotesDisplay from '.';
 
-const mockNotes = ['C4', 'D♭4', 'E4', 'C4', 'D♭4', 'E4'] as FullNote[];
-
 describe('Notes Display', () => {
+	const mockNotes = ['C4', 'D♭4', 'E4', 'C4', 'D♭4', 'E4'] as FullNote[];
+
 	beforeEach(() => {
 		render(
 			// ContextTestComponent makes context state updates in tests possible
@@ -18,8 +18,6 @@ describe('Notes Display', () => {
 			</KeyboardOptionsProvider>
 		);
 	});
-
-
 
 	it('renders the notes display section', () => {
 		const notesDisplay = screen.getByRole('region', { name: /Notes played:/i });

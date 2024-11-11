@@ -11,10 +11,9 @@ vi.mock('@/utils/audio-utils', () => ({
 	playNote: vi.fn(),
 }));
 
-const mockNote = 'C4';
-const mockWaveform = 'sine';
-
 describe('Key', () => {
+	const mockNote = 'C4';
+	const mockWaveform = 'sine';
 	let naturalNoteButton: HTMLButtonElement;
 
 	beforeEach(() => {
