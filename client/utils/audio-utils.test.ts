@@ -66,7 +66,7 @@ describe('Audio Utils', () => {
 		expect(audioContextMock.resume).toHaveBeenCalled();
 		expect(audioContextMock.createOscillator).toHaveBeenCalled();
 		expect(audioContextMock.createGain).toHaveBeenCalled();
-		expect(oscillatorMock.frequency.value).toBe(261.625565300598634);
+		expect(oscillatorMock.frequency.value).toBe(261.625565300598634); // C4 value
 		expect(oscillatorMock.connect).toHaveBeenCalledWith(gainNodeMock);
 		expect(gainNodeMock.connect).toHaveBeenCalledWith(
 			audioContextMock.destination
@@ -81,6 +81,7 @@ describe('Audio Utils', () => {
 		await playNote('D4', 'sine');
 
 		expect(oscillatorMock.frequency.setValueAtTime).toHaveBeenCalledWith(
+			// D4 value
 			293.66476791740756,
 			audioContextMock.currentTime
 		);

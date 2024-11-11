@@ -50,15 +50,20 @@ export default function AudioControls({
 		selectedRepeatNum
 	) as FullNote[];
 
+	// when hasPlayedRandom is true, the repeat button will no longer be disabled.
+	// since this is only a concern if the order is 'random', hasPlayedRandom is
+	// reset whenever the order is changed
 	useEffect(() => {
 		setHasPlayedRandom(false);
 	}, [selectedOrder]);
 
 	function playOrderedScaleNotes(notes: FullNote[]): void {
+		// enable repeat button when order is 'random'
 		if (selectedOrder === 'random') {
 			setHasPlayedRandom(true);
 		}
 
+		// disable buttons (except stop) while notes are playing
 		setIsPlaying(true);
 
 		const noteDuration = noteDurationInMs(selectedBpm, selectedNoteLength);
@@ -68,6 +73,7 @@ export default function AudioControls({
 		playbackTimeoutsRef.current = []; // Reset the ref array
 
 		notes.forEach((fullNote, index) => {
+			// incremented delay ensures each note plays in succession
 			const playDelay = index * noteDuration;
 
 			const timeoutId = setTimeout(() => {
@@ -82,10 +88,12 @@ export default function AudioControls({
 				finalNoteTimeoutRef.current = setTimeout(() => {
 					fadeOutNote();
 					setActiveNote(null);
+					// enable buttons (disable stop)
 					setIsPlaying(false);
 				}, playDelay + noteDuration);
 			}
 
+			// ref to keep track of each note's timeout; necessary to correctly stop notes
 			playbackTimeoutsRef.current.push(timeoutId);
 		});
 	}
@@ -100,15 +108,17 @@ export default function AudioControls({
 	};
 
 	const handleStopClick = (): void => {
+		// clear each remaining note's timeout
 		playbackTimeoutsRef.current.forEach((timeoutId) => clearTimeout(timeoutId));
 		playbackTimeoutsRef.current = []; // reset the ref array
 
+		// clear final note timeout
 		clearTimeout(finalNoteTimeoutRef.current as NodeJS.Timeout);
-		finalNoteTimeoutRef.current = null;
+		finalNoteTimeoutRef.current = null; // reset ref
 
-		fadeOutNote();
-		setIsPlaying(false);
-		setActiveNote(null);
+		fadeOutNote(); // fade out the last played note
+		setIsPlaying(false); // reset buttons
+		setActiveNote(null); // reset appearance of keys
 	};
 
 	return (
