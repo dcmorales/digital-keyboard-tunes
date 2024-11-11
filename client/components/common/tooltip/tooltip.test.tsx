@@ -6,16 +6,17 @@ import Tooltip from '.';
 describe('Tooltip Component', () => {
 	const mockTopic = 'Test Topic';
 	const mockText = 'Tooltip text';
+	let button: HTMLButtonElement;
 
 	beforeEach(() => {
 		render(<Tooltip topic={mockTopic} text={mockText} />);
+
+		button = screen.getByRole('button', {
+			name: `Information for ${mockTopic}`,
+		});
 	});
 
 	it('renders the tooltip button', () => {
-		const button = screen.getByRole('button', {
-			name: `Information for ${mockTopic}`,
-		});
-
 		expect(button).toBeInTheDocument();
 	});
 
@@ -26,10 +27,6 @@ describe('Tooltip Component', () => {
 	});
 
 	it('shows tooltip on mouse enter and hides on mouse leave', () => {
-		const button = screen.getByRole('button', {
-			name: `Information for ${mockTopic}`,
-		});
-
 		fireEvent.mouseEnter(button);
 
 		const tooltip = screen.getByRole('tooltip');
@@ -43,26 +40,19 @@ describe('Tooltip Component', () => {
 	});
 
 	it('shows tooltip on button focus and hides on blur', () => {
-		const button = screen.getByRole('button', {
-			name: `Information for ${mockTopic}`,
-		});
-
 		fireEvent.focus(button);
 
 		const tooltip = screen.getByRole('tooltip');
+
 		expect(tooltip).toBeInTheDocument();
+		expect(tooltip).toHaveTextContent(mockText);
 
 		fireEvent.blur(button);
 
-		const hiddenTooltip = screen.queryByRole('tooltip');
-		expect(hiddenTooltip).not.toBeInTheDocument();
+		expect(tooltip).not.toBeInTheDocument();
 	});
 
 	it('positions tooltip to the left when too far right', () => {
-		const button = screen.getByRole('button', {
-			name: `Information for ${mockTopic}`,
-		});
-
 		// simulate a situation where the tooltip is too far right
 		Object.defineProperty(HTMLElement.prototype, 'getBoundingClientRect', {
 			value: () => ({
