@@ -9,6 +9,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 import Icon from '@/components/common/icon';
+import { debounce } from '@/utils/debounce';
 import styles from './tooltip.module.scss';
 
 export interface TooltipProps {
@@ -29,31 +30,25 @@ export default function Tooltip({ topic, text }: TooltipProps) {
 		setIsVisible(false);
 	};
 
+	// if the tooltip text has screen overflow, reposition it
+	const checkPosition = (): void => {
+		if (tooltipTextRef.current) {
+			const rect = tooltipTextRef.current.getBoundingClientRect();
+			// includes a cushion of 50 so that the tooltip text isn't right at the edge of the page
+			setIsPositionedLeft(rect.right + 50 > window.innerWidth);
+		}
+	};
+
 	useEffect(() => {
-		let resizeTimeout: NodeJS.Timeout;
-
-		const checkPosition = (): void => {
-			if (tooltipTextRef.current) {
-				const rect = tooltipTextRef.current.getBoundingClientRect();
-				setIsPositionedLeft(rect.right + 50 > window.innerWidth);
-			}
-		};
-
-		const debouncedCheckPosition = () => {
-			// clear any existing timeouts to ensure only the latest call is executed
-			clearTimeout(resizeTimeout);
-
-			// set a new timeout to execute checkPosition
-			resizeTimeout = setTimeout(checkPosition, 300);
-		};
-
 		checkPosition(); // check position on initial render
 
+		// avoid unnecessary position checks during resize events
+		const debouncedCheckPosition = debounce(checkPosition, 300);
 		window.addEventListener('resize', debouncedCheckPosition); // update on resize
 
 		// cleanup on component unmount
 		return () => {
-			clearTimeout(resizeTimeout);
+			debouncedCheckPosition.cancel();
 			window.removeEventListener('resize', debouncedCheckPosition);
 		};
 	}, []);
