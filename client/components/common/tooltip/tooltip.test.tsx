@@ -1,12 +1,19 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, MockedFunction, vi } from 'vitest';
 
 import Tooltip from '.';
 
+// for use whenever resize event is fired
 vi.mock('@/utils/debounce', () => ({
 	debounce: (func: (arg: string) => void) => {
-		const debouncedFunction = vi.fn(func);
-		debouncedFunction.cancel = vi.fn(); // Add the cancel method to the mocked debounced function
+		// create the mock for the debounced function and add the cancel method to it
+		const debouncedFunction = vi.fn((...args: [string]) =>
+			func(...args)
+		) as MockedFunction<(...args: [string]) => void> & {
+			cancel: typeof vi.fn;
+		};
+		debouncedFunction.cancel = vi.fn();
+
 		return debouncedFunction;
 	},
 }));
