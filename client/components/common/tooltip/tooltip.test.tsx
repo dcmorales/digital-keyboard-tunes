@@ -1,7 +1,15 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import Tooltip from '.';
+
+vi.mock('@/utils/debounce', () => ({
+	debounce: (func: (arg: string) => void) => {
+		const debouncedFunction = vi.fn(func);
+		debouncedFunction.cancel = vi.fn(); // Add the cancel method to the mocked debounced function
+		return debouncedFunction;
+	},
+}));
 
 describe('Tooltip Component', () => {
 	const mockTopic = 'Test Topic';
@@ -54,17 +62,22 @@ describe('Tooltip Component', () => {
 		expect(tooltip.className.includes('isVisible')).toBe(false);
 	});
 
-	it('positions tooltip to the left when too far right', () => {
-		// simulate a situation where the tooltip is too far right
-		Object.defineProperty(HTMLElement.prototype, 'getBoundingClientRect', {
-			value: () => ({
-				right: window.innerWidth + 100,
-			}),
+	it('positions the tooltip to the left if it overflows the screen', () => {
+		// simulate overflow scenario
+		const getBoundingClientRectMock = vi.fn().mockReturnValue({
+			right: window.innerWidth + 10, // simulate tooltip overflowing on the right
+		});
+		Object.defineProperty(HTMLDivElement.prototype, 'getBoundingClientRect', {
+			value: getBoundingClientRectMock,
 		});
 
+		// show Tooltip
 		fireEvent.mouseEnter(button);
-
 		const tooltip = screen.getByRole('tooltip');
+
+		// force tooltip to recheck position by triggering resize
+		fireEvent.resize(window);
+
 		expect(tooltip.className.includes('positionedLeft')).toBe(true);
 	});
 });
