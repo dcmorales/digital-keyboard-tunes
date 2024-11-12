@@ -37,7 +37,8 @@ describe('Notes Display', () => {
 		// an array containing every occurrence of a note and its spans (flat notes will contain 2)
 		const notesArray = (note: FullNote) => {
 			return Array.from(sectionSpans).filter((span) => {
-				const trimmedText = span.textContent!.replace(/\s*-\s*/g, '').trim(); // remove hyphen and trim white space
+				const trimmedText =
+					span.textContent && span.textContent.replace(/\s*-\s*/g, '').trim(); // remove hyphen and trim white space
 				return trimmedText === note;
 			});
 		};

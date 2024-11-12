@@ -30,7 +30,20 @@ describe('Icon', () => {
 	it.each(sizes)('applies the correct class name for size "%s"', (size) => {
 		render(<Icon name="gear" size={size} />);
 		const gearIcon = screen.getByTestId('svg-gear');
+		const includesSizeClass =
+			gearIcon.parentElement &&
+			gearIcon.parentElement.className.includes(size!);
 
-		expect(gearIcon.parentElement!.className.includes(size!)).toBe(true);
+		expect(includesSizeClass).toBe(true);
+	});
+
+	it('renders the small icon if no size prop is provided', () => {
+		render(<Icon name="gear" />);
+		const gearIcon = screen.getByTestId('svg-gear');
+		const includesSmallClass =
+			gearIcon.parentElement &&
+			gearIcon.parentElement.className.includes('small');
+
+		expect(includesSmallClass).toBe(true);
 	});
 });
