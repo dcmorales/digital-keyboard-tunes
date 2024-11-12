@@ -33,10 +33,11 @@ describe('Tooltip Component', () => {
 
 		expect(tooltip).toBeInTheDocument();
 		expect(tooltip).toHaveTextContent(mockText);
+		expect(tooltip.className.includes('isVisible')).toBe(true);
 
 		fireEvent.mouseLeave(button);
 
-		expect(tooltip).not.toBeInTheDocument();
+		expect(tooltip.className.includes('isVisible')).toBe(false);
 	});
 
 	it('shows tooltip on button focus and hides on blur', () => {
@@ -46,10 +47,11 @@ describe('Tooltip Component', () => {
 
 		expect(tooltip).toBeInTheDocument();
 		expect(tooltip).toHaveTextContent(mockText);
+		expect(tooltip.className.includes('isVisible')).toBe(true);
 
 		fireEvent.blur(button);
 
-		expect(tooltip).not.toBeInTheDocument();
+		expect(tooltip.className.includes('isVisible')).toBe(false);
 	});
 
 	it('positions tooltip to the left when too far right', () => {

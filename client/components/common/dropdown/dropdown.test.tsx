@@ -132,11 +132,11 @@ describe('Dropdown', () => {
 
 		const tooltip = screen.getByRole('tooltip');
 		expect(tooltip).toBeInTheDocument();
-		expect(tooltip).toBeVisible();
 		expect(tooltip).toHaveTextContent('Helpful tooltip');
+		expect(tooltip.className.includes('isVisible')).toBe(true);
 
 		// hide tooltip
 		fireEvent.mouseLeave(tooltipButton);
-		expect(tooltip).not.toBeVisible();
+		expect(tooltip.className.includes('isVisible')).toBe(false);
 	});
 });
