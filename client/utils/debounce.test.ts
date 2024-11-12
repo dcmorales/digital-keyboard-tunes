@@ -5,25 +5,41 @@ import { debounce } from './debounce';
 describe('debounce', () => {
 	let mockFunction: ReturnType<typeof vi.fn>;
 	let debouncedFunction: ReturnType<typeof debounce>;
+	const delay = 1000; // default value
 
 	beforeEach(() => {
 		vi.useFakeTimers();
 		mockFunction = vi.fn();
-		debouncedFunction = debounce(mockFunction, 1000);
+		debouncedFunction = debounce(mockFunction); // will use default value of 1000ms
 	});
 
 	afterEach(() => {
 		vi.useRealTimers();
 	});
 
+	it('calls the function after the default delay if no delay value is provided', () => {
+		// defined in beforeEach with no delay value provided
+		debouncedFunction();
+
+		// function shouldn't be called immediately
+		expect(mockFunction).not.toHaveBeenCalled();
+
+		// fast-forward time by the custom delay
+		vi.advanceTimersByTime(delay);
+
+		expect(mockFunction).toHaveBeenCalled();
+	});
+
 	it('calls the function after the specified delay', () => {
+		const customDelay = 500;
+		debouncedFunction = debounce(mockFunction, customDelay);
 		debouncedFunction();
 
 		// function shouldn't be called immediately
 		expect(mockFunction).not.toHaveBeenCalled();
 
 		// fast-forward time by delay
-		vi.advanceTimersByTime(1000);
+		vi.advanceTimersByTime(customDelay);
 
 		expect(mockFunction).toHaveBeenCalled();
 	});
@@ -34,7 +50,7 @@ describe('debounce', () => {
 		debouncedFunction();
 
 		// fast-forward time by delay
-		vi.advanceTimersByTime(1000);
+		vi.advanceTimersByTime(delay);
 
 		expect(mockFunction).toHaveBeenCalledTimes(1);
 	});
@@ -62,7 +78,7 @@ describe('debounce', () => {
 		debouncedFunction.cancel();
 
 		// fast-forward time by delay
-		vi.advanceTimersByTime(1000);
+		vi.advanceTimersByTime(delay);
 
 		expect(mockFunction).not.toHaveBeenCalled();
 	});
