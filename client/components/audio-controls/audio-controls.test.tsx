@@ -141,6 +141,8 @@ describe('Audio Controls', () => {
 
 		expect(fadeOutNote).toHaveBeenCalled();
 		expect(playButton).not.toBeDisabled(); // button is reset after notes play
+
+		vi.useRealTimers();
 	});
 
 	it('handles the shuffle click', async () => {
@@ -166,6 +168,8 @@ describe('Audio Controls', () => {
 		expect(notesAreDifferent).toBe(true);
 
 		expect(playNoteMock).toHaveBeenCalledTimes(16); // 8 notes for each click
+
+		vi.useRealTimers();
 	});
 
 	it('handles the repeat click', async () => {
@@ -191,6 +195,8 @@ describe('Audio Controls', () => {
 		expect(notesAreTheSame).toBe(true);
 
 		expect(playNoteMock).toHaveBeenCalledTimes(16); // 8 notes for each click
+
+		vi.useRealTimers();
 	});
 
 	it('handles the stop click', async () => {
@@ -212,5 +218,7 @@ describe('Audio Controls', () => {
 
 		expect(fadeOutNote).toHaveBeenCalled();
 		expect(stopButton).toBeDisabled(); // button is reset after click
+
+		vi.useRealTimers();
 	});
 });

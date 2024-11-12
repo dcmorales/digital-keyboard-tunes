@@ -56,5 +56,7 @@ describe('Selected Keyboard', () => {
 		});
 
 		expect(notesDisplay).toBeInTheDocument();
+
+		vi.useRealTimers();
 	});
 });
