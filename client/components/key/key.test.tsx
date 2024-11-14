@@ -84,7 +84,7 @@ describe('Key', () => {
 	});
 
 	it('does not play the note on key down event with keys other than Enter or Space', () => {
-		const otherKeys = ['Tab', 'ArrowUp', 'ArrowDown', 'Esc', ' a'];
+		const otherKeys = ['Tab', 'ArrowUp', 'ArrowDown', 'Escape', ' a'];
 		otherKeys.forEach((key) => {
 			fireEvent.keyDown(naturalNoteButton, { key });
 

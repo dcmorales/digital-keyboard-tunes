@@ -85,6 +85,22 @@ describe('Tooltip Component', () => {
 		expect(tooltip.className.includes('isVisible')).toBe(false);
 	});
 
+	it('does not hide the tooltip if a key other than the escape key is pressed', () => {
+		// show tooltip
+		fireEvent.mouseEnter(button);
+
+		const tooltip = screen.getByRole('tooltip');
+		expect(tooltip.className.includes('isVisible')).toBe(true);
+
+		const otherKeys = ['Tab', 'ArrowUp', 'ArrowDown', 'Enter', ' a'];
+
+		otherKeys.forEach((key) => {
+			fireEvent.keyDown(button, { key });
+
+			expect(tooltip.className.includes('isVisible')).toBe(true); // class name doesn't change
+		});
+	});
+
 	it('positions the tooltip to the left if it overflows the screen', () => {
 		// simulate overflow scenario
 		const getBoundingClientRectMock = vi.fn().mockReturnValue({
