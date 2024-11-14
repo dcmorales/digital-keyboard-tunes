@@ -12,6 +12,7 @@ import Icon from '@/components/common/icon';
 import { debounce } from '@/utils/debounce';
 import styles from './tooltip.module.scss';
 
+// also used in settingsOptions
 export interface TooltipProps {
 	topic: string;
 	text: string;
@@ -54,11 +55,14 @@ export default function Tooltip({ topic, text }: TooltipProps) {
 	}, []);
 
 	return (
-		<div className={styles.tooltipContainer} aria-describedby="tooltip">
+		<div
+			className={styles.tooltipContainer}
+			aria-describedby="tooltip"
+			onMouseEnter={showTooltip}
+			onMouseLeave={hideTooltip}
+		>
 			<button
 				aria-label={`Information for ${topic}`}
-				onMouseEnter={showTooltip}
-				onMouseLeave={hideTooltip}
 				onFocus={showTooltip}
 				onBlur={hideTooltip}
 			>
