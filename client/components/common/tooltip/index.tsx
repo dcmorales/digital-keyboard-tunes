@@ -31,6 +31,14 @@ export default function Tooltip({ topic, text }: TooltipProps) {
 		setIsVisible(false);
 	};
 
+	const handleKeyDown = (
+		event: React.KeyboardEvent<HTMLButtonElement>
+	): void => {
+		if (event.key === 'Escape') {
+			hideTooltip();
+		}
+	};
+
 	// if the tooltip text has screen overflow, reposition it
 	const checkPosition = (): void => {
 		if (tooltipTextRef.current) {
@@ -66,6 +74,7 @@ export default function Tooltip({ topic, text }: TooltipProps) {
 				aria-label={`Information for ${topic}`}
 				onFocus={showTooltip}
 				onBlur={hideTooltip}
+				onKeyDown={handleKeyDown}
 			>
 				<Icon name="info" size="x-small" />
 			</button>

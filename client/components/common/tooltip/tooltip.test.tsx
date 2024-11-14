@@ -42,7 +42,11 @@ describe('Tooltip Component', () => {
 	});
 
 	it('shows tooltip on mouse enter and hides on mouse leave', () => {
-		fireEvent.mouseEnter(button);
+		const tooltipContainer = button.closest(
+			'[aria-describedby="tooltip"]'
+		) as HTMLElement;
+
+		fireEvent.mouseEnter(tooltipContainer);
 
 		const tooltip = screen.getByRole('tooltip');
 
@@ -50,7 +54,7 @@ describe('Tooltip Component', () => {
 		expect(tooltip).toHaveTextContent(mockText);
 		expect(tooltip.className.includes('isVisible')).toBe(true);
 
-		fireEvent.mouseLeave(button);
+		fireEvent.mouseLeave(tooltipContainer);
 
 		expect(tooltip.className.includes('isVisible')).toBe(false);
 	});
@@ -65,6 +69,18 @@ describe('Tooltip Component', () => {
 		expect(tooltip.className.includes('isVisible')).toBe(true);
 
 		fireEvent.blur(button);
+
+		expect(tooltip.className.includes('isVisible')).toBe(false);
+	});
+
+	it('hides tooltip when the escape key is pressed', () => {
+		// show tooltip
+		fireEvent.mouseEnter(button);
+
+		const tooltip = screen.getByRole('tooltip');
+		expect(tooltip.className.includes('isVisible')).toBe(true);
+
+		fireEvent.keyDown(button, { key: 'Escape' });
 
 		expect(tooltip.className.includes('isVisible')).toBe(false);
 	});
