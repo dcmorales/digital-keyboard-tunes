@@ -7,20 +7,20 @@ import {
 	useKeyboardOptions,
 } from './keyboard-options-context';
 
-const renderWithProvider = () => {
-	render(
-		<KeyboardOptionsProvider>
-			<ContextTestComponent />
-		</KeyboardOptionsProvider>
-	);
-};
-
-const changeSelection = (label: string, value: string) => {
-	const select = screen.getByLabelText(label);
-	fireEvent.change(select, { target: { value } });
-};
-
 describe('KeyboardOptionsProvider', () => {
+	const renderWithProvider = () => {
+		render(
+			<KeyboardOptionsProvider>
+				<ContextTestComponent />
+			</KeyboardOptionsProvider>
+		);
+	};
+
+	const changeSelection = (label: string, value: string) => {
+		const select = screen.getByLabelText(label);
+		fireEvent.change(select, { target: { value } });
+	};
+
 	it('provides the initial values', () => {
 		renderWithProvider();
 

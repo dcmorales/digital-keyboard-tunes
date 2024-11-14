@@ -72,7 +72,8 @@ describe('Dropdown', () => {
 		expect(dropdown).toBeDisabled();
 	});
 
-	it('calls onChange when a new option is selected', () => {
+	it('calls the onChange event handler when a new option is selected', () => {
+		// allow for rerender without worrying about previous render
 		cleanup();
 		const { rerender } = render(
 			<Dropdown
@@ -84,6 +85,7 @@ describe('Dropdown', () => {
 				onChange={handleChange}
 			/>
 		);
+
 		const dropdown = screen.getByRole('combobox', {
 			name: /Select an option/i,
 		});
@@ -131,9 +133,10 @@ describe('Dropdown', () => {
 		const tooltip = screen.getByRole('tooltip');
 		expect(tooltip).toBeInTheDocument();
 		expect(tooltip).toHaveTextContent('Helpful tooltip');
+		expect(tooltip.className.includes('isVisible')).toBe(true);
 
 		// hide tooltip
 		fireEvent.mouseLeave(tooltipButton);
-		expect(tooltip).not.toBeVisible();
+		expect(tooltip.className.includes('isVisible')).toBe(false);
 	});
 });
