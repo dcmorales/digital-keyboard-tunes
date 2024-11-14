@@ -21,6 +21,7 @@
 			transition: fill 0.3s;
 		}
 
+		&.tooltipShowing, // consistent style when hovering over tooltip text
 		&:hover,
 		&:focus {
 			background-color: $color-blue-dark;

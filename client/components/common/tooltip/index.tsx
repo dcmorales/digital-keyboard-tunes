@@ -62,6 +62,7 @@ export default function Tooltip({ topic, text }: TooltipProps) {
 			onMouseLeave={hideTooltip}
 		>
 			<button
+				className={isVisible ? styles.tooltipShowing : ''}
 				aria-label={`Information for ${topic}`}
 				onFocus={showTooltip}
 				onBlur={hideTooltip}
