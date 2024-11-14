@@ -69,14 +69,16 @@ export default function Tooltip({ topic, text }: TooltipProps) {
 				<Icon name="info" size="x-small" />
 			</button>
 
-			<div
-				ref={tooltipTextRef}
-				id="tooltip"
-				role="tooltip"
-				className={`${styles.tooltip} ${isPositionedLeft ? styles.positionedLeft : ''} ${isVisible ? styles.isVisible : ''}`}
-				aria-hidden={!isVisible}
-			>
-				{text}
+			<div className={styles.tooltipTextContainer}>
+				<div
+					ref={tooltipTextRef}
+					id="tooltip"
+					role="tooltip"
+					className={`${styles.tooltipText} ${isPositionedLeft ? styles.positionedLeft : ''} ${isVisible ? styles.isVisible : ''}`}
+					aria-hidden={!isVisible}
+				>
+					{text}
+				</div>
 			</div>
 		</div>
 	);

@@ -35,14 +35,17 @@
 		}
 	}
 
-	.tooltip {
+	.tooltipTextContainer {
+		padding-top: $size-s;
+	}
+
+	.tooltipText {
 		background-color: $color-blue-darkest;
 		border-radius: $size-xs;
 		color: $color-white;
 		opacity: 0;
 		padding: $size-s;
 		position: absolute;
-		top: 125%;
 		visibility: hidden;
 		width: 10rem;
 		z-index: 1;
