@@ -97,7 +97,6 @@ export const KeyboardOptionsProvider = ({
 	// if isPlaying is true, dropdowns and keys will be disabled
 	const [isPlaying, setIsPlaying] = useState(false);
 
-
 	// an object that maps different selection names to corresponding handler functions;
 	// the handler functions update a specific piece of state with the value provided
 	const selectionHandlers: Record<SelectionName, (value: string) => void> = {
