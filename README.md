@@ -25,25 +25,25 @@
 
 <p align="center">
     <a href="https://nextjs.org/docs">
-	    <img src="https://skillicons.dev/icons?i=nextjs" alt="Next.js documentation">
+	    <img src="https://skillicons.dev/icons?i=nextjs" alt="Next.js documentation" title="Next.js">
     </a>
     <a href="https://www.typescriptlang.org/docs/">
-        <img src="https://skillicons.dev/icons?i=ts" alt="TypeScript documentation">
+        <img src="https://skillicons.dev/icons?i=ts" alt="TypeScript documentation" title="TypeScript">
     </a>
     <a href="https://sass-lang.com/documentation/">
-        <img src="https://skillicons.dev/icons?i=sass" alt="Sass documentation">
+        <img src="https://skillicons.dev/icons?i=sass" alt="Sass documentation" title="Sass">
     </a>
     <a href="https://vitest.dev/guide/">
-        <img src="https://skillicons.dev/icons?i=vitest" alt="Vitest documentation">
+        <img src="https://skillicons.dev/icons?i=vitest" alt="Vitest documentation" title="Vitest">
     </a>
     <a href="https://testing-library.com/docs/react-testing-library/intro/">
-        <img src="https://techstack-generator.vercel.app/testinglibrary-icon.svg"  alt="React Testing Library documentation" width="50" height="50" />
+        <img src="https://techstack-generator.vercel.app/testinglibrary-icon.svg"  alt="React Testing Library documentation" width="50" height="50" title="React Testing Library" />
     </a>
     <a href="https://docs.github.com/en/actions">
-        <img src="https://skillicons.dev/icons?i=githubactions" alt="Github Actions documentation">
+        <img src="https://skillicons.dev/icons?i=githubactions" alt="Github Actions documentation" title="Github Actions">
     </a>
     <a href="https://pnpm.io/motivation">
-        <img src="https://skillicons.dev/icons?i=pnpm" alt="PNPM documentation">
+        <img src="https://skillicons.dev/icons?i=pnpm" alt="PNPM documentation" title="PNPM">
     </a>
 </p>
 
@@ -124,7 +124,7 @@ It is recommended to use a Node version manager such as [nvm](https://github.com
 
 ## 🔄 Continuous Integration / Continuous Delivery
 
-The repo uses Github Actions for CI/CD. Testing and linting have been automated to run on pull requests. These workflows must pass for PR's to be approved. Merging into `develop` triggers deployment to the staging site. Merging into `main` triggers deployment to the production site. Local builds can be previewed on Vercel's preview sites after creating a pull request. Changes cannot be made directly into either `develop` or `main` and must be done through pull requests instead.
+The repo uses Github Actions for CI/CD. Testing and linting have been automated to run on pull requests. These workflows must pass for PR's to be approved. Merging into `develop` triggers deployment to the staging site. Merging into `main` triggers deployment to the production site. Local builds can be previewed on Vercel's preview sites after creating a pull request. Changes cannot be made directly into either `develop` or `main` and must be done through pull requests instead. Due to this setup, `develop` will have the latest code while `main` will have the most stable code.
 
 ---
 
@@ -152,7 +152,7 @@ Contributions are welcome! Here are ways you can contribute:
    ```sh
    git clone https://github.com/dcmorales/digital-keyboard-tunes
    ```
-3. **Create a New Branch**: Always work on a new branch, giving it a descriptive name.
+3. **Create a New Branch**: Always work on a new branch (branch off of `develop` for the latest code), giving it a descriptive name.
    ```sh
    git checkout -b feature/new-feature-x
    ```

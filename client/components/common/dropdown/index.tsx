@@ -1,6 +1,6 @@
 // dropdown
 // A dropdown menu with an optional tooltip. Displays a label and maps over the options provided.
-// When the selection changes, the event handler is called and the select value is updated.
+// When the selection changes, the event handler is called and the selected value is updated.
 // A name is applied as a simple way to get the target element. Since the event handler is
 // not defined in the component itself, this component can only be added to client components.
 

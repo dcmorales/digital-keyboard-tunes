@@ -8,6 +8,7 @@ import KeyboardSettings from '.';
 describe('Keyboard settings', () => {
 	beforeEach(() => {
 		render(
+			// ContextTestComponent makes context state updates in tests possible
 			<KeyboardOptionsProvider>
 				<KeyboardSettings />
 				<ContextTestComponent />
@@ -159,6 +160,7 @@ describe('Keyboard settings', () => {
 			name: /Select a beats per minute value/i,
 		});
 
+		// update isPlaying to true using test component
 		fireEvent.click(
 			screen.getByRole('button', { name: /Set isPlaying to true/i })
 		);
@@ -166,6 +168,7 @@ describe('Keyboard settings', () => {
 		expect(scaleDropdown).toBeDisabled();
 		expect(bpmDropdown).toBeDisabled();
 
+		// update isPlaying to false using test component
 		fireEvent.click(
 			screen.getByRole('button', { name: /Set isPlaying to false/i })
 		);

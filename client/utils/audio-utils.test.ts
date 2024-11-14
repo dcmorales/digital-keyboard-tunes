@@ -13,60 +13,60 @@ interface GlobalAudioContext extends Window {
 	currentOscillator: OscillatorNode | null;
 }
 
-let audioContextMock: AudioContext;
-let oscillatorMock: OscillatorNode;
-let gainNodeMock: GainNode;
-
-beforeEach(() => {
-	// mock global AudioContext
-	(global as unknown as GlobalAudioContext).AudioContext = vi.fn(
-		() => audioContextMock
-	);
-
-	// create a mock AudioContext
-	audioContextMock = {
-		resume: vi.fn().mockResolvedValue(undefined),
-		createOscillator: vi.fn(() => oscillatorMock),
-		createGain: vi.fn(() => gainNodeMock),
-		currentTime: 0,
-		destination: {},
-	} as unknown as AudioContext;
-
-	// create a mock oscillator
-	oscillatorMock = {
-		connect: vi.fn(),
-		disconnect: vi.fn(),
-		start: vi.fn(),
-		stop: vi.fn(),
-		frequency: { value: 0, setValueAtTime: vi.fn() },
-	} as unknown as OscillatorNode;
-
-	// create a mock gain node
-	gainNodeMock = {
-		connect: vi.fn(),
-		disconnect: vi.fn(),
-		gain: {
-			setValueAtTime: vi.fn(),
-			linearRampToValueAtTime: vi.fn(),
-			value: 1,
-		},
-	} as unknown as GainNode;
-});
-
-afterEach(() => {
-	vi.clearAllMocks();
-	// reset oscillator and gain node
-	stopNote();
-});
-
 describe('Audio Utils', () => {
+	let audioContextMock: AudioContext;
+	let oscillatorMock: OscillatorNode;
+	let gainNodeMock: GainNode;
+
+	beforeEach(() => {
+		// mock global AudioContext
+		(global as unknown as GlobalAudioContext).AudioContext = vi.fn(
+			() => audioContextMock
+		);
+
+		// create a mock AudioContext
+		audioContextMock = {
+			resume: vi.fn().mockResolvedValue(undefined),
+			createOscillator: vi.fn(() => oscillatorMock),
+			createGain: vi.fn(() => gainNodeMock),
+			currentTime: 0,
+			destination: {},
+		} as unknown as AudioContext;
+
+		// create a mock oscillator
+		oscillatorMock = {
+			connect: vi.fn(),
+			disconnect: vi.fn(),
+			start: vi.fn(),
+			stop: vi.fn(),
+			frequency: { value: 0, setValueAtTime: vi.fn() },
+		} as unknown as OscillatorNode;
+
+		// create a mock gain node
+		gainNodeMock = {
+			connect: vi.fn(),
+			disconnect: vi.fn(),
+			gain: {
+				setValueAtTime: vi.fn(),
+				linearRampToValueAtTime: vi.fn(),
+				value: 1,
+			},
+		} as unknown as GainNode;
+	});
+
+	afterEach(() => {
+		vi.clearAllMocks();
+		// reset oscillator and gain node
+		stopNote();
+	});
+
 	it('plays a note', async () => {
 		await playNote('C4', 'sine');
 
 		expect(audioContextMock.resume).toHaveBeenCalled();
 		expect(audioContextMock.createOscillator).toHaveBeenCalled();
 		expect(audioContextMock.createGain).toHaveBeenCalled();
-		expect(oscillatorMock.frequency.value).toBe(261.625565300598634);
+		expect(oscillatorMock.frequency.value).toBe(261.625565300598634); // C4 value
 		expect(oscillatorMock.connect).toHaveBeenCalledWith(gainNodeMock);
 		expect(gainNodeMock.connect).toHaveBeenCalledWith(
 			audioContextMock.destination
@@ -81,6 +81,7 @@ describe('Audio Utils', () => {
 		await playNote('D4', 'sine');
 
 		expect(oscillatorMock.frequency.setValueAtTime).toHaveBeenCalledWith(
+			// D4 value
 			293.66476791740756,
 			audioContextMock.currentTime
 		);
@@ -118,7 +119,7 @@ describe('Audio Utils', () => {
 			audioContextMock.currentTime + 0.1
 		);
 
-		// fast-forward time by 200 ms to simulate the fade-out duration
+		// fast-forward time to simulate the fade-out duration
 		vi.advanceTimersByTime(100);
 
 		expect(oscillatorMock.stop).toHaveBeenCalled();

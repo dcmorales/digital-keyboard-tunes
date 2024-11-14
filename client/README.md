@@ -18,22 +18,22 @@
 
 <p align="center">
     <a href="https://nextjs.org/docs">
-	    <img src="https://skillicons.dev/icons?i=nextjs" alt="Next.js documentation">
+	    <img src="https://skillicons.dev/icons?i=nextjs" alt="Next.js documentation" title="Next.js">
     </a>
     <a href="https://www.typescriptlang.org/docs/">
-        <img src="https://skillicons.dev/icons?i=ts" alt="TypeScript documentation">
+        <img src="https://skillicons.dev/icons?i=ts" alt="TypeScript documentation" title="TypeScript">
     </a>
     <a href="https://sass-lang.com/documentation/">
-        <img src="https://skillicons.dev/icons?i=sass" alt="Sass documentation">
+        <img src="https://skillicons.dev/icons?i=sass" alt="Sass documentation" title="Sass">
     </a>
     <a href="https://vitest.dev/guide/">
-        <img src="https://skillicons.dev/icons?i=vitest" alt="Vitest documentation">
+        <img src="https://skillicons.dev/icons?i=vitest" alt="Vitest documentation" title="Vitest">
     </a>
     <a href="https://testing-library.com/docs/react-testing-library/intro/">
-        <img src="https://techstack-generator.vercel.app/testinglibrary-icon.svg"  alt="React Testing Library documentation" width="50" height="50" />
+        <img src="https://techstack-generator.vercel.app/testinglibrary-icon.svg"  alt="React Testing Library documentation" width="50" height="50" title="React Testing Library" />
     </a>
     <a href="https://pnpm.io/motivation">
-        <img src="https://skillicons.dev/icons?i=pnpm" alt="PNPM documentation">
+        <img src="https://skillicons.dev/icons?i=pnpm" alt="PNPM documentation" title="PNPM">
     </a>
 </p>
 

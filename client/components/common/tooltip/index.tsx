@@ -9,9 +9,10 @@
 import { useEffect, useRef, useState } from 'react';
 
 import Icon from '@/components/common/icon';
+import { debounce } from '@/utils/debounce';
 import styles from './tooltip.module.scss';
 
-interface TooltipProps {
+export interface TooltipProps {
 	topic: string;
 	text: string;
 }
@@ -19,7 +20,7 @@ interface TooltipProps {
 export default function Tooltip({ topic, text }: TooltipProps) {
 	const [isVisible, setIsVisible] = useState(false);
 	const [isPositionedLeft, setIsPositionedLeft] = useState(false);
-	const tooltipRef = useRef<HTMLDivElement | null>(null);
+	const tooltipTextRef = useRef<HTMLDivElement | null>(null);
 
 	const showTooltip = (): void => {
 		setIsVisible(true);
@@ -29,28 +30,31 @@ export default function Tooltip({ topic, text }: TooltipProps) {
 		setIsVisible(false);
 	};
 
+	// if the tooltip text has screen overflow, reposition it
+	const checkPosition = (): void => {
+		if (tooltipTextRef.current) {
+			const rect = tooltipTextRef.current.getBoundingClientRect();
+			// includes a cushion of 50 so that the tooltip text isn't right at the edge of the page
+			setIsPositionedLeft(rect.right + 50 > window.innerWidth);
+		}
+	};
+
 	useEffect(() => {
-		const checkPosition = (): void => {
-			if (tooltipRef.current) {
-				const rect = tooltipRef.current.getBoundingClientRect();
-				setIsPositionedLeft(rect.right > window.innerWidth / 1.5);
-			}
-		};
+		checkPosition(); // check position on initial render
 
-		checkPosition(); // check position after render
-		window.addEventListener('resize', checkPosition); // update on resize
+		// avoid unnecessary position checks during resize events
+		const debouncedCheckPosition = debounce(checkPosition, 300);
+		window.addEventListener('resize', debouncedCheckPosition); // update on resize
 
+		// cleanup on component unmount
 		return () => {
-			window.removeEventListener('resize', checkPosition);
+			debouncedCheckPosition.cancel();
+			window.removeEventListener('resize', debouncedCheckPosition);
 		};
-	}, [isVisible]);
+	}, []);
 
 	return (
-		<div
-			ref={tooltipRef}
-			className={styles.tooltipContainer}
-			aria-describedby="tooltip"
-		>
+		<div className={styles.tooltipContainer} aria-describedby="tooltip">
 			<button
 				aria-label={`Information for ${topic}`}
 				onMouseEnter={showTooltip}
@@ -61,16 +65,15 @@ export default function Tooltip({ topic, text }: TooltipProps) {
 				<Icon name="info" size="x-small" />
 			</button>
 
-			{isVisible && (
-				<div
-					id="tooltip"
-					role="tooltip"
-					className={`${styles.tooltip} ${isPositionedLeft ? styles.positionedLeft : ''}`}
-					aria-hidden={!isVisible}
-				>
-					{text}
-				</div>
-			)}
+			<div
+				ref={tooltipTextRef}
+				id="tooltip"
+				role="tooltip"
+				className={`${styles.tooltip} ${isPositionedLeft ? styles.positionedLeft : ''} ${isVisible ? styles.isVisible : ''}`}
+				aria-hidden={!isVisible}
+			>
+				{text}
+			</div>
 		</div>
 	);
 }

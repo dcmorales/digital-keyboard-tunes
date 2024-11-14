@@ -85,7 +85,7 @@
 	}
 
 	// the highlighted keys have a slightly larger difference in padding
-	// for a more visible pressing effect
+	// than regular keys for a more visible pressing effect
 	&.highlight.active {
 		padding-bottom: $rem-m;
 	}

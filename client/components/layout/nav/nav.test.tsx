@@ -25,7 +25,7 @@ describe('Nav', () => {
 		expect(nav.className.includes('open')).toBe(true);
 	});
 
-	it('renders the close menu button and closes when clicked', () => {
+	it('renders the close menu button and closes the menu when the button is clicked', () => {
 		const { setShowMenu } = renderNav(true);
 		const button = screen.getByRole('button', { name: /Close menu/i });
 

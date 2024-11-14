@@ -8,26 +8,27 @@ import {
 	setNotesOrder,
 } from './scale-note-utils';
 
-const mockNotes: FullNote[] = [
-	'D5',
-	'E♭5',
-	'E5',
-	'F5',
-	'G♭5',
-	'G5',
-	'A♭5',
-	'A5',
-	'B♭5',
-	'B5',
-	'C6',
-	'D♭6',
-	'D6',
-];
-const mockSelectedKey = 'D';
-const mockSelectedOctave = 5;
-const mockSelectedScale = 'major';
-
 describe('Scale Note Utils', () => {
+	// full octave of notes
+	const mockNotes: FullNote[] = [
+		'D5',
+		'E♭5',
+		'E5',
+		'F5',
+		'G♭5',
+		'G5',
+		'A♭5',
+		'A5',
+		'B♭5',
+		'B5',
+		'C6',
+		'D♭6',
+		'D6',
+	];
+	const mockSelectedKey = 'D';
+	const mockSelectedOctave = 5;
+	const mockSelectedScale = 'major';
+
 	it('rearranges notes correctly', () => {
 		const result = rearrangeNotes(mockSelectedKey, mockSelectedOctave);
 

@@ -14,22 +14,54 @@ vi.mock('@/utils/audio-utils', () => ({
 	playNote: vi.fn(),
 }));
 
-const mockScaleNotes = [
-	'C4',
-	'D4',
-	'E4',
-	'F4',
-	'G4',
-	'A4',
-	'B4',
-	'C5',
-] as FullNote[];
-
 describe('Audio Controls', () => {
+	const mockScaleNotes = [
+		'C4',
+		'D4',
+		'E4',
+		'F4',
+		'G4',
+		'A4',
+		'B4',
+		'C5',
+	] as FullNote[];
+	const noteDuration = 200;
+	let playNoteMock: ReturnType<typeof vi.fn>;
+
+	// capture notes played in an array to compare in shuffle and repeat click tests
+	const capturePlayedNotes = async (
+		button: HTMLElement,
+		offset: number = 0
+	) => {
+		fireEvent.click(button);
+		expect(button).toBeDisabled(); // button should be disabled while notes are playing
+
+		const playedNotes = [];
+
+		for (let i = 0; i < mockScaleNotes.length; i++) {
+			await act(() => {
+				vi.advanceTimersByTime(noteDuration); // move forward by the note duration
+			});
+			// capture the note played; offset is necessary for shuffle test
+			playedNotes.push(playNoteMock.mock.calls[offset + i][0]);
+		}
+
+		expect(button).not.toBeDisabled(); // button is reset after notes play
+
+		return playedNotes;
+	};
+
 	beforeEach(() => {
 		vi.clearAllMocks();
 
+		// mock functions that are called during play, shuffle, and repeat clicks
+		vi.mocked(noteDurationInMs).mockReturnValue(noteDuration); // simulate 200ms per note
+		playNoteMock = vi.fn().mockImplementation(() => Promise.resolve());
+		vi.mocked(playNote).mockImplementation(playNoteMock);
+		vi.mocked(fadeOutNote).mockImplementation(() => {});
+
 		render(
+			// ContextTestComponent makes context state updates in tests possible
 			<KeyboardOptionsProvider>
 				<AudioControls
 					lastPlayedNotes={mockScaleNotes}
@@ -38,6 +70,10 @@ describe('Audio Controls', () => {
 				<ContextTestComponent />
 			</KeyboardOptionsProvider>
 		);
+
+		// update scale using test component; 'major' is selected so that mockScaleNotes is correct
+		const scaleSelect = screen.getByLabelText('Select scale:');
+		fireEvent.change(scaleSelect, { target: { value: 'major' } });
 	});
 
 	it('renders the audio controls div', () => {
@@ -48,15 +84,28 @@ describe('Audio Controls', () => {
 		expect(audioControls).toBeInTheDocument();
 	});
 
-	it('renders the play button initially; repeat and shuffle buttons when order is random', async () => {
+	it('renders the play button initially without shuffle or repeat buttons', () => {
 		const playButton = screen.getByRole('button', { name: /Play the scale/i });
+		const shuffleButton = screen.queryByRole('button', {
+			name: /Shuffle the scale/i,
+		});
+		const repeatButton = screen.queryByRole('button', {
+			name: /Repeat the scale/i,
+		});
 
 		expect(playButton).toBeInTheDocument();
+		expect(shuffleButton).not.toBeInTheDocument();
+		expect(repeatButton).not.toBeInTheDocument();
+	});
 
-		// use mock component to update order
+	it('renders the repeat and shuffle buttons when the order is random', () => {
+		// update order using test component
 		const orderSelect = screen.getByLabelText('Select order:');
 		fireEvent.change(orderSelect, { target: { value: 'random' } });
 
+		const playButton = screen.queryByRole('button', {
+			name: /Play the scale/i,
+		});
 		const shuffleButton = screen.getByRole('button', {
 			name: /Shuffle the scale/i,
 		});
@@ -73,66 +122,45 @@ describe('Audio Controls', () => {
 		vi.useFakeTimers();
 
 		const playButton = screen.getByRole('button', { name: /Play the scale/i });
-		const mockOrderedScaleNotes = ['C4', 'D♭4', 'D4', 'E♭4', 'E4', 'F4', 'G♭4'];
-
-		vi.mocked(noteDurationInMs).mockReturnValue(200); // simulate 200ms per note
-		vi.mocked(playNote).mockImplementation(() => Promise.resolve());
-		vi.mocked(fadeOutNote).mockImplementation(() => {});
 
 		fireEvent.click(playButton);
+		expect(playButton).toBeDisabled();
 
-		for (let i = 0; i < mockOrderedScaleNotes.length; i++) {
+		// check that each note in the scale plays after the specified time
+		for (let i = 0; i < mockScaleNotes.length; i++) {
 			await act(() => {
-				vi.advanceTimersByTime(200); // move forward by the note duration
+				vi.advanceTimersByTime(noteDuration); // move forward by the note duration
 			});
 
-			expect(playNote).toHaveBeenCalledWith(mockOrderedScaleNotes[i], 'sine');
+			expect(playNote).toHaveBeenCalledWith(mockScaleNotes[i], 'sine');
 		}
 
 		await act(() => {
-			vi.advanceTimersByTime(200 * mockOrderedScaleNotes.length); // move to the end
+			vi.advanceTimersByTime(noteDuration * mockScaleNotes.length); // move to the end
 		});
 
 		expect(fadeOutNote).toHaveBeenCalled();
+		expect(playButton).not.toBeDisabled(); // button is reset after notes play
+
+		vi.useRealTimers();
 	});
 
 	it('handles the shuffle click', async () => {
 		vi.useFakeTimers();
 
-		const mockScaleNotes = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5'];
-		// use mock component to update order and scale
+		// update order using test component
 		const orderSelect = screen.getByLabelText('Select order:');
-		const scaleSelect = screen.getByLabelText('Select scale:');
 		fireEvent.change(orderSelect, { target: { value: 'random' } });
-		fireEvent.change(scaleSelect, { target: { value: 'major' } });
 
 		const shuffleButton = screen.getByRole('button', {
 			name: /Shuffle the scale/i,
 		});
 
-		vi.mocked(noteDurationInMs).mockReturnValue(200); // simulate 200ms per note
-		const playNoteMock = vi.fn().mockImplementation(() => Promise.resolve());
-		vi.mocked(playNote).mockImplementation(playNoteMock);
-		vi.mocked(fadeOutNote).mockImplementation(() => {});
-
-		// capture notes played in an array to compare later
-		const capturePlayedNotes = async (offset: number) => {
-			fireEvent.click(shuffleButton);
-			expect(shuffleButton).toBeDisabled();
-			const playedNotes = [];
-			for (let i = 0; i < mockScaleNotes.length; i++) {
-				await act(() => {
-					vi.advanceTimersByTime(200); // move forward by the note duration
-				});
-				playedNotes.push(playNoteMock.mock.calls[offset + i][0]); // capture the note played
-			}
-			expect(shuffleButton).not.toBeDisabled();
-
-			return playedNotes;
-		};
-
-		const firstPlayedNotes = await capturePlayedNotes(0);
-		const secondPlayedNotes = await capturePlayedNotes(mockScaleNotes.length);
+		const firstPlayedNotes = await capturePlayedNotes(shuffleButton, 0);
+		const secondPlayedNotes = await capturePlayedNotes(
+			shuffleButton,
+			mockScaleNotes.length
+		);
 
 		// check that both sets of played notes are different
 		const notesAreDifferent =
@@ -140,16 +168,16 @@ describe('Audio Controls', () => {
 		expect(notesAreDifferent).toBe(true);
 
 		expect(playNoteMock).toHaveBeenCalledTimes(16); // 8 notes for each click
+
+		vi.useRealTimers();
 	});
 
 	it('handles the repeat click', async () => {
 		vi.useFakeTimers();
 
-		// use mock component to update order and scale
+		// update order using test component
 		const orderSelect = screen.getByLabelText('Select order:');
-		const scaleSelect = screen.getByLabelText('Select scale:');
 		fireEvent.change(orderSelect, { target: { value: 'random' } });
-		fireEvent.change(scaleSelect, { target: { value: 'major' } });
 
 		const shuffleButton = screen.getByRole('button', {
 			name: /Shuffle the scale/i,
@@ -157,27 +185,6 @@ describe('Audio Controls', () => {
 		const repeatButton = screen.getByRole('button', {
 			name: /Repeat the scale/i,
 		});
-
-		vi.mocked(noteDurationInMs).mockReturnValue(200); // simulate 200ms per note
-		const playNoteMock = vi.fn().mockImplementation(() => Promise.resolve());
-		vi.mocked(playNote).mockImplementation(playNoteMock);
-		vi.mocked(fadeOutNote).mockImplementation(() => {});
-
-		// capture notes played in an array to compare later
-		const capturePlayedNotes = async (button: HTMLElement) => {
-			fireEvent.click(button);
-			expect(button).toBeDisabled();
-			const playedNotes = [];
-			for (let i = 0; i < mockScaleNotes.length; i++) {
-				await act(() => {
-					vi.advanceTimersByTime(200); // move forward by the note duration
-				});
-				playedNotes.push(playNoteMock.mock.calls[i][0]); // capture the note played
-			}
-			expect(button).not.toBeDisabled();
-
-			return playedNotes;
-		};
 
 		const firstPlayedNotes = await capturePlayedNotes(shuffleButton);
 		const secondPlayedNotes = await capturePlayedNotes(repeatButton);
@@ -188,6 +195,8 @@ describe('Audio Controls', () => {
 		expect(notesAreTheSame).toBe(true);
 
 		expect(playNoteMock).toHaveBeenCalledTimes(16); // 8 notes for each click
+
+		vi.useRealTimers();
 	});
 
 	it('handles the stop click', async () => {
@@ -201,13 +210,15 @@ describe('Audio Controls', () => {
 
 		// simulate time passing for a note
 		await act(() => {
-			vi.advanceTimersByTime(200);
+			vi.advanceTimersByTime(noteDuration);
 		});
 		expect(playNote).toHaveBeenCalled();
 
 		fireEvent.click(stopButton);
 
-		expect(stopButton).toBeDisabled();
 		expect(fadeOutNote).toHaveBeenCalled();
+		expect(stopButton).toBeDisabled(); // button is reset after click
+
+		vi.useRealTimers();
 	});
 });
