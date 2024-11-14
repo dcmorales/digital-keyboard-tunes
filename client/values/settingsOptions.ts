@@ -3,7 +3,7 @@
 // Each object in settingsOptions represents a dropdown within the settings.
 // The object provides all props except for those provided by the React context.
 
-import { TooltipProps as Tooltip } from '@/components/common/tooltip';
+import { TooltipDefault as Tooltip } from '@/components/common/tooltip';
 import type {
 	NoteKey,
 	NoteLength,

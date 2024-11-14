@@ -6,19 +6,30 @@
 
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { type ReactNode, useEffect, useRef, useState } from 'react';
 
 import Icon from '@/components/common/icon';
 import { debounce } from '@/utils/debounce';
 import styles from './tooltip.module.scss';
 
-// also used in settingsOptions
-export interface TooltipProps {
-	topic: string;
+interface TooltipPropsBase {
 	text: string;
 }
 
-export default function Tooltip({ topic, text }: TooltipProps) {
+// also used in @values/settingsOptions
+export interface TooltipDefault extends TooltipPropsBase {
+	topic: string;
+	children?: never;
+}
+
+interface TooltipWithChildren extends TooltipPropsBase {
+	children: ReactNode;
+	topic?: never;
+}
+
+type TooltipProps = TooltipDefault | TooltipWithChildren;
+
+export default function Tooltip({ text, topic, children }: TooltipProps) {
 	const [isVisible, setIsVisible] = useState(false);
 	const [isPositionedLeft, setIsPositionedLeft] = useState(false);
 	const tooltipTextRef = useRef<HTMLDivElement | null>(null);
