@@ -6,7 +6,13 @@
 
 'use client';
 
-import { type ReactNode, useEffect, useRef, useState } from 'react';
+import {
+	type KeyboardEvent,
+	type ReactNode,
+	useEffect,
+	useRef,
+	useState,
+} from 'react';
 
 import Icon from '@/components/common/icon';
 import { debounce } from '@/utils/debounce';
@@ -42,9 +48,7 @@ export default function Tooltip({ text, topic, children }: TooltipProps) {
 		setIsVisible(false);
 	};
 
-	const handleKeyDown = (
-		event: React.KeyboardEvent<HTMLButtonElement>
-	): void => {
+	const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>): void => {
 		if (event.key === 'Escape') {
 			hideTooltip();
 		}
