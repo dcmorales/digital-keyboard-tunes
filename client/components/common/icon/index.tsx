@@ -5,7 +5,7 @@
 
 import styles from './icon.module.scss';
 
-// also used in icon tests
+// also used in icon tests and @components/common/icon-button
 export interface IconProps {
 	size?: 'x-small' | 'small' | 'medium' | 'large';
 	name:
