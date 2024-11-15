@@ -57,7 +57,7 @@ export default function AudioControls({
 		setHasPlayedRandom(false);
 	}, [selectedOrder]);
 
-	function playOrderedScaleNotes(notes: FullNote[]): void {
+	const playOrderedScaleNotes = (notes: FullNote[]): void => {
 		// enable repeat button when order is 'random'
 		if (selectedOrder === 'random') {
 			setHasPlayedRandom(true);
@@ -96,7 +96,7 @@ export default function AudioControls({
 			// ref to keep track of each note's timeout; necessary to correctly stop notes
 			playbackTimeoutsRef.current.push(timeoutId);
 		});
-	}
+	};
 
 	const handlePlayClick = (): void => {
 		setLastPlayedNotes(totalNotes);

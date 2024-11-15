@@ -31,6 +31,17 @@ export default function Key({
 		orderedScaleNotes,
 		isPlaying,
 	} = useKeyboardOptions();
+	const isActive = activeNote === note;
+	const {
+		key,
+		black,
+		white,
+		active,
+		keyboardFull,
+		keyboardSelected,
+		highlight,
+		flatSymbol,
+	} = styles;
 
 	const handleMouseDown = (): void => {
 		playNote(note, selectedWaveform);
@@ -49,19 +60,6 @@ export default function Key({
 		fadeOutNote();
 		setActiveNote(null);
 	};
-
-	const isActive = activeNote === note;
-
-	const {
-		key,
-		black,
-		white,
-		active,
-		keyboardFull,
-		keyboardSelected,
-		highlight,
-		flatSymbol,
-	} = styles;
 
 	return (
 		<button

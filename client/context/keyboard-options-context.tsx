@@ -97,6 +97,14 @@ export const KeyboardOptionsProvider = ({
 	// if isPlaying is true, dropdowns and keys will be disabled
 	const [isPlaying, setIsPlaying] = useState(false);
 
+	// scale notes array ordered according to the selectedOrder
+	const orderedScaleNotes = setNotesOrder(
+		selectedKey,
+		selectedOctave,
+		selectedScale,
+		selectedOrder
+	);
+
 	// an object that maps different selection names to corresponding handler functions;
 	// the handler functions update a specific piece of state with the value provided
 	const selectionHandlers: Record<SelectionName, (value: string) => void> = {
@@ -121,14 +129,6 @@ export const KeyboardOptionsProvider = ({
 
 		selectionHandler(value);
 	};
-
-	// scale notes array ordered according to the selectedOrder
-	const orderedScaleNotes = setNotesOrder(
-		selectedKey,
-		selectedOctave,
-		selectedScale,
-		selectedOrder
-	);
 
 	return (
 		<KeyboardOptionsContext.Provider

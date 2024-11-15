@@ -40,29 +40,6 @@ export default function Tooltip({ text, topic, children }: TooltipProps) {
 	const [isPositionedLeft, setIsPositionedLeft] = useState(false);
 	const tooltipTextRef = useRef<HTMLDivElement | null>(null);
 
-	const showTooltip = (): void => {
-		setIsVisible(true);
-	};
-
-	const hideTooltip = (): void => {
-		setIsVisible(false);
-	};
-
-	const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>): void => {
-		if (event.key === 'Escape') {
-			hideTooltip();
-		}
-	};
-
-	// if the tooltip text has screen overflow, reposition it
-	const checkPosition = (): void => {
-		if (tooltipTextRef.current) {
-			const rect = tooltipTextRef.current.getBoundingClientRect();
-			// includes a cushion of 50 so that the tooltip text isn't right at the edge of the page
-			setIsPositionedLeft(rect.right + 50 > window.innerWidth);
-		}
-	};
-
 	useEffect(() => {
 		checkPosition(); // check position on initial render
 
@@ -76,6 +53,29 @@ export default function Tooltip({ text, topic, children }: TooltipProps) {
 			window.removeEventListener('resize', debouncedCheckPosition);
 		};
 	}, []);
+
+	// if the tooltip text has screen overflow, reposition it
+	const checkPosition = (): void => {
+		if (tooltipTextRef.current) {
+			const rect = tooltipTextRef.current.getBoundingClientRect();
+			// includes a cushion of 50 so that the tooltip text isn't right at the edge of the page
+			setIsPositionedLeft(rect.right + 50 > window.innerWidth);
+		}
+	};
+
+	const showTooltip = (): void => {
+		setIsVisible(true);
+	};
+
+	const hideTooltip = (): void => {
+		setIsVisible(false);
+	};
+
+	const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>): void => {
+		if (event.key === 'Escape') {
+			hideTooltip();
+		}
+	};
 
 	return (
 		<div

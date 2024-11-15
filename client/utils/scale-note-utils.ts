@@ -16,10 +16,10 @@ import { noteOptions } from '@/values/settingsOptions';
 // Any note that was originally before the selectedKey will be placed at the end of the new array.
 // The octave will also increase for these notes.
 // End the array with the first key of the next octave.
-export function rearrangeNotes(
+export const rearrangeNotes = (
 	selectedKey: NoteKey,
 	selectedOctave: OctaveNum
-): FullNote[] {
+): FullNote[] => {
 	const startIndex = noteOptions.indexOf(selectedKey);
 	const firstSegment = noteOptions
 		.slice(startIndex)
@@ -30,15 +30,15 @@ export function rearrangeNotes(
 	const endNote = (selectedKey + (selectedOctave + 1)) as FullNote;
 
 	return firstSegment.concat(secondSegment, endNote);
-}
+};
 
 // using the selected scale, key, and octave, follow the provided array pattern
 // to return only the notes that are included in that scale
-export function defineScaleNotes(
+export const defineScaleNotes = (
 	selectedKey: NoteKey,
 	selectedOctave: OctaveNum,
 	selectedScale: Scale
-): FullNote[] {
+): FullNote[] => {
 	const fullNotesOctave = rearrangeNotes(selectedKey, selectedOctave);
 
 	let scaleNoteIndexes: number[];
@@ -71,24 +71,24 @@ export function defineScaleNotes(
 	}
 
 	return scaleNoteIndexes.map((index) => fullNotesOctave[index]);
-}
+};
 
 // Fisher-Yates shuffle
-function shuffleNotes(notes: FullNote[]): FullNote[] {
+const shuffleNotes = (notes: FullNote[]): FullNote[] => {
 	for (let i = notes.length - 1; i > 0; i--) {
 		const j = Math.floor(Math.random() * (i + 1));
 
 		[notes[i], notes[j]] = [notes[j], notes[i]];
 	}
 	return notes;
-}
+};
 
-export function setNotesOrder(
+export const setNotesOrder = (
 	selectedKey: NoteKey,
 	selectedOctave: OctaveNum,
 	selectedScale: Scale,
 	selectedOrder: Order
-): FullNote[] {
+): FullNote[] => {
 	const scaleNotes = defineScaleNotes(
 		selectedKey,
 		selectedOctave,
@@ -103,17 +103,17 @@ export function setNotesOrder(
 		case 'random':
 			return shuffleNotes(scaleNotes);
 	}
-}
+};
 
 // Take the orderedScaleNotes and create a new array with total of notes equal to the totalNotesNum.
 // Then take this new array and repeat it by the number repeatNum. Flatten the result for a
 // single-layered array containing all of the notes to be played.
-export function getAllNotes(
+export const getAllNotes = (
 	orderedScaleNotes: FullNote[],
 	totalNotesNum: TotalNotesNum,
 	repeatNum: number
-): FullNote[] {
+): FullNote[] => {
 	const totalNotes = orderedScaleNotes.slice(0, totalNotesNum);
 
 	return Array.from({ length: repeatNum + 1 }, () => totalNotes).flat();
-}
+};

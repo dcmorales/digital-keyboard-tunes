@@ -19,6 +19,7 @@ export default function NotesDisplay({ lastPlayedNotes }: NotesDisplayProps) {
 	const { selectedRepeatNum } = useKeyboardOptions();
 	const [staticRepeatNum, setStaticRepeatNum] = useState(selectedRepeatNum);
 	const selectedRepeatNumRef = useRef(selectedRepeatNum);
+	const uniqueNotes = Array.from(new Set(lastPlayedNotes));
 
 	useEffect(() => {
 		// static repeat number reflects selections from lastPlayedNotes
@@ -30,8 +31,6 @@ export default function NotesDisplay({ lastPlayedNotes }: NotesDisplayProps) {
 		// update the ref to the latest selectedRepeatNum
 		selectedRepeatNumRef.current = selectedRepeatNum;
 	}, [selectedRepeatNum]);
-
-	const uniqueNotes = Array.from(new Set(lastPlayedNotes));
 
 	const renderNote = (note: FullNote): JSX.Element | string => {
 		// notes that include the flat symbol will render in a span
