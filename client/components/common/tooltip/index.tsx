@@ -75,20 +75,24 @@ export default function Tooltip({ text, topic, children }: TooltipProps) {
 
 	return (
 		<div
-			className={styles.tooltipContainer}
+			className={`${styles.tooltipContainer} ${!children ? styles.tooltipDefault : ''}`}
 			aria-describedby="tooltip"
 			onMouseEnter={showTooltip}
 			onMouseLeave={hideTooltip}
 		>
-			<button
-				className={isVisible ? styles.tooltipShowing : ''}
-				aria-label={`Information for ${topic}`}
-				onFocus={showTooltip}
-				onBlur={hideTooltip}
-				onKeyDown={handleKeyDown}
-			>
-				<Icon name="info" size="x-small" />
-			</button>
+			{!children ? (
+				<button
+					className={`${styles.infoIcon} ${isVisible ? styles.tooltipShowing : ''}`}
+					aria-label={`Information for ${topic}`}
+					onFocus={showTooltip}
+					onBlur={hideTooltip}
+					onKeyDown={handleKeyDown}
+				>
+					<Icon name="info" size="x-small" />
+				</button>
+			) : (
+				children
+			)}
 
 			<div className={styles.tooltipTextContainer}>
 				<div
