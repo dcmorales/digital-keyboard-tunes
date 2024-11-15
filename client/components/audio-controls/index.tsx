@@ -11,8 +11,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-import CustomButton from '@/components/common/custom-button';
-import Icon from '@/components/common/icon';
+import IconButton from '@/components/common/icon-button';
 import { useKeyboardOptions } from '@/context/keyboard-options-context';
 import type { FullNote } from '@/types/keyboard-option-types';
 import { fadeOutNote, noteDurationInMs, playNote } from '@/utils/audio-utils';
@@ -128,42 +127,38 @@ export default function AudioControls({
 			aria-label="Audio controls"
 		>
 			{selectedOrder !== 'random' && (
-				<CustomButton
+				<IconButton
+					icon="play"
 					ariaLabel="Play the scale"
 					disabled={isPlaying}
 					onClick={handlePlayClick}
-				>
-					<Icon name="play" size="large" />
-				</CustomButton>
+				/>
 			)}
 
 			{selectedOrder === 'random' && (
 				<>
-					<CustomButton
+					<IconButton
+						icon="shuffle"
 						ariaLabel="Shuffle the scale"
 						disabled={isPlaying}
 						onClick={handlePlayClick}
-					>
-						<Icon name="shuffle" size="large" />
-					</CustomButton>
+					/>
 
-					<CustomButton
+					<IconButton
+						icon="repeat"
 						ariaLabel="Repeat the scale"
 						disabled={isPlaying || !hasPlayedRandom}
 						onClick={handleRepeatClick}
-					>
-						<Icon name="repeat" size="large" />
-					</CustomButton>
+					/>
 				</>
 			)}
 
-			<CustomButton
+			<IconButton
+				icon="stop"
 				ariaLabel="Stop the scale"
 				disabled={!isPlaying}
 				onClick={handleStopClick}
-			>
-				<Icon name="stop" size="large" />
-			</CustomButton>
+			/>
 		</div>
 	);
 }
