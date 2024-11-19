@@ -7,8 +7,10 @@
 'use client';
 
 import {
+	cloneElement,
+	isValidElement,
 	type KeyboardEvent,
-	type ReactNode,
+	type ReactElement,
 	useEffect,
 	useRef,
 	useState,
@@ -30,7 +32,7 @@ export interface TooltipDefault extends TooltipPropsBase {
 }
 
 interface TooltipWithChildren extends TooltipPropsBase {
-	children: ReactNode;
+	children: ReactElement;
 	topic?: never;
 }
 
@@ -78,6 +80,17 @@ export default function Tooltip({ text, topic, children }: TooltipProps) {
 		}
 	};
 
+	// add event handlers to children if it's a valid React element
+	const childrenWithHandlers = children
+		? isValidElement(children)
+			? cloneElement(children as ReactElement, {
+					onFocus: showTooltip,
+					onBlur: hideTooltip,
+					onKeyDown: handleKeyDown,
+				})
+			: children
+		: null;
+
 	return (
 		<div
 			className={`${styles.tooltipContainer} ${!children ? styles.tooltipDefault : ''}`}
@@ -97,7 +110,7 @@ export default function Tooltip({ text, topic, children }: TooltipProps) {
 					<Icon name="info" size="x-small" />
 				</CustomButton>
 			) : (
-				children
+				childrenWithHandlers
 			)}
 
 			<div className={styles.tooltipTextContainer}>
