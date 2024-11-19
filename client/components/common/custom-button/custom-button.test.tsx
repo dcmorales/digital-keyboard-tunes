@@ -30,6 +30,22 @@ describe('Custom Button', () => {
 		expect(handleClick).toHaveBeenCalledTimes(1);
 	});
 
+	it('applies the custom className if provided', () => {
+		render(
+			<CustomButton
+				ariaLabel="Test ClassName"
+				onClick={handleClick}
+				className="custom-class"
+			>
+				Test Button
+			</CustomButton>
+		);
+
+		const button = screen.getByRole('button', { name: /Test ClassName/i });
+
+		expect(button).toHaveClass('custom-class');
+	});
+
 	it('renders the button as disabled when the disabled prop is true', () => {
 		render(
 			<CustomButton
@@ -51,5 +67,66 @@ describe('Custom Button', () => {
 		fireEvent.click(button);
 
 		expect(handleClick).toHaveBeenCalledTimes(0);
+	});
+
+	it('calls onFocus when focused', () => {
+		const handleFocus = vi.fn();
+		render(
+			<CustomButton
+				ariaLabel="Test Focus"
+				onClick={handleClick}
+				onFocus={handleFocus}
+			>
+				Test Button
+			</CustomButton>
+		);
+
+		const button = screen.getByRole('button', { name: /Test Focus/i });
+
+		button.focus();
+
+		expect(handleFocus).toHaveBeenCalledTimes(1);
+	});
+
+	it('calls onBlur when blurred', () => {
+		const handleBlur = vi.fn();
+		render(
+			<CustomButton
+				ariaLabel="Test Blur"
+				onClick={handleClick}
+				onBlur={handleBlur}
+			>
+				Test Button
+			</CustomButton>
+		);
+
+		const button = screen.getByRole('button', { name: /Test Blur/i });
+
+		button.focus();
+		button.blur();
+
+		expect(handleBlur).toHaveBeenCalledTimes(1);
+	});
+
+	it('calls onKeyDown when a key is pressed', () => {
+		const handleKeyDown = vi.fn();
+		render(
+			<CustomButton
+				ariaLabel="Test KeyDown"
+				onClick={handleClick}
+				onKeyDown={handleKeyDown}
+			>
+				Test Button
+			</CustomButton>
+		);
+
+		const button = screen.getByRole('button', { name: /Test KeyDown/i });
+
+		fireEvent.keyDown(button, { key: 'Enter' });
+
+		expect(handleKeyDown).toHaveBeenCalledTimes(1);
+		expect(handleKeyDown).toHaveBeenCalledWith(
+			expect.objectContaining({ key: 'Enter' })
+		);
 	});
 });
