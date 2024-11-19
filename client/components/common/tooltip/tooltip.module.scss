@@ -37,14 +37,12 @@
 		position: absolute;
 
 		.infoIcon {
-			align-items: center;
 			background-color: $color-white;
 			border: 1px solid $color-blue-darkest;
 			border-radius: 50%;
-			display: flex;
 			height: $rem-s;
-			justify-content: center;
 			outline: none;
+			padding: 0;
 			transition: background-color 0.3s;
 			width: $rem-s;
 

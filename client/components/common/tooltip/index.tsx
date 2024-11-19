@@ -17,6 +17,7 @@ import {
 import Icon from '@/components/common/icon';
 import { debounce } from '@/utils/debounce';
 import styles from './tooltip.module.scss';
+import CustomButton from '../custom-button';
 
 interface TooltipPropsBase {
 	text: string;
@@ -85,15 +86,16 @@ export default function Tooltip({ text, topic, children }: TooltipProps) {
 			onMouseLeave={hideTooltip}
 		>
 			{!children ? (
-				<button
+				<CustomButton
 					className={`${styles.infoIcon} ${isVisible ? styles.tooltipShowing : ''}`}
-					aria-label={`Information for ${topic}`}
+					ariaLabel={`Information for ${topic}`}
+					onClick={() => {}}
 					onFocus={showTooltip}
 					onBlur={hideTooltip}
 					onKeyDown={handleKeyDown}
 				>
 					<Icon name="info" size="x-small" />
-				</button>
+				</CustomButton>
 			) : (
 				children
 			)}
