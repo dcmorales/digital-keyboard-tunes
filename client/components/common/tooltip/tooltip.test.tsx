@@ -31,6 +31,29 @@ describe('Tooltip Component', () => {
 		});
 	});
 
+	// helper function for asserting tooltip is visible
+	const checkTooltipIsVisible = () => {
+		const tooltip = screen.getByRole('tooltip');
+		expect(tooltip).toBeInTheDocument();
+		expect(tooltip).toHaveTextContent(mockText);
+
+		// check tooltip text container class for visibility
+		const tooltipIsVisible =
+			tooltip.parentElement?.className.includes('isVisible');
+		expect(tooltipIsVisible).toBe(true);
+
+		return tooltip;
+	};
+
+	// helper function for asserting tooltip is hidden
+	const checkTooltipIsHidden = async (tooltip: HTMLElement) => {
+		await waitFor(() => {
+			const tooltipIsVisibleAfterLeave =
+				tooltip.parentElement?.className.includes('isVisible');
+			expect(tooltipIsVisibleAfterLeave).toBe(false);
+		});
+	};
+
 	it('renders the tooltip button', () => {
 		expect(button).toBeInTheDocument();
 	});
@@ -44,82 +67,42 @@ describe('Tooltip Component', () => {
 	it('shows tooltip on mouse enter and hides on mouse leave', async () => {
 		fireEvent.mouseEnter(button);
 
-		const tooltip = screen.getByRole('tooltip');
-
-		expect(tooltip).toBeInTheDocument();
-		expect(tooltip).toHaveTextContent(mockText);
-
-		// check tooltip text container class for visibility
-		const tooltipIsVisible =
-			tooltip.parentElement &&
-			tooltip.parentElement.className.includes('isVisible');
-		expect(tooltipIsVisible).toBe(true);
+		const tooltip = checkTooltipIsVisible();
 
 		fireEvent.mouseLeave(button);
 
-		await waitFor(() => {
-			const tooltipIsVisibleAfterLeave =
-				tooltip.parentElement &&
-				tooltip.parentElement.className.includes('isVisible');
-			expect(tooltipIsVisibleAfterLeave).toBe(false);
-		});
+		await checkTooltipIsHidden(tooltip);
 	});
 
 	it('shows tooltip on button focus and hides on blur', async () => {
 		fireEvent.focus(button);
 
-		const tooltip = screen.getByRole('tooltip');
-
-		expect(tooltip).toBeInTheDocument();
-		expect(tooltip).toHaveTextContent(mockText);
-
-		// check tooltip text container class for visibility
-		const tooltipIsVisible =
-			tooltip.parentElement &&
-			tooltip.parentElement.className.includes('isVisible');
-		expect(tooltipIsVisible).toBe(true);
+		const tooltip = checkTooltipIsVisible();
 
 		fireEvent.blur(button);
 
-		await waitFor(() => {
-			const tooltipIsVisibleAfterLeave =
-				tooltip.parentElement &&
-				tooltip.parentElement.className.includes('isVisible');
-			expect(tooltipIsVisibleAfterLeave).toBe(false);
-		});
+		await checkTooltipIsHidden(tooltip);
 	});
 
 	it('hides tooltip when the escape key is pressed', async () => {
 		// show tooltip
 		fireEvent.mouseEnter(button);
 
-		const tooltip = screen.getByRole('tooltip');
-		// check tooltip text container class for visibility
-		const tooltipIsVisible =
-			tooltip.parentElement &&
-			tooltip.parentElement.className.includes('isVisible');
-		expect(tooltipIsVisible).toBe(true);
+		const tooltip = checkTooltipIsVisible();
 
 		fireEvent.keyDown(button, { key: 'Escape' });
 
-		await waitFor(() => {
-			const tooltipIsVisibleAfterLeave =
-				tooltip.parentElement &&
-				tooltip.parentElement.className.includes('isVisible');
-			expect(tooltipIsVisibleAfterLeave).toBe(false);
-		});
+		await checkTooltipIsHidden(tooltip);
 	});
 
 	it('does not hide the tooltip if a key other than the escape key is pressed', () => {
 		// show tooltip
 		fireEvent.mouseEnter(button);
 
-		const tooltip = screen.getByRole('tooltip');
-		// check tooltip text container class for visibility
+		const tooltip = checkTooltipIsVisible();
 		const tooltipIsVisible =
 			tooltip.parentElement &&
 			tooltip.parentElement.className.includes('isVisible');
-		expect(tooltipIsVisible).toBe(true);
 
 		const otherKeys = ['Tab', 'ArrowUp', 'ArrowDown', 'Enter', ' a'];
 

@@ -135,7 +135,6 @@ describe('Dropdown', () => {
 
 		// show tooltip
 		fireEvent.mouseEnter(tooltipButton);
-
 		const tooltip = screen.getByRole('tooltip');
 		expect(tooltip).toBeInTheDocument();
 		expect(tooltip).toHaveTextContent('Helpful tooltip');
