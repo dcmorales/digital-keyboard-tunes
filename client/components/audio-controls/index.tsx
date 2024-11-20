@@ -130,7 +130,7 @@ export default function AudioControls({
 				<IconButton
 					icon="play"
 					tooltipPosition="right"
-					tooltipWidth="6.5rem"
+					tooltipWidth={6.5}
 					ariaLabel="Play the scale"
 					disabled={isPlaying}
 					onClick={handlePlayClick}
@@ -160,7 +160,7 @@ export default function AudioControls({
 			<IconButton
 				icon="stop"
 				tooltipPosition="right"
-				tooltipWidth="6.5rem"
+				tooltipWidth={6.5}
 				ariaLabel="Stop the scale"
 				disabled={!isPlaying}
 				onClick={handleStopClick}

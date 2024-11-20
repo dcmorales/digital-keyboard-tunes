@@ -26,7 +26,7 @@ type TooltipPosition = 'top' | 'bottom' | 'left' | 'right';
 export interface TooltipPropsBase {
 	text: string;
 	position?: TooltipPosition;
-	width?: string;
+	widthInRem?: number;
 }
 
 export interface TooltipDefault extends TooltipPropsBase {
@@ -44,7 +44,7 @@ type TooltipProps = TooltipDefault | TooltipWithChildren;
 export default function Tooltip({
 	text,
 	position = 'bottom',
-	width = '7.5rem',
+	widthInRem = 7.5,
 	topic,
 	children,
 }: TooltipProps) {
@@ -130,7 +130,7 @@ export default function Tooltip({
 					id="tooltip"
 					role="tooltip"
 					className={`${styles.tooltipText} ${styles[position]}`}
-					style={{ width }}
+					style={{ width: `${widthInRem}rem` }}
 					aria-hidden={!isVisible}
 				>
 					{text}

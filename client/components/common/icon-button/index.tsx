@@ -13,7 +13,7 @@ interface IconButtonProps
 	iconSize?: IconProps['size'];
 	tooltipPosition?: TooltipPropsBase['position'];
 	tooltipText?: TooltipPropsBase['text'];
-	tooltipWidth?: TooltipPropsBase['width'];
+	tooltipWidth?: TooltipPropsBase['widthInRem'];
 }
 
 export default function IconButton({
@@ -30,7 +30,7 @@ export default function IconButton({
 		<Tooltip
 			position={tooltipPosition}
 			text={tooltipText ? tooltipText : ariaLabel}
-			width={tooltipWidth}
+			widthInRem={tooltipWidth}
 		>
 			<CustomButton ariaLabel={ariaLabel} disabled={disabled} onClick={onClick}>
 				<Icon name={icon} size={iconSize ? iconSize : 'large'} />
