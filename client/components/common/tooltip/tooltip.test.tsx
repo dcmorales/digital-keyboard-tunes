@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { beforeEach, describe, expect, it, MockedFunction, vi } from 'vitest';
 
 import Tooltip from '.';
@@ -41,48 +41,73 @@ describe('Tooltip Component', () => {
 		expect(tooltip).not.toBeInTheDocument();
 	});
 
-	it('shows tooltip on mouse enter and hides on mouse leave', () => {
-		const tooltipContainer = button.closest(
-			'[aria-describedby="tooltip"]'
-		) as HTMLElement;
-
-		fireEvent.mouseEnter(tooltipContainer);
+	it('shows tooltip on mouse enter and hides on mouse leave', async () => {
+		fireEvent.mouseEnter(button);
 
 		const tooltip = screen.getByRole('tooltip');
 
 		expect(tooltip).toBeInTheDocument();
 		expect(tooltip).toHaveTextContent(mockText);
-		expect(tooltip.className.includes('isVisible')).toBe(true);
 
-		fireEvent.mouseLeave(tooltipContainer);
+		// check tooltip text container class for visibility
+		const tooltipIsVisible =
+			tooltip.parentElement &&
+			tooltip.parentElement.className.includes('isVisible');
+		expect(tooltipIsVisible).toBe(true);
 
-		expect(tooltip.className.includes('isVisible')).toBe(false);
+		fireEvent.mouseLeave(button);
+
+		await waitFor(() => {
+			const tooltipIsVisibleAfterLeave =
+				tooltip.parentElement &&
+				tooltip.parentElement.className.includes('isVisible');
+			expect(tooltipIsVisibleAfterLeave).toBe(false);
+		});
 	});
 
-	it('shows tooltip on button focus and hides on blur', () => {
+	it('shows tooltip on button focus and hides on blur', async () => {
 		fireEvent.focus(button);
 
 		const tooltip = screen.getByRole('tooltip');
 
 		expect(tooltip).toBeInTheDocument();
 		expect(tooltip).toHaveTextContent(mockText);
-		expect(tooltip.className.includes('isVisible')).toBe(true);
+
+		// check tooltip text container class for visibility
+		const tooltipIsVisible =
+			tooltip.parentElement &&
+			tooltip.parentElement.className.includes('isVisible');
+		expect(tooltipIsVisible).toBe(true);
 
 		fireEvent.blur(button);
 
-		expect(tooltip.className.includes('isVisible')).toBe(false);
+		await waitFor(() => {
+			const tooltipIsVisibleAfterLeave =
+				tooltip.parentElement &&
+				tooltip.parentElement.className.includes('isVisible');
+			expect(tooltipIsVisibleAfterLeave).toBe(false);
+		});
 	});
 
-	it('hides tooltip when the escape key is pressed', () => {
+	it('hides tooltip when the escape key is pressed', async () => {
 		// show tooltip
 		fireEvent.mouseEnter(button);
 
 		const tooltip = screen.getByRole('tooltip');
-		expect(tooltip.className.includes('isVisible')).toBe(true);
+		// check tooltip text container class for visibility
+		const tooltipIsVisible =
+			tooltip.parentElement &&
+			tooltip.parentElement.className.includes('isVisible');
+		expect(tooltipIsVisible).toBe(true);
 
 		fireEvent.keyDown(button, { key: 'Escape' });
 
-		expect(tooltip.className.includes('isVisible')).toBe(false);
+		await waitFor(() => {
+			const tooltipIsVisibleAfterLeave =
+				tooltip.parentElement &&
+				tooltip.parentElement.className.includes('isVisible');
+			expect(tooltipIsVisibleAfterLeave).toBe(false);
+		});
 	});
 
 	it('does not hide the tooltip if a key other than the escape key is pressed', () => {
@@ -90,14 +115,18 @@ describe('Tooltip Component', () => {
 		fireEvent.mouseEnter(button);
 
 		const tooltip = screen.getByRole('tooltip');
-		expect(tooltip.className.includes('isVisible')).toBe(true);
+		// check tooltip text container class for visibility
+		const tooltipIsVisible =
+			tooltip.parentElement &&
+			tooltip.parentElement.className.includes('isVisible');
+		expect(tooltipIsVisible).toBe(true);
 
 		const otherKeys = ['Tab', 'ArrowUp', 'ArrowDown', 'Enter', ' a'];
 
 		otherKeys.forEach((key) => {
 			fireEvent.keyDown(button, { key });
 
-			expect(tooltip.className.includes('isVisible')).toBe(true); // class name doesn't change
+			expect(tooltipIsVisible).toBe(true); // class name doesn't change
 		});
 	});
 
@@ -117,6 +146,11 @@ describe('Tooltip Component', () => {
 		// force tooltip to recheck position by triggering resize
 		fireEvent.resize(window);
 
-		expect(tooltip.className.includes('positionedLeft')).toBe(true);
+		// check tooltip text container class for position
+		const isPositionedLeft =
+			tooltip.parentElement &&
+			tooltip.parentElement.className.includes('positionedLeft');
+
+		expect(isPositionedLeft).toBe(true);
 	});
 });

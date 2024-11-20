@@ -1,4 +1,10 @@
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import {
+	cleanup,
+	fireEvent,
+	render,
+	screen,
+	waitFor,
+} from '@testing-library/react';
 import type { ChangeEvent } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -109,7 +115,7 @@ describe('Dropdown', () => {
 		expect(dropdown).toHaveValue('c');
 	});
 
-	it('renders a tooltip if provided', () => {
+	it('renders a tooltip if provided', async () => {
 		render(
 			<Dropdown
 				options={['a', 'b', 'c']}
@@ -133,10 +139,18 @@ describe('Dropdown', () => {
 		const tooltip = screen.getByRole('tooltip');
 		expect(tooltip).toBeInTheDocument();
 		expect(tooltip).toHaveTextContent('Helpful tooltip');
-		expect(tooltip.className.includes('isVisible')).toBe(true);
+		const tooltipIsVisible =
+			tooltip.parentElement &&
+			tooltip.parentElement.className.includes('isVisible');
+		expect(tooltipIsVisible).toBe(true);
 
 		// hide tooltip
 		fireEvent.mouseLeave(tooltipButton);
-		expect(tooltip.className.includes('isVisible')).toBe(false);
+		await waitFor(() => {
+			const tooltipIsVisibleAfterLeave =
+				tooltip.parentElement &&
+				tooltip.parentElement.className.includes('isVisible');
+			expect(tooltipIsVisibleAfterLeave).toBe(false);
+		});
 	});
 });
