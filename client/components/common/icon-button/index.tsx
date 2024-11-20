@@ -7,8 +7,9 @@ import Tooltip, { type TooltipPosition } from '@/components/common/tooltip';
 interface IconButtonProps extends Omit<IconProps, 'name' | 'size'> {
 	icon: IconProps['name'];
 	iconSize?: IconProps['size'];
-	tooltipText?: string;
 	tooltipPosition?: TooltipPosition;
+	tooltipText?: string;
+	tooltipWidth?: string;
 	ariaLabel: string;
 	disabled?: boolean;
 	onClick: () => void;
@@ -17,16 +18,18 @@ interface IconButtonProps extends Omit<IconProps, 'name' | 'size'> {
 export default function IconButton({
 	icon,
 	iconSize,
-	tooltipText,
 	tooltipPosition,
+	tooltipText,
+	tooltipWidth,
 	ariaLabel,
 	disabled,
 	onClick,
 }: IconButtonProps): JSX.Element {
 	return (
 		<Tooltip
-			text={tooltipText ? tooltipText : ariaLabel}
 			position={tooltipPosition}
+			text={tooltipText ? tooltipText : ariaLabel}
+			width={tooltipWidth}
 		>
 			<CustomButton ariaLabel={ariaLabel} disabled={disabled} onClick={onClick}>
 				<Icon name={icon} size={iconSize ? iconSize : 'large'} />

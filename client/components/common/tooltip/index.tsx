@@ -27,6 +27,7 @@ export type TooltipPosition = 'top' | 'bottom' | 'left' | 'right';
 interface TooltipPropsBase {
 	text: string;
 	position?: TooltipPosition;
+	width?: string;
 }
 
 // also used in @values/settingsOptions
@@ -45,6 +46,7 @@ type TooltipProps = TooltipDefault | TooltipWithChildren;
 export default function Tooltip({
 	text,
 	position = 'bottom',
+	width = '7.5rem',
 	topic,
 	children,
 }: TooltipProps) {
@@ -130,6 +132,7 @@ export default function Tooltip({
 					id="tooltip"
 					role="tooltip"
 					className={`${styles.tooltipText} ${styles[position]}`}
+					style={{ width }}
 					aria-hidden={!isVisible}
 				>
 					{text}

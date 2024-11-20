@@ -24,17 +24,12 @@
 	.tooltipText {
 		padding: $size-s;
 		position: relative;
-		width: 10rem;
 
 		// add color and centered caret to tooltip based on position
 		@each $position in $tooltipPositions {
 			&.#{ $position } {
 				@include tooltip-style($position);
 			}
-		}
-
-		@include breakpoint(large) {
-			width: 7rem;
 		}
 	}
 
