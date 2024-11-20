@@ -109,7 +109,7 @@ export default function Tooltip({
 		>
 			{!children ? (
 				<CustomButton
-					className={`${styles.infoIcon} ${isVisible ? styles.tooltipShowing : ''}`}
+					className={styles.infoIcon}
 					ariaLabel={`Information for ${topic}`}
 					onClick={() => {}}
 					onFocus={showTooltip}

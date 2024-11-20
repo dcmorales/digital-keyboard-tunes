@@ -72,8 +72,6 @@
 				transition: fill 0.3s;
 			}
 
-			&.tooltipShowing, // consistent style when hovering over tooltip text
-			&:hover,
 			&:focus {
 				background-color: $color-blue-dark;
 
@@ -94,6 +92,23 @@
 			&.positionedLeft {
 				left: auto;
 				right: 0;
+			}
+		}
+	}
+
+	// consistent style when hovering over tooltip text, not just trigger element
+	&:hover {
+		button {
+			border-color: $color-blue-dark;
+			box-shadow: 0 $size-xs $size-s rgba(0, 0, 0, 0.2);
+		}
+
+		.infoIcon {
+			background-color: $color-blue-dark;
+			box-shadow: none;
+
+			svg {
+				fill: $color-white;
 			}
 		}
 	}
