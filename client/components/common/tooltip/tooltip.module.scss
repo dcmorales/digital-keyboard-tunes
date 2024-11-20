@@ -22,19 +22,14 @@
 	}
 
 	.tooltipText {
-		background-color: $color-blue-darkest;
-		border-radius: $size-xs;
-		color: $color-white;
 		padding: $size-s;
 		position: relative;
 		width: 10rem;
 
-		// add caret to tooltip based on position
+		// add color and centered caret to tooltip based on position
 		@each $position in $tooltipPositions {
 			&.#{ $position } {
-				&::before {
-					@include tooltip-caret($position);
-				}
+				@include tooltip-style($position);
 			}
 		}
 
