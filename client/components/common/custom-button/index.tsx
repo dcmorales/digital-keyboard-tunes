@@ -7,7 +7,7 @@ import type { KeyboardEvent, ReactNode } from 'react';
 
 import styles from './custom-button.module.scss';
 
-interface CustomButtonProps {
+export interface CustomButtonProps {
 	children: ReactNode;
 	className?: string;
 	ariaLabel: string;

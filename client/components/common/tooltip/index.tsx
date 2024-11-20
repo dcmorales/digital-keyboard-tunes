@@ -21,16 +21,14 @@ import { debounce } from '@/utils/debounce';
 import styles from './tooltip.module.scss';
 import CustomButton from '../custom-button';
 
-// also used in @components/common/icon-button
-export type TooltipPosition = 'top' | 'bottom' | 'left' | 'right';
+type TooltipPosition = 'top' | 'bottom' | 'left' | 'right';
 
-interface TooltipPropsBase {
+export interface TooltipPropsBase {
 	text: string;
 	position?: TooltipPosition;
 	width?: string;
 }
 
-// also used in @values/settingsOptions
 export interface TooltipDefault extends TooltipPropsBase {
 	topic: string;
 	children?: never;

@@ -2,17 +2,18 @@
 
 import CustomButton from '@/components/common/custom-button';
 import Icon, { IconProps } from '@/components/common/icon';
-import Tooltip, { type TooltipPosition } from '@/components/common/tooltip';
+import type { CustomButtonProps } from '@/components/common/custom-button';
+import Tooltip, { type TooltipPropsBase } from '@/components/common/tooltip';
 
-interface IconButtonProps extends Omit<IconProps, 'name' | 'size'> {
+interface IconButtonProps
+	extends Omit<IconProps, 'name' | 'size'>,
+		Omit<TooltipPropsBase, 'text' | 'position' | 'width'>,
+		Omit<CustomButtonProps, 'children'> {
 	icon: IconProps['name'];
 	iconSize?: IconProps['size'];
-	tooltipPosition?: TooltipPosition;
-	tooltipText?: string;
-	tooltipWidth?: string;
-	ariaLabel: string;
-	disabled?: boolean;
-	onClick: () => void;
+	tooltipPosition?: TooltipPropsBase['position'];
+	tooltipText?: TooltipPropsBase['text'];
+	tooltipWidth?: TooltipPropsBase['width'];
 }
 
 export default function IconButton({
