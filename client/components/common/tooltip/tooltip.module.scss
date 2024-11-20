@@ -11,7 +11,7 @@
 
 		&:has(.bottom) {
 			left: 50%;
-			padding-top: $size-xs;
+			padding-top: $size-s;
 			top: 100%;
 			transform: translateX(-50%);
 		}
@@ -19,12 +19,12 @@
 		&:has(.top) {
 			bottom: 100%;
 			left: 50%;
-			padding-bottom: $size-xs;
+			padding-bottom: $size-s;
 			transform: translateX(-50%);
 		}
 
 		&:has(.left) {
-			padding-right: $size-xs;
+			padding-right: $size-s;
 			right: 100%;
 			top: 50%;
 			transform: translateY(-50%);
@@ -32,7 +32,7 @@
 
 		&:has(.right) {
 			left: 100%;
-			padding-left: $size-xs;
+			padding-left: $size-s;
 			top: 50%;
 			transform: translateY(-50%);
 		}
@@ -47,7 +47,61 @@
 		border-radius: $size-xs;
 		color: $color-white;
 		padding: $size-s;
+		position: relative;
 		width: 10rem;
+
+		// add caret to tooltip
+		&.bottom {
+			&::before {
+				border-color: transparent transparent $color-blue-darkest transparent;
+				border-style: solid;
+				border-width: 5px;
+				bottom: 100%;
+				content: '';
+				left: 50%;
+				position: absolute;
+				transform: translateX(-50%);
+			}
+		}
+
+		&.top {
+			&::after {
+				border-color: $color-blue-darkest transparent transparent transparent;
+				border-style: solid;
+				border-width: 5px;
+				content: '';
+				left: 50%;
+				position: absolute;
+				top: 100%;
+				transform: translateX(-50%);
+			}
+		}
+
+		&.left {
+			&::before {
+				border-color: transparent transparent transparent $color-blue-darkest;
+				border-style: solid;
+				border-width: 5px;
+				content: '';
+				left: 100%;
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
+			}
+		}
+
+		&.right {
+			&::before {
+				border-color: transparent $color-blue-darkest transparent transparent;
+				border-style: solid;
+				border-width: 5px;
+				content: '';
+				position: absolute;
+				right: 100%;
+				top: 50%;
+				transform: translateY(-50%);
+			}
+		}
 
 		@include breakpoint(large) {
 			width: 7rem;
@@ -84,14 +138,21 @@
 		// reset text position to be directly under the info icon without centering
 		.tooltipTextContainer {
 			&:has(.bottom) {
-				top: auto;
 				left: auto;
+				top: auto;
 				transform: none;
 			}
 
 			&.positionedLeft {
 				left: auto;
 				right: 0;
+			}
+
+			// no caret for info icon tooltip
+			.tooltipText {
+				&::before {
+					content: none;
+				}
 			}
 		}
 	}
