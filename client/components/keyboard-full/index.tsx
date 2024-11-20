@@ -6,7 +6,7 @@
 import Scrollbar from '@/components/common/scrollbar';
 import Octave from '@/components/octave';
 import type { FullNote, OctaveNum } from '@/types/keyboard-option-types';
-import { noteOptions } from '@/values/settingsOptions';
+import { noteOptions } from '@/values/settings-options';
 import styles from './keyboard-full.module.scss';
 
 // create an array of numbers 1-7

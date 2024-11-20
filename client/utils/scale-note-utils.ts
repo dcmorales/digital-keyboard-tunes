@@ -9,7 +9,7 @@ import type {
 	Scale,
 	TotalNotesNum,
 } from '@/types/keyboard-option-types';
-import { noteOptions } from '@/values/settingsOptions';
+import { noteOptions } from '@/values/settings-options';
 
 // note options: ['C','D♭','D','E♭','E','F','G♭','G','A♭','A','B♭','B']
 // Create a new array starting at the selectedKey. Add the selectedOctave to each string to create a fullNote.

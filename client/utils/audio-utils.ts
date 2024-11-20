@@ -2,7 +2,7 @@
 // Contains the functions for the audio context. Handles playing and stopping sounds.
 // Also determines how long sounds should play in a given scale.
 
-import { noteValues } from '@/values/noteValues';
+import { noteValues } from '@/values/note-values';
 import type {
 	FullNote,
 	NoteLength,

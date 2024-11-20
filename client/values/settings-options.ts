@@ -1,4 +1,4 @@
-// settingsOptions
+// settings-options
 // Defines options for keyboard-settings.
 // Each object in settingsOptions represents a dropdown within the settings.
 // The object provides all props except for those provided by the React context.
