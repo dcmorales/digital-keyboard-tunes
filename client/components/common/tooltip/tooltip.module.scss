@@ -2,31 +2,52 @@
 
 .tooltipContainer {
 	display: inline-block;
+	position: relative;
 
 	.tooltipTextContainer {
-		padding-top: $size-s;
+		position: absolute;
+		visibility: hidden;
+		z-index: 1;
+
+		&:has(.bottom) {
+			left: 50%;
+			padding-top: $size-xs;
+			top: 100%;
+			transform: translateX(-50%);
+		}
+
+		&:has(.top) {
+			bottom: 100%;
+			left: 50%;
+			padding-bottom: $size-xs;
+			transform: translateX(-50%);
+		}
+
+		&:has(.left) {
+			padding-right: $size-xs;
+			right: 100%;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+
+		&:has(.right) {
+			left: 100%;
+			padding-left: $size-xs;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+
+		&.isVisible {
+			visibility: visible;
+		}
 	}
 
 	.tooltipText {
 		background-color: $color-blue-darkest;
 		border-radius: $size-xs;
 		color: $color-white;
-		opacity: 0;
 		padding: $size-s;
-		position: absolute;
-		visibility: hidden;
 		width: 10rem;
-		z-index: 1;
-
-		&.positionedLeft {
-			left: auto;
-			right: 0;
-		}
-
-		&.isVisible {
-			opacity: 1;
-			visibility: visible;
-		}
 
 		@include breakpoint(large) {
 			width: 7rem;
@@ -59,10 +80,20 @@
 				svg {
 					fill: $color-white;
 				}
+			}
+		}
 
-				+ .tooltip {
-					visibility: visible;
-				}
+		// reset text position to be directly under the info icon without centering
+		.tooltipTextContainer {
+			&:has(.bottom) {
+				top: auto;
+				left: auto;
+				transform: none;
+			}
+
+			&.positionedLeft {
+				left: auto;
+				right: 0;
 			}
 		}
 	}

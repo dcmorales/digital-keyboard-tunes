@@ -21,8 +21,12 @@ import { debounce } from '@/utils/debounce';
 import styles from './tooltip.module.scss';
 import CustomButton from '../custom-button';
 
+// also used in @components/common/icon-button
+export type TooltipPosition = 'top' | 'bottom' | 'left' | 'right';
+
 interface TooltipPropsBase {
 	text: string;
+	position?: TooltipPosition;
 }
 
 // also used in @values/settingsOptions
@@ -38,7 +42,12 @@ interface TooltipWithChildren extends TooltipPropsBase {
 
 type TooltipProps = TooltipDefault | TooltipWithChildren;
 
-export default function Tooltip({ text, topic, children }: TooltipProps) {
+export default function Tooltip({
+	text,
+	position = 'bottom',
+	topic,
+	children,
+}: TooltipProps) {
 	const [isVisible, setIsVisible] = useState(false);
 	const [isPositionedLeft, setIsPositionedLeft] = useState(false);
 	const tooltipTextRef = useRef<HTMLDivElement | null>(null);
@@ -113,12 +122,14 @@ export default function Tooltip({ text, topic, children }: TooltipProps) {
 				childrenWithHandlers
 			)}
 
-			<div className={styles.tooltipTextContainer}>
+			<div
+				className={`${styles.tooltipTextContainer} ${isPositionedLeft ? styles.positionedLeft : ''} ${isVisible ? styles.isVisible : ''}`}
+			>
 				<div
 					ref={tooltipTextRef}
 					id="tooltip"
 					role="tooltip"
-					className={`${styles.tooltipText} ${isPositionedLeft ? styles.positionedLeft : ''} ${isVisible ? styles.isVisible : ''}`}
+					className={`${styles.tooltipText} ${styles[position]}`}
 					aria-hidden={!isVisible}
 				>
 					{text}

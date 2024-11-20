@@ -130,6 +130,7 @@ export default function AudioControls({
 				<IconButton
 					icon="play"
 					ariaLabel="Play the scale"
+					tooltipPosition="right"
 					disabled={isPlaying}
 					onClick={handlePlayClick}
 				/>
@@ -140,6 +141,7 @@ export default function AudioControls({
 					<IconButton
 						icon="shuffle"
 						ariaLabel="Shuffle the scale"
+						tooltipPosition="right"
 						disabled={isPlaying}
 						onClick={handlePlayClick}
 					/>
@@ -147,6 +149,7 @@ export default function AudioControls({
 					<IconButton
 						icon="repeat"
 						ariaLabel="Repeat the scale"
+						tooltipPosition="right"
 						disabled={isPlaying || !hasPlayedRandom}
 						onClick={handleRepeatClick}
 					/>
@@ -156,6 +159,7 @@ export default function AudioControls({
 			<IconButton
 				icon="stop"
 				ariaLabel="Stop the scale"
+				tooltipPosition="right"
 				disabled={!isPlaying}
 				onClick={handleStopClick}
 			/>
