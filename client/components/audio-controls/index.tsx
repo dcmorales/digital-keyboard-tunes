@@ -15,6 +15,7 @@ import IconButton from '@/components/common/icon-button';
 import { useKeyboardOptions } from '@/context/keyboard-options-context';
 import type { FullNote } from '@/types/keyboard-option-types';
 import { fadeOutNote, noteDurationInMs, playNote } from '@/utils/audio-utils';
+import { debounce } from '@/utils/debounce';
 import { getAllNotes } from '@/utils/scale-note-utils';
 import styles from './audio-controls.module.scss';
 
@@ -42,12 +43,16 @@ export default function AudioControls({
 	const playbackTimeoutsRef = useRef<NodeJS.Timeout[]>([]);
 	const finalNoteTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 	const [hasPlayedRandom, setHasPlayedRandom] = useState<boolean>(false);
+	const [tooltipPosition, setTooltipPosition] = useState<'top' | 'right'>(
+		'right'
+	);
 
 	const totalNotes = getAllNotes(
 		orderedScaleNotes,
 		selectedTotalNotes,
 		selectedRepeatNum
 	) as FullNote[];
+	const tabletBreakpoint = 1024;
 
 	// when hasPlayedRandom is true, the repeat button will no longer be disabled.
 	// since this is only a concern if the order is 'random', hasPlayedRandom is
@@ -55,6 +60,25 @@ export default function AudioControls({
 	useEffect(() => {
 		setHasPlayedRandom(false);
 	}, [selectedOrder]);
+
+	// update tooltip position based on screen width
+	useEffect(() => {
+		handleResize(); // set the initial tooltip position
+
+		// avoid unnecessary position checks during resize events
+		const debouncedCheckPosition = debounce(handleResize, 300);
+		window.addEventListener('resize', debouncedCheckPosition); // update on resize
+
+		// cleanup on component unmount
+		return () => {
+			debouncedCheckPosition.cancel();
+			window.removeEventListener('resize', debouncedCheckPosition);
+		};
+	}, []);
+
+	const handleResize = (): void => {
+		setTooltipPosition(window.innerWidth < tabletBreakpoint ? 'top' : 'right');
+	};
 
 	const playOrderedScaleNotes = (notes: FullNote[]): void => {
 		// enable repeat button when order is 'random'
@@ -129,7 +153,7 @@ export default function AudioControls({
 			{selectedOrder !== 'random' && (
 				<IconButton
 					icon="play"
-					tooltipPosition="right"
+					tooltipPosition={tooltipPosition}
 					tooltipWidth={6.5}
 					ariaLabel="Play the scale"
 					disabled={isPlaying}
@@ -141,7 +165,7 @@ export default function AudioControls({
 				<>
 					<IconButton
 						icon="shuffle"
-						tooltipPosition="right"
+						tooltipPosition={tooltipPosition}
 						ariaLabel="Shuffle the scale"
 						disabled={isPlaying}
 						onClick={handlePlayClick}
@@ -149,7 +173,7 @@ export default function AudioControls({
 
 					<IconButton
 						icon="repeat"
-						tooltipPosition="right"
+						tooltipPosition={tooltipPosition}
 						ariaLabel="Repeat the scale"
 						disabled={isPlaying || !hasPlayedRandom}
 						onClick={handleRepeatClick}
@@ -159,7 +183,7 @@ export default function AudioControls({
 
 			<IconButton
 				icon="stop"
-				tooltipPosition="right"
+				tooltipPosition={tooltipPosition}
 				tooltipWidth={6.5}
 				ariaLabel="Stop the scale"
 				disabled={!isPlaying}
