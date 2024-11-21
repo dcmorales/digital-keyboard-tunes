@@ -13,9 +13,9 @@ import { useEffect, useRef, useState } from 'react';
 
 import IconButton from '@/components/common/icon-button';
 import { useKeyboardOptions } from '@/context/keyboard-options-context';
+import { useResizeEffect } from '@/hooks/useResizeEffect';
 import type { FullNote } from '@/types/keyboard-option-types';
 import { fadeOutNote, noteDurationInMs, playNote } from '@/utils/audio-utils';
-import { debounce } from '@/utils/debounce';
 import { getAllNotes } from '@/utils/scale-note-utils';
 import styles from './audio-controls.module.scss';
 
@@ -61,24 +61,11 @@ export default function AudioControls({
 		setHasPlayedRandom(false);
 	}, [selectedOrder]);
 
-	// update tooltip position based on screen width
-	useEffect(() => {
-		handleResize(); // set the initial tooltip position
-
-		// avoid unnecessary position checks during resize events
-		const debouncedCheckPosition = debounce(handleResize, 300);
-		window.addEventListener('resize', debouncedCheckPosition); // update on resize
-
-		// cleanup on component unmount
-		return () => {
-			debouncedCheckPosition.cancel();
-			window.removeEventListener('resize', debouncedCheckPosition);
-		};
-	}, []);
-
 	const handleResize = (): void => {
 		setTooltipPosition(window.innerWidth < tabletBreakpoint ? 'top' : 'right');
 	};
+
+	useResizeEffect(handleResize);
 
 	const playOrderedScaleNotes = (notes: FullNote[]): void => {
 		// enable repeat button when order is 'random'
