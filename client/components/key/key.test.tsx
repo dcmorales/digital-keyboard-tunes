@@ -34,7 +34,6 @@ describe('Key', () => {
 	});
 
 	it('renders a button with the correct aria label', () => {
-		// label defined in beforeEach hook
 		expect(naturalNoteButton).toBeInTheDocument();
 	});
 

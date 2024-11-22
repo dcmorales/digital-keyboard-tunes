@@ -31,7 +31,7 @@ describe('Tooltip Component', () => {
 		});
 	});
 
-	// helper function for asserting tooltip is visible
+	// assert tooltip is visible and return it
 	const checkTooltipIsVisible = () => {
 		const tooltip = screen.getByRole('tooltip');
 		expect(tooltip).toBeInTheDocument();
@@ -45,7 +45,7 @@ describe('Tooltip Component', () => {
 		return tooltip;
 	};
 
-	// helper function for asserting tooltip is hidden
+	// assert tooltip is hidden
 	const checkTooltipIsHidden = async (tooltip: HTMLElement) => {
 		await waitFor(() => {
 			const tooltipIsVisibleAfterLeave =

@@ -19,5 +19,5 @@ export function useResizeEffect(callback: () => void): void {
 			debouncedCallback.cancel();
 			window.removeEventListener('resize', debouncedCallback);
 		};
-	}, [callback]); // re-run effect if callback changes
+	}, [callback]);
 }

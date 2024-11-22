@@ -42,7 +42,7 @@ export default function AudioControls({
 	} = useKeyboardOptions();
 	const playbackTimeoutsRef = useRef<NodeJS.Timeout[]>([]);
 	const finalNoteTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-	const [hasPlayedRandom, setHasPlayedRandom] = useState<boolean>(false);
+	const [repeatEnabled, setRepeatEnabled] = useState<boolean>(false);
 	const [tooltipPosition, setTooltipPosition] = useState<'top' | 'right'>(
 		'right'
 	);
@@ -54,11 +54,9 @@ export default function AudioControls({
 	) as FullNote[];
 	const tabletBreakpoint = 1024;
 
-	// when hasPlayedRandom is true, the repeat button will no longer be disabled.
-	// since this is only a concern if the order is 'random', hasPlayedRandom is
-	// reset whenever the order is changed
+	// reset the repeat button whenever order changes from 'random'
 	useEffect(() => {
-		setHasPlayedRandom(false);
+		setRepeatEnabled(false);
 	}, [selectedOrder]);
 
 	const handleResize = (): void => {
@@ -68,9 +66,8 @@ export default function AudioControls({
 	useResizeEffect(handleResize);
 
 	const playOrderedScaleNotes = (notes: FullNote[]): void => {
-		// enable repeat button when order is 'random'
 		if (selectedOrder === 'random') {
-			setHasPlayedRandom(true);
+			setRepeatEnabled(true);
 		}
 
 		// disable buttons (except stop) while notes are playing
@@ -78,28 +75,25 @@ export default function AudioControls({
 
 		const noteDuration = noteDurationInMs(selectedBpm, selectedNoteLength);
 
-		// clear any existing timeouts
+		// clear any existing timeouts and reset the ref array
 		playbackTimeoutsRef.current.forEach((timeoutId) => clearTimeout(timeoutId));
-		playbackTimeoutsRef.current = []; // Reset the ref array
+		playbackTimeoutsRef.current = [];
 
 		notes.forEach((fullNote, index) => {
 			// incremented delay ensures each note plays in succession
 			const playDelay = index * noteDuration;
 
 			const timeoutId = setTimeout(() => {
-				// setting note to active will update the key's appearance
-				setActiveNote(fullNote);
+				setActiveNote(fullNote); // update active key's appearance
 				playNote(fullNote, selectedWaveform);
 			}, playDelay);
 
-			// since playNote updates frequency as new values are passed in,
-			// fadeOutNote only needs to be called on the very last note
+			// reset after final note
 			if (index === notes.length - 1) {
 				finalNoteTimeoutRef.current = setTimeout(() => {
 					fadeOutNote();
-					setActiveNote(null);
-					// enable buttons (disable stop)
 					setIsPlaying(false);
+					setActiveNote(null);
 				}, playDelay + noteDuration);
 			}
 
@@ -118,17 +112,18 @@ export default function AudioControls({
 	};
 
 	const handleStopClick = (): void => {
-		// clear each remaining note's timeout
+		// clear each remaining note's timeout and reset the ref array
 		playbackTimeoutsRef.current.forEach((timeoutId) => clearTimeout(timeoutId));
-		playbackTimeoutsRef.current = []; // reset the ref array
+		playbackTimeoutsRef.current = [];
 
-		// clear final note timeout
+		// clear final note timeout and reset ref
 		clearTimeout(finalNoteTimeoutRef.current as NodeJS.Timeout);
-		finalNoteTimeoutRef.current = null; // reset ref
+		finalNoteTimeoutRef.current = null;
 
-		fadeOutNote(); // fade out the last played note
-		setIsPlaying(false); // reset buttons
-		setActiveNote(null); // reset appearance of keys
+		// reset after last played note
+		fadeOutNote();
+		setIsPlaying(false);
+		setActiveNote(null);
 	};
 
 	return (
@@ -162,7 +157,7 @@ export default function AudioControls({
 						icon="repeat"
 						tooltipPosition={tooltipPosition}
 						ariaLabel="Repeat the scale"
-						disabled={isPlaying || !hasPlayedRandom}
+						disabled={isPlaying || !repeatEnabled}
 						onClick={handleRepeatClick}
 					/>
 				</>

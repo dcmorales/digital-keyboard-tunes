@@ -46,8 +46,9 @@ describe('Selected Keyboard', () => {
 	});
 
 	it('renders NotesDisplay when lastPlayedNotes has values', () => {
-		// add values to lastPlayNotes by playing initial notes
 		vi.useFakeTimers();
+
+		// add values to lastPlayNotes by playing initial notes
 		const playButton = screen.getByRole('button', { name: /Play the scale/i });
 		fireEvent.click(playButton);
 

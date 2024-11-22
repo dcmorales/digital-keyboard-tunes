@@ -95,10 +95,9 @@ export const KeyboardOptionsProvider = ({
 	// plays a series of notes; this will update the styles of the key at that note
 	const [activeNote, setActiveNote] = useState<FullNote | null>(null);
 	// if isPlaying is true, dropdowns and keys will be disabled
-	const [isPlaying, setIsPlaying] = useState(false);
+	const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
-	// scale notes array ordered according to the selectedOrder
-	const orderedScaleNotes = setNotesOrder(
+	const orderedScaleNotes: FullNote[] = setNotesOrder(
 		selectedKey,
 		selectedOctave,
 		selectedScale,

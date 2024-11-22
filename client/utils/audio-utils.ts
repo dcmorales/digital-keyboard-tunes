@@ -96,7 +96,6 @@ export const fadeOutNote = (): void => {
 			audioContext!.currentTime + fadeDuration
 		);
 
-		// stop the oscillator after the fade-out duration
 		setTimeout(() => {
 			stopNote();
 		}, fadeDuration * 1000);
