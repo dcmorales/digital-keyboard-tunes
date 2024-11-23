@@ -48,8 +48,8 @@ export default function Tooltip({
 	topic,
 	children,
 }: TooltipProps) {
-	const [isVisible, setIsVisible] = useState(false);
-	const [isPositionedLeft, setIsPositionedLeft] = useState(false);
+	const [isVisible, setIsVisible] = useState<boolean>(false);
+	const [isPositionedLeft, setIsPositionedLeft] = useState<boolean>(false);
 	const tooltipTextRef = useRef<HTMLDivElement | null>(null);
 
 	// if the tooltip text has screen overflow, reposition it

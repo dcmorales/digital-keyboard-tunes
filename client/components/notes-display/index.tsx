@@ -17,8 +17,9 @@ interface NotesDisplayProps {
 
 export default function NotesDisplay({ lastPlayedNotes }: NotesDisplayProps) {
 	const { selectedRepeatNum } = useKeyboardOptions();
-	const [staticRepeatNum, setStaticRepeatNum] = useState(selectedRepeatNum);
-	const selectedRepeatNumRef = useRef(selectedRepeatNum);
+	const [staticRepeatNum, setStaticRepeatNum] =
+		useState<number>(selectedRepeatNum);
+	const selectedRepeatNumRef = useRef<number>(selectedRepeatNum);
 	const uniqueNotes = Array.from(new Set(lastPlayedNotes));
 
 	useEffect(() => {

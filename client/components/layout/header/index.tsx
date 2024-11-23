@@ -18,8 +18,8 @@ import styles from './header.module.scss';
 
 export default function Header(): JSX.Element {
 	const pathname = usePathname();
-	const [showSettings, setShowSettings] = useState(false);
-	const [showMenu, setShowMenu] = useState(false);
+	const [showSettings, setShowSettings] = useState<boolean>(false);
+	const [showMenu, setShowMenu] = useState<boolean>(false);
 
 	const toggleSettings = (): void => {
 		setShowSettings((prevState) => !prevState);
