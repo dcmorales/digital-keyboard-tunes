@@ -23,6 +23,7 @@ import {
 import CustomButton from '@/components/common/custom-button';
 import Icon from '@/components/common/icon';
 import { useResizeEffect } from '@/hooks/useResizeEffect';
+import variables from '@/styles/abstracts/variables.module.scss';
 import styles from './tooltip.module.scss';
 
 type TooltipPosition = 'top' | 'bottom' | 'left' | 'right';
@@ -60,7 +61,7 @@ export default function Tooltip({
 	const [isPositionedLeft, setIsPositionedLeft] = useState<boolean>(false);
 	const tooltipTextRef = useRef<HTMLDivElement | null>(null);
 	const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-	const tabletBreakpoint = 1024;
+	const tabletBreakpoint = parseInt(variables.tabletBreakpoint);
 
 	// if the tooltip text has screen overflow, reposition it
 	const checkPosition = useCallback((): void => {

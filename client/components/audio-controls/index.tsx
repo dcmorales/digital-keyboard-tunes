@@ -14,6 +14,7 @@ import { useEffect, useRef, useState } from 'react';
 import IconButton from '@/components/common/icon-button';
 import { useKeyboardOptions } from '@/context/keyboard-options-context';
 import { useResizeEffect } from '@/hooks/useResizeEffect';
+import variables from '@/styles/abstracts/variables.module.scss';
 import type { FullNote } from '@/types/keyboard-option-types';
 import { fadeOutNote, noteDurationInMs, playNote } from '@/utils/audio-utils';
 import { getAllNotes } from '@/utils/scale-note-utils';
@@ -46,13 +47,12 @@ export default function AudioControls({
 	const [tooltipPosition, setTooltipPosition] = useState<'top' | 'right'>(
 		'right'
 	);
-
 	const totalNotes = getAllNotes(
 		orderedScaleNotes,
 		selectedTotalNotes,
 		selectedRepeatNum
 	) as FullNote[];
-	const tabletBreakpoint = 1024;
+	const tabletBreakpoint = parseInt(variables.tabletBreakpoint);
 
 	// clean up on component unmount
 	useEffect(() => {
