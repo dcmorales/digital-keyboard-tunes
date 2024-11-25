@@ -122,7 +122,7 @@ export const KeyboardOptionsProvider = ({
 
 	// an event handler to find the appropriate selectionHandler based on name,
 	// then calls that handler with the selected value
-	const onSelectionChange = (e: ChangeEvent<HTMLSelectElement>) => {
+	const onSelectionChange = (e: ChangeEvent<HTMLSelectElement>): void => {
 		const { name, value } = e.target;
 		const selectionHandler = selectionHandlers[name as SelectionName];
 

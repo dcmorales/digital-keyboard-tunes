@@ -13,7 +13,7 @@ let audioContext: AudioContext | null = null;
 let currentOscillator: OscillatorNode | null = null;
 let gainNode: GainNode | null = null;
 
-const initializeAudioContext = () => {
+const initializeAudioContext = (): Promise<void> => {
 	if (!audioContext) {
 		audioContext = new AudioContext();
 	}
@@ -30,7 +30,7 @@ const splitNoteString = (note: FullNote): [string, number] => {
 	return [match[1], octaveNum];
 };
 
-const definePitch = (note: FullNote) => {
+const definePitch = (note: FullNote): number => {
 	const noteInfo = splitNoteString(note);
 
 	return noteValues[noteInfo[1] - 1] // reduce octaveNum by 1 to get correct index of octave

@@ -22,14 +22,6 @@ describe('Custom Button', () => {
 		expect(screen.getByText('Test Button')).toBeInTheDocument();
 	});
 
-	it('calls onClick when clicked', () => {
-		const button = screen.getByRole('button', { name: /Test the Button/i });
-
-		fireEvent.click(button);
-
-		expect(handleClick).toHaveBeenCalledTimes(1);
-	});
-
 	it('applies the custom className if provided', () => {
 		render(
 			<CustomButton
@@ -67,6 +59,14 @@ describe('Custom Button', () => {
 		fireEvent.click(button);
 
 		expect(handleClick).toHaveBeenCalledTimes(0);
+	});
+
+	it('calls onClick when clicked', () => {
+		const button = screen.getByRole('button', { name: /Test the Button/i });
+
+		fireEvent.click(button);
+
+		expect(handleClick).toHaveBeenCalledTimes(1);
 	});
 
 	it('calls onFocus when focused', () => {

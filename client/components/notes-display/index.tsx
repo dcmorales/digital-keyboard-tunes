@@ -20,7 +20,7 @@ export default function NotesDisplay({ lastPlayedNotes }: NotesDisplayProps) {
 	const [staticRepeatNum, setStaticRepeatNum] =
 		useState<number>(selectedRepeatNum);
 	const selectedRepeatNumRef = useRef<number>(selectedRepeatNum);
-	const uniqueNotes = Array.from(new Set(lastPlayedNotes));
+	const uniqueNotes: FullNote[] = Array.from(new Set(lastPlayedNotes));
 
 	useEffect(() => {
 		// static repeat number reflects selections from lastPlayedNotes

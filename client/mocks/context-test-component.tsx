@@ -13,7 +13,12 @@ interface SelectInputProps {
 	onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
 
-const SelectInput = ({ label, value, options, onChange }: SelectInputProps) => (
+const SelectInput = ({
+	label,
+	value,
+	options,
+	onChange,
+}: SelectInputProps): JSX.Element => (
 	<div>
 		<label htmlFor={label}>Select {label}:</label>
 		<select id={label} name={label} value={value} onChange={onChange}>
