@@ -54,6 +54,18 @@ export default function AudioControls({
 	) as FullNote[];
 	const tabletBreakpoint = 1024;
 
+	// clean up on component unmount
+	useEffect(() => {
+		return () => {
+			playbackTimeoutsRef.current.forEach((timeoutId) =>
+				clearTimeout(timeoutId)
+			);
+			playbackTimeoutsRef.current = [];
+			clearTimeout(finalNoteTimeoutRef.current as NodeJS.Timeout);
+			finalNoteTimeoutRef.current = null;
+		};
+	}, []);
+
 	// reset the repeat button whenever order changes from 'random'
 	useEffect(() => {
 		setRepeatEnabled(false);
@@ -112,11 +124,9 @@ export default function AudioControls({
 	};
 
 	const handleStopClick = (): void => {
-		// clear each remaining note's timeout and reset the ref array
+		// clear timeouts and reset refs
 		playbackTimeoutsRef.current.forEach((timeoutId) => clearTimeout(timeoutId));
 		playbackTimeoutsRef.current = [];
-
-		// clear final note timeout and reset ref
 		clearTimeout(finalNoteTimeoutRef.current as NodeJS.Timeout);
 		finalNoteTimeoutRef.current = null;
 
