@@ -31,6 +31,8 @@ export default function IconButton({
 			position={tooltipPosition}
 			text={tooltipText ? tooltipText : ariaLabel}
 			widthInRem={tooltipWidth}
+			secondsDisplayed={1.5}
+			autoDismiss
 		>
 			<CustomButton ariaLabel={ariaLabel} disabled={disabled} onClick={onClick}>
 				<Icon name={icon} size={iconSize ? iconSize : 'large'} />

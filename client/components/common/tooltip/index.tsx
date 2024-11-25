@@ -8,10 +8,14 @@
 
 import {
 	cloneElement,
+	type FocusEvent,
 	isValidElement,
 	type KeyboardEvent,
+	type MouseEvent,
 	type ReactElement,
+	type TouchEvent,
 	useCallback,
+	useEffect,
 	useRef,
 	useState,
 } from 'react';
@@ -27,6 +31,8 @@ export interface TooltipPropsBase {
 	text: string;
 	position?: TooltipPosition;
 	widthInRem?: number;
+	autoDismiss?: boolean;
+	secondsDisplayed?: number;
 }
 
 export interface TooltipDefault extends TooltipPropsBase {
@@ -45,12 +51,16 @@ export default function Tooltip({
 	text,
 	position = 'bottom',
 	widthInRem = 7.5,
+	autoDismiss = false,
+	secondsDisplayed = 5,
 	topic,
 	children,
 }: TooltipProps) {
 	const [isVisible, setIsVisible] = useState<boolean>(false);
 	const [isPositionedLeft, setIsPositionedLeft] = useState<boolean>(false);
 	const tooltipTextRef = useRef<HTMLDivElement | null>(null);
+	const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+	const tabletBreakpoint = 1024;
 
 	// if the tooltip text has screen overflow, reposition it
 	const checkPosition = useCallback((): void => {
@@ -64,12 +74,39 @@ export default function Tooltip({
 	// set initial position and update on resize
 	useResizeEffect(checkPosition);
 
-	const showTooltip = (): void => {
+	// clean up on component unmount
+	useEffect(() => {
+		return () => {
+			if (timeoutRef.current) {
+				clearTimeout(timeoutRef.current);
+			}
+		};
+	}, []);
+
+	const showTooltip = (event?: MouseEvent | FocusEvent | TouchEvent): void => {
 		setIsVisible(true);
+
+		// automatically dismiss tooltip on touch events if enabled
+		if (
+			autoDismiss &&
+			window.innerWidth < tabletBreakpoint &&
+			event &&
+			event.type === 'touchstart'
+		) {
+			clearTimeout(timeoutRef.current!);
+
+			timeoutRef.current = setTimeout(() => {
+				setIsVisible(false);
+			}, secondsDisplayed * 1000);
+		}
 	};
 
 	const hideTooltip = (): void => {
 		setIsVisible(false);
+
+		if (timeoutRef.current) {
+			clearTimeout(timeoutRef.current);
+		}
 	};
 
 	const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>): void => {
