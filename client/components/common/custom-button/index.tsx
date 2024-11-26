@@ -3,7 +3,7 @@
 // It displays its children. Since the event handler is not defined in the
 // component itself, this component can only be added to client components.
 
-import type { KeyboardEvent, ReactNode } from 'react';
+import type { KeyboardEvent, ReactNode, TouchEvent } from 'react';
 
 import styles from './custom-button.module.scss';
 
@@ -16,6 +16,7 @@ export interface CustomButtonProps {
 	onFocus?: () => void;
 	onBlur?: () => void;
 	onKeyDown?: (event: KeyboardEvent<HTMLButtonElement>) => void;
+	onTouchStart?: (event: TouchEvent<HTMLButtonElement>) => void;
 }
 
 export default function CustomButton({
@@ -27,6 +28,7 @@ export default function CustomButton({
 	onFocus,
 	onBlur,
 	onKeyDown,
+	onTouchStart,
 }: CustomButtonProps): JSX.Element {
 	return (
 		<button
@@ -37,6 +39,7 @@ export default function CustomButton({
 			onFocus={onFocus}
 			onBlur={onBlur}
 			onKeyDown={onKeyDown}
+			onTouchStart={onTouchStart}
 		>
 			{children}
 		</button>

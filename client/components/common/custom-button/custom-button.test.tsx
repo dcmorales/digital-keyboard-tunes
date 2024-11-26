@@ -129,4 +129,23 @@ describe('Custom Button', () => {
 			expect.objectContaining({ key: 'Enter' })
 		);
 	});
+
+	it('calls onTouchStart when a touch event starts', () => {
+		const handleTouchStart = vi.fn();
+		render(
+			<CustomButton
+				ariaLabel="Test TouchStart"
+				onClick={handleClick}
+				onTouchStart={handleTouchStart}
+			>
+				Test Button
+			</CustomButton>
+		);
+
+		const button = screen.getByRole('button', { name: /Test TouchStart/i });
+
+		fireEvent.touchStart(button);
+
+		expect(handleTouchStart).toHaveBeenCalledTimes(1);
+	});
 });
