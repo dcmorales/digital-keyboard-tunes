@@ -1,6 +1,5 @@
 // debounceMock
-// A mock of the debounce function. For use whenever a resize event
-// is fired inside of a test.
+// A complete mock of the debounce function.
 
 import { MockedFunction, vi } from 'vitest';
 
