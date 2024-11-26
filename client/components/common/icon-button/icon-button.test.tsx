@@ -9,7 +9,13 @@ describe('Icon Button', () => {
 	beforeEach(() => {
 		handleClick = vi.fn();
 		render(
-			<IconButton icon="gear" ariaLabel="Icon button" onClick={handleClick} />
+			<IconButton
+				icon="gear"
+				ariaLabel="Icon button"
+				tooltipPosition="top"
+				tooltipWidth={10}
+				onClick={handleClick}
+			/>
 		);
 	});
 
@@ -28,7 +34,7 @@ describe('Icon Button', () => {
 
 		fireEvent.mouseEnter(button);
 
-		const tooltip = screen.queryByRole('tooltip');
+		const tooltip = screen.getByRole('tooltip');
 
 		expect(tooltip).toBeInTheDocument();
 		expect(tooltip).toHaveTextContent('Icon button'); // same as ariaLabel
@@ -49,7 +55,7 @@ describe('Icon Button', () => {
 
 		fireEvent.mouseEnter(button);
 
-		const tooltip = screen.queryByRole('tooltip');
+		const tooltip = screen.getByRole('tooltip');
 
 		expect(tooltip).toHaveTextContent('Custom tooltip text');
 	});
@@ -86,5 +92,16 @@ describe('Icon Button', () => {
 		fireEvent.click(button);
 
 		expect(handleClick).toHaveBeenCalledTimes(1);
+	});
+
+	it('passes the correct props to Tooltip', () => {
+		const button = screen.getByRole('button', { name: /Icon button/i });
+
+		fireEvent.mouseEnter(button);
+
+		const tooltip = screen.getByRole('tooltip');
+
+		expect(tooltip).toHaveStyle('width: 10rem');
+		expect(tooltip.className.includes('top')).toBe(true);
 	});
 });
