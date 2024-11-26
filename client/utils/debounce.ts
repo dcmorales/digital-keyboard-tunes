@@ -11,11 +11,12 @@ export const debounce = <T extends (...args: unknown[]) => void>(
 	let timeoutId: ReturnType<typeof setTimeout> | undefined;
 
 	const debouncedFunction = (...args: Parameters<T>) => {
-		// if there is an existing timeout, clear it to ensure only the latest call is executed
+		// clear the existing timeout to ensure only the latest call is executed
 		if (timeoutId) {
 			clearTimeout(timeoutId);
 		}
 
+		// set a new timeout for the callback
 		timeoutId = setTimeout(() => {
 			callback(...args);
 		}, delay);
