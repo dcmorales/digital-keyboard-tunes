@@ -1,22 +1,8 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { beforeEach, describe, expect, it, MockedFunction, vi } from 'vitest';
+import { act } from 'react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import Tooltip from '.';
-
-// for use whenever resize event is fired
-vi.mock('@/utils/debounce', () => ({
-	debounce: (func: (arg: string) => void) => {
-		// create the mock for the debounced function and add the cancel method to it
-		const debouncedFunction = vi.fn((...args: [string]) =>
-			func(...args)
-		) as MockedFunction<(...args: [string]) => void> & {
-			cancel: typeof vi.fn;
-		};
-		debouncedFunction.cancel = vi.fn();
-
-		return debouncedFunction;
-	},
-}));
 
 describe('Tooltip Component', () => {
 	const mockTopic = 'Test Topic';
@@ -113,10 +99,12 @@ describe('Tooltip Component', () => {
 		});
 	});
 
-	it('positions the tooltip to the left if it overflows the screen', () => {
+	it('positions the tooltip to the left if it overflows the screen', async () => {
+		vi.useFakeTimers();
+
 		// simulate overflow scenario
 		const getBoundingClientRectMock = vi.fn().mockReturnValue({
-			right: window.innerWidth + 10, // simulate tooltip overflowing on the right
+			right: window.innerWidth + 10,
 		});
 		Object.defineProperty(HTMLDivElement.prototype, 'getBoundingClientRect', {
 			value: getBoundingClientRectMock,
@@ -129,11 +117,17 @@ describe('Tooltip Component', () => {
 		// force tooltip to recheck position by triggering resize
 		fireEvent.resize(window);
 
+		await act(() => {
+			vi.advanceTimersByTime(300);
+		});
+
 		// check tooltip text container class for position
 		const isPositionedLeft =
 			tooltip.parentElement &&
 			tooltip.parentElement.className.includes('positionedLeft');
 
 		expect(isPositionedLeft).toBe(true);
+
+		vi.useRealTimers();
 	});
 });

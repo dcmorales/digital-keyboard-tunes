@@ -116,7 +116,7 @@ describe('Audio Utils', () => {
 		);
 
 		// simulate the fade-out duration
-		vi.advanceTimersByTime(100);
+		await vi.advanceTimersByTime(100);
 
 		expect(oscillatorMock.stop).toHaveBeenCalled();
 		expect(oscillatorMock.disconnect).toHaveBeenCalled();

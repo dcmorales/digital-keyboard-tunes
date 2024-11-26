@@ -26,7 +26,7 @@ describe('useResizeEffect', () => {
 		expect(callback).toHaveBeenCalledTimes(1);
 	});
 
-	it('debounces the callback on resize', () => {
+	it('debounces the callback on resize', async () => {
 		const callback = vi.fn();
 		renderHook(() => useResizeEffect(callback));
 
@@ -37,7 +37,7 @@ describe('useResizeEffect', () => {
 
 		expect(callback).toHaveBeenCalledTimes(1); // only initial call
 
-		vi.advanceTimersByTime(300);
+		await vi.advanceTimersByTime(300);
 
 		expect(callback).toHaveBeenCalledTimes(2); // initial call plus call after debounce
 	});

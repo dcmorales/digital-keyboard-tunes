@@ -4,7 +4,6 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { KeyboardOptionsProvider } from '@/context/keyboard-options-context';
 import ContextTestComponent from '@/mocks/context-test-component';
-import { debounceMock } from '@/mocks/debounceMock';
 import { FullNote } from '@/types/keyboard-option-types';
 import { fadeOutNote, noteDurationInMs, playNote } from '@/utils/audio-utils';
 import AudioControls from '.';
@@ -19,10 +18,6 @@ vi.mock('@/utils/audio-utils', () => ({
 	fadeOutNote: vi.fn(),
 	noteDurationInMs: vi.fn(),
 	playNote: vi.fn(),
-}));
-
-vi.mock('@/utils/debounce', () => ({
-	debounce: debounceMock,
 }));
 
 describe('Audio Controls', () => {
@@ -233,7 +228,8 @@ describe('Audio Controls', () => {
 		vi.useRealTimers();
 	});
 
-	it('updates tooltip position based on window width', () => {
+	it('updates tooltip position based on window width', async () => {
+		vi.useFakeTimers();
 		const playButton = screen.getByRole('button', { name: /Play the scale/i });
 		fireEvent.mouseEnter(playButton);
 
@@ -242,20 +238,30 @@ describe('Audio Controls', () => {
 		expect(tooltip).toBeInTheDocument();
 		expect(tooltip.className.includes('right')).toBe(true); // initial position
 
-		// // resize the window to below the tablet breakpoint
+		// resize the window to below the tablet breakpoint
 		window.innerWidth = 768;
 		fireEvent.resize(window);
+
+		await act(() => {
+			vi.advanceTimersByTime(300);
+		});
 
 		// position updates
 		expect(tooltip.className.includes('right')).toBe(false);
 		expect(tooltip.className.includes('top')).toBe(true);
 
-		// // resize the window back above the breakpoint
+		// resize the window back above the breakpoint
 		window.innerWidth = 1200;
 		fireEvent.resize(window);
+
+		await act(() => {
+			vi.advanceTimersByTime(300);
+		});
 
 		// position is reset
 		expect(tooltip.className.includes('top')).toBe(false);
 		expect(tooltip.className.includes('right')).toBe(true);
+
+		vi.useRealTimers();
 	});
 });

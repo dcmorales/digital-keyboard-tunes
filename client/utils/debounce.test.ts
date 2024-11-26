@@ -17,61 +17,61 @@ describe('debounce', () => {
 		vi.useRealTimers();
 	});
 
-	it('calls the function after the default delay if no delay value is provided', () => {
+	it('calls the function after the default delay if no delay value is provided', async () => {
 		debouncedFunction();
 
 		expect(mockFunction).not.toHaveBeenCalled();
 
-		vi.advanceTimersByTime(defaultDelay);
+		await vi.advanceTimersByTime(defaultDelay);
 
 		expect(mockFunction).toHaveBeenCalled();
 	});
 
-	it('calls the function after the specified delay', () => {
+	it('calls the function after the specified delay', async () => {
 		const customDelay = 500;
 		debouncedFunction = debounce(mockFunction, customDelay);
 		debouncedFunction();
 
 		expect(mockFunction).not.toHaveBeenCalled();
 
-		vi.advanceTimersByTime(customDelay);
+		await vi.advanceTimersByTime(customDelay);
 
 		expect(mockFunction).toHaveBeenCalled();
 	});
 
-	it('calls the function only once if called multiple times within the delay', () => {
+	it('calls the function only once if called multiple times within the delay', async () => {
 		debouncedFunction();
 		debouncedFunction();
 		debouncedFunction();
 
-		vi.advanceTimersByTime(defaultDelay);
+		await vi.advanceTimersByTime(defaultDelay);
 
 		expect(mockFunction).toHaveBeenCalledTimes(1);
 	});
 
-	it('resets the delay if called again before the previous delay is over', () => {
+	it('resets the delay if called again before the previous delay is over', async () => {
 		debouncedFunction();
 
 		// fast-forward, but not enough for the function to trigger
-		vi.advanceTimersByTime(500);
+		await vi.advanceTimersByTime(500);
 
 		// call debouncedFunction again to reset the timer
 		debouncedFunction();
 
 		// fast-forward again
-		vi.advanceTimersByTime(500);
+		await vi.advanceTimersByTime(500);
 		expect(mockFunction).not.toHaveBeenCalled();
 
 		// fast-forward the remaining time
-		vi.advanceTimersByTime(500);
+		await vi.advanceTimersByTime(500);
 		expect(mockFunction).toHaveBeenCalledTimes(1);
 	});
 
-	it('does not call the function if cancel is called before the delay is over', () => {
+	it('does not call the function if cancel is called before the delay is over', async () => {
 		debouncedFunction();
 		debouncedFunction.cancel();
 
-		vi.advanceTimersByTime(defaultDelay);
+		await vi.advanceTimersByTime(defaultDelay);
 
 		expect(mockFunction).not.toHaveBeenCalled();
 	});
