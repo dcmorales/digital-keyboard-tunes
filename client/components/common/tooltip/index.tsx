@@ -23,7 +23,6 @@ import {
 import CustomButton from '@/components/common/custom-button';
 import Icon from '@/components/common/icon';
 import { useResizeEffect } from '@/hooks/useResizeEffect';
-import variables from '@/styles/abstracts/variables.module.scss';
 import styles from './tooltip.module.scss';
 
 type TooltipPosition = 'top' | 'bottom' | 'left' | 'right';
@@ -61,7 +60,6 @@ export default function Tooltip({
 	const [isPositionedLeft, setIsPositionedLeft] = useState<boolean>(false);
 	const tooltipTextRef = useRef<HTMLDivElement | null>(null);
 	const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-	const tabletBreakpoint = parseInt(variables.tabletBreakpoint);
 
 	// if the tooltip text has screen overflow, reposition it
 	const checkPosition = useCallback((): void => {
@@ -88,12 +86,7 @@ export default function Tooltip({
 		setIsVisible(true);
 
 		// automatically dismiss tooltip on touch events if enabled
-		if (
-			autoDismiss &&
-			window.innerWidth < tabletBreakpoint &&
-			event &&
-			event.type === 'touchstart'
-		) {
+		if (autoDismiss && event && event.type === 'touchstart') {
 			clearTimeout(timeoutRef.current!);
 
 			timeoutRef.current = setTimeout(() => {
@@ -123,6 +116,7 @@ export default function Tooltip({
 					onFocus: showTooltip,
 					onBlur: hideTooltip,
 					onKeyDown: handleKeyDown,
+					onTouchStart: showTooltip,
 				})
 			: children
 		: null;
@@ -142,6 +136,7 @@ export default function Tooltip({
 					onFocus={showTooltip}
 					onBlur={hideTooltip}
 					onKeyDown={handleKeyDown}
+					onTouchStart={showTooltip}
 				>
 					<Icon name="info" size="x-small" />
 				</CustomButton>
