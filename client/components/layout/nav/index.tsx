@@ -4,6 +4,8 @@
 // the main links for pages.
 
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 import CustomButton from '@/components/common/custom-button';
 import Icon from '@/components/common/icon';
@@ -15,11 +17,17 @@ interface NavProps {
 }
 
 export default function Nav({ isOpen, setShowMenu }: NavProps) {
+	const [menuRoot, setMenuRoot] = useState<HTMLElement | null>(null);
+
+	useEffect(() => {
+		setMenuRoot(document.getElementById('menu-root'));
+	}, []);
+
 	const closeMenu = (): void => {
 		setShowMenu(false);
 	};
 
-	return (
+	const navContent = (
 		<>
 			{isOpen && (
 				<div
@@ -29,7 +37,10 @@ export default function Nav({ isOpen, setShowMenu }: NavProps) {
 				/>
 			)}
 
-			<nav className={`${styles.nav} ${isOpen ? styles.open : styles.closed}`}>
+			<nav
+				className={`${styles.nav} ${isOpen ? styles.open : styles.closed}`}
+				aria-hidden={!isOpen}
+			>
 				<CustomButton ariaLabel="Close menu" onClick={closeMenu}>
 					<Icon name="close" />
 				</CustomButton>
@@ -61,4 +72,8 @@ export default function Nav({ isOpen, setShowMenu }: NavProps) {
 			</nav>
 		</>
 	);
+
+	if (!menuRoot) return null;
+
+	return createPortal(navContent, menuRoot);
 }

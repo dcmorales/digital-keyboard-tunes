@@ -24,6 +24,8 @@ export default function RootLayout({
 				<KeyboardOptionsProvider>
 					<Header />
 
+					<div id="menu-root" data-testid="menu-root"></div>
+
 					<main>{children}</main>
 
 					<Footer />

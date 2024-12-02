@@ -16,6 +16,17 @@ describe('Root Layout', () => {
 		expect(header).toBeInTheDocument();
 	});
 
+	it('renders the menu-root div', () => {
+		render(
+			<Layout>
+				<div>Hello, world</div>
+			</Layout>
+		);
+		const menuRoot = screen.getByTestId('menu-root');
+
+		expect(menuRoot).toBeInTheDocument();
+	});
+
 	it('renders children correctly', () => {
 		const { getByText } = render(
 			<Layout>
