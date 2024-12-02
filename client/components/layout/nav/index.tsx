@@ -1,7 +1,7 @@
 // nav
-// The nav menu for the app. Hidden until the menu button in the
-// header is clicked. Slides out from the right side. Contains
-// the main links for pages.
+// The nav menu for the app. Hidden until the menu button in the header is clicked.
+// Slides out from the right side. Contains the main links for pages. Uses a portal
+// to render it higher in the DOM hierarchy and only renders once the DOM is ready.
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';

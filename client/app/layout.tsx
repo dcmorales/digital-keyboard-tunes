@@ -1,4 +1,5 @@
-// main layout
+// root layout
+// Provides global styles, context, and a div for dynamically rendering the menu.
 
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
