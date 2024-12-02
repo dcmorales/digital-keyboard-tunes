@@ -23,11 +23,10 @@ describe('Tooltip Component', () => {
 		expect(tooltip).toBeInTheDocument();
 		expect(tooltip).toHaveTextContent(mockText);
 
-		const isVisible = tooltip.getAttribute('aria-hidden') === 'false';
 		const tooltipIsVisible =
 			tooltip.parentElement &&
 			tooltip.parentElement.className.includes('isVisible');
-		expect(isVisible).toBe(true);
+		expect(tooltip).toHaveAttribute('aria-hidden', 'false');
 		expect(tooltipIsVisible).toBe(true);
 
 		return tooltip;
@@ -35,13 +34,12 @@ describe('Tooltip Component', () => {
 
 	// assert tooltip is hidden
 	const checkTooltipIsHidden = (tooltip: HTMLElement) => {
-		const isHidden = tooltip.getAttribute('aria-hidden') === 'true';
-		const tooltipIsVisibleAfterLeave =
+		const tooltipIsVisible =
 			tooltip.parentElement &&
 			tooltip.parentElement.className.includes('isVisible');
 
-		expect(isHidden).toBe(true);
-		expect(tooltipIsVisibleAfterLeave).toBe(false);
+		expect(tooltip).toHaveAttribute('aria-hidden', 'true');
+		expect(tooltipIsVisible).toBe(false);
 	};
 
 	it('renders the default tooltip button', () => {
