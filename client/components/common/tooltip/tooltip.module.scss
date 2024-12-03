@@ -2,63 +2,100 @@
 
 .tooltipContainer {
 	display: inline-block;
-	position: absolute;
+	position: relative;
 
-	button {
-		align-items: center;
-		background-color: $color-white;
-		border: 1px solid $color-blue-darkest;
-		border-radius: 50%;
-		display: flex;
-		height: $rem-s;
-		justify-content: center;
-		outline: none;
-		transition: background-color 0.3s;
-		width: $rem-s;
+	.tooltipTextContainer {
+		position: absolute;
+		visibility: hidden;
+		z-index: 1;
 
-		svg {
-			fill: $color-blue-darkest;
-			transition: fill 0.3s;
+		// position tooltip to the bottom, top, left, or right
+		@each $position in $tooltipPositions {
+			&:has(.#{ $position }) {
+				@include tooltip-position($position);
+			}
 		}
 
-		&:hover,
-		&:focus {
-			background-color: $color-blue-dark;
+		&.isVisible {
+			visibility: visible;
+		}
+	}
 
-			svg {
-				fill: $color-white;
-			}
+	.tooltipText {
+		padding: $size-s;
+		position: relative;
 
-			+ .tooltip {
-				visibility: visible;
+		// add color and centered caret to tooltip based on position
+		@each $position in $tooltipPositions {
+			&.#{ $position } {
+				@include tooltip-style($position);
 			}
 		}
 	}
 
-	.tooltip {
-		background-color: $color-blue-darkest;
-		border-radius: $size-xs;
-		color: $color-white;
-		opacity: 0;
-		padding: $size-s;
+	&.tooltipDefault {
 		position: absolute;
-		top: 125%;
-		visibility: hidden;
-		width: 10rem;
-		z-index: 1;
 
-		&.positionedLeft {
-			left: auto;
-			right: 0;
+		.infoIcon {
+			background-color: $color-white;
+			border: 1px solid $color-blue-darkest;
+			border-radius: 50%;
+			height: $rem-s;
+			outline: none;
+			padding: 0;
+			transition: background-color 0.3s;
+			width: $rem-s;
+
+			svg {
+				fill: $color-blue-darkest;
+				transition: fill 0.3s;
+			}
+
+			&:focus {
+				background-color: $color-blue-dark;
+
+				svg {
+					fill: $color-white;
+				}
+			}
 		}
 
-		&.isVisible {
-			opacity: 1;
-			visibility: visible;
+		// reset text position to be directly under the info icon without centering
+		.tooltipTextContainer {
+			&:has(.bottom) {
+				left: auto;
+				top: auto;
+				transform: none;
+			}
+
+			&.positionedLeft {
+				left: auto;
+				right: 0;
+			}
+
+			// no caret for info icon tooltip
+			.tooltipText {
+				&::before {
+					content: none;
+				}
+			}
+		}
+	}
+
+	// consistent style when hovering over tooltip text, not just trigger element
+	&:hover {
+		button {
+			border-color: $color-blue-dark;
+			box-shadow: 0 $size-xs $size-s rgba(0, 0, 0, 0.2);
 		}
 
-		@include breakpoint(large) {
-			width: 7rem;
+		.infoIcon {
+			background-color: $color-blue-dark;
+			box-shadow: none;
+
+			svg {
+				fill: $color-white;
+			}
 		}
 	}
 }

@@ -1,0 +1,7 @@
+// variables used within the JavaScript of components
+
+@use 'breakpoints' as *;
+
+:export {
+	tabletBreakpoint: $tablet;
+}

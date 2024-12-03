@@ -8,6 +8,12 @@ import { FullNote } from '@/types/keyboard-option-types';
 import { fadeOutNote, noteDurationInMs, playNote } from '@/utils/audio-utils';
 import AudioControls from '.';
 
+vi.mock('@/styles/abstracts/variables.module.scss', () => ({
+	default: {
+		tabletBreakpoint: '1024px',
+	},
+}));
+
 vi.mock('@/utils/audio-utils', () => ({
 	fadeOutNote: vi.fn(),
 	noteDurationInMs: vi.fn(),
@@ -218,6 +224,44 @@ describe('Audio Controls', () => {
 
 		expect(fadeOutNote).toHaveBeenCalled();
 		expect(stopButton).toBeDisabled(); // button is reset after click
+
+		vi.useRealTimers();
+	});
+
+	it('updates tooltip position based on window width', async () => {
+		vi.useFakeTimers();
+		const playButton = screen.getByRole('button', { name: /Play the scale/i });
+		fireEvent.mouseEnter(playButton);
+
+		// cannot get by role since aria-hidden is true
+		const tooltip = screen.getByText('Play the scale');
+
+		expect(tooltip).toBeInTheDocument();
+		expect(tooltip.className.includes('right')).toBe(true); // initial position
+
+		// resize the window to below the tablet breakpoint
+		window.innerWidth = 768;
+		fireEvent.resize(window);
+
+		await act(() => {
+			vi.advanceTimersByTime(300);
+		});
+
+		// position updates
+		expect(tooltip.className.includes('right')).toBe(false);
+		expect(tooltip.className.includes('top')).toBe(true);
+
+		// resize the window back above the breakpoint
+		window.innerWidth = 1200;
+		fireEvent.resize(window);
+
+		await act(() => {
+			vi.advanceTimersByTime(300);
+		});
+
+		// position is reset
+		expect(tooltip.className.includes('top')).toBe(false);
+		expect(tooltip.className.includes('right')).toBe(true);
 
 		vi.useRealTimers();
 	});

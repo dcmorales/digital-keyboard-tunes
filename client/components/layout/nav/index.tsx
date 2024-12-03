@@ -1,12 +1,13 @@
 // nav
-// The nav menu for the app. Hidden until the menu button in the
-// header is clicked. Slides out from the right side. Contains
-// the main links for pages.
+// The nav menu for the app. Hidden until the menu button in the header is clicked.
+// Slides out from the right side. Contains the main links for pages. Uses a portal
+// to render it higher in the DOM hierarchy and only renders once the DOM is ready.
 
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 
-import CustomButton from '@/components/common/custom-button';
-import Icon from '@/components/common/icon';
+import IconButton from '@/components/common/icon-button';
 import styles from './nav.module.scss';
 
 interface NavProps {
@@ -15,11 +16,17 @@ interface NavProps {
 }
 
 export default function Nav({ isOpen, setShowMenu }: NavProps) {
+	const [menuRoot, setMenuRoot] = useState<HTMLElement | null>(null);
+
+	useEffect(() => {
+		setMenuRoot(document.getElementById('menu-root'));
+	}, []);
+
 	const closeMenu = (): void => {
 		setShowMenu(false);
 	};
 
-	return (
+	const navContent = (
 		<>
 			{isOpen && (
 				<div
@@ -29,10 +36,16 @@ export default function Nav({ isOpen, setShowMenu }: NavProps) {
 				/>
 			)}
 
-			<nav className={`${styles.nav} ${isOpen ? styles.open : styles.closed}`}>
-				<CustomButton ariaLabel="Close menu" onClick={closeMenu}>
-					<Icon name="close" />
-				</CustomButton>
+			<nav
+				className={`${styles.nav} ${isOpen ? styles.open : styles.closed}`}
+				aria-hidden={!isOpen}
+			>
+				<IconButton
+					icon="close"
+					iconSize="small"
+					ariaLabel="Close menu"
+					onClick={closeMenu}
+				/>
 
 				<ul>
 					<li>
@@ -61,4 +74,8 @@ export default function Nav({ isOpen, setShowMenu }: NavProps) {
 			</nav>
 		</>
 	);
+
+	if (!menuRoot) return null;
+
+	return createPortal(navContent, menuRoot);
 }

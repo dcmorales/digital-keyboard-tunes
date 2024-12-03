@@ -88,9 +88,13 @@ Digital Keyboard Tunes client is a web application built with Next.js and TypeSc
     ├── context/
     │   ├── *.test.tsx
     │   └── *.tsx
+    ├── hooks/
+    │   ├── *.test.tsx
+    │   └── *.tsx
     ├── mocks/
     │   └── *.tsx
     ├── styles/
+    │   ├── variables.module.scss
     │   └── *.scss
     ├── types/
     │   └── *.ts

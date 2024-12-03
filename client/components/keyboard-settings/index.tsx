@@ -9,7 +9,7 @@
 import Dropdown from '@/components/common/dropdown';
 import { useKeyboardOptions } from '@/context/keyboard-options-context';
 import type { TotalNotesNum } from '@/types/keyboard-option-types';
-import { settingsOptions } from '@/values/settingsOptions';
+import { settingsOptions } from '@/values/settings-options';
 import styles from './keyboard-settings.module.scss';
 
 export default function KeyboardSettings(): JSX.Element {

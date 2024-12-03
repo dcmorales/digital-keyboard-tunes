@@ -1,20 +1,34 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import Nav from '.';
 
 describe('Nav', () => {
+	beforeEach(() => {
+		// add `menu-root` to the document body
+		const menuRoot = document.createElement('div');
+		menuRoot.id = 'menu-root';
+		document.body.appendChild(menuRoot);
+	});
+
+	afterEach(() => {
+		const menuRoot = document.getElementById('menu-root');
+		if (menuRoot) {
+			menuRoot.remove();
+		}
+	});
+
 	const renderNav = (isOpen: boolean, setShowMenu = vi.fn()) => {
 		render(<Nav isOpen={isOpen} setShowMenu={setShowMenu} />);
+
 		return { setShowMenu };
 	};
 
-	it('renders the nav when closed', () => {
+	it('does not render the nav when closed', () => {
 		renderNav(false);
-		const nav = screen.getByRole('navigation');
+		const nav = screen.queryByRole('navigation');
 
-		expect(nav).toBeInTheDocument();
-		expect(nav.className.includes('closed')).toBe(true);
+		expect(nav).not.toBeInTheDocument(); // initially hidden
 	});
 
 	it('renders the nav when open', () => {
@@ -22,6 +36,7 @@ describe('Nav', () => {
 		const nav = screen.getByRole('navigation');
 
 		expect(nav).toBeInTheDocument();
+		expect(nav).toHaveAttribute('aria-hidden', 'false');
 		expect(nav.className.includes('open')).toBe(true);
 	});
 

@@ -1,0 +1,68 @@
+@use 'colors' as *;
+@use 'sizes' as *;
+
+$tooltipPositions: bottom, top, left, right;
+
+// position tooltip text relative to its triggering element
+@mixin tooltip-position($position) {
+	@if $position == bottom {
+		left: 50%;
+		padding-top: $size-s;
+		top: 100%;
+		transform: translateX(-50%);
+	} @else if $position == top {
+		bottom: 100%;
+		left: 50%;
+		padding-bottom: $size-s;
+		transform: translateX(-50%);
+	} @else if $position == left {
+		padding-right: $size-s;
+		right: 100%;
+		top: 50%;
+		transform: translateY(-50%);
+	} @else if $position == right {
+		left: 100%;
+		padding-left: $size-s;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+}
+
+// add centered caret to tooltip based on position in addition to
+// base styles that may affect caret appearance if changed
+@mixin tooltip-style($position) {
+	$color-tooltip: $color-blue-darkest;
+
+	background-color: $color-tooltip;
+	border-radius: $size-xs;
+	color: $color-white;
+
+	&::before {
+		content: '';
+		border-style: solid;
+		border-width: 5px;
+		position: absolute;
+
+		@if $position == bottom {
+			border-color: transparent transparent $color-tooltip transparent;
+			bottom: 100%;
+			left: 50%;
+			transform: translateX(-50%);
+		} @else if $position == top {
+			border-color: $color-tooltip transparent transparent transparent;
+			left: 50%;
+			top: 100%;
+			transform: translateX(-50%);
+		} @else if $position == left {
+			border-color: transparent transparent transparent $color-tooltip;
+			left: 100%;
+			top: 50%;
+			transform: translateY(-50%);
+		} @else if $position == right {
+			border-color: transparent $color-tooltip transparent transparent;
+			right: 100%;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+	}
+}

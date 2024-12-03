@@ -95,7 +95,14 @@ export const KeyboardOptionsProvider = ({
 	// plays a series of notes; this will update the styles of the key at that note
 	const [activeNote, setActiveNote] = useState<FullNote | null>(null);
 	// if isPlaying is true, dropdowns and keys will be disabled
-	const [isPlaying, setIsPlaying] = useState(false);
+	const [isPlaying, setIsPlaying] = useState<boolean>(false);
+
+	const orderedScaleNotes: FullNote[] = setNotesOrder(
+		selectedKey,
+		selectedOctave,
+		selectedScale,
+		selectedOrder
+	);
 
 	// an object that maps different selection names to corresponding handler functions;
 	// the handler functions update a specific piece of state with the value provided
@@ -115,20 +122,12 @@ export const KeyboardOptionsProvider = ({
 
 	// an event handler to find the appropriate selectionHandler based on name,
 	// then calls that handler with the selected value
-	const onSelectionChange = (e: ChangeEvent<HTMLSelectElement>) => {
+	const onSelectionChange = (e: ChangeEvent<HTMLSelectElement>): void => {
 		const { name, value } = e.target;
 		const selectionHandler = selectionHandlers[name as SelectionName];
 
 		selectionHandler(value);
 	};
-
-	// scale notes array ordered according to the selectedOrder
-	const orderedScaleNotes = setNotesOrder(
-		selectedKey,
-		selectedOctave,
-		selectedScale,
-		selectedOrder
-	);
 
 	return (
 		<KeyboardOptionsContext.Provider
