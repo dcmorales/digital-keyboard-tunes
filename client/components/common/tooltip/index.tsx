@@ -1,8 +1,12 @@
 // tooltip
-// A tooltip component that displays an info icon. When hovered over
-// or focused on, the tooltip text becomes visible. If the tooltip is too
-// far to the right, the position will be updated to the left so that it
-// isn't cut off from view.
+// A tooltip component that displays alongside either an info icon (default) or
+// a valid child component (one that can handle the defined events). For the default
+// tooltip, a topic is required; for tooltips with other valid children, ariaHidden may
+// be applied to remove the tooltip from the accessibility tree. The tooltip's position
+// and width can be customized. If autoDismiss is true, the tooltip will be dismissed on
+// touch events after the specified time. When hovered over or focused on, the tooltip
+// text becomes visible. If the default tooltip is too far to the right, the position will
+// be updated to the left so that it isn't cut off from view.
 
 'use client';
 

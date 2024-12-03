@@ -1,4 +1,9 @@
 // icon-button
+// A button that displays an icon. The icon, ariaLabel, and onClick handler are the only
+// required props. It can display as is or with a tooltip (if the icon's meaning is not
+// immediately clear). The tooltip props can be customized, otherwise they will default
+// to values in Tooltip. If the button has a tooltip, it will be automatically dismissed
+// after 1.5 seconds after touch events. Tooltip text will be the same as the aria-label.
 
 import CustomButton, {
 	type CustomButtonProps,
@@ -6,16 +11,28 @@ import CustomButton, {
 import Icon, { type IconProps } from '@/components/common/icon';
 import Tooltip, { type TooltipPropsBase } from '@/components/common/tooltip';
 
-interface IconButtonProps
+interface IconButtonPropsBase
 	extends Omit<IconProps, 'name' | 'size'>,
-		Omit<TooltipPropsBase, 'text' | 'position' | 'width'>,
 		Omit<CustomButtonProps, 'children'> {
 	icon: IconProps['name'];
 	iconSize?: IconProps['size'];
+}
+
+interface IconButtonWithoutTooltip extends IconButtonPropsBase {
+	tooltipPosition?: never;
+	tooltipWidth?: never;
+	hasTooltip?: false;
+}
+
+interface IconButtonWithTooltip
+	extends Omit<TooltipPropsBase, 'text' | 'position' | 'width'>,
+		IconButtonPropsBase {
 	tooltipPosition?: TooltipPropsBase['position'];
 	tooltipWidth?: TooltipPropsBase['widthInRem'];
-	hasTooltip?: boolean;
+	hasTooltip?: true;
 }
+
+type IconButtonProps = IconButtonWithoutTooltip | IconButtonWithTooltip;
 
 export default function IconButton({
 	icon,
