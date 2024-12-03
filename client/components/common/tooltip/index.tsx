@@ -38,11 +38,13 @@ export interface TooltipPropsBase {
 export interface TooltipDefault extends TooltipPropsBase {
 	topic: string;
 	children?: never;
+	ariaHidden?: never;
 }
 
 interface TooltipWithChildren extends TooltipPropsBase {
 	children: ReactElement;
 	topic?: never;
+	ariaHidden?: boolean;
 }
 
 type TooltipProps = TooltipDefault | TooltipWithChildren;
@@ -54,6 +56,7 @@ export default function Tooltip({
 	autoDismiss = false,
 	secondsDisplayed = 5,
 	topic,
+	ariaHidden = false,
 	children,
 }: TooltipProps) {
 	const [isVisible, setIsVisible] = useState<boolean>(false);
@@ -153,7 +156,7 @@ export default function Tooltip({
 					role="tooltip"
 					className={`${styles.tooltipText} ${styles[position]}`}
 					style={{ width: `${widthInRem}rem` }}
-					aria-hidden={!isVisible}
+					aria-hidden={!isVisible || ariaHidden}
 				>
 					{text}
 				</div>

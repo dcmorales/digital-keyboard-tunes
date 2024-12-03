@@ -233,7 +233,8 @@ describe('Audio Controls', () => {
 		const playButton = screen.getByRole('button', { name: /Play the scale/i });
 		fireEvent.mouseEnter(playButton);
 
-		const tooltip = screen.getByRole('tooltip');
+		// cannot get by role since aria-hidden is true
+		const tooltip = screen.getByText('Play the scale');
 
 		expect(tooltip).toBeInTheDocument();
 		expect(tooltip.className.includes('right')).toBe(true); // initial position

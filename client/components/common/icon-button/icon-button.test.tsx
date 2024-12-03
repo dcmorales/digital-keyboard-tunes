@@ -12,6 +12,7 @@ describe('Icon Button', () => {
 			<IconButton
 				icon="gear"
 				ariaLabel="Icon button"
+				hasTooltip
 				tooltipPosition="top"
 				tooltipWidth={10}
 				onClick={handleClick}
@@ -34,30 +35,11 @@ describe('Icon Button', () => {
 
 		fireEvent.mouseEnter(button);
 
-		const tooltip = screen.getByRole('tooltip');
+		// cannot get by role since aria-hidden is true
+		const tooltip = screen.getByText('Icon button');
 
 		expect(tooltip).toBeInTheDocument();
 		expect(tooltip).toHaveTextContent('Icon button'); // same as ariaLabel
-	});
-
-	it('shows the tooltip with custom tooltip text if provided', () => {
-		render(
-			<IconButton
-				icon="gear"
-				ariaLabel="Button with custom tooltip"
-				tooltipText="Custom tooltip text"
-				onClick={handleClick}
-			/>
-		);
-		const button = screen.getByRole('button', {
-			name: /Button with custom tooltip/i,
-		});
-
-		fireEvent.mouseEnter(button);
-
-		const tooltip = screen.getByRole('tooltip');
-
-		expect(tooltip).toHaveTextContent('Custom tooltip text');
 	});
 
 	it('renders a large icon if no size is provided', () => {
@@ -99,9 +81,29 @@ describe('Icon Button', () => {
 
 		fireEvent.mouseEnter(button);
 
-		const tooltip = screen.getByRole('tooltip');
+		// cannot get by role since aria-hidden is true
+		const tooltip = screen.getByText('Icon button');
 
 		expect(tooltip).toHaveStyle('width: 10rem');
 		expect(tooltip.className.includes('top')).toBe(true);
+	});
+
+	it('does not render a tooltip if hasTooltip is not passed in', () => {
+		render(
+			<IconButton
+				icon="gear"
+				ariaLabel="Button without tooltip"
+				onClick={handleClick}
+			/>
+		);
+		const button = screen.getByRole('button', {
+			name: /Button without tooltip/i,
+		});
+
+		fireEvent.mouseEnter(button);
+
+		const tooltip = screen.queryByRole('tooltip');
+
+		expect(tooltip).not.toBeInTheDocument();
 	});
 });

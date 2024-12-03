@@ -298,4 +298,25 @@ describe('Tooltip Component', () => {
 
 		clearTimeoutSpy.mockRestore();
 	});
+
+	it('is not present in accessibility tree when ariaHidden prop is true', () => {
+		render(
+			<Tooltip text="Not in accessibility tree" ariaHidden>
+				<button aria-label="Aria hidden example">Aria hidden button</button>
+			</Tooltip>
+		);
+		const ariaHiddenButton = screen.getByRole('button', {
+			name: /Aria hidden example/i,
+		});
+
+		fireEvent.mouseEnter(ariaHiddenButton);
+
+		// accessible role is hidden
+		let tooltip = screen.queryByRole('tooltip');
+		expect(tooltip).not.toBeInTheDocument();
+
+		tooltip = screen.getByText('Not in accessibility tree');
+		expect(tooltip).toBeInTheDocument();
+		expect(tooltip).toHaveAttribute('aria-hidden', 'true');
+	});
 });

@@ -145,6 +145,7 @@ export default function AudioControls({
 			{selectedOrder !== 'random' && (
 				<IconButton
 					icon="play"
+					hasTooltip
 					tooltipPosition={tooltipPosition}
 					tooltipWidth={6.5}
 					ariaLabel="Play the scale"
@@ -157,6 +158,7 @@ export default function AudioControls({
 				<>
 					<IconButton
 						icon="shuffle"
+						hasTooltip
 						tooltipPosition={tooltipPosition}
 						ariaLabel="Shuffle the scale"
 						disabled={isPlaying}
@@ -165,6 +167,7 @@ export default function AudioControls({
 
 					<IconButton
 						icon="repeat"
+						hasTooltip
 						tooltipPosition={tooltipPosition}
 						ariaLabel="Repeat the scale"
 						disabled={isPlaying || !repeatEnabled}
@@ -175,6 +178,7 @@ export default function AudioControls({
 
 			<IconButton
 				icon="stop"
+				hasTooltip
 				tooltipPosition={tooltipPosition}
 				tooltipWidth={6.5}
 				ariaLabel="Stop the scale"

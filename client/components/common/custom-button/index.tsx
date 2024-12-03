@@ -32,7 +32,7 @@ export default function CustomButton({
 }: CustomButtonProps): JSX.Element {
 	return (
 		<button
-			className={`${styles.button} ${className ? className : ''}`}
+			className={`${styles.button} ${className || ''}`}
 			aria-label={ariaLabel}
 			disabled={disabled}
 			onClick={onClick}

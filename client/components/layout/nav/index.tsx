@@ -7,8 +7,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import CustomButton from '@/components/common/custom-button';
-import Icon from '@/components/common/icon';
+import IconButton from '@/components/common/icon-button';
 import styles from './nav.module.scss';
 
 interface NavProps {
@@ -41,9 +40,12 @@ export default function Nav({ isOpen, setShowMenu }: NavProps) {
 				className={`${styles.nav} ${isOpen ? styles.open : styles.closed}`}
 				aria-hidden={!isOpen}
 			>
-				<CustomButton ariaLabel="Close menu" onClick={closeMenu}>
-					<Icon name="close" />
-				</CustomButton>
+				<IconButton
+					icon="close"
+					iconSize="small"
+					ariaLabel="Close menu"
+					onClick={closeMenu}
+				/>
 
 				<ul>
 					<li>

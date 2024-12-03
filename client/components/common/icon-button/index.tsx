@@ -1,8 +1,9 @@
 // icon-button
 
-import CustomButton from '@/components/common/custom-button';
-import Icon, { IconProps } from '@/components/common/icon';
-import type { CustomButtonProps } from '@/components/common/custom-button';
+import CustomButton, {
+	type CustomButtonProps,
+} from '@/components/common/custom-button';
+import Icon, { type IconProps } from '@/components/common/icon';
 import Tooltip, { type TooltipPropsBase } from '@/components/common/tooltip';
 
 interface IconButtonProps
@@ -12,31 +13,40 @@ interface IconButtonProps
 	icon: IconProps['name'];
 	iconSize?: IconProps['size'];
 	tooltipPosition?: TooltipPropsBase['position'];
-	tooltipText?: TooltipPropsBase['text'];
 	tooltipWidth?: TooltipPropsBase['widthInRem'];
+	hasTooltip?: boolean;
 }
 
 export default function IconButton({
 	icon,
-	iconSize,
+	iconSize = 'large',
 	tooltipPosition,
-	tooltipText,
 	tooltipWidth,
+	hasTooltip,
 	ariaLabel,
 	disabled,
 	onClick,
 }: IconButtonProps): JSX.Element {
+	const iconButtonContent = (
+		<CustomButton ariaLabel={ariaLabel} disabled={disabled} onClick={onClick}>
+			<Icon name={icon} size={iconSize} />
+		</CustomButton>
+	);
+
+	if (!hasTooltip) {
+		return iconButtonContent;
+	}
+
 	return (
 		<Tooltip
 			position={tooltipPosition}
-			text={tooltipText ? tooltipText : ariaLabel}
+			text={ariaLabel}
 			widthInRem={tooltipWidth}
 			secondsDisplayed={1.5}
 			autoDismiss
+			ariaHidden
 		>
-			<CustomButton ariaLabel={ariaLabel} disabled={disabled} onClick={onClick}>
-				<Icon name={icon} size={iconSize ? iconSize : 'large'} />
-			</CustomButton>
+			{iconButtonContent}
 		</Tooltip>
 	);
 }
