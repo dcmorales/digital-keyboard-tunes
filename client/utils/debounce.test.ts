@@ -5,7 +5,7 @@ import { debounce } from './debounce';
 describe('debounce', () => {
 	let mockFunction: ReturnType<typeof vi.fn>;
 	let debouncedFunction: ReturnType<typeof debounce>;
-	const delay = 1000; // default value
+	const defaultDelay = 1000;
 
 	beforeEach(() => {
 		vi.useFakeTimers();
@@ -17,68 +17,61 @@ describe('debounce', () => {
 		vi.useRealTimers();
 	});
 
-	it('calls the function after the default delay if no delay value is provided', () => {
-		// defined in beforeEach with no delay value provided
+	it('calls the function after the default delay if no delay value is provided', async () => {
 		debouncedFunction();
 
-		// function shouldn't be called immediately
 		expect(mockFunction).not.toHaveBeenCalled();
 
-		// fast-forward time by the custom delay
-		vi.advanceTimersByTime(delay);
+		await vi.advanceTimersByTime(defaultDelay);
 
 		expect(mockFunction).toHaveBeenCalled();
 	});
 
-	it('calls the function after the specified delay', () => {
+	it('calls the function after the specified delay', async () => {
 		const customDelay = 500;
 		debouncedFunction = debounce(mockFunction, customDelay);
 		debouncedFunction();
 
-		// function shouldn't be called immediately
 		expect(mockFunction).not.toHaveBeenCalled();
 
-		// fast-forward time by delay
-		vi.advanceTimersByTime(customDelay);
+		await vi.advanceTimersByTime(customDelay);
 
 		expect(mockFunction).toHaveBeenCalled();
 	});
 
-	it('calls the function only once if called multiple times within the delay', () => {
+	it('calls the function only once if called multiple times within the delay', async () => {
 		debouncedFunction();
 		debouncedFunction();
 		debouncedFunction();
 
-		// fast-forward time by delay
-		vi.advanceTimersByTime(delay);
+		await vi.advanceTimersByTime(defaultDelay);
 
 		expect(mockFunction).toHaveBeenCalledTimes(1);
 	});
 
-	it('resets the delay if called again before the previous delay is over', () => {
+	it('resets the delay if called again before the previous delay is over', async () => {
 		debouncedFunction();
 
 		// fast-forward, but not enough for the function to trigger
-		vi.advanceTimersByTime(500);
+		await vi.advanceTimersByTime(500);
 
 		// call debouncedFunction again to reset the timer
 		debouncedFunction();
 
-		// fast-forward again - the function should still not have been called
-		vi.advanceTimersByTime(500);
+		// fast-forward again
+		await vi.advanceTimersByTime(500);
 		expect(mockFunction).not.toHaveBeenCalled();
 
 		// fast-forward the remaining time
-		vi.advanceTimersByTime(500);
+		await vi.advanceTimersByTime(500);
 		expect(mockFunction).toHaveBeenCalledTimes(1);
 	});
 
-	it('does not call the function if cancel is called before the delay is over', () => {
+	it('does not call the function if cancel is called before the delay is over', async () => {
 		debouncedFunction();
 		debouncedFunction.cancel();
 
-		// fast-forward time by delay
-		vi.advanceTimersByTime(delay);
+		await vi.advanceTimersByTime(defaultDelay);
 
 		expect(mockFunction).not.toHaveBeenCalled();
 	});

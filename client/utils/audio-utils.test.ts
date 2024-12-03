@@ -7,7 +7,6 @@ import {
 	stopNote,
 } from './audio-utils';
 
-// create interfaces for the global objects
 interface GlobalAudioContext extends Window {
 	AudioContext: new () => AudioContext;
 	currentOscillator: OscillatorNode | null;
@@ -24,7 +23,6 @@ describe('Audio Utils', () => {
 			() => audioContextMock
 		);
 
-		// create a mock AudioContext
 		audioContextMock = {
 			resume: vi.fn().mockResolvedValue(undefined),
 			createOscillator: vi.fn(() => oscillatorMock),
@@ -33,7 +31,6 @@ describe('Audio Utils', () => {
 			destination: {},
 		} as unknown as AudioContext;
 
-		// create a mock oscillator
 		oscillatorMock = {
 			connect: vi.fn(),
 			disconnect: vi.fn(),
@@ -42,7 +39,6 @@ describe('Audio Utils', () => {
 			frequency: { value: 0, setValueAtTime: vi.fn() },
 		} as unknown as OscillatorNode;
 
-		// create a mock gain node
 		gainNodeMock = {
 			connect: vi.fn(),
 			disconnect: vi.fn(),
@@ -119,8 +115,8 @@ describe('Audio Utils', () => {
 			audioContextMock.currentTime + 0.1
 		);
 
-		// fast-forward time to simulate the fade-out duration
-		vi.advanceTimersByTime(100);
+		// simulate the fade-out duration
+		await vi.advanceTimersByTime(100);
 
 		expect(oscillatorMock.stop).toHaveBeenCalled();
 		expect(oscillatorMock.disconnect).toHaveBeenCalled();

@@ -118,16 +118,30 @@ describe('Header', () => {
 	});
 
 	it('opens the nav after clicking menu button', () => {
-		const button = screen.getByRole('button', {
-			name: /Open menu/i,
-		});
-		const nav = screen.getByRole('navigation');
+		// add `menu-root` to the document body
+		cleanup();
+		const menuRoot = document.createElement('div');
+		menuRoot.id = 'menu-root';
+		document.body.appendChild(menuRoot);
 
-		expect(nav).toBeInTheDocument();
-		expect(nav.className.includes('closed')).toBe(true);
+		render(
+			<KeyboardOptionsProvider>
+				<Header />
+			</KeyboardOptionsProvider>
+		);
+
+		const button = screen.getByRole('button', { name: /Open menu/i });
+		let nav = screen.queryByRole('navigation');
+
+		expect(nav).not.toBeInTheDocument(); // initially hidden
 
 		fireEvent.click(button);
+		nav = screen.getByRole('navigation');
 
+		expect(nav).toHaveAttribute('aria-hidden', 'false');
 		expect(nav.className.includes('open')).toBe(true);
+
+		// clean up `menu-root`
+		document.body.removeChild(menuRoot);
 	});
 });

@@ -124,7 +124,7 @@ It is recommended to use a Node version manager such as [nvm](https://github.com
 
 ## 🔄 Continuous Integration / Continuous Delivery
 
-The repo uses Github Actions for CI/CD. Testing and linting have been automated to run on pull requests. These workflows must pass for PR's to be approved. Merging into `develop` triggers deployment to the staging site. Merging into `main` triggers deployment to the production site. Local builds can be previewed on Vercel's preview sites after creating a pull request. Changes cannot be made directly into either `develop` or `main` and must be done through pull requests instead. Due to this setup, `develop` will have the latest code while `main` will have the most stable code.
+The repo uses Github Actions for CI/CD. Testing and linting have been automated to run on pull requests. These workflows must pass for PR's to be approved. Merging into `develop` triggers deployment to the staging site. Merging into `main` triggers deployment to the production site. Local builds can be previewed on Vercel's preview sites after creating a pull request. Changes cannot be made directly into either `develop` or `main` and must be done through pull requests instead. With to this setup, `develop` will have the latest code while `main` will have the most stable code.
 
 ---
 

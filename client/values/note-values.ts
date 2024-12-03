@@ -1,4 +1,4 @@
-// Keyboard note values
+// note-values
 // Provides the values for each key on the keyboard.
 
 import type { NoteKey } from '@/types/keyboard-option-types';

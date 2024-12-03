@@ -5,7 +5,6 @@
 
 import styles from './icon.module.scss';
 
-// also used in icon tests
 export interface IconProps {
 	size?: 'x-small' | 'small' | 'medium' | 'large';
 	name:
@@ -20,7 +19,7 @@ export interface IconProps {
 		| 'stop';
 }
 
-const icons = {
+const icons: Record<IconProps['name'], JSX.Element> = {
 	close: (
 		<svg
 			data-testid="svg-close"
@@ -209,7 +208,7 @@ const icons = {
 };
 
 export default function Icon({ name, size = 'small' }: IconProps): JSX.Element {
-	const IconSVG = icons[name];
+	const iconSVG = icons[name];
 
-	return <span className={`${styles.icon} ${styles[size]}`}>{IconSVG}</span>;
+	return <span className={`${styles.icon} ${styles[size]}`}>{iconSVG}</span>;
 }

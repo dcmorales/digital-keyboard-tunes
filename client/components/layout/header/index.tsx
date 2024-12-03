@@ -10,16 +10,15 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
-import CustomButton from '@/components/common/custom-button';
-import Icon from '@/components/common/icon';
+import IconButton from '@/components/common/icon-button';
 import KeyboardSettings from '@/components/keyboard-settings';
 import Nav from '@/components/layout/nav';
 import styles from './header.module.scss';
 
 export default function Header(): JSX.Element {
 	const pathname = usePathname();
-	const [showSettings, setShowSettings] = useState(false);
-	const [showMenu, setShowMenu] = useState(false);
+	const [showSettings, setShowSettings] = useState<boolean>(false);
+	const [showMenu, setShowMenu] = useState<boolean>(false);
 
 	const toggleSettings = (): void => {
 		setShowSettings((prevState) => !prevState);
@@ -39,17 +38,20 @@ export default function Header(): JSX.Element {
 
 				<div className={styles.buttonsContainer}>
 					{pathname !== '/about' && (
-						<CustomButton
+						<IconButton
+							icon="gear"
+							iconSize="small"
 							ariaLabel={`${!showSettings ? 'Open' : 'Close'} keyboard settings`}
 							onClick={toggleSettings}
-						>
-							<Icon name="gear" />
-						</CustomButton>
+						/>
 					)}
 
-					<CustomButton ariaLabel="Open menu" onClick={handleMenuClick}>
-						<Icon name="menu" />
-					</CustomButton>
+					<IconButton
+						icon="menu"
+						iconSize="small"
+						ariaLabel="Open menu"
+						onClick={handleMenuClick}
+					/>
 				</div>
 			</div>
 

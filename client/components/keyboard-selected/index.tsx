@@ -19,7 +19,10 @@ import styles from './keyboard-selected.module.scss';
 export default function KeyboardSelected(): JSX.Element {
 	const { selectedKey, selectedOctave } = useKeyboardOptions();
 	const [lastPlayedNotes, setLastPlayedNotes] = useState<FullNote[]>([]);
-	const fullNotesOctave = rearrangeNotes(selectedKey, selectedOctave);
+	const fullNotesOctave: FullNote[] = rearrangeNotes(
+		selectedKey,
+		selectedOctave
+	);
 
 	return (
 		<div

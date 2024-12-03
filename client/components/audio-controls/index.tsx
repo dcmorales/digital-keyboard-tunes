@@ -11,9 +11,10 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-import CustomButton from '@/components/common/custom-button';
-import Icon from '@/components/common/icon';
+import IconButton from '@/components/common/icon-button';
 import { useKeyboardOptions } from '@/context/keyboard-options-context';
+import { useResizeEffect } from '@/hooks/useResizeEffect';
+import variables from '@/styles/abstracts/variables.module.scss';
 import type { FullNote } from '@/types/keyboard-option-types';
 import { fadeOutNote, noteDurationInMs, playNote } from '@/utils/audio-utils';
 import { getAllNotes } from '@/utils/scale-note-utils';
@@ -42,25 +43,43 @@ export default function AudioControls({
 	} = useKeyboardOptions();
 	const playbackTimeoutsRef = useRef<NodeJS.Timeout[]>([]);
 	const finalNoteTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-	const [hasPlayedRandom, setHasPlayedRandom] = useState<boolean>(false);
-
+	const [repeatEnabled, setRepeatEnabled] = useState<boolean>(false);
+	const [tooltipPosition, setTooltipPosition] = useState<'top' | 'right'>(
+		'right'
+	);
 	const totalNotes = getAllNotes(
 		orderedScaleNotes,
 		selectedTotalNotes,
 		selectedRepeatNum
 	) as FullNote[];
+	const tabletBreakpoint = parseInt(variables.tabletBreakpoint);
 
-	// when hasPlayedRandom is true, the repeat button will no longer be disabled.
-	// since this is only a concern if the order is 'random', hasPlayedRandom is
-	// reset whenever the order is changed
+	// clean up on component unmount
 	useEffect(() => {
-		setHasPlayedRandom(false);
+		return () => {
+			playbackTimeoutsRef.current.forEach((timeoutId) =>
+				clearTimeout(timeoutId)
+			);
+			playbackTimeoutsRef.current = [];
+			clearTimeout(finalNoteTimeoutRef.current as NodeJS.Timeout);
+			finalNoteTimeoutRef.current = null;
+		};
+	}, []);
+
+	// reset the repeat button whenever order changes from 'random'
+	useEffect(() => {
+		setRepeatEnabled(false);
 	}, [selectedOrder]);
 
-	function playOrderedScaleNotes(notes: FullNote[]): void {
-		// enable repeat button when order is 'random'
+	const handleResize = (): void => {
+		setTooltipPosition(window.innerWidth < tabletBreakpoint ? 'top' : 'right');
+	};
+
+	useResizeEffect(handleResize);
+
+	const playOrderedScaleNotes = (notes: FullNote[]): void => {
 		if (selectedOrder === 'random') {
-			setHasPlayedRandom(true);
+			setRepeatEnabled(true);
 		}
 
 		// disable buttons (except stop) while notes are playing
@@ -68,35 +87,32 @@ export default function AudioControls({
 
 		const noteDuration = noteDurationInMs(selectedBpm, selectedNoteLength);
 
-		// clear any existing timeouts
+		// clear any existing timeouts and reset the ref array
 		playbackTimeoutsRef.current.forEach((timeoutId) => clearTimeout(timeoutId));
-		playbackTimeoutsRef.current = []; // Reset the ref array
+		playbackTimeoutsRef.current = [];
 
 		notes.forEach((fullNote, index) => {
 			// incremented delay ensures each note plays in succession
 			const playDelay = index * noteDuration;
 
 			const timeoutId = setTimeout(() => {
-				// setting note to active will update the key's appearance
-				setActiveNote(fullNote);
+				setActiveNote(fullNote); // update active key's appearance
 				playNote(fullNote, selectedWaveform);
 			}, playDelay);
 
-			// since playNote updates frequency as new values are passed in,
-			// fadeOutNote only needs to be called on the very last note
+			// reset after final note
 			if (index === notes.length - 1) {
 				finalNoteTimeoutRef.current = setTimeout(() => {
 					fadeOutNote();
-					setActiveNote(null);
-					// enable buttons (disable stop)
 					setIsPlaying(false);
+					setActiveNote(null);
 				}, playDelay + noteDuration);
 			}
 
 			// ref to keep track of each note's timeout; necessary to correctly stop notes
 			playbackTimeoutsRef.current.push(timeoutId);
 		});
-	}
+	};
 
 	const handlePlayClick = (): void => {
 		setLastPlayedNotes(totalNotes);
@@ -108,17 +124,16 @@ export default function AudioControls({
 	};
 
 	const handleStopClick = (): void => {
-		// clear each remaining note's timeout
+		// clear timeouts and reset refs
 		playbackTimeoutsRef.current.forEach((timeoutId) => clearTimeout(timeoutId));
-		playbackTimeoutsRef.current = []; // reset the ref array
-
-		// clear final note timeout
+		playbackTimeoutsRef.current = [];
 		clearTimeout(finalNoteTimeoutRef.current as NodeJS.Timeout);
-		finalNoteTimeoutRef.current = null; // reset ref
+		finalNoteTimeoutRef.current = null;
 
-		fadeOutNote(); // fade out the last played note
-		setIsPlaying(false); // reset buttons
-		setActiveNote(null); // reset appearance of keys
+		// reset after last played note
+		fadeOutNote();
+		setIsPlaying(false);
+		setActiveNote(null);
 	};
 
 	return (
@@ -128,42 +143,48 @@ export default function AudioControls({
 			aria-label="Audio controls"
 		>
 			{selectedOrder !== 'random' && (
-				<CustomButton
+				<IconButton
+					icon="play"
+					hasTooltip
+					tooltipPosition={tooltipPosition}
+					tooltipWidth={6.5}
 					ariaLabel="Play the scale"
 					disabled={isPlaying}
 					onClick={handlePlayClick}
-				>
-					<Icon name="play" size="large" />
-				</CustomButton>
+				/>
 			)}
 
 			{selectedOrder === 'random' && (
 				<>
-					<CustomButton
+					<IconButton
+						icon="shuffle"
+						hasTooltip
+						tooltipPosition={tooltipPosition}
 						ariaLabel="Shuffle the scale"
 						disabled={isPlaying}
 						onClick={handlePlayClick}
-					>
-						<Icon name="shuffle" size="large" />
-					</CustomButton>
+					/>
 
-					<CustomButton
+					<IconButton
+						icon="repeat"
+						hasTooltip
+						tooltipPosition={tooltipPosition}
 						ariaLabel="Repeat the scale"
-						disabled={isPlaying || !hasPlayedRandom}
+						disabled={isPlaying || !repeatEnabled}
 						onClick={handleRepeatClick}
-					>
-						<Icon name="repeat" size="large" />
-					</CustomButton>
+					/>
 				</>
 			)}
 
-			<CustomButton
+			<IconButton
+				icon="stop"
+				hasTooltip
+				tooltipPosition={tooltipPosition}
+				tooltipWidth={6.5}
 				ariaLabel="Stop the scale"
 				disabled={!isPlaying}
 				onClick={handleStopClick}
-			>
-				<Icon name="stop" size="large" />
-			</CustomButton>
+			/>
 		</div>
 	);
 }

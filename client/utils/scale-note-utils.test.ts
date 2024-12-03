@@ -154,7 +154,7 @@ describe('Scale Note Utils', () => {
 		);
 		expect(randomOrder).toEqual(expect.arrayContaining(scaleNotes));
 
-		// check that the order is different from the expected ascending order
+		// check that the order is different from the ascending order
 		const ascendingOrder = setNotesOrder(
 			mockSelectedKey,
 			mockSelectedOctave,
@@ -165,11 +165,8 @@ describe('Scale Note Utils', () => {
 	});
 
 	it('correctly gets all notes based on repeat number and total number of notes', () => {
-		const mockTotalNotes = 3; // only get the first three notes of the mock notes
-		const mockRepeatNum = 2; // repeat the array twice
-
-		const totalNotes = getAllNotes(mockNotes, mockTotalNotes, mockRepeatNum);
-
+		const mockTotalNotes = 3;
+		const mockRepeatNum = 2;
 		// the first three notes of the mockNotes array repeated twice
 		const expectedNotes = [
 			'D5',
@@ -182,6 +179,8 @@ describe('Scale Note Utils', () => {
 			'E♭5',
 			'E5',
 		];
+
+		const totalNotes = getAllNotes(mockNotes, mockTotalNotes, mockRepeatNum);
 
 		expect(totalNotes).toEqual(expectedNotes);
 	});
