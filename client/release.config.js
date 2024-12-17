@@ -8,9 +8,17 @@ module.exports = {
 			'@semantic-release/git',
 			{
 				assets: ['CHANGELOG.md', 'package.json'],
-				message: 'chore(release): ${nextRelease.version} [skip ci]',
+				message: 'release(frontend): ${nextRelease.version} [skip ci]',
 			},
 		],
-		'@semantic-release/github',
+		{
+			path: '@semantic-release/exec',
+			cmd: 'cd client && pnpm exec semantic-release',
+		},
+		{
+			path: '@semantic-release/github',
+			tagFormat: 'frontend-v${nextRelease.version}',
+			name: 'Frontend Release v${nextRelease.version}',
+		},
 	],
 };
