@@ -1,0 +1,78 @@
+name: Create a Conventional Commit on PR Approval or 'approved' Label
+
+on:
+  pull_request:
+    types: [labeled, edited]
+    branches:
+      - main
+      - develop
+  pull_request_review:
+    types: [submitted]
+
+  workflow_run:
+    workflows: ['restrict-approved-label.yml'] # Ensure this runs after checking labels
+    types:
+      - completed
+
+jobs:
+  create_commit:
+    runs-on: ubuntu-latest
+    env:
+      PR_TITLE: ${{ github.event.pull_request.title }}
+    if: |
+      contains(github.event.pull_request.labels.*.name, 'approved') ||
+      github.event.review.state == 'approved'
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Check for conventional commit prefix and BREAKING CHANGES
+        run: |
+          # List of valid commit types
+          VALID_TYPES=("build" "chore" "ci" "docs" "feat" "fix" "perf" "refactor" "style" "test")
+          COMMIT_TYPE=""
+          PR_TITLE="${{ env.PR_TITLE }}"
+
+          # Extract commit type (e.g., feat:, fix:)
+          for TYPE in "${VALID_TYPES[@]}"; do
+            if [[ "$PR_TITLE" =~ ^$TYPE: ]]; then
+              COMMIT_TYPE=$TYPE
+              break
+            fi
+          done
+
+          if [ -z "$COMMIT_TYPE" ]; then
+            echo "No valid commit prefix found in PR title. Exiting."
+            exit 0
+          else
+            echo "Found commit type: $COMMIT_TYPE"
+          fi
+
+          # Check for BREAKING CHANGES in PR title
+          if [[ "$PR_TITLE" =~ BREAKING[[:space:]]CHANGES:(.*) ]]; then
+            BREAKING_CHANGES="BREAKING CHANGES:${BASH_REMATCH[1]}"
+            echo "BREAKING_CHANGES=$BREAKING_CHANGES" >> $GITHUB_ENV
+
+            # Remove "BREAKING CHANGES:" from PR title before using it in the commit message
+            PR_TITLE="${PR_TITLE/ BREAKING CHANGES:${BASH_REMATCH[1]}/}"
+          else
+            echo "No BREAKING CHANGES found."
+            echo "BREAKING_CHANGES=" >> $GITHUB_ENV
+          fi
+
+      - name: Create an empty commit
+        run: |
+          # Construct the commit message
+          COMMIT_MSG="$PR_TITLE"
+          if [ -n "$BREAKING_CHANGES" ]; then
+            COMMIT_MSG="${COMMIT_MSG}\n$BREAKING_CHANGES"
+          fi
+
+          echo "Commit message:"
+          echo "$COMMIT_MSG"
+
+          # Create the empty commit
+          git config user.name "GitHub Action"
+          git config user.email "action@github.com"
+          git commit --allow-empty -m "$COMMIT_MSG"
+          git push origin HEAD:${{ github.head_ref }}
