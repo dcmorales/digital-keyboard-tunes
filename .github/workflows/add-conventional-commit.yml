@@ -89,10 +89,15 @@ jobs:
           echo "Commit message:"
           echo "$COMMIT_MSG"
 
-          # Create the empty commit
+          # Configure Git
           cd client
           git config --local user.name "GitHub Action"
           git config --local user.email "action@github.com"
+
+          # Pull the latest changes before pushing
+          git pull origin ${{ github.head_ref }} || echo "No changes to pull"
+
+          # Create the empty commit
           git commit --allow-empty -m "$COMMIT_MSG"
 
           # Push the changes
