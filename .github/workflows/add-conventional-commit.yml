@@ -25,8 +25,12 @@ jobs:
     env:
       PR_TITLE: ${{ github.event.pull_request.title }}
     if: |
-      contains(github.event.pull_request.labels.*.name, 'approved') ||
-      github.event.review.state == 'approved'
+      (contains(github.event.pull_request.labels.*.name, 'approved') ||
+      github.event.review.state == 'approved') &&
+      !(
+        (github.event.pull_request.base.ref == 'main' && github.event.pull_request.head.ref == 'develop') ||
+        (github.event.pull_request.base.ref == 'develop' && github.event.pull_request.head.ref == 'main')
+      )
 
     steps:
       - name: Get code
@@ -52,7 +56,7 @@ jobs:
 
           if [ -z "$COMMIT_TYPE" ]; then
             echo "No valid commit prefix found in PR title. Exiting."
-            exit 0
+            exit 1
           else
             echo "Found commit type: $COMMIT_TYPE"
           fi
