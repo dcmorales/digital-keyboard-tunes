@@ -16,6 +16,9 @@ on:
     types:
       - completed
 
+permissions:
+  contents: write
+
 jobs:
   create_commit:
     runs-on: ubuntu-latest
@@ -33,7 +36,10 @@ jobs:
           # List of valid commit types
           VALID_TYPES=("build" "chore" "ci" "docs" "feat" "fix" "perf" "refactor" "style" "test")
           COMMIT_TYPE=""
+
           PR_TITLE="${{ env.PR_TITLE }}"
+          # Strip leading/trailing whitespace
+          PR_TITLE=$(echo "$PR_TITLE" | xargs)
 
           # Extract commit type (e.g., feat:, fix:)
           for TYPE in "${VALID_TYPES[@]}"; do
@@ -62,10 +68,15 @@ jobs:
             echo "BREAKING_CHANGES=" >> $GITHUB_ENV
           fi
 
+          # Ensure the sanitized PR title is safe for use
+          SAFE_TITLE=$(echo "$PR_TITLE" | sed 's/[^a-zA-Z0-9 :.-]//g')
+
+          echo "SANITIZED_PR_TITLE=$SAFE_TITLE" >> $GITHUB_ENV
+
       - name: Create an empty commit
         run: |
           # Construct the commit message
-          COMMIT_MSG="$PR_TITLE"
+          COMMIT_MSG="$SANITIZED_PR_TITLE"
           if [ -n "$BREAKING_CHANGES" ]; then
             COMMIT_MSG="${COMMIT_MSG}\n$BREAKING_CHANGES"
           fi
