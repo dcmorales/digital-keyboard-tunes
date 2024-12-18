@@ -1,4 +1,4 @@
-name: Create a Conventional Commit on PR Approval or 'approved' Label
+name: Create a Conventional Commit on PR Approval
 
 on:
   pull_request:
@@ -56,7 +56,7 @@ jobs:
 
           if [ -z "$COMMIT_TYPE" ]; then
             echo "No valid commit prefix found in PR title. Exiting."
-            exit 0
+            exit 1
           else
             echo "Found commit type: $COMMIT_TYPE"
           fi
