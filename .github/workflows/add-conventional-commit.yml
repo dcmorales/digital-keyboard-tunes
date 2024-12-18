@@ -95,7 +95,7 @@ jobs:
           git config --local user.email "action@github.com"
 
           # Pull the latest changes before pushing
-          git pull origin ${{ github.head_ref }} || echo "No changes to pull"
+          git pull --rebase origin ${{ github.head_ref }} || echo "No changes to pull"
 
           # Create the empty commit
           git commit --allow-empty -m "$COMMIT_MSG"
