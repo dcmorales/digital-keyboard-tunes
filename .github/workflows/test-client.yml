@@ -2,6 +2,7 @@ name: Test Client
 
 on:
   pull_request:
+    types: [opened, synchronize, labeled]
     paths:
       - 'client/**' # Only trigger if there are changes in the client directory
 
