@@ -1,4 +1,5 @@
 ## Description
+
 <!---
     Describe your changes here. Please also include relevant motivation and context. Include screenshots if relevant.
 -->
@@ -23,8 +24,10 @@
 <!--- Put an `x` in all the boxes that apply to your changes. -->
 
 - [ ] I have tested that my code builds successfully
-- [ ] I have pulled the latest version of this branch's base branch (i.e. `main`)
+- [ ] I have pulled the latest version of this branch's base branch (i.e. `develop` or `main`)
 - [ ] I have updated the README or inline docs if needed
-- [ ] I have added a short, descriptive title to this PR
+- [ ] I have added a title to this PR that is descriptive and follows the conventional commits format.
+  - [ ] Contains prefix: `build:`, `chore:`, `ci:`, `docs:`, `feat:`, `fix:`, `perf:`, `refactor:`, `style:`, `test:`
+  - [ ] If there are breaking changes, `BREAKING CHANGES:` followed by a description is added to the end of the title.
 
 ## Other comments
