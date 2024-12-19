@@ -78,7 +78,38 @@ jobs:
 
           echo "SANITIZED_PR_TITLE=$SAFE_TITLE" >> $GITHUB_ENV
 
+      - name: Check if the most recent commit matches PR title
+        id: check_commit
+        run: |
+          # Fetch the branch from origin and ensure it exists locally
+          git fetch origin ${{ github.head_ref }}:refs/remotes/origin/${{ github.head_ref }}
+
+          # Checkout the fetched branch
+          git checkout ${{ github.head_ref }}
+
+          # Get the most recent commit message
+          LAST_COMMIT_MSG=$(git log -1 --pretty=%s)
+
+          echo "Most recent commit message: $LAST_COMMIT_MSG"
+
+          # Check if the PR title (sanitized) matches the most recent commit message
+          if [[ "$LAST_COMMIT_MSG" == "$SANITIZED_PR_TITLE" ]]; then
+            echo "match_found=true" >> $GITHUB_ENV
+            echo "::set-output name=match_found::true"
+            echo "A commit with the message '$SANITIZED_PR_TITLE' already exists in the commit history. Skipping commit creation."
+            exit 0
+          else
+            echo "match_found=false" >> $GITHUB_ENV
+            echo "::set-output name=match_found::false"
+            echo "$LAST_COMMIT_MSG. No matching commit found. Proceeding to create a new commit."
+          fi
+
+      - name: Skip commit creation if match found
+        if: steps.check_commit.outputs.match_found == 'true'
+        run: echo "Skipping commit creation as a matching commit was found."
+
       - name: Create an empty commit
+        if: steps.check_commit.outputs.match_found == 'false'
         run: |
           # Construct the commit message
           COMMIT_MSG="$SANITIZED_PR_TITLE"
