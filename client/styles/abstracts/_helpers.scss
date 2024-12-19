@@ -28,8 +28,7 @@ $tooltipPositions: bottom, top, left, right;
 	}
 }
 
-// add centered caret to tooltip based on position in addition to
-// base styles that may affect caret appearance if changed
+// add centered caret to tooltip based on position and include base styles
 @mixin tooltip-style($position) {
 	$color-tooltip: $color-blue-darkest;
 

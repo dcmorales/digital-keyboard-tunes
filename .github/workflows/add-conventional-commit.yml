@@ -1,0 +1,135 @@
+name: Create a Conventional Commit on PR Approval
+
+on:
+  pull_request:
+    types: [labeled, edited]
+    branches:
+      - main
+      - develop
+    paths:
+      - 'client/**' # Only trigger if there are changes in the client directory
+  pull_request_review:
+    types: [submitted]
+
+  workflow_run:
+    workflows: ['restrict-approved-label.yml'] # Ensure this runs after checking labels
+    types:
+      - completed
+
+permissions:
+  contents: write
+
+jobs:
+  create_commit:
+    runs-on: ubuntu-latest
+    env:
+      PR_TITLE: ${{ github.event.pull_request.title }}
+    if: |
+      (contains(github.event.pull_request.labels.*.name, 'approved') ||
+      github.event.review.state == 'approved') &&
+      !(
+        (github.event.pull_request.base.ref == 'main' && github.event.pull_request.head.ref == 'develop') ||
+        (github.event.pull_request.base.ref == 'develop' && github.event.pull_request.head.ref == 'main')
+      )
+
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+
+      - name: Check for conventional commit prefix and BREAKING CHANGES
+        run: |
+          # List of valid commit types
+          VALID_TYPES=("build" "chore" "ci" "docs" "feat" "fix" "perf" "refactor" "style" "test")
+          COMMIT_TYPE=""
+
+          PR_TITLE="${{ env.PR_TITLE }}"
+          # Strip leading/trailing whitespace
+          PR_TITLE=$(echo "$PR_TITLE" | xargs)
+
+          # Extract commit type (e.g., feat:, fix:)
+          for TYPE in "${VALID_TYPES[@]}"; do
+            if [[ "$PR_TITLE" =~ ^$TYPE: ]]; then
+              COMMIT_TYPE=$TYPE
+              break
+            fi
+          done
+
+          if [ -z "$COMMIT_TYPE" ]; then
+            echo "No valid commit prefix found in PR title. Exiting."
+            exit 1
+          else
+            echo "Found commit type: $COMMIT_TYPE"
+          fi
+
+          # Check for BREAKING CHANGES in PR title
+          if [[ "$PR_TITLE" =~ BREAKING[[:space:]]CHANGES:(.*) ]]; then
+            BREAKING_CHANGES="BREAKING CHANGES:${BASH_REMATCH[1]}"
+            echo "BREAKING_CHANGES=$BREAKING_CHANGES" >> $GITHUB_ENV
+
+            # Remove "BREAKING CHANGES:" from PR title before using it in the commit message
+            PR_TITLE="${PR_TITLE/ BREAKING CHANGES:${BASH_REMATCH[1]}/}"
+          else
+            echo "No BREAKING CHANGES found."
+            echo "BREAKING_CHANGES=" >> $GITHUB_ENV
+          fi
+
+          # Ensure the sanitized PR title is safe for use
+          SAFE_TITLE=$(echo "$PR_TITLE" | sed 's/[^a-zA-Z0-9 :.-]//g')
+
+          echo "SANITIZED_PR_TITLE=$SAFE_TITLE" >> $GITHUB_ENV
+
+      - name: Check if the most recent commit matches PR title
+        id: check_commit
+        run: |
+          # Fetch the branch from origin and ensure it exists locally
+          git fetch origin ${{ github.head_ref }}:refs/remotes/origin/${{ github.head_ref }}
+
+          # Checkout the fetched branch
+          git checkout ${{ github.head_ref }}
+
+          # Get the most recent commit message
+          LAST_COMMIT_MSG=$(git log -1 --pretty=%s)
+
+          echo "Most recent commit message: $LAST_COMMIT_MSG"
+
+          # Check if the PR title (sanitized) matches the most recent commit message
+          if [[ "$LAST_COMMIT_MSG" == "$SANITIZED_PR_TITLE" ]]; then
+            echo "match_found=true" >> $GITHUB_ENV
+            echo "::set-output name=match_found::true"
+            echo "A commit with the message '$SANITIZED_PR_TITLE' already exists in the commit history. Skipping commit creation."
+            exit 0
+          else
+            echo "match_found=false" >> $GITHUB_ENV
+            echo "::set-output name=match_found::false"
+            echo "$LAST_COMMIT_MSG. No matching commit found. Proceeding to create a new commit."
+          fi
+
+      - name: Skip commit creation if match found
+        if: steps.check_commit.outputs.match_found == 'true'
+        run: echo "Skipping commit creation as a matching commit was found."
+
+      - name: Create an empty commit
+        if: steps.check_commit.outputs.match_found == 'false'
+        run: |
+          # Construct the commit message
+          COMMIT_MSG="$SANITIZED_PR_TITLE"
+          if [ -n "$BREAKING_CHANGES" ]; then
+            COMMIT_MSG="${COMMIT_MSG}\n$BREAKING_CHANGES"
+          fi
+
+          echo "Commit message:"
+          echo "$COMMIT_MSG"
+
+          # Configure Git
+          cd client
+          git config --local user.name "GitHub Action"
+          git config --local user.email "action@github.com"
+
+          # Pull the latest changes before pushing
+          git pull --rebase origin ${{ github.head_ref }} || echo "No changes to pull"
+
+          # Create the empty commit
+          git commit --allow-empty -m "$COMMIT_MSG"
+
+          # Push the changes
+          git push origin HEAD:${{ github.head_ref }}
