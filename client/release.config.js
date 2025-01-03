@@ -7,6 +7,7 @@ module.exports = {
 				preset: 'conventionalcommits',
 				releaseRules: [
 					{ scope: 'client' }, // trigger release for commits with 'client' scope
+					{ scope: null }, // trigger release for commits with no scope
 					{ scope: 'server', release: false }, // ignore server commits
 				],
 			},
