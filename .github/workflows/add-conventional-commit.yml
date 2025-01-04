@@ -45,48 +45,69 @@ jobs:
         if: env.SKIP_COMMIT_CREATION == 'false'
         uses: actions/checkout@v3
 
-      - name: Check for conventional commit prefix and BREAKING CHANGES
+      - name: Validate PR title and assign commit headers
         if: env.SKIP_COMMIT_CREATION == 'false'
         run: |
           # List of valid commit types
           VALID_TYPES=("build" "chore" "ci" "docs" "feat" "fix" "perf" "refactor" "style" "test")
-          COMMIT_TYPE=""
 
-          PR_TITLE="${{ env.PR_TITLE }}"
-          # Strip leading/trailing whitespace
-          PR_TITLE=$(echo "$PR_TITLE" | xargs)
+          # Sanitize PR title by removing unwanted characters
+          PR_TITLE=$(echo "$PR_TITLE" | sed 's/[^a-zA-Z0-9 :;().-]//g')
 
-          # Extract commit type (e.g., feat:, fix:)
-          for TYPE in "${VALID_TYPES[@]}"; do
-            if [[ "$PR_TITLE" =~ ^$TYPE: ]]; then
-              COMMIT_TYPE=$TYPE
-              break
+          # Split PR title into segments based on semicolons
+          IFS=';' read -ra SEGMENTS <<< "$PR_TITLE"
+
+          # Initialize variables for each category
+          CLIENT_COMMIT_HEADER=""
+          SERVER_COMMIT_HEADER=""
+          GENERAL_COMMIT_HEADER=""
+
+          # Validate and categorize each segment
+          for SEGMENT in "${SEGMENTS[@]}"; do
+            # Remove leading/trailing whitespace from each segment
+            SEGMENT=$(echo "$SEGMENT" | xargs)
+
+            # Check segment length is no longer than 100 characters
+            MAX_LENGTH=100
+            if [ ${#SEGMENT} -gt $MAX_LENGTH ]; then
+              echo "Segment is too long: ${SEGMENT}"
+              exit 1
             fi
+
+            # Extract commit type and scope (e.g., feat:, fix(client):)
+            for TYPE in "${VALID_TYPES[@]}"; do
+              if [[ "$SEGMENT" =~ ^$TYPE(\(([^)]+)\))?: ]]; then
+                SCOPE=${BASH_REMATCH[2]}
+
+                if [ "$SCOPE" == "client" ] && [ -z "$CLIENT_COMMIT_HEADER" ]; then
+                  # Client-specific commit
+                  CLIENT_COMMIT_HEADER="$SEGMENT"
+                elif [ "$SCOPE" == "server" ] && [ -z "$SERVER_COMMIT_HEADER" ]; then
+                  # Server-specific commit
+                  SERVER_COMMIT_HEADER="$SEGMENT"
+                elif [ -z "$SCOPE" ] && [ -z "$GENERAL_COMMIT_HEADER" ]; then
+                  # General commit (no scope)
+                  GENERAL_COMMIT_HEADER="$SEGMENT"
+                fi
+                break
+              fi
+            done
           done
 
-          if [ -z "$COMMIT_TYPE" ]; then
-            echo "No valid commit prefix found in PR title. Exiting."
+          # Validate that at least one valid commit header exists
+          if [ -z "$GENERAL_COMMIT_HEADER" ] && [ -z "$CLIENT_COMMIT_HEADER" ] && [ -z "$SERVER_COMMIT_HEADER" ]; then
+            echo "No valid conventional commit header found in PR title."
             exit 1
-          else
-            echo "Found commit type: $COMMIT_TYPE"
           fi
 
-          # Check for BREAKING CHANGES in PR title
-          if [[ "$PR_TITLE" =~ BREAKING[[:space:]]CHANGES:(.*) ]]; then
-            BREAKING_CHANGES="BREAKING CHANGES:${BASH_REMATCH[1]}"
-            echo "BREAKING_CHANGES=$BREAKING_CHANGES" >> $GITHUB_ENV
+          echo "Client commit: $CLIENT_COMMIT_HEADER"
+          echo "Server commit: $SERVER_COMMIT_HEADER"
+          echo "General commit: $GENERAL_COMMIT_HEADER"
 
-            # Remove "BREAKING CHANGES:" from PR title before using it in the commit message
-            PR_TITLE="${PR_TITLE/ BREAKING CHANGES:${BASH_REMATCH[1]}/}"
-          else
-            echo "No BREAKING CHANGES found."
-            echo "BREAKING_CHANGES=" >> $GITHUB_ENV
-          fi
-
-          # Ensure the sanitized PR title is safe for use
-          SAFE_TITLE=$(echo "$PR_TITLE" | sed 's/[^a-zA-Z0-9 :.-]//g')
-
-          echo "SANITIZED_PR_TITLE=$SAFE_TITLE" >> $GITHUB_ENV
+          # Export categorized commit headers to environment variables
+          echo "CLIENT_COMMIT_HEADER=$CLIENT_COMMIT_HEADER" >> $GITHUB_ENV
+          echo "SERVER_COMMIT_HEADER=$SERVER_COMMIT_HEADER" >> $GITHUB_ENV
+          echo "GENERAL_COMMIT_HEADER=$GENERAL_COMMIT_HEADER" >> $GITHUB_ENV
 
       - name: Check if the most recent commit matches PR title
         if: env.SKIP_COMMIT_CREATION == 'false'
