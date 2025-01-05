@@ -23,6 +23,7 @@ jobs:
     env:
       PR_TITLE: ${{ github.event.pull_request.title }}
       IS_SYNC_MERGE: false
+      MATCH_FOUND: false
     if: |
       (contains(github.event.pull_request.labels.*.name, 'approved') ||
       github.event.review.state == 'approved')
@@ -109,8 +110,36 @@ jobs:
           echo "SERVER_HEADER=$SERVER_HEADER" >> $GITHUB_ENV
           echo "GENERAL_HEADER=$GENERAL_HEADER" >> $GITHUB_ENV
 
-      - name: Assign commit body and footer
+      - name: Check if recent commits match PR commit headers
         if: env.IS_SYNC_MERGE == 'false'
+        run: |
+          # Fetch the branch from origin and ensure it exists locally
+          git fetch origin ${{ github.head_ref }}:refs/remotes/origin/${{ github.head_ref }}
+
+          # Checkout the fetched branch
+          git checkout ${{ github.head_ref }}
+
+          # Get the first line (header) of the last 3 commit messages
+          LAST_COMMIT_HEADERS=$(git log -n 3 --pretty=format:"%s")
+
+          # Check if any of the commit headers match the PR headers
+          while IFS= read -r commit_header; do
+            if [[ "$commit_header" == "$CLIENT_HEADER" || "$commit_header" == "$SERVER_HEADER" || "$commit_header" == "$GENERAL_HEADER" ]]; then
+              MATCH_FOUND=true
+              break
+            fi
+          done <<< "$LAST_COMMIT_HEADERS"
+
+          # If a match is found, do not continue with commit creation
+          echo "MATCH_FOUND=$MATCH_FOUND" >> $GITHUB_ENV
+          if [ "$MATCH_FOUND" = true ]; then
+            echo "The commit already exists in the commit history. Skipping commit creation."
+          else
+            echo "No matching commit found. Proceeding with body/footer assignment."
+          fi
+
+      - name: Assign commit body and footer
+        if: env.IS_SYNC_MERGE == 'false' && env.MATCH_FOUND == 'false'
         run: |
           # Fetch the PR body
           PR_BODY=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
@@ -135,7 +164,7 @@ jobs:
           echo "general_footer=$GENERAL_FOOTER" >> $GITHUB_ENV
 
       - name: Construct commit messages
-        if: env.IS_SYNC_MERGE == 'false'
+        if: env.IS_SYNC_MERGE == 'false' && env.MATCH_FOUND == 'false'
         run: |
           # Concatenate segments between new lines to follow commit convention
           CLIENT_COMMIT_MESSAGE=$(printf "%s\n\n%s\n\n%s" "$CLIENT_HEADER" "$CLIENT_BODY" "$CLIENT_FOOTER" | sed '/^$/N;/^\n$/D')
@@ -147,39 +176,8 @@ jobs:
           echo "SERVER_COMMIT_MESSAGE=$SERVER_COMMIT_MESSAGE" >> $GITHUB_ENV
           echo "GENERAL_COMMIT_MESSAGE=$GENERAL_COMMIT_MESSAGE" >> $GITHUB_ENV
 
-      - name: Check if the most recent commit matches PR title
-        if: env.IS_SYNC_MERGE == 'false'
-        id: check_commit
-        run: |
-          # Fetch the branch from origin and ensure it exists locally
-          git fetch origin ${{ github.head_ref }}:refs/remotes/origin/${{ github.head_ref }}
-
-          # Checkout the fetched branch
-          git checkout ${{ github.head_ref }}
-
-          # Get the most recent commit message
-          LAST_COMMIT_MSG=$(git log -1 --pretty=%s)
-
-          echo "Most recent commit message: $LAST_COMMIT_MSG"
-
-          # Check if the PR title (sanitized) matches the most recent commit message
-          if [[ "$LAST_COMMIT_MSG" == "$SANITIZED_PR_TITLE" ]]; then
-            echo "match_found=true" >> $GITHUB_ENV
-            echo "::set-output name=match_found::true"
-            echo "A commit with the message '$SANITIZED_PR_TITLE' already exists in the commit history. Skipping commit creation."
-            exit 0
-          else
-            echo "match_found=false" >> $GITHUB_ENV
-            echo "::set-output name=match_found::false"
-            echo "$LAST_COMMIT_MSG. No matching commit found. Proceeding to create a new commit."
-          fi
-
-      - name: Skip commit creation if match found
-        if: env.IS_SYNC_MERGE == 'false' && steps.check_commit.outputs.match_found == 'true'
-        run: echo "Skipping commit creation as a matching commit was found."
-
       - name: Create an empty commit
-        if: env.IS_SYNC_MERGE == 'false' && steps.check_commit.outputs.match_found == 'false'
+        if: env.IS_SYNC_MERGE == 'false' && env.MATCH_FOUND == 'false'
         run: |
           # Construct the commit message
           COMMIT_MSG="$SANITIZED_PR_TITLE"
