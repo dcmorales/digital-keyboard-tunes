@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       PR_TITLE: ${{ github.event.pull_request.title }}
-      SKIP_COMMIT_CREATION: false
+      IS_SYNC_MERGE: false
     if: |
       (contains(github.event.pull_request.labels.*.name, 'approved') ||
       github.event.review.state == 'approved')
@@ -32,21 +32,21 @@ jobs:
         run: |
           if [[ ("${{ github.event.pull_request.base.ref }}" == "main" && "${{ github.event.pull_request.head.ref }}" == "develop") ||
                 ("${{ github.event.pull_request.base.ref }}" == "develop" && "${{ github.event.pull_request.head.ref }}" == "main") ]]; then
-            echo "SKIP_COMMIT_CREATION=true" >> $GITHUB_ENV
+            echo "IS_SYNC_MERGE=true" >> $GITHUB_ENV
           else
-            echo "SKIP_COMMIT_CREATION=false" >> $GITHUB_ENV
+            echo "IS_SYNC_MERGE=false" >> $GITHUB_ENV
           fi
 
       - name: Skip commit creation if merge is between main and develop
-        if: env.SKIP_COMMIT_CREATION == 'true'
+        if: env.IS_SYNC_MERGE == 'true'
         run: echo "Skipping commit creation steps because this is a branch-sync merge between main and develop; a conventional commit is not needed."
 
       - name: Get code
-        if: env.SKIP_COMMIT_CREATION == 'false'
+        if: env.IS_SYNC_MERGE == 'false'
         uses: actions/checkout@v3
 
       - name: Validate PR title and assign commit headers
-        if: env.SKIP_COMMIT_CREATION == 'false'
+        if: env.IS_SYNC_MERGE == 'false'
         run: |
           # List of valid commit types
           VALID_TYPES=("build" "chore" "ci" "docs" "feat" "fix" "perf" "refactor" "style" "test")
@@ -110,7 +110,7 @@ jobs:
           echo "GENERAL_COMMIT_HEADER=$GENERAL_COMMIT_HEADER" >> $GITHUB_ENV
 
       - name: Check if the most recent commit matches PR title
-        if: env.SKIP_COMMIT_CREATION == 'false'
+        if: env.IS_SYNC_MERGE == 'false'
         id: check_commit
         run: |
           # Fetch the branch from origin and ensure it exists locally
@@ -137,11 +137,11 @@ jobs:
           fi
 
       - name: Skip commit creation if match found
-        if: env.SKIP_COMMIT_CREATION == 'false' && steps.check_commit.outputs.match_found == 'true'
+        if: env.IS_SYNC_MERGE == 'false' && steps.check_commit.outputs.match_found == 'true'
         run: echo "Skipping commit creation as a matching commit was found."
 
       - name: Create an empty commit
-        if: env.SKIP_COMMIT_CREATION == 'false' && steps.check_commit.outputs.match_found == 'false'
+        if: env.IS_SYNC_MERGE == 'false' && steps.check_commit.outputs.match_found == 'false'
         run: |
           # Construct the commit message
           COMMIT_MSG="$SANITIZED_PR_TITLE"
