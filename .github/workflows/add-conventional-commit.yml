@@ -58,9 +58,9 @@ jobs:
           IFS=';' read -ra SEGMENTS <<< "$PR_TITLE"
 
           # Initialize variables for each category
-          CLIENT_COMMIT_HEADER=""
-          SERVER_COMMIT_HEADER=""
-          GENERAL_COMMIT_HEADER=""
+          CLIENT_HEADER=""
+          SERVER_HEADER=""
+          GENERAL_HEADER=""
 
           # Validate and categorize each segment
           for SEGMENT in "${SEGMENTS[@]}"; do
@@ -79,15 +79,15 @@ jobs:
               if [[ "$SEGMENT" =~ ^$TYPE(\(([^)]+)\))?: ]]; then
                 SCOPE=${BASH_REMATCH[2]}
 
-                if [ "$SCOPE" == "client" ] && [ -z "$CLIENT_COMMIT_HEADER" ]; then
+                if [ "$SCOPE" == "client" ] && [ -z "$CLIENT_HEADER" ]; then
                   # Client-specific commit
-                  CLIENT_COMMIT_HEADER="$SEGMENT"
-                elif [ "$SCOPE" == "server" ] && [ -z "$SERVER_COMMIT_HEADER" ]; then
+                  CLIENT_HEADER="$SEGMENT"
+                elif [ "$SCOPE" == "server" ] && [ -z "$SERVER_HEADER" ]; then
                   # Server-specific commit
-                  SERVER_COMMIT_HEADER="$SEGMENT"
-                elif [ -z "$SCOPE" ] && [ -z "$GENERAL_COMMIT_HEADER" ]; then
+                  SERVER_HEADER="$SEGMENT"
+                elif [ -z "$SCOPE" ] && [ -z "$GENERAL_HEADER" ]; then
                   # General commit (no scope)
-                  GENERAL_COMMIT_HEADER="$SEGMENT"
+                  GENERAL_HEADER="$SEGMENT"
                 fi
                 break
               fi
@@ -95,23 +95,22 @@ jobs:
           done
 
           # Validate that at least one valid commit header exists
-          if [ -z "$GENERAL_COMMIT_HEADER" ] && [ -z "$CLIENT_COMMIT_HEADER" ] && [ -z "$SERVER_COMMIT_HEADER" ]; then
+          if [ -z "$GENERAL_HEADER" ] && [ -z "$CLIENT_HEADER" ] && [ -z "$SERVER_HEADER" ]; then
             echo "No valid conventional commit header found in PR title."
             exit 1
           fi
 
-          echo "Client commit: $CLIENT_COMMIT_HEADER"
-          echo "Server commit: $SERVER_COMMIT_HEADER"
-          echo "General commit: $GENERAL_COMMIT_HEADER"
+          echo "Client commit: $CLIENT_HEADER"
+          echo "Server commit: $SERVER_HEADER"
+          echo "General commit: $GENERAL_HEADER"
 
           # Export categorized commit headers to environment variables
-          echo "CLIENT_COMMIT_HEADER=$CLIENT_COMMIT_HEADER" >> $GITHUB_ENV
-          echo "SERVER_COMMIT_HEADER=$SERVER_COMMIT_HEADER" >> $GITHUB_ENV
-          echo "GENERAL_COMMIT_HEADER=$GENERAL_COMMIT_HEADER" >> $GITHUB_ENV
+          echo "CLIENT_HEADER=$CLIENT_HEADER" >> $GITHUB_ENV
+          echo "SERVER_HEADER=$SERVER_HEADER" >> $GITHUB_ENV
+          echo "GENERAL_HEADER=$GENERAL_HEADER" >> $GITHUB_ENV
 
       - name: Assign commit body and footer
         if: env.IS_SYNC_MERGE == 'false'
-        id: pr_details
         run: |
           # Fetch the PR body
           PR_BODY=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
@@ -134,6 +133,19 @@ jobs:
           echo "client_footer=$CLIENT_FOOTER" >> $GITHUB_ENV
           echo "server_footer=$SERVER_FOOTER" >> $GITHUB_ENV
           echo "general_footer=$GENERAL_FOOTER" >> $GITHUB_ENV
+
+      - name: Construct commit messages
+        if: env.IS_SYNC_MERGE == 'false'
+        run: |
+          # Concatenate segments between new lines to follow commit convention
+          CLIENT_COMMIT_MESSAGE=$(printf "%s\n\n%s\n\n%s" "$CLIENT_HEADER" "$CLIENT_BODY" "$CLIENT_FOOTER" | sed '/^$/N;/^\n$/D')
+          SERVER_COMMIT_MESSAGE=$(printf "%s\n\n%s\n\n%s" "$SERVER_HEADER" "$SERVER_BODY" "$SERVER_FOOTER" | sed '/^$/N;/^\n$/D')
+          GENERAL_COMMIT_MESSAGE=$(printf "%s\n\n%s\n\n%s" "$GENERAL_HEADER" "$GENERAL_BODY" "$GENERAL_FOOTER" | sed '/^$/N;/^\n$/D')
+
+          # Output the constructed commit messages
+          echo "CLIENT_COMMIT_MESSAGE=$CLIENT_COMMIT_MESSAGE" >> $GITHUB_ENV
+          echo "SERVER_COMMIT_MESSAGE=$SERVER_COMMIT_MESSAGE" >> $GITHUB_ENV
+          echo "GENERAL_COMMIT_MESSAGE=$GENERAL_COMMIT_MESSAGE" >> $GITHUB_ENV
 
       - name: Check if the most recent commit matches PR title
         if: env.IS_SYNC_MERGE == 'false'
