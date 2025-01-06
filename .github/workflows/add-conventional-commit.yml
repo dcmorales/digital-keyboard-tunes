@@ -176,28 +176,34 @@ jobs:
           echo "SERVER_COMMIT_MESSAGE=$SERVER_COMMIT_MESSAGE" >> $GITHUB_ENV
           echo "GENERAL_COMMIT_MESSAGE=$GENERAL_COMMIT_MESSAGE" >> $GITHUB_ENV
 
-      - name: Create an empty commit
+      - name: Create empty commit(s)
         if: env.IS_SYNC_MERGE == 'false' && env.MATCH_FOUND == 'false'
         run: |
-          # Construct the commit message
-          COMMIT_MSG="$SANITIZED_PR_TITLE"
-          if [ -n "$BREAKING_CHANGES" ]; then
-            COMMIT_MSG="${COMMIT_MSG}\n$BREAKING_CHANGES"
-          fi
-
-          echo "Commit message:"
-          echo "$COMMIT_MSG"
-
           # Configure Git
-          cd client
           git config --local user.name "GitHub Action"
           git config --local user.email "action@github.com"
 
           # Pull the latest changes before pushing
           git pull --rebase origin ${{ github.head_ref }} || echo "No changes to pull"
 
-          # Create the empty commit
-          git commit --allow-empty -m "$COMMIT_MSG"
+          # Define an associative array of commit types and their messages
+          declare -A COMMIT_MESSAGES=(
+            ["client"]="$CLIENT_COMMIT_MESSAGE"
+            ["server"]="$SERVER_COMMIT_MESSAGE"
+            ["general"]="$GENERAL_COMMIT_MESSAGE"
+          )
+
+          # Loop through the commit messages and create commits for non-empty ones
+          for TYPE in "${!COMMIT_MESSAGES[@]}"; do
+            MESSAGE=${COMMIT_MESSAGES[$TYPE]}
+            if [ -n "$MESSAGE" ]; then
+              echo "Creating $TYPE commit with the following message:"
+              echo "$MESSAGE"
+              git commit --allow-empty -m "$MESSAGE"
+            else
+              echo "No $TYPE commit message found, skipping $TYPE commit."
+            fi
+          done
 
           # Push the changes
           git push origin HEAD:${{ github.head_ref }}
