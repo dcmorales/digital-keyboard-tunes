@@ -71,7 +71,7 @@ jobs:
             # Check segment length is no longer than 100 characters
             MAX_LENGTH=100
             if [ ${#SEGMENT} -gt $MAX_LENGTH ]; then
-              echo "Segment is too long: ${SEGMENT}"
+              echo "Segment is too long, 100 characters is the max length: ${SEGMENT}"
               exit 1
             fi
 
@@ -89,6 +89,9 @@ jobs:
                 elif [ -z "$SCOPE" ] && [ -z "$GENERAL_HEADER" ]; then
                   # General commit (no scope)
                   GENERAL_HEADER="$SEGMENT"
+                else
+                  echo "Invalid scope found: $SCOPE. Valid scopes are: client, server, or no scope (only one of each is allowed)."
+                  exit 1
                 fi
                 break
               fi
