@@ -145,23 +145,27 @@ jobs:
           PR_BODY=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }} | jq -r .body)
 
-          # Extract commit body between start and end comment markers
-          CLIENT_BODY=$(echo "$PR_BODY" | sed -n '/<!-- Start of client commit body -->/,/<!-- End of client commit body -->/p' | sed '1d;$d')
-          SERVER_BODY=$(echo "$PR_BODY" | sed -n '/<!-- Start of server commit body -->/,/<!-- End of server commit body -->/p' | sed '1d;$d')
-          GENERAL_BODY=$(echo "$PR_BODY" | sed -n '/<!-- Start of general commit body -->/,/<!-- End of general commit body -->/p' | sed '1d;$d')
+          # Define sections
+          SECTIONS=("client" "server" "general")
+          for SECTION in "${SECTIONS[@]}"; do
+            # Get the corresponding commit header
+            COMMIT_HEADER="${SECTION^^}_HEADER"
+            COMMIT_HEADER_VAL=$(eval echo \$$COMMIT_HEADER)
 
-          # Extract commit footer between start and end comment markers
-          CLIENT_FOOTER=$(echo "$PR_BODY" | sed -n '/<!-- Start of client commit footer -->/,/<!-- End of client commit footer -->/p' | sed '1d;$d')
-          SERVER_FOOTER=$(echo "$PR_BODY" | sed -n '/<!-- Start of server commit footer -->/,/<!-- End of server commit footer -->/p' | sed '1d;$d')
-          GENERAL_FOOTER=$(echo "$PR_BODY" | sed -n '/<!-- Start of general commit footer -->/,/<!-- End of general commit footer -->/p' | sed '1d;$d')
+            # Extract commit body between start and end comment markers
+            BODY=$(echo "$PR_BODY" | sed -n "/<!-- Start of ${SECTION} commit body -->/,/<!-- End of ${SECTION} commit body -->/p" | sed '1d;$d')
+            echo "${SECTION^^}_BODY=$BODY" >> $GITHUB_ENV
 
-          # Write outputs to environment files
-          echo "client_body=$CLIENT_BODY" >> $GITHUB_ENV
-          echo "server_body=$SERVER_BODY" >> $GITHUB_ENV
-          echo "general_body=$GENERAL_BODY" >> $GITHUB_ENV
-          echo "client_footer=$CLIENT_FOOTER" >> $GITHUB_ENV
-          echo "server_footer=$SERVER_FOOTER" >> $GITHUB_ENV
-          echo "general_footer=$GENERAL_FOOTER" >> $GITHUB_ENV
+            # Extract commit footer between start and end comment markers
+            FOOTER=$(echo "$PR_BODY" | sed -n "/<!-- Start of ${SECTION} commit footer -->/,/<!-- End of ${SECTION} commit footer -->/p" | sed '1d;$d')
+            echo "${SECTION^^}_FOOTER=$FOOTER" >> $GITHUB_ENV
+
+            # Check if header is missing and body or footer is non-empty
+            if [ -z "$COMMIT_HEADER_VAL" ] && { [ -n "$BODY" ] || [ -n "$FOOTER" ]; }; then
+              echo "${SECTION^^}_HEADER is not provided but is required if the body or footer is non-empty."
+              exit 1
+            fi
+          done
 
       - name: Construct commit messages
         if: env.IS_SYNC_MERGE == 'false' && env.MATCH_FOUND == 'false'
