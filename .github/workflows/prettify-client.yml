@@ -2,7 +2,6 @@ name: Prettify Client
 
 on:
   pull_request:
-    types: [opened, synchronize, labeled]
     branches:
       - develop
       - main
