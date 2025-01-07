@@ -1,0 +1,216 @@
+name: Create a Conventional Commit on PR Approval
+
+on:
+  pull_request:
+    types: [labeled, edited]
+    branches:
+      - main
+      - develop
+  pull_request_review:
+    types: [submitted]
+
+  workflow_run:
+    workflows: ['restrict-approved-label.yml'] # Ensure this runs after checking labels
+    types:
+      - completed
+
+permissions:
+  contents: write
+
+jobs:
+  create_commit:
+    runs-on: ubuntu-latest
+    env:
+      PR_TITLE: ${{ github.event.pull_request.title }}
+      IS_SYNC_MERGE: false
+      MATCH_FOUND: false
+    if: |
+      (contains(github.event.pull_request.labels.*.name, 'approved') ||
+      github.event.review.state == 'approved')
+
+    steps:
+      - name: Determine if merge is between main and develop
+        run: |
+          if [[ ("${{ github.event.pull_request.base.ref }}" == "main" && "${{ github.event.pull_request.head.ref }}" == "develop") ||
+                ("${{ github.event.pull_request.base.ref }}" == "develop" && "${{ github.event.pull_request.head.ref }}" == "main") ]]; then
+            echo "IS_SYNC_MERGE=true" >> $GITHUB_ENV
+          else
+            echo "IS_SYNC_MERGE=false" >> $GITHUB_ENV
+          fi
+
+      - name: Skip commit creation if merge is between main and develop
+        if: env.IS_SYNC_MERGE == 'true'
+        run: echo "Skipping commit creation steps because this is a branch-sync merge between main and develop; a conventional commit is not needed."
+
+      - name: Get code
+        if: env.IS_SYNC_MERGE == 'false'
+        uses: actions/checkout@v3
+
+      - name: Validate PR title and assign commit headers
+        if: env.IS_SYNC_MERGE == 'false'
+        run: |
+          # List of valid commit types
+          VALID_TYPES=("build" "chore" "ci" "docs" "feat" "fix" "perf" "refactor" "style" "test")
+
+          # Sanitize PR title by removing unwanted characters
+          PR_TITLE=$(echo "$PR_TITLE" | sed 's/[^a-zA-Z0-9 :;().-]//g')
+
+          # Split PR title into segments based on semicolons
+          IFS=';' read -ra SEGMENTS <<< "$PR_TITLE"
+
+          # Initialize variables for each category
+          CLIENT_HEADER=""
+          SERVER_HEADER=""
+          GENERAL_HEADER=""
+
+          # Validate and categorize each segment
+          for SEGMENT in "${SEGMENTS[@]}"; do
+            # Remove leading/trailing whitespace from each segment
+            SEGMENT=$(echo "$SEGMENT" | xargs)
+
+            # Check segment length is no longer than 100 characters
+            MAX_LENGTH=100
+            if [ ${#SEGMENT} -gt $MAX_LENGTH ]; then
+              echo "Segment is too long, 100 characters is the max length: ${SEGMENT}"
+              exit 1
+            fi
+
+            # Extract commit type and scope (e.g., feat:, fix(client):)
+            for TYPE in "${VALID_TYPES[@]}"; do
+              if [[ "$SEGMENT" =~ ^$TYPE(\(([^)]+)\))?: ]]; then
+                SCOPE=${BASH_REMATCH[2]}
+
+                if [ "$SCOPE" == "client" ] && [ -z "$CLIENT_HEADER" ]; then
+                  # Client-specific commit
+                  CLIENT_HEADER="$SEGMENT"
+                elif [ "$SCOPE" == "server" ] && [ -z "$SERVER_HEADER" ]; then
+                  # Server-specific commit
+                  SERVER_HEADER="$SEGMENT"
+                elif [ -z "$SCOPE" ] && [ -z "$GENERAL_HEADER" ]; then
+                  # General commit (no scope)
+                  GENERAL_HEADER="$SEGMENT"
+                else
+                  echo "Invalid scope found: $SCOPE. Valid scopes are: client, server, or no scope (only one of each is allowed)."
+                  exit 1
+                fi
+                break
+              fi
+            done
+          done
+
+          # Validate that at least one valid commit header exists
+          if [ -z "$GENERAL_HEADER" ] && [ -z "$CLIENT_HEADER" ] && [ -z "$SERVER_HEADER" ]; then
+            echo "No valid conventional commit header found in PR title."
+            exit 1
+          fi
+
+          echo "Client commit: $CLIENT_HEADER"
+          echo "Server commit: $SERVER_HEADER"
+          echo "General commit: $GENERAL_HEADER"
+
+          # Export categorized commit headers to environment variables
+          echo "CLIENT_HEADER=$CLIENT_HEADER" >> $GITHUB_ENV
+          echo "SERVER_HEADER=$SERVER_HEADER" >> $GITHUB_ENV
+          echo "GENERAL_HEADER=$GENERAL_HEADER" >> $GITHUB_ENV
+
+      - name: Check if recent commits match PR commit headers
+        if: env.IS_SYNC_MERGE == 'false'
+        run: |
+          # Fetch the branch from origin and ensure it exists locally
+          git fetch origin ${{ github.head_ref }}:refs/remotes/origin/${{ github.head_ref }}
+
+          # Checkout the fetched branch
+          git checkout ${{ github.head_ref }}
+
+          # Get the first line (header) of the last 3 commit messages
+          LAST_COMMIT_HEADERS=$(git log -n 3 --pretty=format:"%s")
+
+          # Check if any of the commit headers match the PR headers
+          while IFS= read -r commit_header; do
+            if [[ "$commit_header" == "$CLIENT_HEADER" || "$commit_header" == "$SERVER_HEADER" || "$commit_header" == "$GENERAL_HEADER" ]]; then
+              MATCH_FOUND=true
+              break
+            fi
+          done <<< "$LAST_COMMIT_HEADERS"
+
+          # If a match is found, do not continue with commit creation
+          echo "MATCH_FOUND=$MATCH_FOUND" >> $GITHUB_ENV
+          if [ "$MATCH_FOUND" = true ]; then
+            echo "The commit already exists in the commit history. Skipping commit creation."
+          else
+            echo "No matching commit found. Proceeding with body/footer assignment."
+          fi
+
+      - name: Assign commit body and footer
+        if: env.IS_SYNC_MERGE == 'false' && env.MATCH_FOUND == 'false'
+        run: |
+          # Fetch the PR body
+          PR_BODY=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }} | jq -r .body)
+
+          # Define sections
+          SECTIONS=("client" "server" "general")
+          for SECTION in "${SECTIONS[@]}"; do
+            # Get the corresponding commit header
+            COMMIT_HEADER="${SECTION^^}_HEADER"
+            COMMIT_HEADER_VAL=$(eval echo \$$COMMIT_HEADER)
+
+            # Extract commit body between start and end comment markers
+            BODY=$(echo "$PR_BODY" | sed -n "/<!-- Start of ${SECTION} commit body -->/,/<!-- End of ${SECTION} commit body -->/p" | sed '1d;$d')
+            echo "${SECTION^^}_BODY=$BODY" >> $GITHUB_ENV
+
+            # Extract commit footer between start and end comment markers
+            FOOTER=$(echo "$PR_BODY" | sed -n "/<!-- Start of ${SECTION} commit footer -->/,/<!-- End of ${SECTION} commit footer -->/p" | sed '1d;$d')
+            echo "${SECTION^^}_FOOTER=$FOOTER" >> $GITHUB_ENV
+
+            # Check if header is missing and body or footer is non-empty
+            if [ -z "$COMMIT_HEADER_VAL" ] && { [ -n "$BODY" ] || [ -n "$FOOTER" ]; }; then
+              echo "${SECTION^^}_HEADER is not provided but is required if the body or footer is non-empty."
+              exit 1
+            fi
+          done
+
+      - name: Construct commit messages
+        if: env.IS_SYNC_MERGE == 'false' && env.MATCH_FOUND == 'false'
+        run: |
+          # Concatenate segments between new lines to follow commit convention
+          CLIENT_COMMIT_MESSAGE=$(printf "%s\n\n%s\n\n%s" "$CLIENT_HEADER" "$CLIENT_BODY" "$CLIENT_FOOTER" | sed '/^$/N;/^\n$/D')
+          SERVER_COMMIT_MESSAGE=$(printf "%s\n\n%s\n\n%s" "$SERVER_HEADER" "$SERVER_BODY" "$SERVER_FOOTER" | sed '/^$/N;/^\n$/D')
+          GENERAL_COMMIT_MESSAGE=$(printf "%s\n\n%s\n\n%s" "$GENERAL_HEADER" "$GENERAL_BODY" "$GENERAL_FOOTER" | sed '/^$/N;/^\n$/D')
+
+          # Output the constructed commit messages
+          echo "CLIENT_COMMIT_MESSAGE=$CLIENT_COMMIT_MESSAGE" >> $GITHUB_ENV
+          echo "SERVER_COMMIT_MESSAGE=$SERVER_COMMIT_MESSAGE" >> $GITHUB_ENV
+          echo "GENERAL_COMMIT_MESSAGE=$GENERAL_COMMIT_MESSAGE" >> $GITHUB_ENV
+
+      - name: Create empty commit(s)
+        if: env.IS_SYNC_MERGE == 'false' && env.MATCH_FOUND == 'false'
+        run: |
+          # Configure Git
+          git config --local user.name "GitHub Action"
+          git config --local user.email "action@github.com"
+
+          # Pull the latest changes before pushing
+          git pull --rebase origin ${{ github.head_ref }} || echo "No changes to pull"
+
+          # Define an associative array of commit types and their messages
+          declare -A COMMIT_MESSAGES=(
+            ["client"]="$CLIENT_COMMIT_MESSAGE"
+            ["server"]="$SERVER_COMMIT_MESSAGE"
+            ["general"]="$GENERAL_COMMIT_MESSAGE"
+          )
+
+          # Loop through the commit messages and create commits for non-empty ones
+          for TYPE in "${!COMMIT_MESSAGES[@]}"; do
+            MESSAGE=${COMMIT_MESSAGES[$TYPE]}
+            if [ -n "$MESSAGE" ]; then
+              echo "Creating $TYPE commit with the following message:"
+              echo "$MESSAGE"
+              git commit --allow-empty -m "$MESSAGE"
+            else
+              echo "No $TYPE commit message found, skipping $TYPE commit."
+            fi
+          done
+
+          # Push the changes
+          git push origin HEAD:${{ github.head_ref }}
