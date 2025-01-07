@@ -68,6 +68,9 @@ jobs:
             # Remove leading/trailing whitespace from each segment
             SEGMENT=$(echo "$SEGMENT" | xargs)
 
+            # Convert the first character to lowercase
+            SEGMENT=$(echo "$SEGMENT" | sed 's/^\(.\)/\L\1/')
+
             # Check segment length is no longer than 100 characters
             MAX_LENGTH=100
             if [ ${#SEGMENT} -gt $MAX_LENGTH ]; then
