@@ -78,25 +78,24 @@ jobs:
               exit 1
             fi
 
-            # Extract commit type and scope (e.g., feat:, fix(client):)
-            for TYPE in "${VALID_TYPES[@]}"; do
-              if [[ "$SEGMENT" =~ ^$TYPE(\(([^)]+)\))?: ]]; then
-                SCOPE=${BASH_REMATCH[2]}
-
-                if [ "$SCOPE" == "client" ] && [ -z "$CLIENT_HEADER" ]; then
-                  # Client-specific commit
-                  CLIENT_HEADER="$SEGMENT"
-                elif [ "$SCOPE" == "server" ] && [ -z "$SERVER_HEADER" ]; then
-                  # Server-specific commit
-                  SERVER_HEADER="$SEGMENT"
-                elif [ -z "$SCOPE" ] && [ -z "$GENERAL_HEADER" ]; then
-                  # General commit (no scope)
-                  GENERAL_HEADER="$SEGMENT"
+            # Check if segment starts with a valid commit type and scope (e.g., feat:, fix(client):)
+            for VALID_TYPE in "${VALID_TYPES[@]}"; do
+              if [[ "$SEGMENT" =~ ^$VALID_TYPE(\([a-zA-Z0-9_-]+\))?: ]]; then
+                # Check for scope
+                if [[ "$SEGMENT" =~ \([a-zA-Z0-9_-]+\): ]]; then
+                  # Scope exists, validate it is 'client' or 'server'
+                  if [[ "$SEGMENT" =~ \(client\): ]]; then
+                    CLIENT_HEADER="$SEGMENT"
+                  elif [[ "$SEGMENT" =~ \(server\): ]]; then
+                    SERVER_HEADER="$SEGMENT"
+                  else
+                    echo "Error: Invalid scope in commit header. Only 'client', 'server', or no scope are allowed: $SEGMENT"
+                    exit 1
+                  fi
                 else
-                  echo "Invalid scope found: $SCOPE. Valid scopes are: client, server, or no scope (only one of each is allowed)."
-                  exit 1
+                  # No scope provided
+                  GENERAL_HEADER="$SEGMENT"
                 fi
-                break
               fi
             done
           done
