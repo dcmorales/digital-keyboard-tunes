@@ -180,15 +180,42 @@ jobs:
       - name: Construct commit messages
         if: env.IS_SYNC_MERGE == 'false' && env.MATCH_FOUND == 'false'
         run: |
-          # Concatenate segments between new lines to follow commit convention
-          CLIENT_COMMIT_MESSAGE=$(printf "%s\n\n%s\n\n%s" "$CLIENT_HEADER" "$CLIENT_BODY" "$CLIENT_FOOTER" | sed '/^$/N;/^\n$/D')
-          SERVER_COMMIT_MESSAGE=$(printf "%s\n\n%s\n\n%s" "$SERVER_HEADER" "$SERVER_BODY" "$SERVER_FOOTER" | sed '/^$/N;/^\n$/D')
-          GENERAL_COMMIT_MESSAGE=$(printf "%s\n\n%s\n\n%s" "$GENERAL_HEADER" "$GENERAL_BODY" "$GENERAL_FOOTER" | sed '/^$/N;/^\n$/D')
+          # Concatenate segments with actual new lines to follow commit convention
+          CLIENT_COMMIT_MESSAGE="${CLIENT_HEADER}
 
-          # Output the constructed commit messages
-          echo "CLIENT_COMMIT_MESSAGE=$CLIENT_COMMIT_MESSAGE" >> $GITHUB_ENV
-          echo "SERVER_COMMIT_MESSAGE=$SERVER_COMMIT_MESSAGE" >> $GITHUB_ENV
-          echo "GENERAL_COMMIT_MESSAGE=$GENERAL_COMMIT_MESSAGE" >> $GITHUB_ENV
+          ${CLIENT_BODY}
+
+          ${CLIENT_FOOTER}"
+
+          SERVER_COMMIT_MESSAGE="${SERVER_HEADER}
+
+          ${SERVER_BODY}
+
+          ${SERVER_FOOTER}"
+
+          GENERAL_COMMIT_MESSAGE="${GENERAL_HEADER}
+
+          ${GENERAL_BODY}
+
+          ${GENERAL_FOOTER}"
+
+          # Trim leading and trailing whitespace
+          CLIENT_COMMIT_MESSAGE=$(echo "$CLIENT_COMMIT_MESSAGE" | sed 's/^[ \t]*//;s/[ \t]*$//')
+          SERVER_COMMIT_MESSAGE=$(echo "$SERVER_COMMIT_MESSAGE" | sed 's/^[ \t]*//;s/[ \t]*$//')
+          GENERAL_COMMIT_MESSAGE=$(echo "$GENERAL_COMMIT_MESSAGE" | sed 's/^[ \t]*//;s/[ \t]*$//')
+
+          # Set environment variables with the multi-line commit messages
+          echo "CLIENT_COMMIT_MESSAGE<<EOF" >> $GITHUB_ENV
+          echo "$CLIENT_COMMIT_MESSAGE" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+          echo "SERVER_COMMIT_MESSAGE<<EOF" >> $GITHUB_ENV
+          echo "$SERVER_COMMIT_MESSAGE" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+          echo "GENERAL_COMMIT_MESSAGE<<EOF" >> $GITHUB_ENV
+          echo "$GENERAL_COMMIT_MESSAGE" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
 
       - name: Create empty commit(s)
         if: env.IS_SYNC_MERGE == 'false' && env.MATCH_FOUND == 'false'
