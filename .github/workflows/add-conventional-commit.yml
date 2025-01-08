@@ -164,11 +164,15 @@ jobs:
 
             # Extract commit body between start and end comment markers
             BODY=$(echo "$PR_BODY" | sed -n "/<!-- Start of ${SECTION} commit body -->/,/<!-- End of ${SECTION} commit body -->/p" | sed '1d;$d')
-            echo "${SECTION^^}_BODY=$BODY" >> $GITHUB_ENV
+            echo "${SECTION^^}_BODY<<EOF" >> $GITHUB_ENV
+            echo "$BODY" >> $GITHUB_ENV
+            echo "EOF" >> $GITHUB_ENV
 
             # Extract commit footer between start and end comment markers
             FOOTER=$(echo "$PR_BODY" | sed -n "/<!-- Start of ${SECTION} commit footer -->/,/<!-- End of ${SECTION} commit footer -->/p" | sed '1d;$d')
-            echo "${SECTION^^}_FOOTER=$FOOTER" >> $GITHUB_ENV
+            echo "${SECTION^^}_FOOTER<<EOF" >> $GITHUB_ENV
+            echo "$FOOTER" >> $GITHUB_ENV
+            echo "EOF" >> $GITHUB_ENV
 
             # Check if header is missing and body or footer is non-empty
             if [ -z "$COMMIT_HEADER_VAL" ] && { [ -n "$BODY" ] || [ -n "$FOOTER" ]; }; then
