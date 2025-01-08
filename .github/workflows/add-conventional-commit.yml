@@ -81,20 +81,25 @@ jobs:
             # Check if segment starts with a valid commit type and scope (e.g., feat:, fix(client):)
             for VALID_TYPE in "${VALID_TYPES[@]}"; do
               if [[ "$SEGMENT" =~ ^$VALID_TYPE(\([a-zA-Z0-9_-]+\))?: ]]; then
-                # Check for scope
+                # Check if a scope exists
                 if [[ "$SEGMENT" =~ \([a-zA-Z0-9_-]+\): ]]; then
-                  # Scope exists, validate it is 'client' or 'server'
-                  if [[ "$SEGMENT" =~ \(client\): ]]; then
+                  # Validate the scope as 'client' or 'server'
+                  if [[ "$SEGMENT" =~ \(client\): && -z "$CLIENT_HEADER" ]]; then
                     CLIENT_HEADER="$SEGMENT"
-                  elif [[ "$SEGMENT" =~ \(server\): ]]; then
+                  elif [[ "$SEGMENT" =~ \(server\): && -z "$SERVER_HEADER" ]]; then
                     SERVER_HEADER="$SEGMENT"
                   else
-                    echo "Error: Invalid scope in commit header. Only 'client', 'server', or no scope are allowed: $SEGMENT"
+                    echo "Invalid scope in commit header. Valid scopes are client or server (only one of each is allowed). $SEGMENT"
                     exit 1
                   fi
                 else
-                  # No scope provided
-                  GENERAL_HEADER="$SEGMENT"
+                  # No scope provided, assign general header
+                  if [[ -z "$GENERAL_HEADER" ]]; then
+                    GENERAL_HEADER="$SEGMENT"
+                  else
+                    echo "General header already exists. Only one general header is allowed."
+                    exit 1
+                  fi
                 fi
               fi
             done
