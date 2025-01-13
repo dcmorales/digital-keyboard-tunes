@@ -27,11 +27,17 @@
 
 <!-- Details on the changes made. This will be included in the release notes. -->
 
+#### Client
+
 <!-- Start of client commit body -->
 <!-- End of client commit body -->
 
+#### Server
+
 <!-- Start of server commit body -->
 <!-- End of server commit body -->
+
+#### General
 
 <!-- For commits without a specific scope: -->
 <!-- Start of general commit body -->
@@ -41,11 +47,17 @@
 
 <!-- Includes additional information that doesn't belong in the body. Typically for use when there are modifications that aren't backwards-compatible. For these changes, you must include 'BREAKING CHANGES:' followed by a message on what the changes are; this will trigger a major release bump. -->
 
+#### Client
+
 <!-- Start of client commit footer -->
 <!-- End of client commit footer -->
 
+#### Server
+
 <!-- Start of server commit footer -->
 <!-- End of server commit footer -->
+
+#### General
 
 <!-- For commits without a specific scope: -->
 <!-- Start of general commit footer -->

@@ -68,6 +68,9 @@ jobs:
             # Remove leading/trailing whitespace from each segment
             SEGMENT=$(echo "$SEGMENT" | xargs)
 
+            # Convert all characters before the colon to lowercase
+            SEGMENT=$(echo "$SEGMENT" | sed 's/^[^:]*\:/\L&/')
+
             # Check segment length is no longer than 100 characters
             MAX_LENGTH=100
             if [ ${#SEGMENT} -gt $MAX_LENGTH ]; then
@@ -75,25 +78,29 @@ jobs:
               exit 1
             fi
 
-            # Extract commit type and scope (e.g., feat:, fix(client):)
-            for TYPE in "${VALID_TYPES[@]}"; do
-              if [[ "$SEGMENT" =~ ^$TYPE(\(([^)]+)\))?: ]]; then
-                SCOPE=${BASH_REMATCH[2]}
-
-                if [ "$SCOPE" == "client" ] && [ -z "$CLIENT_HEADER" ]; then
-                  # Client-specific commit
-                  CLIENT_HEADER="$SEGMENT"
-                elif [ "$SCOPE" == "server" ] && [ -z "$SERVER_HEADER" ]; then
-                  # Server-specific commit
-                  SERVER_HEADER="$SEGMENT"
-                elif [ -z "$SCOPE" ] && [ -z "$GENERAL_HEADER" ]; then
-                  # General commit (no scope)
-                  GENERAL_HEADER="$SEGMENT"
+            # Check if segment starts with a valid commit type and scope (e.g., feat:, fix(client):)
+            for VALID_TYPE in "${VALID_TYPES[@]}"; do
+              if [[ "$SEGMENT" =~ ^$VALID_TYPE(\([a-zA-Z0-9_-]+\))?: ]]; then
+                # Check if a scope exists
+                if [[ "$SEGMENT" =~ \([a-zA-Z0-9_-]+\): ]]; then
+                  # Validate the scope as 'client' or 'server'
+                  if [[ "$SEGMENT" =~ \(client\): && -z "$CLIENT_HEADER" ]]; then
+                    CLIENT_HEADER="$SEGMENT"
+                  elif [[ "$SEGMENT" =~ \(server\): && -z "$SERVER_HEADER" ]]; then
+                    SERVER_HEADER="$SEGMENT"
+                  else
+                    echo "Invalid scope in commit header. Valid scopes are client or server (only one of each is allowed). $SEGMENT"
+                    exit 1
+                  fi
                 else
-                  echo "Invalid scope found: $SCOPE. Valid scopes are: client, server, or no scope (only one of each is allowed)."
-                  exit 1
+                  # No scope provided, assign general header
+                  if [[ -z "$GENERAL_HEADER" ]]; then
+                    GENERAL_HEADER="$SEGMENT"
+                  else
+                    echo "General header already exists. Only one general header is allowed."
+                    exit 1
+                  fi
                 fi
-                break
               fi
             done
           done
@@ -157,11 +164,15 @@ jobs:
 
             # Extract commit body between start and end comment markers
             BODY=$(echo "$PR_BODY" | sed -n "/<!-- Start of ${SECTION} commit body -->/,/<!-- End of ${SECTION} commit body -->/p" | sed '1d;$d')
-            echo "${SECTION^^}_BODY=$BODY" >> $GITHUB_ENV
+            echo "${SECTION^^}_BODY<<EOF" >> $GITHUB_ENV
+            echo "$BODY" >> $GITHUB_ENV
+            echo "EOF" >> $GITHUB_ENV
 
             # Extract commit footer between start and end comment markers
             FOOTER=$(echo "$PR_BODY" | sed -n "/<!-- Start of ${SECTION} commit footer -->/,/<!-- End of ${SECTION} commit footer -->/p" | sed '1d;$d')
-            echo "${SECTION^^}_FOOTER=$FOOTER" >> $GITHUB_ENV
+            echo "${SECTION^^}_FOOTER<<EOF" >> $GITHUB_ENV
+            echo "$FOOTER" >> $GITHUB_ENV
+            echo "EOF" >> $GITHUB_ENV
 
             # Check if header is missing and body or footer is non-empty
             if [ -z "$COMMIT_HEADER_VAL" ] && { [ -n "$BODY" ] || [ -n "$FOOTER" ]; }; then
@@ -173,15 +184,42 @@ jobs:
       - name: Construct commit messages
         if: env.IS_SYNC_MERGE == 'false' && env.MATCH_FOUND == 'false'
         run: |
-          # Concatenate segments between new lines to follow commit convention
-          CLIENT_COMMIT_MESSAGE=$(printf "%s\n\n%s\n\n%s" "$CLIENT_HEADER" "$CLIENT_BODY" "$CLIENT_FOOTER" | sed '/^$/N;/^\n$/D')
-          SERVER_COMMIT_MESSAGE=$(printf "%s\n\n%s\n\n%s" "$SERVER_HEADER" "$SERVER_BODY" "$SERVER_FOOTER" | sed '/^$/N;/^\n$/D')
-          GENERAL_COMMIT_MESSAGE=$(printf "%s\n\n%s\n\n%s" "$GENERAL_HEADER" "$GENERAL_BODY" "$GENERAL_FOOTER" | sed '/^$/N;/^\n$/D')
+          # Concatenate segments with actual new lines to follow commit convention
+          CLIENT_COMMIT_MESSAGE="${CLIENT_HEADER}
 
-          # Output the constructed commit messages
-          echo "CLIENT_COMMIT_MESSAGE=$CLIENT_COMMIT_MESSAGE" >> $GITHUB_ENV
-          echo "SERVER_COMMIT_MESSAGE=$SERVER_COMMIT_MESSAGE" >> $GITHUB_ENV
-          echo "GENERAL_COMMIT_MESSAGE=$GENERAL_COMMIT_MESSAGE" >> $GITHUB_ENV
+          ${CLIENT_BODY}
+
+          ${CLIENT_FOOTER}"
+
+          SERVER_COMMIT_MESSAGE="${SERVER_HEADER}
+
+          ${SERVER_BODY}
+
+          ${SERVER_FOOTER}"
+
+          GENERAL_COMMIT_MESSAGE="${GENERAL_HEADER}
+
+          ${GENERAL_BODY}
+
+          ${GENERAL_FOOTER}"
+
+          # Trim leading and trailing whitespace
+          CLIENT_COMMIT_MESSAGE=$(echo "$CLIENT_COMMIT_MESSAGE" | sed 's/^[ \t]*//;s/[ \t]*$//')
+          SERVER_COMMIT_MESSAGE=$(echo "$SERVER_COMMIT_MESSAGE" | sed 's/^[ \t]*//;s/[ \t]*$//')
+          GENERAL_COMMIT_MESSAGE=$(echo "$GENERAL_COMMIT_MESSAGE" | sed 's/^[ \t]*//;s/[ \t]*$//')
+
+          # Set environment variables with the multi-line commit messages
+          echo "CLIENT_COMMIT_MESSAGE<<EOF" >> $GITHUB_ENV
+          echo "$CLIENT_COMMIT_MESSAGE" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+          echo "SERVER_COMMIT_MESSAGE<<EOF" >> $GITHUB_ENV
+          echo "$SERVER_COMMIT_MESSAGE" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+          echo "GENERAL_COMMIT_MESSAGE<<EOF" >> $GITHUB_ENV
+          echo "$GENERAL_COMMIT_MESSAGE" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
 
       - name: Create empty commit(s)
         if: env.IS_SYNC_MERGE == 'false' && env.MATCH_FOUND == 'false'
