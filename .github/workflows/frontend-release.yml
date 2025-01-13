@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'client/**' # Only trigger if there are changes in the client directory
 
 jobs:
   release:
