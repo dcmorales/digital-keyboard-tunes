@@ -2,6 +2,7 @@ name: Check Merge Branch
 
 on:
   pull_request:
+    types: [opened, edited, labeled]
     branches:
       - main
 
