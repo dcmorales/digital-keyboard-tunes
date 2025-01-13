@@ -21,14 +21,18 @@ module.exports = {
 				message: 'release(client): ${nextRelease.version} [skip ci]',
 			},
 		],
-		{
-			path: '@semantic-release/exec',
-			cmd: 'sed -i "s/(client)//g" client/CHANGELOG.md && cd client && pnpm exec semantic-release', // remove (client) from the changelog then trigger release
-		},
-		{
-			path: '@semantic-release/github',
-			tagFormat: 'client-v${nextRelease.version}',
-			name: 'Client Release v${nextRelease.version}',
-		},
+		[
+			'@semantic-release/exec',
+			{
+				prepareCmd: 'sed -i "s/(client)//g" client/CHANGELOG.md', // remove (client) from the changelog then trigger release
+			},
+		],
+		[
+			'@semantic-release/github',
+			{
+				tagFormat: 'client-v${nextRelease.version}',
+				name: 'Client Release v${nextRelease.version}',
+			},
+		],
 	],
 };
