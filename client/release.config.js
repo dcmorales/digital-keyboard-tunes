@@ -20,12 +20,7 @@ module.exports = {
 				noCi: true,
 			},
 		],
-		[
-			'@semantic-release/exec',
-			{
-				prepareCmd: 'sed -i "s/(client)//g" CHANGELOG.md', // remove (client) from the changelog then trigger release
-			},
-		],
+		'@semantic-release/exec',
 		[
 			'@semantic-release/github',
 			{
