@@ -1,4 +1,4 @@
-name: Ensure Only Repo Owner Applies 'approved' Label
+name: Ensure Only Repo Owner Applies Specific Labels
 
 on:
   pull_request:
@@ -8,8 +8,9 @@ jobs:
   check-label:
     runs-on: ubuntu-latest
     steps:
-      - name: Check if label is 'approved'
-        if: contains(github.event.label.name, 'approved')
+      - name: Check if label is 'approved' or 'release ready'
+        if: |
+          contains(github.event.label.name, 'approved') || contains(github.event.label.name, 'release ready')
         run: |
           # Fetch the repository owner
           OWNER=$(curl -s https://api.github.com/repos/${{ github.repository }} | jq -r '.owner.login')
@@ -18,7 +19,7 @@ jobs:
           LABEL_ADDER=${{ github.event.sender.login }}
 
           if [ "$OWNER" != "$LABEL_ADDER" ]; then
-            echo "Only the repository owner can apply the 'approved' label."
+            echo "Only the repository owner can apply the '$LABEL_NAME' label."
             exit 1
           fi
-          echo "Repository owner applied the 'approved' label."
+          echo "Repository owner applied the '$LABEL_NAME' label."

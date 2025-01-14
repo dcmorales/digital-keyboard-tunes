@@ -10,7 +10,7 @@ on:
     types: [submitted]
 
   workflow_run:
-    workflows: ['restrict-approved-label.yml'] # Ensure this runs after checking labels
+    workflows: ['restrict-specific-labels.yml'] # Ensure this runs after checking labels
     types:
       - completed
 
