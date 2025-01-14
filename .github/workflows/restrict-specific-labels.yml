@@ -18,6 +18,9 @@ jobs:
           # Get the username of the person who added the label
           LABEL_ADDER=${{ github.event.sender.login }}
 
+          # Get the label name
+          LABEL_NAME=${{ github.event.label.name }}
+
           if [ "$OWNER" != "$LABEL_ADDER" ]; then
             echo "Only the repository owner can apply the '$LABEL_NAME' label."
             exit 1
