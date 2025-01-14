@@ -16,8 +16,8 @@ module.exports = {
 		[
 			'@semantic-release/github',
 			{
-				tagFormat: 'client-v${nextRelease.version}',
-				name: 'Client Release v${nextRelease.version}',
+				tagFormat: 'client-v${version}',
+				name: 'Client Release v${version}',
 			},
 		],
 	],
