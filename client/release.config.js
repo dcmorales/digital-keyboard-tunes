@@ -13,6 +13,14 @@ module.exports = {
 		'@semantic-release/release-notes-generator',
 		'@semantic-release/changelog',
 		[
+			'@semantic-release/git',
+			{
+				assets: ['CHANGELOG.md', 'package.json'],
+				message: 'release(client): ${nextRelease.version} [skip ci]',
+				noCi: true,
+			},
+		],
+		[
 			'@semantic-release/exec',
 			{
 				prepareCmd: 'sed -i "s/(client)//g" CHANGELOG.md', // remove (client) from the changelog then trigger release
