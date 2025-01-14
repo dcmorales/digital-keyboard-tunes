@@ -12,7 +12,12 @@ module.exports = {
 		],
 		'@semantic-release/release-notes-generator',
 		'@semantic-release/changelog',
-		'@semantic-release/exec',
+		[
+			'@semantic-release/exec',
+			{
+				prepareCmd: 'sed -i "s/(client)//g" CHANGELOG.md', // remove (client) from the changelog then trigger release
+			},
+		],
 		[
 			'@semantic-release/github',
 			{
