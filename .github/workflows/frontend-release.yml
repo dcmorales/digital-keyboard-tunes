@@ -41,4 +41,4 @@ jobs:
 
           commit-message: 'chore(release): ${{ steps.release.outputs.nextRelease.version }} [skip ci]'
           base: main
-          branch: release/${{ steps.release.outputs.nextRelease.version }}
+          branch: release
