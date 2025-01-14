@@ -15,7 +15,7 @@ module.exports = {
 		[
 			'@semantic-release/exec',
 			{
-				prepareCmd: 'sed -i "s/(client)//g" client/CHANGELOG.md', // remove (client) from the changelog then trigger release
+				prepareCmd: 'sed -i "s/(client)//g" CHANGELOG.md', // remove (client) from the changelog then trigger release
 			},
 		],
 		[
