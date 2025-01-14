@@ -1,13 +1,16 @@
 name: Frontend Release
 
 on:
-  push:
+  pull_request:
+    types: [labeled]
     branches:
       - main
 
 jobs:
   release:
     runs-on: ubuntu-latest
+    if: |
+      contains(github.event.pull_request.labels.*.name, 'release ready')
 
     steps:
       - name: Get code
