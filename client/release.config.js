@@ -21,9 +21,4 @@ module.exports = {
 			},
 		],
 	],
-	commitAnalyzer: {
-		parserOpts: {
-			noteKeywords: ['BREAKING CHANGES'],
-		},
-	},
 };
