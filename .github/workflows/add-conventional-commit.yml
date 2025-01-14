@@ -152,7 +152,7 @@ jobs:
         if: env.IS_SYNC_MERGE == 'false' && env.MATCH_FOUND == 'false'
         run: |
           # Fetch the PR body
-          PR_BODY=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          PR_BODY=$(curl -s -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
           https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }} | jq -r .body)
 
           # Define sections
