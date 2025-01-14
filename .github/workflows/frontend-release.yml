@@ -6,6 +6,11 @@ on:
     branches:
       - main
 
+  workflow_run:
+    workflows: ['restrict-specific-labels.yml'] # Ensure this runs after checking labels
+    types:
+      - completed
+
 jobs:
   release:
     runs-on: ubuntu-latest
