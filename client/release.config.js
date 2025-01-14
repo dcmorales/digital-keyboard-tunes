@@ -1,5 +1,6 @@
 module.exports = {
 	branches: ['main'],
+	tagFormat: 'client-v${version}',
 	plugins: [
 		[
 			'@semantic-release/commit-analyzer',
@@ -13,12 +14,6 @@ module.exports = {
 		'@semantic-release/release-notes-generator',
 		'@semantic-release/changelog',
 		'@semantic-release/exec',
-		[
-			'@semantic-release/github',
-			{
-				tagFormat: 'client-v${version}',
-				name: 'Client Release v${version}',
-			},
-		],
+		'@semantic-release/github',
 	],
 };
