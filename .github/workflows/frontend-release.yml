@@ -28,3 +28,20 @@ jobs:
         run: cd client && pnpm exec semantic-release
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      - name: Set Tag
+        id: tag
+        run: echo "tag=$(git describe --tags $(git rev-list --tags --max-count=1))" >> $GITHUB_OUTPUT
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          title: 'chore(release): ${{ steps.tag.outputs.tag }} [skip ci]'
+          body: |
+            ### ${{ steps.tag.outputs.tag }}
+
+            Automated PR created by the Release GitHub Action.
+
+          commit-message: 'chore(release): ${{ steps.tag.outputs.tag }} [skip ci]'
+          base: main
+          branch: release
