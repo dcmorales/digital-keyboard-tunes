@@ -163,7 +163,7 @@ Contributions are welcome! Here are ways you can contribute:
    ```
 3. **Create a New Branch**: Always work on a new branch (branch off of `develop` for the latest code), giving it a descriptive name.
    ```sh
-   git checkout -b feature/new-feature-x
+   git checkout -b feat/new-feature-x
    ```
 4. **Make Your Changes**: Develop and test your changes locally. Be sure to follow the guidelines provided in the other README files.
 5. **Commit Your Changes**: Commit with a clear message describing your updates.
@@ -172,11 +172,11 @@ Contributions are welcome! Here are ways you can contribute:
    ```
 6. **Push to github**: Push the changes to your forked repository.
    ```sh
-   git push origin feature/new-feature-x
+   git push origin feat/new-feature-x
    ```
-7. **Submit a Pull Request**: Create a PR against the original project repository. Clearly describe the changes and their motivations using the PR template provided. Merges into `main` are not allowed and will cause a Github Actions workflow to fail, but you can request to merge into `develop`.
+7. **Submit a Pull Request**: Create a PR against the original project repository. Make sure the title begins with a conventional commit prefix (`build`, `chore`, `ci`, `docs`, `feat`, `fix`, `perf`, `refactor`, `style`, or `test`) for use in a Github Actions workflow once approved. Clearly describe the changes and their motivations using the PR template provided. Merges into `main` are not allowed and will cause a Github Actions workflow to fail, but you can request to merge into `develop`.
 8. **Ensure all tests pass**: Linting and testing will be triggered after a pull request is made into `develop`. If there are any failures in these workflows, the PR will not be approved and the branch will not be allowed to merge.
-9. **Review**: Once your PR is reviewed and approved, it will be merged into the `develop` branch. Thank you for your contribution!
+9. **Review**: Once your PR is reviewed and approved, a conventional commit will be created based on the PR title and the changes will be merged into the `develop` branch. Thank you for your contribution!
 </details>
 
 <details closed>
