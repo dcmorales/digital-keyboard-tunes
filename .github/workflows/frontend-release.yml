@@ -28,3 +28,14 @@ jobs:
         run: cd client && pnpm exec semantic-release
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      - name: Set Tag
+        id: tag
+        run: echo "tag=$(git describe --tags $(git rev-list --tags --max-count=1))" >> $GITHUB_OUTPUT
+
+      - name: Extract version from tag
+        id: version
+        run: |
+          tag=${{ steps.tag.outputs.tag }}
+          version=${tag#client-v} # Remove 'client-v' prefix
+          echo "version=${version}" >> $GITHUB_OUTPUT
