@@ -47,3 +47,16 @@ jobs:
 
       - name: Format with Prettier
         run: cd client && pnpm run prettier
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          title: 'chore(release): ${{ steps.tag.outputs.tag }}'
+          body: |
+            ### ${{ steps.tag.outputs.tag }}
+
+            Automated PR created by the Frontend Release GitHub Action.
+
+          commit-message: 'chore(release): ${{ steps.tag.outputs.tag }}'
+          base: main
+          branch: release/${{ steps.tag.outputs.tag }}
