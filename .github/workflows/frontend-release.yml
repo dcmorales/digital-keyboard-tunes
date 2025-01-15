@@ -8,6 +8,7 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    if: ${{ !startsWith(github.event.head_commit.message, 'chore(release):') }} # Skip if already pushed by the release process
 
     steps:
       - name: Get code
@@ -51,12 +52,12 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with:
-          title: 'chore(release): ${{ steps.tag.outputs.tag }} [skip ci]'
+          title: 'chore(release): ${{ steps.tag.outputs.tag }}'
           body: |
             ### ${{ steps.tag.outputs.tag }}
 
             Automated PR created by the Release GitHub Action.
 
-          commit-message: 'chore(release): ${{ steps.tag.outputs.tag }} [skip ci]'
+          commit-message: 'chore(release): ${{ steps.tag.outputs.tag }}'
           base: main
           branch: release/${{ steps.tag.outputs.tag }}
