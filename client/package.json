@@ -1,43 +1,43 @@
 {
-	"name": "digital-keyboard-tunes",
-	"version": "0.1.0",
-	"private": true,
-	"scripts": {
-		"dev": "next dev",
-		"build": "next build",
-		"start": "next start",
-		"lint": "next lint",
-		"test": "vitest",
-		"prettier": "prettier --write .",
-		"coverage": "vitest run --coverage"
-	},
-	"dependencies": {
-		"next": "14.2.12",
-		"react": "^18",
-		"react-dom": "^18"
-	},
-	"devDependencies": {
-		"@semantic-release/changelog": "^6.0.3",
-		"@semantic-release/commit-analyzer": "^13.0.0",
-		"@semantic-release/exec": "^6.0.3",
-		"@semantic-release/github": "^11.0.1",
-		"@semantic-release/release-notes-generator": "^14.0.2",
-		"@testing-library/dom": "^10.4.0",
-		"@testing-library/jest-dom": "^6.5.0",
-		"@testing-library/react": "^16.0.1",
-		"@types/node": "^20.16.10",
-		"@types/react": "^18.3.10",
-		"@types/react-dom": "^18.3.0",
-		"@vitejs/plugin-react": "^4.3.2",
-		"@vitest/coverage-istanbul": "^2.1.1",
-		"conventional-changelog-conventionalcommits": "^8.0.0",
-		"eslint": "8.57.1",
-		"eslint-config-next": "14.2.12",
-		"jsdom": "^25.0.1",
-		"prettier": "^3.3.3",
-		"sass": "^1.79.4",
-		"semantic-release": "^24.2.0",
-		"typescript": "^5.6.2",
-		"vitest": "^2.1.1"
-	}
+  "name": "digital-keyboard-tunes",
+  "version": "1.0.2",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "vitest",
+    "prettier": "prettier --write .",
+    "coverage": "vitest run --coverage"
+  },
+  "dependencies": {
+    "next": "14.2.12",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^13.0.0",
+    "@semantic-release/exec": "^6.0.3",
+    "@semantic-release/github": "^11.0.1",
+    "@semantic-release/release-notes-generator": "^14.0.2",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.5.0",
+    "@testing-library/react": "^16.0.1",
+    "@types/node": "^20.16.10",
+    "@types/react": "^18.3.10",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.2",
+    "@vitest/coverage-istanbul": "^2.1.1",
+    "conventional-changelog-conventionalcommits": "^8.0.0",
+    "eslint": "8.57.1",
+    "eslint-config-next": "14.2.12",
+    "jsdom": "^25.0.1",
+    "prettier": "^3.3.3",
+    "sass": "^1.79.4",
+    "semantic-release": "^24.2.0",
+    "typescript": "^5.6.2",
+    "vitest": "^2.1.1"
+  }
 }
