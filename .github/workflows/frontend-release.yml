@@ -56,7 +56,7 @@ jobs:
           body: |
             ### ${{ steps.tag.outputs.tag }}
 
-            Automated PR created by the Frontend Release GitHub Action.
+            Automated PR created by the Frontend Release workflow.
 
           commit-message: 'chore(release): ${{ steps.tag.outputs.tag }}'
           base: main
