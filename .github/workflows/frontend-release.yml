@@ -45,6 +45,9 @@ jobs:
           version=${{ steps.version.outputs.version }}
           jq ".version = \"${version}\"" client/package.json > tmp.$$.json && mv tmp.$$.json client/package.json
 
+      - name: Format with Prettier
+        run: cd client && pnpm run prettier
+
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with:
