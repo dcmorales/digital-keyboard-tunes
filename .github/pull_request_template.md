@@ -45,7 +45,7 @@
 
 ### Commit Footer
 
-<!-- Includes additional information that doesn't belong in the body. Typically for use when there are modifications that aren't backwards-compatible. For these changes, you must include 'BREAKING CHANGES:' followed by a message on what the changes are; this will trigger a major release bump. -->
+<!-- Includes additional information that doesn't belong in the body. Typically for use when there are modifications that aren't backwards-compatible. For these changes, you must include 'BREAKING CHANGE:' followed by a message on what the changes are; this will trigger a major release bump. -->
 
 #### Client
 

@@ -2,6 +2,7 @@ name: Check Merge Branch
 
 on:
   pull_request:
+    types: [opened, edited, labeled]
     branches:
       - main
 
@@ -13,7 +14,7 @@ jobs:
         if: github.event.pull_request.base.ref == 'main'
         run: |
           SOURCE_BRANCH="${{ github.event.pull_request.head.ref }}"
-          if [[ "$SOURCE_BRANCH" != "develop" && "$SOURCE_BRANCH" != hotfix* ]]; then
-            echo "Merging from branch '$SOURCE_BRANCH' into 'main' is not allowed. Only 'develop' and 'hotfix*' branches are permitted."
+          if [[ "$SOURCE_BRANCH" != "develop" && "$SOURCE_BRANCH" != hotfix* && "$SOURCE_BRANCH" != release* ]]; then
+            echo "Merging from branch '$SOURCE_BRANCH' into 'main' is not allowed. Only 'develop', 'hotfix*', and 'release*' branches are permitted."
             exit 1
           fi

@@ -1,6 +1,6 @@
 {
 	"name": "digital-keyboard-tunes",
-	"version": "0.1.0",
+	"version": "1.0.0",
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
@@ -19,7 +19,7 @@
 	"devDependencies": {
 		"@semantic-release/changelog": "^6.0.3",
 		"@semantic-release/commit-analyzer": "^13.0.0",
-		"@semantic-release/git": "^10.0.1",
+		"@semantic-release/exec": "^6.0.3",
 		"@semantic-release/github": "^11.0.1",
 		"@semantic-release/release-notes-generator": "^14.0.2",
 		"@testing-library/dom": "^10.4.0",
@@ -30,6 +30,7 @@
 		"@types/react-dom": "^18.3.0",
 		"@vitejs/plugin-react": "^4.3.2",
 		"@vitest/coverage-istanbul": "^2.1.1",
+		"conventional-changelog-conventionalcommits": "^8.0.0",
 		"eslint": "8.57.1",
 		"eslint-config-next": "14.2.12",
 		"jsdom": "^25.0.1",
