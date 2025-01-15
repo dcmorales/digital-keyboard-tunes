@@ -39,3 +39,11 @@ jobs:
           tag=${{ steps.tag.outputs.tag }}
           version=${tag#client-v} # Remove 'client-v' prefix
           echo "version=${version}" >> $GITHUB_OUTPUT
+
+      - name: Update package.json
+        run: |
+          version=${{ steps.version.outputs.version }}
+          jq ".version = \"${version}\"" client/package.json > tmp.$$.json && mv tmp.$$.json client/package.json
+
+      - name: Format with Prettier
+        run: cd client && pnpm run prettier
