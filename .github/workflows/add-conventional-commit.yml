@@ -29,16 +29,16 @@ jobs:
       github.event.review.state == 'approved')
 
     steps:
-      - name: Determine if merge is between main and develop
+      - name: Determine if merge is between main, develop, or release branches
         run: |
-          if [[ ("${{ github.event.pull_request.base.ref }}" == "main" && "${{ github.event.pull_request.head.ref }}" == "develop") ||
+          if [[ ("${{ github.event.pull_request.base.ref }}" == "main" && ("${{ github.event.pull_request.head.ref }}" == "develop" || "${{ github.event.pull_request.head.ref }}" == release*)) ||
                 ("${{ github.event.pull_request.base.ref }}" == "develop" && "${{ github.event.pull_request.head.ref }}" == "main") ]]; then
             echo "IS_SYNC_MERGE=true" >> $GITHUB_ENV
           else
             echo "IS_SYNC_MERGE=false" >> $GITHUB_ENV
           fi
 
-      - name: Skip commit creation if merge is between main and develop
+      - name: Skip commit creation if merge is between main, develop, or release branches
         if: env.IS_SYNC_MERGE == 'true'
         run: echo "Skipping commit creation steps because this is a branch-sync merge between main and develop; a conventional commit is not needed."
 
@@ -152,7 +152,7 @@ jobs:
         if: env.IS_SYNC_MERGE == 'false' && env.MATCH_FOUND == 'false'
         run: |
           # Fetch the PR body
-          PR_BODY=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          PR_BODY=$(curl -s -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
           https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }} | jq -r .body)
 
           # Define sections

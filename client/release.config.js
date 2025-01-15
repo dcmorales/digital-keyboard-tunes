@@ -1,5 +1,6 @@
 module.exports = {
 	branches: ['main'],
+	tagFormat: 'client-v${version}',
 	plugins: [
 		[
 			'@semantic-release/commit-analyzer',
@@ -12,25 +13,7 @@ module.exports = {
 		],
 		'@semantic-release/release-notes-generator',
 		'@semantic-release/changelog',
-		[
-			'@semantic-release/git',
-			{
-				assets: ['CHANGELOG.md', 'package.json'],
-				message: 'release(client): ${nextRelease.version} [skip ci]',
-			},
-		],
-		[
-			'@semantic-release/exec',
-			{
-				prepareCmd: 'sed -i "s/(client)//g" client/CHANGELOG.md', // remove (client) from the changelog then trigger release
-			},
-		],
-		[
-			'@semantic-release/github',
-			{
-				tagFormat: 'client-v${nextRelease.version}',
-				name: 'Client Release v${nextRelease.version}',
-			},
-		],
+		'@semantic-release/exec',
+		'@semantic-release/github',
 	],
 };
