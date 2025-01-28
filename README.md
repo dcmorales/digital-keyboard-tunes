@@ -24,31 +24,31 @@
 </p>
 
 <p align="center">
-    <a href="https://nextjs.org/docs">
+    <a href="https://nextjs.org/docs" target="_blank">
 	    <img src="https://skillicons.dev/icons?i=nextjs" alt="Next.js documentation" title="Next.js">
     </a>
-    <a href="https://www.typescriptlang.org/docs/">
+    <a href="https://www.typescriptlang.org/docs/" target="_blank">
         <img src="https://skillicons.dev/icons?i=ts" alt="TypeScript documentation" title="TypeScript">
     </a>
-    <a href="https://vitest.dev/guide/">
+    <a href="https://vitest.dev/guide/" target="_blank">
         <img src="https://skillicons.dev/icons?i=vitest" alt="Vitest documentation" title="Vitest">
     </a>
     <a href="https://testing-library.com/docs/react-testing-library/intro/">
         <img src="https://techstack-generator.vercel.app/testinglibrary-icon.svg"  alt="React Testing Library documentation" width="50" height="50" title="React Testing Library" />
     </a>
-    <a href="https://sass-lang.com/documentation/">
+    <a href="https://sass-lang.com/documentation/" target="_blank">
         <img src="https://skillicons.dev/icons?i=sass" alt="Sass documentation" title="Sass">
     </a>
-    <a href="https://prettier.io/docs/en/">
+    <a href="https://prettier.io/docs/en/" target="_blank">
         <img alt="Prettier documentation" title="Prettier" src="https://res.cloudinary.com/dvuzczntd/image/upload/v1737010974/logos--prettier_zgzs4m.svg">
     </a>
-    <a href="https://pnpm.io/motivation">
+    <a href="https://pnpm.io/motivation" target="_blank">
         <img src="https://skillicons.dev/icons?i=pnpm" alt="PNPM documentation" title="PNPM">
     </a>
-    <a href="https://semantic-release.gitbook.io/semantic-release">
+    <a href="https://semantic-release.gitbook.io/semantic-release" target="_blank">
         <img alt="Semantic-Release documentation" title="Semantic-Release" src="https://res.cloudinary.com/dvuzczntd/image/upload/v1737010736/logos--semantic-release_qqm6uy.svg">
     </a>
-    <a href="https://docs.github.com/en/actions">
+    <a href="https://docs.github.com/en/actions" target="_blank">
         <img src="https://skillicons.dev/icons?i=githubactions" alt="Github Actions documentation" title="Github Actions">
     </a>
 </p>
