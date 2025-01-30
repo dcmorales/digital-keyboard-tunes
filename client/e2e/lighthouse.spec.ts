@@ -19,15 +19,24 @@ test.describe('Lighthouse Audit Test', () => {
 		});
 
 		const page = await browser.newPage();
+
 		await page.goto(process.env.STAGING_URL!);
 
 		await playAudit({
 			page,
 			port: 9222,
 			thresholds: {
-				performance: 80,
+				performance: 85,
 				accessibility: 90,
+				'best-practices': 85,
 				seo: 85,
+			},
+			reports: {
+				formats: {
+					html: true,
+				},
+				directory: './lighthouse-reports',
+				name: `audit-report-${Date.now()}`,
 			},
 		});
 
