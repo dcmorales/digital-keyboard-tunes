@@ -37,6 +37,7 @@
 		"eslint": "8.57.1",
 		"eslint-config-next": "14.2.12",
 		"jsdom": "^25.0.1",
+		"playwright-lighthouse": "^4.0.0",
 		"prettier": "^3.4.2",
 		"sass": "^1.83.4",
 		"semantic-release": "^24.2.1",
