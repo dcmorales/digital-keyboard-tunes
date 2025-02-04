@@ -1,4 +1,4 @@
-import { test, chromium } from '@playwright/test';
+import { chromium, test } from '@playwright/test';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -12,13 +12,13 @@ test.describe('Lighthouse Audit Test', () => {
 			test.skip();
 		}
 
-		const { playAudit } = await import('playwright-lighthouse');
-
 		const browser = await chromium.launch({
 			args: ['--remote-debugging-port=9222'],
 		});
 
 		const page = await browser.newPage();
+
+		const { playAudit } = await import('playwright-lighthouse');
 
 		await page.goto(process.env.STAGING_URL!);
 
@@ -37,6 +37,15 @@ test.describe('Lighthouse Audit Test', () => {
 				},
 				directory: './lighthouse-reports',
 				name: `audit-report-${Date.now()}`,
+			},
+			config: {
+				extends: 'lighthouse:default',
+				settings: {
+					extraHeaders: {
+						'x-vercel-protection-bypass':
+							process.env.VERCEL_AUTOMATION_BYPASS_SECRET || '',
+					},
+				},
 			},
 		});
 
