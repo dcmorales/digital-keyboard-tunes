@@ -14,6 +14,10 @@ export default defineConfig({
 	reporter: 'html',
 	use: {
 		baseURL: process.env.STAGING_URL || 'http://localhost:3000', // CI will always use staging URL, optional for local development
+		extraHTTPHeaders: {
+			'x-vercel-protection-bypass':
+				process.env.VERCEL_AUTOMATION_BYPASS_SECRET || '', // bypass Vercel authentication
+		},
 		trace: 'on-first-retry', // collect trace when retrying the failed test
 	},
 
