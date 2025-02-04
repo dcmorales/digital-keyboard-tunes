@@ -35,8 +35,8 @@ test.describe('Lighthouse Audit Test', () => {
 				formats: {
 					html: true,
 				},
-				directory: './lighthouse-reports',
-				name: `audit-report-${Date.now()}`,
+				directory: './lighthouse-report',
+				name: 'lighthouse-report',
 			},
 			config: {
 				extends: 'lighthouse:default',
