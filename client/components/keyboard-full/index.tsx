@@ -1,9 +1,8 @@
 // keyboard-full
 // A container component for grouping the Octave components. This keyboard contains seven octaves;
 // each octave is made up of 12 fullNotes (i.e., a note from noteOptions plus an octaveNum).
-// It doesn't display on small screens and uses a scrollbar for screens that can't fit all octaves.
+// It doesn't display on small screens.
 
-import Scrollbar from '@/components/common/scrollbar';
 import Octave from '@/components/octave';
 import type { FullNote, OctaveNum } from '@/types/keyboard-option-types';
 import { noteOptions } from '@/values/settings-options';
@@ -17,20 +16,18 @@ const octaveNums: OctaveNum[] = Array.from(
 
 export default function KeyboardFull(): JSX.Element {
 	return (
-		<Scrollbar>
-			<div
-				className={styles.keyboardFull}
-				role="group"
-				aria-label="Full keyboard keys"
-			>
-				{octaveNums.map((octaveNum) => {
-					const fullNotes = noteOptions.map(
-						(note) => note + octaveNum
-					) as FullNote[];
+		<div
+			className={styles.keyboardFull}
+			role="group"
+			aria-label="Full keyboard keys"
+		>
+			{octaveNums.map((octaveNum) => {
+				const fullNotes = noteOptions.map(
+					(note) => note + octaveNum
+				) as FullNote[];
 
-					return <Octave key={octaveNum} fullNotes={fullNotes} />;
-				})}
-			</div>
-		</Scrollbar>
+				return <Octave key={octaveNum} fullNotes={fullNotes} />;
+			})}
+		</div>
 	);
 }
