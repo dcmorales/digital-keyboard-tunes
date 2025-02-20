@@ -27,11 +27,12 @@
 		}
 
 		&.highlight {
-			color: $color-blue;
+			color: darken($color-blue, 15%);
 		}
 
 		&.active {
 			color: $color-blue-dark;
+			font-weight: 700;
 		}
 
 		&:hover {
@@ -51,6 +52,10 @@
 
 		&.keyboardFull {
 			letter-spacing: -0.12em;
+
+			&.highlight {
+				color: lighten($color-blue-light, 5%);
+			}
 		}
 
 		&.highlight {
@@ -59,10 +64,11 @@
 
 		&.active {
 			color: $color-blue;
+			font-weight: 700;
 		}
 
 		&:hover {
-			background-color: lighten($color-black, 10%);
+			background-color: lighten($color-black, 12%);
 		}
 	}
 
