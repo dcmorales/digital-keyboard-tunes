@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 test.describe('Lighthouse Audit', () => {
-	test('should pass the defined thresholds for performance, accessibility, etc. on Chromium', async ({
+	test('meets the defined thresholds for performance, accessibility, etc. on Chromium', async ({
 		browserName,
 	}) => {
 		// Lighthouse requires capabilities only available in Chromium, skip this test for non-Chromium browsers
