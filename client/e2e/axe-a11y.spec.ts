@@ -1,14 +1,18 @@
 import AxeBuilder from '@axe-core/playwright';
-import { test, expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
-test.describe('homepage accessibility', () => {
-	test('does not have any automatically detectable issues', async ({
-		page,
-	}) => {
-		await page.goto('http://localhost:3000/');
+import { pages } from './pages';
 
-		const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
+pages.forEach(({ name, url }) => {
+	test.describe(`Accessibility check for ${name} page`, () => {
+		test('does not have any automatically detectable issues', async ({
+			page,
+		}) => {
+			await page.goto(url);
 
-		expect(accessibilityScanResults.violations).toEqual([]);
+			const accessibilityScanResults = await new AxeBuilder({ page }).analyze();
+
+			expect(accessibilityScanResults.violations).toEqual([]);
+		});
 	});
 });
