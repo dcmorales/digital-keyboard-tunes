@@ -17,29 +17,32 @@
 </p>
 
 <p align="center">
+    <a href="https://pnpm.io/motivation" target="_blank">
+        <img src="https://skillicons.dev/icons?i=pnpm" alt="PNPM documentation" title="PNPM" />
+    </a>
     <a href="https://nextjs.org/docs" target="_blank">
-	    <img src="https://skillicons.dev/icons?i=nextjs" alt="Next.js documentation" title="Next.js">
+	    <img src="https://skillicons.dev/icons?i=nextjs" alt="Next.js documentation" title="Next.js" />
     </a>
     <a href="https://www.typescriptlang.org/docs/" target="_blank">
-        <img src="https://skillicons.dev/icons?i=ts" alt="TypeScript documentation" title="TypeScript">
-    </a>
-    <a href="https://vitest.dev/guide/" target="_blank">
-        <img src="https://skillicons.dev/icons?i=vitest" alt="Vitest documentation" title="Vitest">
-    </a>
-    <a href="https://testing-library.com/docs/react-testing-library/intro/" target="_blank">
-        <img src="https://techstack-generator.vercel.app/testinglibrary-icon.svg"  alt="React Testing Library documentation" width="50" height="50" title="React Testing Library" />
+        <img src="https://skillicons.dev/icons?i=ts" alt="TypeScript documentation" title="TypeScript" />
     </a>
     <a href="https://sass-lang.com/documentation/" target="_blank">
-        <img src="https://skillicons.dev/icons?i=sass" alt="Sass documentation" title="Sass">
+        <img src="https://skillicons.dev/icons?i=sass" alt="Sass documentation" title="Sass" />
+    </a>
+    <a href="https://vitest.dev/guide/" target="_blank">
+        <img src="https://skillicons.dev/icons?i=vitest" alt="Vitest documentation" title="Vitest" />
+    </a>
+    <a href="https://testing-library.com/docs/react-testing-library/intro/" target="_blank">
+        <img src="https://res.cloudinary.com/dvuzczntd/image/upload/v1740446393/testing-library_gisg7x.svg" alt="React Testing Library documentation" height="48" width="48" title="React Testing Library" />
+    </a>
+    <a href="https://playwright.dev/docs/intro" target="_blank">
+        <img src="https://res.cloudinary.com/dvuzczntd/image/upload/v1740446109/playwright_ayrxjk.svg" alt="Playwright documentation" height="48" width="48" title="Playwright" />
     </a>
     <a href="https://prettier.io/docs/en/" target="_blank">
-        <img alt="Prettier documentation" title="Prettier" src="https://res.cloudinary.com/dvuzczntd/image/upload/v1737010974/logos--prettier_zgzs4m.svg">
-    </a>
-    <a href="https://pnpm.io/motivation" target="_blank">
-        <img src="https://skillicons.dev/icons?i=pnpm" alt="PNPM documentation" title="PNPM">
+        <img src="https://res.cloudinary.com/dvuzczntd/image/upload/v1737010974/logos--prettier_zgzs4m.svg" alt="Prettier documentation" height="48" width="48" title="Prettier" style="border-radius: 8px;" />
     </a>
     <a href="https://semantic-release.gitbook.io/semantic-release" target="_blank">
-        <img alt="Semantic-Release documentation" title="Semantic-Release" src="https://res.cloudinary.com/dvuzczntd/image/upload/v1737010736/logos--semantic-release_qqm6uy.svg">
+        <img src="https://res.cloudinary.com/dvuzczntd/image/upload/v1737010736/logos--semantic-release_qqm6uy.svg" alt="Semantic-Release documentation" height="48" width="48" title="Semantic-Release" />
     </a>
 </p>
 
@@ -86,7 +89,7 @@ Digital Keyboard Tunes client is a web application built with Next.js and TypeSc
     ├── app/
     │   ├── *.test.tsx
     │   └── *.tsx
-    ├── components
+    ├── components/
     │   └── */
     │       ├── index.tsx
     │       ├── *.test.tsx
@@ -94,6 +97,9 @@ Digital Keyboard Tunes client is a web application built with Next.js and TypeSc
     ├── context/
     │   ├── *.test.tsx
     │   └── *.tsx
+    ├── e2e/
+    │   ├── *.test.ts
+    │   └── *.ts
     ├── hooks/
     │   ├── *.test.tsx
     │   └── *.tsx
@@ -109,10 +115,8 @@ Digital Keyboard Tunes client is a web application built with Next.js and TypeSc
     │   └── *.ts
     ├── values/
     │   └── *.ts
-    ├── next.config.mjs
-    ├── release.config.js
-    ├── tsconfig.json
-    ├── vitest.config.mts
+    ├── *.config.*
+    ├── *.rc*
     ├── package.json
     └── pnpm-lock.yaml
 ```
@@ -197,10 +201,16 @@ To run the client, execute the following command from the `client` directory:
 
 ### 🧪 Tests
 
-Vitest and React Testing Library are used for testing. Tests will run automatically after a pull request is made. You can also run the tests manually.
+Vitest and React Testing Library are used for unit testing. Tests will run automatically after a pull request is made. You can also run the tests manually.
 
 ```sh
 ❯ pnpm test
+```
+
+Playwright is used for end-to-end testing on the staging site, ensuring that common workflows function correctly. In addition to testing user interactions, it also performs accessibility checks. These tests are automatically run on the staging site after a merge into the `develop` branch. To create new tests, add them to the `e2e` directory. Each file should be named with the `.spec.ts` extension to differentiate it from unit test files. Once you've added or modified tests, you can run them locally. First you'll need the `.env` file, then you can execute the following command:
+
+```sh
+❯ pnpm playwright test
 ```
 
 ---
