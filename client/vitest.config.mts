@@ -30,10 +30,10 @@ export default defineConfig({
 			],
 			thresholds: {
 				// average for all files
-				statements: 85,
-				branches: 85,
-				functions: 85,
-				lines: 85,
+				statements: 100,
+				branches: 100,
+				functions: 100,
+				lines: 100,
 
 				'**/*.tsx': {
 					statements: 85,
