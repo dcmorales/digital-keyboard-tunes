@@ -24,11 +24,6 @@ export default defineConfig({
 	// configure projects for major browsers and mobile viewports
 	projects: [
 		{
-			name: 'Google Chrome',
-			testIgnore: /.*lighthouse.spec.ts/, // explicitly ignore non-Chromium browser that uses Chromium engine
-			use: { ...devices['Desktop Chrome'], channel: 'chrome' },
-		},
-		{
 			name: 'chromium',
 			use: { ...devices['Desktop Chrome'] },
 		},
