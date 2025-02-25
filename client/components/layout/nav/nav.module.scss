@@ -50,6 +50,11 @@
 
 	&.closed {
 		right: -100%;
+
+		button,
+		ul {
+			display: none;
+		}
 	}
 
 	@include breakpoint(large) {
