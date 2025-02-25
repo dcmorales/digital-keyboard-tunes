@@ -20,9 +20,17 @@ export default defineConfig({
 		globals: true,
 		coverage: {
 			provider: 'istanbul',
+			exclude: [
+				'.next/**', // build files
+				'**/*.test.tsx', // test files
+				'**/*.test.ts', // test files
+				'e2e/**', // playwright tests
+				'mocks/**', // mock files for tests
+				'*.config.*', // all config files
+			],
 		},
 		setupFiles: './setupTests.ts',
 		environment: 'jsdom',
-		exclude: ['e2e', 'node_modules'],
+		exclude: ['node_modules', 'e2e'],
 	},
 });
