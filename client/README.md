@@ -77,7 +77,7 @@ Digital Keyboard Tunes client is a web application built with Next.js and TypeSc
 | ⚙️  | **Architecture**  | This project's frontend is built using Next.js and TypeScript. It follows a structured architecture that includes the app-router, components, and styles. Unit tests and SCSS modules are co-located by the units they are testing and styling. |
 | 🔩  | **Code Quality**  | The frontend of the codebase uses TypeScript for type safety and improved code readability. Automated workflows run testing on PR requests to ensure consistency and Prettier updates to maintain a consistent code style.                      |
 | 📄  | **Documentation** | The project includes detailed README files and comments within the codebase (either inline or on top of the file) to provide further context.                                                                                                   |
-| 🧪  | **Testing**       | Testing the frontend is done through Vitest and React Testing Library.                                                                                                                                                                          |
+| 🧪  | **Testing**       | Testing the frontend is done through Vitest and React Testing Library. Playwright is used for end-to-end testing.                                                                                                                               |
 | 📦  | **Dependencies**  | Key dependencies on the frontend include Next.js, React, TypeScript, Sass, and Vitest.                                                                                                                                                          |
 
 ---
