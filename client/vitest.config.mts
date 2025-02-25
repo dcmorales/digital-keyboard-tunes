@@ -28,6 +28,27 @@ export default defineConfig({
 				'mocks/**', // mock files for tests
 				'*.config.*', // all config files
 			],
+			thresholds: {
+				// average for all files
+				statements: 85,
+				branches: 85,
+				functions: 85,
+				lines: 85,
+
+				'**/*.tsx': {
+					statements: 85,
+					branches: 85,
+					functions: 85,
+					lines: 85,
+				},
+
+				'**/*.ts': {
+					statements: 85,
+					branches: 85,
+					functions: 85,
+					lines: 85,
+				},
+			},
 		},
 		setupFiles: './setupTests.ts',
 		environment: 'jsdom',
