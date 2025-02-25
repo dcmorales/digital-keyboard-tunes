@@ -67,12 +67,13 @@
 
 <!--- Put an `x` in all the boxes that apply to your changes. -->
 
-- [ ] I have tested that my code builds successfully
-- [ ] I have pulled the latest version of this branch's base branch (i.e., `develop` or `main`)
-- [ ] I have updated the README or inline docs if needed
-- [ ] I have added a title to this PR that is descriptive and follows the conventional commits format.
-  - [ ] Contains prefix (`build`, `chore`, `ci`, `docs`, `feat`, `fix`, `perf`, `refactor`, `style`, `test`) which is followed by the scope (`client` or `server`), if applicable.
-  - [ ] If there are changes to both the client and the server, the PR title contains a semicolon (;) and contains a message for each (i.e., `feat(client):... ; feat(server):...`)
+- [ ] I have tested that my code builds successfully.
+- [ ] I have pulled the latest version of this branch's base branch (i.e., `develop` or `main`).
+- [ ] I have added tests that meet the minimum coverage threshold (85%).
+- [ ] I have updated the README or inline docs, if needed.
+- [ ] I have added a descriptive title to this PR that follows the conventional commits format:
+  - [ ] Contains a prefix (`build`, `chore`, `ci`, `docs`, `feat`, `fix`, `perf`, `refactor`, `style`, `test`), followed by the scope (`client` or `server`), if applicable.
+  - [ ] If there are changes to both the client and the server, the PR title contains a semicolon (;) and includes a message for each (e.g., `feat(client):... ; feat(server):...`).
 - [ ] I have added any important commit details to this PR.
 
 ## Other comments

@@ -77,7 +77,7 @@ Digital Keyboard Tunes client is a web application built with Next.js and TypeSc
 | ⚙️  | **Architecture**  | This project's frontend is built using Next.js and TypeScript. It follows a structured architecture that includes the app-router, components, and styles. Unit tests and SCSS modules are co-located by the units they are testing and styling. |
 | 🔩  | **Code Quality**  | The frontend of the codebase uses TypeScript for type safety and improved code readability. Automated workflows run testing on PR requests to ensure consistency and Prettier updates to maintain a consistent code style.                      |
 | 📄  | **Documentation** | The project includes detailed README files and comments within the codebase (either inline or on top of the file) to provide further context.                                                                                                   |
-| 🧪  | **Testing**       | Testing the frontend is done through Vitest and React Testing Library.                                                                                                                                                                          |
+| 🧪  | **Testing**       | Testing the frontend is done through Vitest and React Testing Library. Playwright is used for end-to-end testing.                                                                                                                               |
 | 📦  | **Dependencies**  | Key dependencies on the frontend include Next.js, React, TypeScript, Sass, and Vitest.                                                                                                                                                          |
 
 ---
@@ -201,10 +201,16 @@ To run the client, execute the following command from the `client` directory:
 
 ### 🧪 Tests
 
-Vitest and React Testing Library are used for unit testing. Tests will run automatically after a pull request is made. You can also run the tests manually.
+Vitest and React Testing Library are used for unit testing. When selecting elements, `.getByRole()` should be the preferred method as it encourages semantic thinking, which enhances accessibility. If a test requires checking a `className`, use `componentName.className.includes()` due to the use of css modules. You can run tests locally with:
 
 ```sh
 ❯ pnpm test
+```
+
+Code coverage across all files must meet a minimum of 85% for statements, branches, functions, and lines. Testing and code coverage will be automatically checked after a pull request is made. To check coverage locally, run the following command:
+
+```sh
+❯ pnpm coverage
 ```
 
 Playwright is used for end-to-end testing on the staging site, ensuring that common workflows function correctly. In addition to testing user interactions, it also performs accessibility checks. These tests are automatically run on the staging site after a merge into the `develop` branch. To create new tests, add them to the `e2e` directory. Each file should be named with the `.spec.ts` extension to differentiate it from unit test files. Once you've added or modified tests, you can run them locally. First you'll need the `.env` file, then you can execute the following command:
