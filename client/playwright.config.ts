@@ -10,7 +10,7 @@ export default defineConfig({
 	fullyParallel: true,
 	forbidOnly: !!process.env.CI, // fail the build on CI if a test is marked as test.only
 	retries: process.env.CI ? 2 : 0,
-	workers: process.env.CI ? 1 : undefined, // limit workers to one in CI environments to avoid resource contention
+	workers: process.env.CI ? 2 : undefined, // limit workers to two in CI environments to avoid resource contention
 	reporter: 'html',
 	use: {
 		baseURL: process.env.STAGING_URL || 'http://localhost:3000', // CI will always use staging URL, optional for local development
@@ -23,11 +23,6 @@ export default defineConfig({
 
 	// configure projects for major browsers and mobile viewports
 	projects: [
-		{
-			name: 'Google Chrome',
-			testIgnore: /.*lighthouse.spec.ts/, // explicitly ignore non-Chromium browser that uses Chromium engine
-			use: { ...devices['Desktop Chrome'], channel: 'chrome' },
-		},
 		{
 			name: 'chromium',
 			use: { ...devices['Desktop Chrome'] },
