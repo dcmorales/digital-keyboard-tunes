@@ -24,32 +24,35 @@
 </p>
 
 <p align="center">
-    <a href="https://nextjs.org/docs">
-	    <img src="https://skillicons.dev/icons?i=nextjs" alt="Next.js documentation" title="Next.js">
+    <a href="https://pnpm.io/motivation" target="_blank">
+        <img src="https://skillicons.dev/icons?i=pnpm" alt="PNPM documentation" title="PNPM" />
     </a>
-    <a href="https://www.typescriptlang.org/docs/">
-        <img src="https://skillicons.dev/icons?i=ts" alt="TypeScript documentation" title="TypeScript">
+    <a href="https://nextjs.org/docs" target="_blank">
+	    <img src="https://skillicons.dev/icons?i=nextjs" alt="Next.js documentation" title="Next.js" />
     </a>
-    <a href="https://vitest.dev/guide/">
-        <img src="https://skillicons.dev/icons?i=vitest" alt="Vitest documentation" title="Vitest">
+    <a href="https://www.typescriptlang.org/docs/" target="_blank">
+        <img src="https://skillicons.dev/icons?i=ts" alt="TypeScript documentation" title="TypeScript" />
     </a>
-    <a href="https://testing-library.com/docs/react-testing-library/intro/">
-        <img src="https://techstack-generator.vercel.app/testinglibrary-icon.svg"  alt="React Testing Library documentation" width="50" height="50" title="React Testing Library" />
+    <a href="https://sass-lang.com/documentation/" target="_blank">
+        <img src="https://skillicons.dev/icons?i=sass" alt="Sass documentation" title="Sass" />
     </a>
-    <a href="https://sass-lang.com/documentation/">
-        <img src="https://skillicons.dev/icons?i=sass" alt="Sass documentation" title="Sass">
+    <a href="https://vitest.dev/guide/" target="_blank">
+        <img src="https://skillicons.dev/icons?i=vitest" alt="Vitest documentation" title="Vitest" />
     </a>
-    <a href="https://prettier.io/docs/en/">
-        <img alt="Prettier documentation" title="Prettier" src="https://res.cloudinary.com/dvuzczntd/image/upload/v1737010974/logos--prettier_zgzs4m.svg">
+    <a href="https://testing-library.com/docs/react-testing-library/intro/" target="_blank">
+        <img src="https://res.cloudinary.com/dvuzczntd/image/upload/v1740446393/testing-library_gisg7x.svg" alt="React Testing Library documentation" height="48" width="48" title="React Testing Library" />
     </a>
-    <a href="https://pnpm.io/motivation">
-        <img src="https://skillicons.dev/icons?i=pnpm" alt="PNPM documentation" title="PNPM">
+    <a href="https://playwright.dev/docs/intro" target="_blank">
+        <img src="https://res.cloudinary.com/dvuzczntd/image/upload/v1740446109/playwright_ayrxjk.svg" alt="Playwright documentation" height="48" width="48" title="Playwright" />
     </a>
-    <a href="https://semantic-release.gitbook.io/semantic-release">
-        <img alt="Semantic-Release documentation" title="Semantic-Release" src="https://res.cloudinary.com/dvuzczntd/image/upload/v1737010736/logos--semantic-release_qqm6uy.svg">
+    <a href="https://prettier.io/docs/en/" target="_blank">
+        <img src="https://res.cloudinary.com/dvuzczntd/image/upload/v1737010974/logos--prettier_zgzs4m.svg" alt="Prettier documentation" height="48" width="48" title="Prettier" style="border-radius: 8px;" />
     </a>
-    <a href="https://docs.github.com/en/actions">
-        <img src="https://skillicons.dev/icons?i=githubactions" alt="Github Actions documentation" title="Github Actions">
+    <a href="https://docs.github.com/en/actions" target="_blank">
+        <img src="https://skillicons.dev/icons?i=githubactions" alt="Github Actions documentation" title="Github Actions" />
+    </a>
+    <a href="https://semantic-release.gitbook.io/semantic-release" target="_blank">
+        <img src="https://res.cloudinary.com/dvuzczntd/image/upload/v1737010736/logos--semantic-release_qqm6uy.svg" alt="Semantic-Release documentation" height="48" width="48" title="Semantic-Release" />
     </a>
 </p>
 
@@ -98,8 +101,23 @@ Digital Keyboard Tunes is a web application built with Next.js and TypeScript on
     │   └── workflows/
     │       └── *.yml
     └── client/
-        └── ...
+        ├── app/
+        ├── components/
+        ├── context/
+        ├── e2e/
+        ├── hooks/
+        ├── mocks/
+        ├── styles/
+        ├── types/
+        ├── utils/
+        ├── values/
+        ├── *.config.*
+        ├── *.rc*
+        ├── package.json
+        └── pnpm-lock.yaml
 ```
+
+A more detailed breakdown of the client directory structure can be found in the [client README.md](client/README.md).
 
 ---
 
@@ -109,12 +127,13 @@ Digital Keyboard Tunes is a web application built with Next.js and TypeScript on
 
 | File                                                                         | Summary                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| [test-client.yml](.github/workflows/test-client.yml)                         | Runs frontend unit tests whenever a pull request is made that includes changes to the client.                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| [prettify-client.yml](.github/workflows/prettify-client.yml)                 | Runs Prettier when a pull request is made to either the `main` or `develop` branch that includes changes to the client. If formatting is necessary, the changes are auto-committed.                                                                                                                                                                                                                                                                                                                                                  |
-| [check-merge-branch.yml](.github/workflows/check-merge-branch.yml)           | Ensures merges into `main` can only be done by `develop`, `hotfix*`, or `release*` branches.                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| [restrict-approved-label.yml](.github/workflows/restrict-approved-label.yml) | Restricts the use of the `approved` label so that only the repo owner can apply it.                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | [add-conventional-commit.yml](.github/workflows/add-conventional-commit.yml) | Creates a conventional commit to an approved pull request based on the PR title; PR title must begin with a conventional commit prefix unless the merge is `develop` into `main` or `main` into `develop`. Other details may be added to the commit through the PR body. The only scopes allowed are `client` or `server`, in addition to no scope. A semicolon(;) can be used to separate multiple commits in the PR title, though only one commit per scope is allowed. These commits will be analyzed during the release process. |
+| [check-merge-branch.yml](.github/workflows/check-merge-branch.yml)           | Ensures merges into `main` can only be done by `develop`, `hotfix*`, or `release*` branches.                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 | [frontend-release.yml](.github/workflows/frontend-release.yml)               | Runs semantic-release after a merge into main. Commits containing the scope `server` will be ignored while those containing `client` or no scope will be analyzed. If a release is triggered, a pull request is created with the changes made to the client `CHANGELOG.md` and `package.json`. A Github release will also be created with the changes.                                                                                                                                                                               |
+| [playwright.yml](.github/workflows/playwright.yml)                           | Runs end-to-end tests (including accessibility checks) on staging site after merges into `develop` are made.                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| [prettify-client.yml](.github/workflows/prettify-client.yml)                 | Runs Prettier when a pull request is made to either the `main` or `develop` branch that includes changes to the client. If formatting is necessary, the changes are auto-committed.                                                                                                                                                                                                                                                                                                                                                  |
+| [restrict-approved-label.yml](.github/workflows/restrict-approved-label.yml) | Restricts the use of the `approved` label so that only the repo owner can apply it.                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| [test-client.yml](.github/workflows/test-client.yml)                         | Runs frontend unit tests whenever a pull request is made that includes changes to the client.                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 
 </details>
 
@@ -144,7 +163,7 @@ Because of this, each PR must begin with a conventional commit prefix (`build`, 
 
 Through the PR body, other details may be added, such as the commit body and footer. A semicolon(;) can be used to separate multiple commits in the PR title, though only one commit per scope is allowed. Once the PR is approved, a commit will be created containing all of these details. While not all prefixes trigger a release, they are required in the PR to provide consistency
 
-When a frontend release is triggered, a pull request is created with the changes made to the client [CHANGELOG.md](client/CHANGELOG.md) and `package.json` version. A Github release will also be created with the changes. Tags for the frontend will be formatted as `client-v${version}`.
+When a frontend release is triggered, a pull request is created with the changes made to the [client CHANGELOG.md](client/CHANGELOG.md) and `package.json` version. A Github release will also be created with the changes. Tags for the frontend will be formatted as `client-v${version}`.
 
 ---
 
